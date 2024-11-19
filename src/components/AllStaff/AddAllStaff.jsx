@@ -5,6 +5,7 @@ import { BASE_URL } from '../../utils/baseURL'
 import { toast } from 'react-toastify'
 import MiniSpinner from '../../shared/MiniSpinner/MiniSpinner'
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa'
+import { Button } from '../ui/button'
 
 const AddAllStaff = ({
   setOpenAddStaffModal,
@@ -107,7 +108,7 @@ const AddAllStaff = ({
             </h3>
             <button
               type='button'
-              className='btn bg-white hover:bg-bgBtnInactive hover:text-btnInactiveColor  p-1 absolute right-3 rounded-full top-3'
+              className='btn p-1 absolute right-3 rounded-full top-3 text-white bg-error-100 hover:bg-error-50'
               onClick={() => setOpenAddStaffModal(false)}
             >
               {' '}
@@ -291,24 +292,12 @@ const AddAllStaff = ({
             </div>
 
             <div className='flex gap-6 mt-6 justify-end'>
-              <button
-                className='px-10 py-2 border hover:bg-bgBtnInactive hover:text-btnInactiveColor rounded '
-                onClick={() => setOpenAddStaffModal(false)}
-                type='button'
-              >
-                Cancel
-              </button>
               {loading ? (
                 <div className='px-10 py-2  bg-primaryColor hover:bg-blue-500 duration-200 text-white rounded'>
                   <MiniSpinner />
                 </div>
               ) : (
-                <button
-                  className='px-10 py-2  bg-primaryColor hover:bg-blue-500 duration-200 text-white rounded'
-                  type='submit'
-                >
-                  Add Staff
-                </button>
+                <Button type='submit'>Create</Button>
               )}
             </div>
           </form>

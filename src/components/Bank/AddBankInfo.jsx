@@ -1,12 +1,10 @@
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { Button } from '../ui/button'
+import MiniSpinner from '@/shared/MiniSpinner/MiniSpinner'
 import { RxCross1 } from 'react-icons/rx'
 
-import { useForm } from 'react-hook-form'
-import { useState } from 'react'
-
-import MiniSpinner from '../../shared/MiniSpinner/MiniSpinner'
-import { Button } from '../ui/button'
-
-const AddCategory = ({ setCategoryCreateModal }) => {
+const AddBankInfo = ({ setBankAccountCreateModal }) => {
   const [loading, setLoading] = useState(false)
 
   const {
@@ -27,18 +25,18 @@ const AddCategory = ({ setCategoryCreateModal }) => {
     <div>
       <div>
         <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'>
-          <div className='relative overflow-hidden text-left bg-white rounded-lg shadow-xl w-[550px] p-6 max-h-[100vh] overflow-y-auto scrollbar-thin'>
+          <div className='relative overflow-hidden text-left bg-white rounded-lg shadow-xl w-[850px] p-6 max-h-[100vh] overflow-y-auto scrollbar-thin'>
             <div className='flex items-center justify-between mt-4'>
               <h3
                 className='text-[26px] font-bold text-gray-800 capitalize'
                 id='modal-title '
               >
-                Create Category
+                Add Bank Info
               </h3>
               <button
                 type='button'
                 className='btn p-1 absolute right-3 rounded-full top-3 text-white bg-error-100 hover:bg-error-50'
-                onClick={() => setCategoryCreateModal(false)}
+                onClick={() => setBankAccountCreateModal(false)}
               >
                 {' '}
                 <RxCross1 size={20}></RxCross1>
@@ -50,24 +48,22 @@ const AddCategory = ({ setCategoryCreateModal }) => {
             <form onSubmit={handleSubmit(handleDataPost)} className=''>
               <div>
                 <label
-                  htmlFor='UserEmail'
+                  htmlFor=''
                   className='block text-xs font-medium text-gray-700'
                 >
-                  Category Name <span className='text-red-500'>*</span>
+                  Account Name <span className='text-red-500'>*</span>
                 </label>
 
                 <input
-                  {...register('category_name', {
-                    required: 'category name is required',
+                  {...register('account_name', {
+                    required: 'Account name is required',
                   })}
                   type='text'
-                  placeholder='Category Name'
+                  placeholder='Account Name'
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
                 />
-                {errors.category_name && (
-                  <p className='text-red-600'>
-                    {errors.category_name?.message}
-                  </p>
+                {errors.account_name && (
+                  <p className='text-red-600'>{errors.account_name?.message}</p>
                 )}
               </div>
 
@@ -88,4 +84,4 @@ const AddCategory = ({ setCategoryCreateModal }) => {
   )
 }
 
-export default AddCategory
+export default AddBankInfo

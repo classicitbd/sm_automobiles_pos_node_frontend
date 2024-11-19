@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query'
 import { AuthContext } from '../../../context/AuthProvider'
 import useGetRole from '../../../hooks/useGetRole'
 import useDebounced from '../../../hooks/useDebounced'
+import { Button } from '@/components/ui/button'
 
 const AllStaffPage = () => {
   //Add staff modal open state
@@ -62,12 +63,9 @@ const AllStaffPage = () => {
         </div>
         <div>
           <div>
-            <button
-              className='w-[138px] h-[40px] rounded-[8px] py-[10px] px-[14px] bg-primaryColor  text-white text-sm'
-              onClick={() => setOpenAddStaffModal(true)}
-            >
+            <Button onClick={() => setOpenAddStaffModal(true)}>
               Add Staff
-            </button>
+            </Button>
           </div>
         </div>
       </div>

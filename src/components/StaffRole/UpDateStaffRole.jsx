@@ -6,6 +6,7 @@ import permissionsData from '../../data/permissionData'
 import MiniSpinner from '../../shared/MiniSpinner/MiniSpinner'
 import { BASE_URL } from '../../utils/baseURL'
 import { AuthContext } from './../../context/AuthProvider'
+import { Button } from '../ui/button'
 
 const UpDateStaffRole = ({ setUpdateModal, updateModalValue, refetch }) => {
   const {
@@ -92,7 +93,7 @@ const UpDateStaffRole = ({ setUpdateModal, updateModalValue, refetch }) => {
           <button
             type='button'
             onClick={() => setUpdateModal(false)}
-            className='btn bg-white hover:bg-white border p-1'
+            className='btn p-1 absolute right-3 rounded-full top-3 text-white bg-error-100 hover:bg-error-50'
           >
             <RxCross1 size={25} />
           </button>
@@ -169,12 +170,9 @@ const UpDateStaffRole = ({ setUpdateModal, updateModalValue, refetch }) => {
           </div>
 
           <div className='flex justify-end mt-6 gap-4'>
-            <button
-              onClick={() => setUpdateModal(false)}
-              className='btn px-6 py-2.5 transition-colors duration-300 transform bg-white rounded-xl border'
-            >
+            <Button onClick={() => setUpdateModal(false)} variant='outline'>
               Cancel
-            </button>
+            </Button>
             {loading ? (
               <button
                 type='button'
@@ -183,12 +181,7 @@ const UpDateStaffRole = ({ setUpdateModal, updateModalValue, refetch }) => {
                 <MiniSpinner />
               </button>
             ) : (
-              <button
-                type='submit'
-                className='px-6 py-2.5 text-white transition-colors duration-300 transform bg-[#22CD5A] rounded-xl hover:bg-[#22CD5A]'
-              >
-                Update
-              </button>
+              <Button type='submit'>Update</Button>
             )}
           </div>
         </form>

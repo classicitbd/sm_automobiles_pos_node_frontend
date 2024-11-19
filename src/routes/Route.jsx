@@ -7,47 +7,52 @@ import SupplierPage from "@/pages/Supplier/SupplierPage";
 import AllStaffPage from "@/pages/StaffAndRolePage/AllStaffPage/AllStaffPage";
 import StaffRoleTablePage from "@/pages/StaffAndRolePage/StaffRoleTablePage/StaffRoleTablePage";
 import AddStaffRolePage from "@/pages/StaffAndRolePage/AddStaffRolePage/AddStaffRolePage";
+import BankPage from "@/pages/BankPage/BankPage";
 
 const route = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <DashboardLayout />,
     errorElement: <NotFound />,
     children: [
       {
-        path: "/",
+        path: '/',
         element: <div>Home</div>,
       },
       // ------Task Start------
       {
-        path: "/category",
+        path: '/category',
         element: <CategoryPage />,
       },
       {
-        path: "/supplier",
+        path: '/supplier',
         element: <SupplierPage />,
       },
       // ------Staff And Role----
       {
-        path: "/all-staff",
+        path: '/all-staff',
         element: <AllStaffPage />,
       },
       {
-        path: "/staff-role",
+        path: '/staff-role',
         element: <StaffRoleTablePage />,
       },
       {
-        path: "/create-staff-role",
+        path: '/create-staff-role',
         element: <AddStaffRolePage />,
       },
 
-      // ------Staff And Role End----
+      // ------Bank Account----
+      {
+        path: '/bank-account',
+        element: <BankPage />,
+      },
     ],
   },
   {
-    path: "/sign-in",
+    path: '/sign-in',
     element: <SignInPage />,
   },
-]);
+])
 
 export default route;
