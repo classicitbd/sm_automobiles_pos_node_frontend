@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { BASE_URL } from "../../utils/baseURL";
 import MiniSpinner from "../../shared/MiniSpinner/MiniSpinner";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { Button } from "../ui/button";
 const UpdateStaff = ({
   refetch,
   setUpdateModal,
@@ -97,7 +98,7 @@ const UpdateStaff = ({
           <button
             type='button'
             onClick={() => setUpdateModal(false)}
-            className='btn bg-white hover:bg-bgBtnInactive hover:text-btnInactiveColor  p-1 absolute right-3 rounded-full top-3'
+            className='btn p-1 absolute right-3 rounded-full top-3 text-white bg-error-100 hover:bg-error-50'
           >
             <RxCross1 size={20}></RxCross1>
           </button>
@@ -322,24 +323,12 @@ const UpdateStaff = ({
           </div>
 
           <div className='flex gap-6 mt-6 justify-end'>
-            <button
-              className='px-10 py-2 border hover:bg-bgBtnInactive hover:text-btnInactiveColor rounded '
-              onClick={() => setUpdateModal(false)}
-              type='button'
-            >
-              Cancel
-            </button>
             {loading ? (
               <div className='px-10 py-2  bg-primaryColor hover:bg-blue-500 duration-200 text-white rounded'>
                 <MiniSpinner />
               </div>
             ) : (
-              <button
-                className='px-10 py-2  bg-primaryColor hover:bg-blue-500 duration-200 text-white rounded'
-                type='submit'
-              >
-                Update Staff
-              </button>
+              <Button type='submit'>Update Staff</Button>
             )}
           </div>
         </form>

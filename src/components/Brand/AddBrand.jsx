@@ -1,17 +1,20 @@
-import { RxCross1 } from 'react-icons/rx'
-
-import { useForm } from 'react-hook-form'
+import MiniSpinner from '@/shared/MiniSpinner/MiniSpinner'
 import { useState } from 'react'
-
-import MiniSpinner from '../../shared/MiniSpinner/MiniSpinner'
+import { useForm } from 'react-hook-form'
+import { RxCross1 } from 'react-icons/rx'
 import { Button } from '../ui/button'
 
-const UpDateCategory = ({ setCategoryUpdateModal }) => {
+const AddBrand = ({ setBrandCreateModal }) => {
   const [loading, setLoading] = useState(false)
-  const { register, handleSubmit } = useForm()
 
-  // Handle Update Category
-  const handleDataPost = async (data) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
+
+  //handle Data post
+  const handleDataPost = (data) => {
     console.log(data)
   }
 
@@ -23,14 +26,14 @@ const UpDateCategory = ({ setCategoryUpdateModal }) => {
             <div className='flex items-center justify-between mt-4'>
               <h3
                 className='text-[26px] font-bold text-gray-800 capitalize'
-                id='modal-title'
+                id='modal-title '
               >
-                Update Category
+                Create Brand
               </h3>
               <button
                 type='button'
-                className='btn p-1 absolute right-3 rounded-full top-3 text-white bg-error-100 hover:bg-error-50 '
-                onClick={() => setCategoryUpdateModal(false)}
+                className='btn p-1 absolute right-3 rounded-full top-3 text-white bg-error-100 hover:bg-error-50'
+                onClick={() => setBrandCreateModal(false)}
               >
                 {' '}
                 <RxCross1 size={20}></RxCross1>
@@ -41,26 +44,28 @@ const UpDateCategory = ({ setCategoryUpdateModal }) => {
 
             <form onSubmit={handleSubmit(handleDataPost)} className=''>
               <div>
-                <label
-                  htmlFor='UserEmail'
-                  className='block text-xs font-medium text-gray-700'
-                >
-                  Category Name
+                <label className='block text-xs font-medium text-gray-700'>
+                  Brand Name <span className='text-red-500'>*</span>
                 </label>
 
                 <input
-                  {...register('category_name')}
+                  {...register('brand_name', {
+                    required: 'Brand name is required',
+                  })}
                   type='text'
-                  //defaultValue={categoryUpdateData?.category_name}
+                  placeholder='Brand Name'
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
                 />
+                {errors.brand_name && (
+                  <p className='text-red-600'>{errors.brand_name?.message}</p>
+                )}
               </div>
               <div className='mt-2'>
                 <label className='block text-xs font-medium text-gray-700'>
-                  Category Status
+                  Brand Status
                 </label>
                 <select
-                  {...register('category_status')}
+                  {...register('brand_status')}
                   className='mt-2 rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2 w-full'
                 >
                   <option value='active'>Active</option>
@@ -68,13 +73,13 @@ const UpDateCategory = ({ setCategoryUpdateModal }) => {
                 </select>
               </div>
 
-              <div className='flex gap-8 mt-6 justify-end'>
-                {loading ? (
-                  <div className='px-10 py-2  bg-primary text-white rounded flex justify-center items-center'>
+              <div className='flex justify-end mt-3'>
+                {loading == true ? (
+                  <div className='px-10 py-2 flex items-center justify-center  bg-primaryColor text-white rounded'>
                     <MiniSpinner />
                   </div>
                 ) : (
-                  <Button type='Submit'>Update</Button>
+                  <Button type='submit'>Create</Button>
                 )}
               </div>
             </form>
@@ -85,4 +90,4 @@ const UpDateCategory = ({ setCategoryUpdateModal }) => {
   )
 }
 
-export default UpDateCategory
+export default AddBrand

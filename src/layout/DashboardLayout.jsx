@@ -21,7 +21,7 @@ const DashboardLayout = () => {
         <title>Admin - {BASE_TITLE}</title>
       </Helmet>
       <div
-        className={`hidden lg:block max-h-screen overflow-hidden overflow-y-auto scrollbar-thin transition-width duration-500 ease-in-out bg-white ${
+        className={`hidden lg:block max-h-screen overflow-hidden overflow-y-auto scrollbar-thin transition-width duration-500 ease-in-out  ${
           isSidebarOpen ? 'w-60' : 'w-0'
         }`}
       >
@@ -29,7 +29,7 @@ const DashboardLayout = () => {
       </div>
       {/* ------ mobile menu ------ start */}
       <div
-        className={`h-screen w-10/12 sm:w-4/12 fixed inset-y-0 left-0 z-50 bg-bgray-50 overflow-y-auto transition-transform duration-500 ease-in-out transform ${
+        className={`h-screen w-10/12 sm:w-4/12 fixed inset-y-0 left-0 z-50  overflow-y-auto transition-transform duration-500 ease-in-out transform ${
           isMinibarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -41,7 +41,7 @@ const DashboardLayout = () => {
 
       {/* Main content */}
       <div className='flex-1 flex flex-col sticky overflow-x-auto overflow-y-scroll'>
-        <header className=' bg-[#FFFFFF]'>
+        <header className=''>
           <DashBoardNavbar
             isSidebarOpen={isSidebarOpen}
             setSidebarOpen={setSidebarOpen}
@@ -53,7 +53,7 @@ const DashboardLayout = () => {
         {/* Main content area */}
         <div className='min-h-screen'>
           {' '}
-          <div className='py-4  md:px-6 px-2.5 bg-gray-50'>
+          <div className='py-4  md:px-6 px-2.5 '>
             <Outlet />
           </div>
         </div>

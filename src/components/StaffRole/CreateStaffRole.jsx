@@ -103,7 +103,7 @@ const CreateStaffRole = () => {
               {...register('role_name', { required: 'Role Name is required' })}
               id='role_name'
               type='text'
-              className='block w-full px-2 py-1.5 outline-blueColor-400 text-gray-700 bg-white border border-gray-200 rounded'
+              className='block w-full px-2 py-1.5 outline-primaryVariant-400 text-gray-700 bg-white border border-gray-200 rounded'
             />
             {errors.role_name && (
               <p className='text-red-600'>{errors.role_name.message}</p>
@@ -137,7 +137,7 @@ const CreateStaffRole = () => {
                             type='checkbox'
                             id={permission}
                             {...register(permission)}
-                            className='mr-2 outline-blueColor-600'
+                            className='mr-2 outline-primaryVariant-600'
                           />
                           <span
                             className={`text-sm ${
@@ -161,14 +161,14 @@ const CreateStaffRole = () => {
             {loading ? (
               <button
                 type='button'
-                className='px-6 py-2 text-white transition-colors duration-300 transform bg-blueColor-500 rounded-xl hover:bg-blueColor-400'
+                className='px-6 py-2 text-white transition-colors duration-300 transform bg-primaryVariant-500 rounded-xl hover:bg-primaryVariant-400'
               >
                 <MiniSpinner />
               </button>
             ) : (
               <button
                 type='submit'
-                className='px-6 py-2 text-white transition-colors duration-300 transform bg-blueColor-500 rounded-xl hover:bg-blueColor-400'
+                className='px-6 py-2 text-white transition-colors duration-300 transform bg-primaryVariant-500 rounded-xl hover:bg-primaryVariant-400'
               >
                 Submit
               </button>

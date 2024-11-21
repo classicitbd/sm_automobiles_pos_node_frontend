@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import StaffRoleTable from '../../../components/StaffRole/StaffRoleTable'
+import { Button } from '@/components/ui/button'
 
 const StaffRoleTablePage = () => {
   //Add Staff Role Modal State
@@ -12,9 +13,7 @@ const StaffRoleTablePage = () => {
         </div>
         <div>
           <Link to='/create-staff-role'>
-            <button className='w-[138px] h-[40px] rounded-[8px] py-[10px] px-[14px] bg-primaryColor  text-white text-sm'>
-              Add Staff Role
-            </button>
+            <Button>Add Staff Role</Button>
           </Link>
         </div>
       </div>

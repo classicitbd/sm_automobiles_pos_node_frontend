@@ -1,53 +1,82 @@
-import { createBrowserRouter } from "react-router-dom";
-import DashboardLayout from "../layout/DashboardLayout";
-import NotFound from "../shared/NotFound/NotFound";
-import CategoryPage from "../pages/CategoryPage/CategoryPage";
-import SignInPage from "@/pages/SignInPage/SignInPage";
-import SupplierPage from "@/pages/Supplier/SupplierPage";
-import AllStaffPage from "@/pages/StaffAndRolePage/AllStaffPage/AllStaffPage";
-import StaffRoleTablePage from "@/pages/StaffAndRolePage/StaffRoleTablePage/StaffRoleTablePage";
-import AddStaffRolePage from "@/pages/StaffAndRolePage/AddStaffRolePage/AddStaffRolePage";
+import { createBrowserRouter } from 'react-router-dom'
+import DashboardLayout from '../layout/DashboardLayout'
+import NotFound from '../shared/NotFound/NotFound'
+import CategoryPage from '../pages/CategoryPage/CategoryPage'
+import SignInPage from '@/pages/SignInPage/SignInPage'
+import SupplierPage from '@/pages/Supplier/SupplierPage'
+import AllStaffPage from '@/pages/StaffAndRolePage/AllStaffPage/AllStaffPage'
+import StaffRoleTablePage from '@/pages/StaffAndRolePage/StaffRoleTablePage/StaffRoleTablePage'
+import AddStaffRolePage from '@/pages/StaffAndRolePage/AddStaffRolePage/AddStaffRolePage'
+import BankPage from '@/pages/BankPage/BankPage'
+import CustomersPage from '@/pages/CustomersPage/CustomersPage'
+import BrandPage from '@/pages/BrandPage/BrandPage'
+import ShowRoomPage from '@/pages/ShowRoomPage/ShowRoomPage'
+import ExpensesPage from '@/pages/ExpensesPage/ExpensesPage'
 
 const route = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <DashboardLayout />,
     errorElement: <NotFound />,
     children: [
       {
-        path: "/",
+        path: '/',
         element: <div>Home</div>,
       },
       // ------Task Start------
       {
-        path: "/category",
+        path: '/category',
         element: <CategoryPage />,
       },
       {
-        path: "/supplier",
+        path: '/brand',
+        element: <BrandPage />,
+      },
+      {
+        path: '/showroom',
+        element: <ShowRoomPage />,
+      },
+      {
+        path: '/supplier',
         element: <SupplierPage />,
       },
       // ------Staff And Role----
       {
-        path: "/all-staff",
+        path: '/all-staff',
         element: <AllStaffPage />,
       },
       {
-        path: "/staff-role",
+        path: '/staff-role',
         element: <StaffRoleTablePage />,
       },
       {
-        path: "/create-staff-role",
+        path: '/create-staff-role',
         element: <AddStaffRolePage />,
       },
 
-      // ------Staff And Role End----
+      // ------Bank Account----
+      {
+        path: '/bank-account',
+        element: <BankPage />,
+      },
+
+      // ------Customers----
+      {
+        path: '/customers',
+        element: <CustomersPage />,
+      },
+
+      // ------Expenses----
+      {
+        path: '/expense',
+        element: <ExpensesPage />,
+      },
     ],
   },
   {
-    path: "/sign-in",
+    path: '/sign-in',
     element: <SignInPage />,
   },
-]);
+])
 
-export default route;
+export default route

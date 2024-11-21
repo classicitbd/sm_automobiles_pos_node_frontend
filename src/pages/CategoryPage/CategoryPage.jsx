@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from 'react'
 import CategoryTable from '../../components/Category/CategoryTable'
 import AddCategory from '../../components/Category/AddCategory'
-import { BASE_URL } from '../../utils/baseURL'
-import { useQuery } from '@tanstack/react-query'
+//import { BASE_URL } from '../../utils/baseURL'
+//import { useQuery } from '@tanstack/react-query'
 import { AuthContext } from './../../context/AuthProvider'
 import useDebounced from '../../hooks/useDebounced'
+import { Button } from '@/components/ui/button'
 
 function CategoryPage() {
   const [categoryCreateModal, setCategoryCreateModal] = useState(false)
@@ -27,38 +28,38 @@ function CategoryPage() {
   }
 
   // Fetch category data
-  const {
-    data: categoryTypes = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: [
-      `/api/v1/category/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
-    ],
-    queryFn: async () => {
-      try {
-        const res = await fetch(
-          `${BASE_URL}/category/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
-          {
-            credentials: 'include',
-          }
-        )
+  // const {
+  //   data: categoryTypes = [],
+  //   isLoading,
+  //   refetch,
+  // } = useQuery({
+  //   queryKey: [
+  //     `/api/v1/category/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
+  //   ],
+  //   queryFn: async () => {
+  //     try {
+  //       const res = await fetch(
+  //         `${BASE_URL}/category/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
+  //         {
+  //           credentials: 'include',
+  //         }
+  //       )
 
-        if (!res.ok) {
-          const errorData = await res.text()
-          throw new Error(
-            `Error: ${res.status} ${res.statusText} - ${errorData}`
-          )
-        }
+  //       if (!res.ok) {
+  //         const errorData = await res.text()
+  //         throw new Error(
+  //           `Error: ${res.status} ${res.statusText} - ${errorData}`
+  //         )
+  //       }
 
-        const data = await res.json()
-        return data
-      } catch (error) {
-        console.error('Fetch error:', error)
-        throw error
-      }
-    },
-  })
+  //       const data = await res.json()
+  //       return data
+  //     } catch (error) {
+  //       console.error('Fetch error:', error)
+  //       throw error
+  //     }
+  //   },
+  // })
 
   return (
     <div className='bg-white rounded-lg py-6 px-4 shadow'>
@@ -68,13 +69,9 @@ function CategoryPage() {
         </div>
 
         <div>
-          <button
-            type='button'
-            className='rounded-[8px] py-[10px] px-[14px] bg-primaryColor hover:bg-blue-500 duration-200 text-white text-sm'
-            onClick={() => setCategoryCreateModal(true)}
-          >
+          <Button type='button' onClick={() => setCategoryCreateModal(true)}>
             Create Category
-          </button>
+          </Button>
         </div>
       </div>
       {/* search Category... */}
@@ -90,22 +87,22 @@ function CategoryPage() {
       {/* Category Data Show and update and delete operation file */}
 
       <CategoryTable
-        categoryTypes={categoryTypes}
+        //categoryTypes={categoryTypes}
         setPage={setPage}
         setLimit={setLimit}
         page={page}
         limit={limit}
-        totalData={categoryTypes?.totalData}
+        // totalData={categoryTypes?.totalData}
         setSearchTerm={setSearchTerm}
-        refetch={refetch}
+        //refetch={refetch}
         user={user}
-        isLoading={isLoading}
+        // isLoading={isLoading}
       />
 
       {/* Create category modal */}
       {categoryCreateModal && (
         <AddCategory
-          refetch={refetch}
+          //refetch={refetch}
           setCategoryCreateModal={setCategoryCreateModal}
           user={user}
         />
