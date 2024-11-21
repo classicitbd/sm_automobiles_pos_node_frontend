@@ -1,9 +1,9 @@
 // import { toast } from "react-toastify";
-import { MdDeleteForever } from 'react-icons/md'
-import { useState } from 'react'
-import Swal from 'sweetalert2-optimized'
 
-import TableLoadingSkeleton from '../common/loadingSkeleton/TableLoadingSkeleton'
+import { useState } from 'react'
+
+
+
 import UpdateSupplier from './UpdateSupplier'
 import { FiEdit } from 'react-icons/fi'
 const SupplierTable = () => {
@@ -15,18 +15,7 @@ const SupplierTable = () => {
     setUpdateModalValue(item)
   }
 
-  // delete a Staff
-  const handleDelete = (item) => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: `You won't be able to revert this ${item?.supplier_name} supplier!`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-    })
-  }
+ 
 
   return (
     <div>
@@ -81,11 +70,7 @@ const SupplierTable = () => {
                 Active
               </td>
               <td className='whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4'>
-                <MdDeleteForever
-                  onClick={() => handleDelete()}
-                  className='cursor-pointer text-red-500 hover:text-red-300'
-                  size={25}
-                />
+               
                 <FiEdit
                   onClick={() => updateStaffModal()}
                   className='cursor-pointer text-gray-500 hover:text-gray-300'

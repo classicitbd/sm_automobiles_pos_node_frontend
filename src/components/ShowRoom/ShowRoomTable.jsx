@@ -1,26 +1,17 @@
+import { useState } from "react"
+import { FiEdit } from "react-icons/fi"
+import UpdateShowRoom from "./UpdateShowRoom"
 
-import { FiEdit } from 'react-icons/fi'
-import { useState } from 'react'
-import UpDateCategory from './UpDateCategory'
+const ShowRoomTable = () => {
+   const [showRoomUpdateModal, setShowRoomUpdateModal] = useState(false)
+   const [showRoomUpdateData, setShowRoomUpdateData] = useState({})
 
+   //handle Update Function..
 
- const CategoryTable = (
- 
-) => {
-  
-
-  //Update Handle contoler
-  const [categoryUpdateModal, setCategoryUpdateModal] = useState(false)
-  const [categoryUpdateData, setCategoryUpdateData] = useState({})
-
-  const handleCategoryUpdateModal = (category) => {
-    setCategoryUpdateData(category)
-    setCategoryUpdateModal(true)
-  }
-
- 
- 
-
+   const handleShowRoomUpdateModal = () => {
+     setShowRoomUpdateData()
+     setShowRoomUpdateModal(true)
+   }
   return (
     <>
       <div>
@@ -30,31 +21,29 @@ import UpDateCategory from './UpDateCategory'
               <thead className='ltr:text-left rtl:text-right bg-[#fff9ee]'>
                 <tr className='divide-x divide-gray-300  font-semibold text-center text-gray-900'>
                   <td className='whitespace-nowrap p-4 '>SL No</td>
-                  <td className='whitespace-nowrap p-4 '>Category Name</td>
-                  <td className='whitespace-nowrap p-4 '>Category Status</td>
+                  <td className='whitespace-nowrap p-4 '>Showroom Name</td>
+                  <td className='whitespace-nowrap p-4 '>Showroom Status</td>
 
                   <td className='whitespace-nowrap p-4 '>Action</td>
                 </tr>
               </thead>
 
               <tbody className='divide-y divide-gray-200 text-center'>
-                <tr  className='divide-x divide-gray-300  font-semibold text-center text-gray-900'>
+                <tr className='divide-x divide-gray-300  font-semibold text-center text-gray-900'>
                   <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
                     2
                   </td>
                   <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
-                  Pos System
+                    Showroom Name...
                   </td>
                   <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
-                   Active
+                    In-Active...
                   </td>
 
                   <td className='whitespace-nowrap py-1.5 px-2 text-gray-700'>
-                   
-
                     <button
                       className='ml-3'
-                      onClick={() => handleCategoryUpdateModal()}
+                      onClick={() => handleShowRoomUpdateModal()}
                     >
                       <FiEdit
                         size={25}
@@ -68,11 +57,11 @@ import UpDateCategory from './UpDateCategory'
           </div>
         </div>
 
-        {/* Show Category Update Modal */}
-        {categoryUpdateModal && (
-          <UpDateCategory
-            setCategoryUpdateModal={setCategoryUpdateModal}
-            categoryUpdateData={categoryUpdateData}
+        {/* Show Showroom Update Modal */}
+        {showRoomUpdateModal && (
+          <UpdateShowRoom
+            setShowRoomUpdateModal={setShowRoomUpdateModal}
+            showRoomUpdateData={showRoomUpdateData}
             // refetch={refetch}
             // user={user}
           />
@@ -82,4 +71,4 @@ import UpDateCategory from './UpDateCategory'
   )
 }
 
-export default CategoryTable
+export default ShowRoomTable

@@ -4,14 +4,15 @@ import { Link, useLocation } from 'react-router-dom'
 
 import { BiTask } from 'react-icons/bi'
 import { GoHome } from 'react-icons/go'
-import { BsShieldPlus } from 'react-icons/bs'
+import { BsExplicit, BsShieldPlus } from 'react-icons/bs'
 import { PiUsersThree } from 'react-icons/pi'
 import { TbCategoryPlus } from 'react-icons/tb'
 
 import { ChildMenuItem, DropdownMenu, MenuItem } from './DropdownAndMenuItem'
 import { FiUsers } from 'react-icons/fi'
-import { FaUsers } from 'react-icons/fa'
+import { FaUsers, FaUserTie } from 'react-icons/fa'
 import { MdCheckBoxOutlineBlank } from 'react-icons/md'
+import { LucideUser2 } from 'lucide-react'
 
 const SideNavBar = () => {
   const { pathname } = useLocation()
@@ -73,6 +74,18 @@ const SideNavBar = () => {
               label='Category'
               isActive={isActive('/category')}
             />
+            <ChildMenuItem
+              to='/brand'
+              icon={TbCategoryPlus}
+              label='Brand'
+              isActive={isActive('/brand')}
+            />
+            <ChildMenuItem
+              to='/showroom'
+              icon={TbCategoryPlus}
+              label='Show Room'
+              isActive={isActive('/showroom')}
+            />
           </DropdownMenu>
 
           <DropdownMenu
@@ -100,21 +113,58 @@ const SideNavBar = () => {
               isActive={isActive('/staff-role')}
             />
           </DropdownMenu>
-
-          <MenuItem
-            to='/supplier'
-            icon={FaUsers}
-            label='Supplier'
-            isActive={isActive('/supplier')}
-            onClick={closeAllDropdowns} // Close all dropdowns when clicked
-          />
-          <MenuItem
-            to='/bank-account'
-            icon={MdCheckBoxOutlineBlank}
-            label='Bank Account'
-            isActive={isActive('/bank-account')}
-            onClick={closeAllDropdowns} // Close all dropdowns when clicked
-          />
+          <DropdownMenu
+            label='About Supply'
+            icon={BiTask}
+            isOpen={activeDropdown === 'supplier'}
+            onClick={() => toggleDropdown('supplier')}
+          >
+            <ChildMenuItem
+              to='/supplier'
+              icon={FaUsers}
+              label='Supplier'
+              isActive={isActive('/supplier')}
+            />
+          </DropdownMenu>
+          <DropdownMenu
+            label='About Bank Account'
+            icon={BiTask}
+            isOpen={activeDropdown === 'bankAccount'}
+            onClick={() => toggleDropdown('bankAccount')}
+          >
+            <ChildMenuItem
+              to='/bank-account'
+              icon={MdCheckBoxOutlineBlank}
+              label='Bank Account'
+              isActive={isActive('/bank-account')}
+            />
+          </DropdownMenu>
+          <DropdownMenu
+            label='About Customers'
+            icon={BiTask}
+            isOpen={activeDropdown === 'customers'}
+            onClick={() => toggleDropdown('customers')}
+          >
+            <ChildMenuItem
+              to='/customers'
+              icon={FaUserTie}
+              label='Customers'
+              isActive={isActive('/customers')}
+            />
+          </DropdownMenu>
+          <DropdownMenu
+            label='About Expenses'
+            icon={BiTask}
+            isOpen={activeDropdown === 'expenses'}
+            onClick={() => toggleDropdown('expenses')}
+          >
+            <ChildMenuItem
+              to='/expense'
+              icon={BsExplicit}
+              label='Expenses'
+              isActive={isActive('/expense')}
+            />
+          </DropdownMenu>
         </ul>
       </div>
     </div>

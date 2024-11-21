@@ -70,6 +70,18 @@ const AddCategory = ({ setCategoryCreateModal }) => {
                   </p>
                 )}
               </div>
+              <div className='mt-2'>
+                <label className='block text-xs font-medium text-gray-700'>
+                  Category Status
+                </label>
+                <select
+                  {...register('category_status')}
+                  className='mt-2 rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2 w-full'
+                >
+                  <option value='active'>Active</option>
+                  <option value='in-active'>In-Active</option>
+                </select>
+              </div>
 
               <div className='flex justify-end mt-3'>
                 {loading == true ? (

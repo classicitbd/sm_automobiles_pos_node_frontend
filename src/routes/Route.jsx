@@ -1,13 +1,17 @@
-import { createBrowserRouter } from "react-router-dom";
-import DashboardLayout from "../layout/DashboardLayout";
-import NotFound from "../shared/NotFound/NotFound";
-import CategoryPage from "../pages/CategoryPage/CategoryPage";
-import SignInPage from "@/pages/SignInPage/SignInPage";
-import SupplierPage from "@/pages/Supplier/SupplierPage";
-import AllStaffPage from "@/pages/StaffAndRolePage/AllStaffPage/AllStaffPage";
-import StaffRoleTablePage from "@/pages/StaffAndRolePage/StaffRoleTablePage/StaffRoleTablePage";
-import AddStaffRolePage from "@/pages/StaffAndRolePage/AddStaffRolePage/AddStaffRolePage";
-import BankPage from "@/pages/BankPage/BankPage";
+import { createBrowserRouter } from 'react-router-dom'
+import DashboardLayout from '../layout/DashboardLayout'
+import NotFound from '../shared/NotFound/NotFound'
+import CategoryPage from '../pages/CategoryPage/CategoryPage'
+import SignInPage from '@/pages/SignInPage/SignInPage'
+import SupplierPage from '@/pages/Supplier/SupplierPage'
+import AllStaffPage from '@/pages/StaffAndRolePage/AllStaffPage/AllStaffPage'
+import StaffRoleTablePage from '@/pages/StaffAndRolePage/StaffRoleTablePage/StaffRoleTablePage'
+import AddStaffRolePage from '@/pages/StaffAndRolePage/AddStaffRolePage/AddStaffRolePage'
+import BankPage from '@/pages/BankPage/BankPage'
+import CustomersPage from '@/pages/CustomersPage/CustomersPage'
+import BrandPage from '@/pages/BrandPage/BrandPage'
+import ShowRoomPage from '@/pages/ShowRoomPage/ShowRoomPage'
+import ExpensesPage from '@/pages/ExpensesPage/ExpensesPage'
 
 const route = createBrowserRouter([
   {
@@ -23,6 +27,14 @@ const route = createBrowserRouter([
       {
         path: '/category',
         element: <CategoryPage />,
+      },
+      {
+        path: '/brand',
+        element: <BrandPage />,
+      },
+      {
+        path: '/showroom',
+        element: <ShowRoomPage />,
       },
       {
         path: '/supplier',
@@ -47,6 +59,18 @@ const route = createBrowserRouter([
         path: '/bank-account',
         element: <BankPage />,
       },
+
+      // ------Customers----
+      {
+        path: '/customers',
+        element: <CustomersPage />,
+      },
+
+      // ------Expenses----
+      {
+        path: '/expense',
+        element: <ExpensesPage />,
+      },
     ],
   },
   {
@@ -55,4 +79,4 @@ const route = createBrowserRouter([
   },
 ])
 
-export default route;
+export default route

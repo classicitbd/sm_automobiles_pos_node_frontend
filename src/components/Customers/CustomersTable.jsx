@@ -1,22 +1,17 @@
-import { useState } from 'react'
-import { FiEdit } from 'react-icons/fi'
-
-import UpdateBankInfo from './UpdateBankInfo'
-
+import { FiEdit } from "react-icons/fi"
+import UpdateCustomers from "./UpdateCustomers"
+import { useState } from "react"
 
 
-const BankInfoTable = () => {
-
+const CustomersTable = () => {
   //Update Handle contoler
-  const [bankAccountUpdateModal, setBankAccountUpdateModal] = useState(false)
-  const [bankAccountUpdateData, setBankAccountUpdateData] = useState({})
+  const [customerUpdateModal, setCustomerUpdateModal] = useState(false)
+  const [customerUpdateData, setCustomerUpdateData] = useState({})
 
-  const handleBankUpdateModal = () => {
-    setBankAccountUpdateData()
-    setBankAccountUpdateModal(true)
+  const handleCustomerUpdateModal = () => {
+    setCustomerUpdateData()
+    setCustomerUpdateModal(true)
   }
-
- 
   return (
     <div>
       <div className='rounded-lg border border-gray-200 mt-6'>
@@ -25,11 +20,14 @@ const BankInfoTable = () => {
             <thead className='ltr:text-left rtl:text-right bg-[#fff9ee]'>
               <tr className='divide-x divide-gray-300  font-semibold text-center text-gray-900'>
                 <td className='whitespace-nowrap p-4 '>SL No</td>
-                <td className='whitespace-nowrap p-4 '>Account Name</td>
-                <td className='whitespace-nowrap p-4 '>Account No</td>
-                <td className='whitespace-nowrap p-4 '>Bank Name</td>
-                <td className='whitespace-nowrap p-4 '>Bank Balance</td>
-                <td className='whitespace-nowrap p-4 '>Bank Status</td>
+                <td className='whitespace-nowrap p-4 '>Customers Name</td>
+                <td className='whitespace-nowrap p-4 '>Customer Address</td>
+                <td className='whitespace-nowrap p-4 '>Customer Email</td>
+                <td className='whitespace-nowrap p-4 '>Customer Phone</td>
+                <td className='whitespace-nowrap p-4 '>Previous Advance</td>
+                <td className='whitespace-nowrap p-4 '>Previous Due</td>
+                <td className='whitespace-nowrap p-4 '>Customer Status</td>
+                <td className='whitespace-nowrap p-4 '>First Payment Status</td>
 
                 <td className='whitespace-nowrap p-4 '>Action</td>
               </tr>
@@ -41,27 +39,34 @@ const BankInfoTable = () => {
                   2
                 </td>
                 <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
-                 Istiak
+                  Istiak Ahamed
                 </td>
                 <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
-                 24568
+                 Gangni
                 </td>
                 <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
-                 Sonali
+                istik@123.com
                 </td>
                 <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
-                 2000
+                097664565
                 </td>
                 <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
-                 Active
+               ad-64546
+                </td>
+                <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
+                d-1235
+                </td>
+                <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
+                  Active
+                </td>
+                <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
+                  In-Active
                 </td>
 
                 <td className='whitespace-nowrap py-1.5 px-2 text-gray-700'>
-                 
-
                   <button
                     className='ml-3'
-                    onClick={() => handleBankUpdateModal()}
+                    onClick={() => handleCustomerUpdateModal()}
                   >
                     <FiEdit
                       size={25}
@@ -76,14 +81,14 @@ const BankInfoTable = () => {
       </div>
 
       {/* Show Bank Update Modal */}
-      {bankAccountUpdateModal && (
-        <UpdateBankInfo
-          setBankAccountUpdateModal={setBankAccountUpdateModal}
-          bankAccountUpdateData={bankAccountUpdateData}
+      {customerUpdateModal && (
+        <UpdateCustomers
+          setCustomerUpdateModal={setCustomerUpdateModal}
+          customerUpdateData={customerUpdateData}
         />
       )}
     </div>
   )
 }
 
-export default BankInfoTable
+export default CustomersTable

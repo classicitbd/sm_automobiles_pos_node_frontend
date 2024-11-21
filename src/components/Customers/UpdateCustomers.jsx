@@ -1,17 +1,12 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { RxCross1 } from 'react-icons/rx'
 import { Button } from '../ui/button'
 import MiniSpinner from '@/shared/MiniSpinner/MiniSpinner'
-import { RxCross1 } from 'react-icons/rx'
 
-const AddBankInfo = ({ setBankAccountCreateModal }) => {
+const UpdateCustomers = ({ setCustomerUpdateModal, customerUpdateData }) => {
   const [loading, setLoading] = useState(false)
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm()
+  const { register, handleSubmit } = useForm()
 
   // get token
   // const token = getCookie(authKey);
@@ -20,7 +15,6 @@ const AddBankInfo = ({ setBankAccountCreateModal }) => {
   const handleDataPost = (data) => {
     console.log(data)
   }
-
   return (
     <div>
       <div>
@@ -31,12 +25,12 @@ const AddBankInfo = ({ setBankAccountCreateModal }) => {
                 className='text-[26px] font-bold text-gray-800 capitalize'
                 id='modal-title '
               >
-                Add Bank Info
+                Update Customers Info
               </h3>
               <button
                 type='button'
                 className='btn p-1 absolute right-3 rounded-full top-3 text-white bg-error-100 hover:bg-error-50'
-                onClick={() => setBankAccountCreateModal(false)}
+                onClick={() => setCustomerUpdateModal(false)}
               >
                 {' '}
                 <RxCross1 size={20}></RxCross1>
@@ -51,99 +45,125 @@ const AddBankInfo = ({ setBankAccountCreateModal }) => {
                   htmlFor=''
                   className='block text-xs font-medium text-gray-700'
                 >
-                  Account Name <span className='text-red-500'>*</span>
+                  Customers Name
                 </label>
 
                 <input
-                  {...register('account_name', {
-                    required: 'Account name is required',
+                  {...register('customer_name', {
+                    required: 'Customer name is required',
                   })}
                   type='text'
-                  placeholder='Account Name'
+                  placeholder='Customers Name'
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
                 />
-                {errors.account_name && (
-                  <p className='text-red-600'>{errors.account_name?.message}</p>
-                )}
               </div>
               <div className='mt-2'>
                 <label
                   htmlFor=''
                   className='block text-xs font-medium text-gray-700'
                 >
-                  Account Name <span className='text-red-500'>*</span>
+                  Customer Address
                 </label>
 
                 <input
-                  {...register('account_no', {
-                    required: 'Account no is required',
-                  })}
+                  {...register('customer_address')}
                   type='text'
-                  placeholder='Account No'
+                  placeholder='Customer Address'
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
                 />
-                {errors.account_no && (
-                  <p className='text-red-600'>{errors.account_no?.message}</p>
-                )}
               </div>
               <div className='mt-2'>
                 <label
                   htmlFor=''
                   className='block text-xs font-medium text-gray-700'
                 >
-                  Bank Name <span className='text-red-500'>*</span>
+                  Customer Email
                 </label>
 
                 <input
-                  {...register('bank_name', {
-                    required: 'Bank name is required',
-                  })}
-                  type='text'
-                  placeholder='Bank Name'
+                  {...register('customer_email')}
+                  type='email'
+                  placeholder='Customer Email'
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
                 />
-                {errors.bank_name && (
-                  <p className='text-red-600'>{errors.bank_name?.message}</p>
-                )}
+              </div>
+              <div className='mt-2'>
+                <label
+                  htmlFor=''
+                  className='block text-xs font-medium text-gray-700'
+                >
+                  Customer Phone
+                </label>
+
+                <input
+                  {...register('customer_phone')}
+                  type='number'
+                  placeholder='Customer Phone'
+                  className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
+                />
               </div>
               <div className='mt-2'>
                 <label className='block text-xs font-medium text-gray-700'>
-                  Bank Balance <span className='text-red-500'>*</span>
+                  Previous Advance
                 </label>
 
                 <input
-                  {...register('bank_balance', {
-                    required: ' Bank Balance is required',
+                  {...register('previous_advance', {
                     validate: (value) => {
                       if (value < 0) {
-                        return 'Balance must be greater than 0 or equal 0'
+                        return 'Advance must be getter than 0'
                       }
                     },
                   })}
                   type='number'
-                  placeholder='Enter Bank Balance'
+                  placeholder='Enter  Previous Advance'
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
                 />
-                {errors.bank_balance && (
-                  <p className='text-red-600'>{errors.bank_balance?.message}</p>
-                )}
               </div>
               <div className='mt-2'>
                 <label className='block text-xs font-medium text-gray-700'>
-                  Bank Status <span className='text-red-500'>*</span>
+                  Previous Due
                 </label>
-                <select
-                  {...register('bank_status', {
-                    required: 'Bank Status is required',
+
+                <input
+                  {...register('previous_due', {
+                    validate: (value) => {
+                      if (value < 0) {
+                        return 'Due must be getter than 0'
+                      }
+                    },
                   })}
-                  className='mt-2 rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2 w-full'
-                >
-                  <option value='active'>Active</option>
-                  <option value='in-active'>In-Active</option>
-                </select>
-                {errors.bank_status && (
-                  <p className='text-red-600'>{errors.bank_status.message}</p>
-                )}
+                  type='number'
+                  placeholder='Enter  Previous Due'
+                  className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
+                />
+              </div>
+
+              <div className='grid grid-cols-2 gap-4 mt-4'>
+                <div className=''>
+                  <label className='block text-xs font-medium text-gray-700'>
+                    Customer Status
+                  </label>
+                  <select
+                    {...register('customer_status')}
+                    className='mt-2 rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2 w-full'
+                  >
+                    <option value='active'>Active</option>
+                    <option value='in-active'>In-Active</option>
+                  </select>
+                </div>
+                <div className=''>
+                  <label className='block text-xs font-medium text-gray-700'>
+                    First Payment Status
+                  </label>
+                  <select
+                    {...register('first_payment_status')}
+                    className='mt-2 rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2 w-full'
+                  >
+                    <option value='active'>Active</option>
+                    <option value='in-active'>In-Active</option>
+                  </select>
+                </div>
               </div>
 
               <div className='flex justify-end mt-3'>
@@ -152,7 +172,7 @@ const AddBankInfo = ({ setBankAccountCreateModal }) => {
                     <MiniSpinner />
                   </div>
                 ) : (
-                  <Button type='submit'>Create</Button>
+                  <Button type='submit'>Update</Button>
                 )}
               </div>
             </form>
@@ -163,4 +183,4 @@ const AddBankInfo = ({ setBankAccountCreateModal }) => {
   )
 }
 
-export default AddBankInfo
+export default UpdateCustomers
