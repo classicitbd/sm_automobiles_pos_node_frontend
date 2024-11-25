@@ -12,7 +12,7 @@ import { ChildMenuItem, DropdownMenu, MenuItem } from './DropdownAndMenuItem'
 import { FiUsers } from 'react-icons/fi'
 import { FaUsers, FaUserTie } from 'react-icons/fa'
 import { MdCheckBoxOutlineBlank } from 'react-icons/md'
-import { LucideUser2 } from 'lucide-react'
+import { SiPurgecss } from 'react-icons/si'
 
 const SideNavBar = () => {
   const { pathname } = useLocation()
@@ -114,7 +114,7 @@ const SideNavBar = () => {
             />
           </DropdownMenu>
           <DropdownMenu
-            label='About Supply'
+            label='About Supplier'
             icon={BiTask}
             isOpen={activeDropdown === 'supplier'}
             onClick={() => toggleDropdown('supplier')}
@@ -163,6 +163,19 @@ const SideNavBar = () => {
               icon={BsExplicit}
               label='Expenses'
               isActive={isActive('/expense')}
+            />
+          </DropdownMenu>
+          <DropdownMenu
+            label='About Purchase'
+            icon={BiTask}
+            isOpen={activeDropdown === 'purchase'}
+            onClick={() => toggleDropdown('purchase')}
+          >
+            <ChildMenuItem
+              to='/purchase'
+              icon={SiPurgecss}
+              label='Purchase'
+              isActive={isActive('/purchase')}
             />
           </DropdownMenu>
         </ul>

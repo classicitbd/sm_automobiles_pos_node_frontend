@@ -3,18 +3,76 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { RxCross1 } from 'react-icons/rx'
 import { Button } from '../ui/button'
+import { BASE_URL } from '@/utils/baseURL'
+import { toast } from 'react-toastify'
 
 const UpdateBankInfo = ({
   setBankAccountUpdateModal,
   bankAccountUpdateData,
+  refetch,
+  user,
 }) => {
   const [loading, setLoading] = useState(false)
 
   const { register, handleSubmit } = useForm()
 
-  //Hndle Data post
-  const handleDataPost = (data) => {
-    console.log(data)
+  //Handle Data post
+  const handleDataPost = async (data) => {
+    setLoading(true)
+    try {
+      const sendData = {
+        _id: bankAccountUpdateData?._id,
+        bank_updated_by: user?._id,
+        account_name: data?.account_name
+          ? data?.account_name
+          : bankAccountUpdateData?.account_name,
+        account_no: data?.account_no
+          ? data?.account_no
+          : bankAccountUpdateData?.account_no,
+        bank_name: data?.bank_name
+          ? data?.bank_name
+          : bankAccountUpdateData?.bank_name,
+        bank_balance: data?.bank_balance
+          ? data?.bank_balance
+          : bankAccountUpdateData?.bank_balance,
+        bank_status: data?.bank_status
+          ? data?.bank_status
+          : bankAccountUpdateData?.bank_status,
+      }
+
+      const response = await fetch(`${BASE_URL}/bank`, {
+        method: 'PATCH',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(sendData),
+      })
+      const result = await response.json()
+      if (result?.statusCode === 200 && result?.success === true) {
+        toast.success(
+          result?.message ? result?.message : 'Bank Update successfully',
+          {
+            autoClose: 1000,
+          }
+        )
+        refetch()
+        setLoading(false)
+        setBankAccountUpdateModal(false)
+      } else {
+        toast.error(result?.message || 'Something went wrong', {
+          autoClose: 1000,
+        })
+        setLoading(false)
+      }
+    } catch (error) {
+      toast.error(error?.message, {
+        autoClose: 1000,
+      })
+      setLoading(false)
+    } finally {
+      setLoading(false)
+    }
   }
   return (
     <div>
@@ -46,13 +104,12 @@ const UpdateBankInfo = ({
                   htmlFor=''
                   className='block text-xs font-medium text-gray-700'
                 >
-                  Account Name 
+                  Account Name
                 </label>
 
                 <input
-                  {...register('account_name', {
-                    required: 'Account name is required',
-                  })}
+                  {...register('account_name')}
+                  defaultValue={bankAccountUpdateData?.account_name}
                   type='text'
                   placeholder='Account Name'
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
@@ -63,14 +120,13 @@ const UpdateBankInfo = ({
                   htmlFor=''
                   className='block text-xs font-medium text-gray-700'
                 >
-                  Account Name
+                  Account NO
                 </label>
 
                 <input
-                  {...register('account_no', {
-                    required: 'Account no is required',
-                  })}
+                  {...register('account_no')}
                   type='text'
+                  defaultValue={bankAccountUpdateData?.account_no}
                   placeholder='Account No'
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
                 />
@@ -80,13 +136,12 @@ const UpdateBankInfo = ({
                   htmlFor=''
                   className='block text-xs font-medium text-gray-700'
                 >
-                  Bank Name 
+                  Bank Name
                 </label>
 
                 <input
-                  {...register('bank_name', {
-                    required: 'Bank name is required',
-                  })}
+                  {...register('bank_name')}
+                  defaultValue={bankAccountUpdateData?.bank_name}
                   type='text'
                   placeholder='Bank Name'
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
@@ -94,18 +149,18 @@ const UpdateBankInfo = ({
               </div>
               <div className='mt-2'>
                 <label className='block text-xs font-medium text-gray-700'>
-                  Bank Balance 
+                  Bank Balance
                 </label>
 
                 <input
                   {...register('bank_balance', {
-                    required: ' Bank Balance is required',
                     validate: (value) => {
                       if (value < 0) {
                         return 'Balance must be greater than 0 or equal 0'
                       }
                     },
                   })}
+                  defaultValue={bankAccountUpdateData?.bank_balance}
                   type='number'
                   placeholder='Enter Bank Balance'
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
@@ -116,9 +171,8 @@ const UpdateBankInfo = ({
                   Bank Status
                 </label>
                 <select
-                  {...register('bank_status', {
-                    required: 'Bank Status is required',
-                  })}
+                  {...register('bank_status')}
+                  defaultValue={bankAccountUpdateData?.bank_status}
                   className='mt-2 rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2 w-full'
                 >
                   <option value='active'>Active</option>

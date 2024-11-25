@@ -57,17 +57,14 @@ const AddAllStaff = ({
     }
     console.log(sendData)
     try {
-      const response = await fetch(
-        `${BASE_URL}/admin_reg_log?role_type=staff_create`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            credentials: 'include',
-          },
-          body: JSON.stringify(sendData),
-        }
-      )
+      const response = await fetch(`${BASE_URL}/user?role_type=staff_create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          credentials: 'include',
+        },
+        body: JSON.stringify(sendData),
+      })
       const result = await response.json()
       if (result?.statusCode == 200 && result?.success == true) {
         toast.success(

@@ -5,14 +5,66 @@ import { useState } from 'react'
 
 import MiniSpinner from '../../shared/MiniSpinner/MiniSpinner'
 import { Button } from '../ui/button'
+import { BASE_URL } from '@/utils/baseURL'
+import { toast } from 'react-toastify'
 
-const UpDateCategory = ({ setCategoryUpdateModal }) => {
+const UpDateCategory = ({
+  setCategoryUpdateModal,
+  categoryUpdateData,
+  refetch,
+  user,
+}) => {
   const [loading, setLoading] = useState(false)
   const { register, handleSubmit } = useForm()
 
   // Handle Update Category
   const handleDataPost = async (data) => {
-    console.log(data)
+    setLoading(true)
+    try {
+      const sendData = {
+        _id: categoryUpdateData?._id,
+        category_updated_by: user?._id,
+        category_name: data?.category_name
+          ? data?.category_name
+          : categoryUpdateData?.category_name,
+        category_status: data?.category_status
+          ? data?.category_status
+          : categoryUpdateData?.category_status,
+      }
+
+      const response = await fetch(`${BASE_URL}/category`, {
+        method: 'PATCH',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(sendData),
+      })
+      const result = await response.json()
+      if (result?.statusCode === 200 && result?.success === true) {
+        toast.success(
+          result?.message ? result?.message : 'category Update successfully',
+          {
+            autoClose: 1000,
+          }
+        )
+        refetch()
+        setLoading(false)
+        setCategoryUpdateModal(false)
+      } else {
+        toast.error(result?.message || 'Something went wrong', {
+          autoClose: 1000,
+        })
+        setLoading(false)
+      }
+    } catch (error) {
+      toast.error(error?.message, {
+        autoClose: 1000,
+      })
+      setLoading(false)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -51,7 +103,7 @@ const UpDateCategory = ({ setCategoryUpdateModal }) => {
                 <input
                   {...register('category_name')}
                   type='text'
-                  //defaultValue={categoryUpdateData?.category_name}
+                  defaultValue={categoryUpdateData?.category_name}
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
                 />
               </div>
@@ -61,6 +113,7 @@ const UpDateCategory = ({ setCategoryUpdateModal }) => {
                 </label>
                 <select
                   {...register('category_status')}
+                  defaultValue={categoryUpdateData?.category_status}
                   className='mt-2 rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2 w-full'
                 >
                   <option value='active'>Active</option>

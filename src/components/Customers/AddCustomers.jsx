@@ -3,8 +3,11 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { RxCross1 } from 'react-icons/rx'
 import { Button } from '../ui/button'
+import { BASE_URL } from '@/utils/baseURL'
+import { toast } from 'react-toastify'
 
-const AddCustomers = ({ setCustomersCreateModal }) => {
+const AddCustomers = ({ setCustomersCreateModal , refetch,
+  user}) => {
   const [loading, setLoading] = useState(false)
   const {
     register,
@@ -16,8 +19,56 @@ const AddCustomers = ({ setCustomersCreateModal }) => {
   // const token = getCookie(authKey);
   
 
-  const handleDataPost = (data) => {
-    console.log(data)
+  const handleDataPost = async (data) => {
+   setLoading(true)
+    try {
+      const sendData = {
+        customer_publisher_id: user?._id,
+        customer_name: data?.customer_name,
+        customer_phone: data?.customer_phone,
+        customer_email: data?.customer_email,
+        customer_address: data?.customer_address,
+        previous_due: data?.previous_due,
+        previous_advance: data?.previous_advance,
+       
+      }
+
+      const response = await fetch(
+        `${BASE_URL}/customer?role_type=customer_create`,
+        {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(sendData),
+        }
+      )
+      const result = await response.json()
+      if (result?.statusCode === 200 && result?.success === true) {
+        toast.success(
+          result?.message ? result?.message : 'Customer created successfully',
+          {
+            autoClose: 1000,
+          }
+        )
+        refetch()
+        setLoading(false)
+        setCustomersCreateModal(false)
+      } else {
+        toast.error(result?.message || 'Something went wrong', {
+          autoClose: 1000,
+        })
+        setLoading(false)
+      }
+    } catch (error) {
+      toast.error(error?.message, {
+        autoClose: 1000,
+      })
+      setLoading(false)
+    } finally {
+      setLoading(false)
+    }
   }
   return (
     <div>
@@ -146,33 +197,6 @@ const AddCustomers = ({ setCustomersCreateModal }) => {
                   placeholder='Enter  Previous Due'
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
                 />
-              </div>
-
-              <div className='grid grid-cols-2 gap-4 mt-4'>
-                <div className=''>
-                  <label className='block text-xs font-medium text-gray-700'>
-                    Customer Status
-                  </label>
-                  <select
-                    {...register('customer_status')}
-                    className='mt-2 rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2 w-full'
-                  >
-                    <option value='active'>Active</option>
-                    <option value='in-active'>In-Active</option>
-                  </select>
-                </div>
-                <div className=''>
-                  <label className='block text-xs font-medium text-gray-700'>
-                    First Payment Status
-                  </label>
-                  <select
-                    {...register('first_payment_status')}
-                    className='mt-2 rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2 w-full'
-                  >
-                    <option value='active'>Active</option>
-                    <option value='in-active'>In-Active</option>
-                  </select>
-                </div>
               </div>
 
               <div className='flex justify-end mt-3'>

@@ -3,8 +3,10 @@ import { useForm } from 'react-hook-form'
 import { RxCross1 } from 'react-icons/rx'
 import { Button } from '../ui/button'
 import MiniSpinner from '@/shared/MiniSpinner/MiniSpinner'
+import { BASE_URL } from '@/utils/baseURL'
+import { toast } from 'react-toastify'
 
-const AddShowRoom = ({ setShowRoomCreateModal }) => {
+const AddShowRoom = ({ setShowRoomCreateModal, refetch, user }) => {
   const [loading, setLoading] = useState(false)
 
   const {
@@ -14,8 +16,51 @@ const AddShowRoom = ({ setShowRoomCreateModal }) => {
   } = useForm()
 
   //handle Data post
-  const handleDataPost = (data) => {
-    console.log(data)
+  const handleDataPost = async (data) => {
+    setLoading(true)
+    try {
+      const sendData = {
+        showroom_publisher_id: user?._id,
+        showroom_name: data?.showroom_name,
+        showroom_status: data?.showroom_status,
+      }
+
+      const response = await fetch(
+        `${BASE_URL}/showroom?role_type=showroom_create`,
+        {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(sendData),
+        }
+      )
+      const result = await response.json()
+      if (result?.statusCode === 200 && result?.success === true) {
+        toast.success(
+          result?.message ? result?.message : 'Show Room created successfully',
+          {
+            autoClose: 1000,
+          }
+        )
+        refetch()
+        setLoading(false)
+        setShowRoomCreateModal(false)
+      } else {
+        toast.error(result?.message || 'Something went wrong', {
+          autoClose: 1000,
+        })
+        setLoading(false)
+      }
+    } catch (error) {
+      toast.error(error?.message, {
+        autoClose: 1000,
+      })
+      setLoading(false)
+    } finally {
+      setLoading(false)
+    }
   }
   return (
     <div>

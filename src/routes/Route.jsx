@@ -12,6 +12,7 @@ import CustomersPage from '@/pages/CustomersPage/CustomersPage'
 import BrandPage from '@/pages/BrandPage/BrandPage'
 import ShowRoomPage from '@/pages/ShowRoomPage/ShowRoomPage'
 import ExpensesPage from '@/pages/ExpensesPage/ExpensesPage'
+import PurchasePage from '@/pages/PurchasePage/PurchasePage'
 
 const route = createBrowserRouter([
   {
@@ -70,6 +71,11 @@ const route = createBrowserRouter([
       {
         path: '/expense',
         element: <ExpensesPage />,
+      },
+      // ------Purchase----
+      {
+        path: '/purchase',
+        element: <PurchasePage />,
       },
     ],
   },
