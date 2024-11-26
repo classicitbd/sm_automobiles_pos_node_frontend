@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FiEdit } from 'react-icons/fi'
 import UpdateBrand from './UpdateBrand'
 import TableLoadingSkeleton from '../common/loadingSkeleton/TableLoadingSkeleton'
@@ -26,6 +26,12 @@ const BrandTable = ({
     setBrandUpdateModal(true)
   }
 
+  const [serialNumber, setSerialNumber] = useState()
+  useEffect(() => {
+    const newSerialNumber = (page - 1) * limit
+    setSerialNumber(newSerialNumber)
+  }, [page, limit])
+
   return (
     <>
       {isLoading === true ? (
@@ -47,29 +53,47 @@ const BrandTable = ({
                   </thead>
 
                   <tbody className='divide-y divide-gray-200 text-center'>
-                    <tr className='divide-x divide-gray-300  font-semibold text-center text-gray-900'>
-                      <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
-                        2
-                      </td>
-                      <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
-                        Brand Name...
-                      </td>
-                      <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
-                        In-Active...
-                      </td>
+                  {brandTypes?.data?.map((brand, i) => (
+                      <tr
+                        key={brand?._id}
+                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? 'bg-white' : 'bg-tableRowBGColor'
+                          }`}
+                      >
+                        <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
+                          {serialNumber + i + 1}
+                        </td>
+                        <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
+                          {brand?.brand_name}
+                        </td>
+                        <td className='whitespace-nowrap py-1.5 '>
+                          {brand?.brand_status === 'active' ? (
+                            <p
+                              className='bg-bgBtnActive text-btnActiveColor px-[10px] py-[4px] rounded-[8px]'
+                            >
+                              <span>Active</span>
+                            </p>
+                          ) : (
+                            <p
+                              className='bg-bgBtnInactive text-btnInactiveColor px-[10px] py-[4px] rounded-[8px]'
+                            >
+                              <span>In-Active</span>
+                            </p>
+                          )}
+                        </td>
+                        <td className='whitespace-nowrap py-1.5 px-2 text-gray-700'>
 
-                      <td className='whitespace-nowrap py-1.5 px-2 text-gray-700'>
-                        <button
-                          className='ml-3'
-                          onClick={() => handleBrandUpdateModal()}
-                        >
-                          <FiEdit
-                            size={25}
-                            className='cursor-pointer text-gray-500 hover:text-gray-300'
-                          />
-                        </button>
-                      </td>
-                    </tr>
+                          <button
+                            className='ml-3'
+                            onClick={() => handleBrandUpdateModal(brand)}
+                          >
+                            <FiEdit
+                              size={25}
+                              className='cursor-pointer text-gray-500 hover:text-gray-300'
+                            />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

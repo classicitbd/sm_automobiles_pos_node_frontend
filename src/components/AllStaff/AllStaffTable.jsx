@@ -1,10 +1,6 @@
 // import { toast } from "react-toastify";
-import { MdDeleteForever } from 'react-icons/md'
 import { useState } from 'react'
 import { FiEdit } from 'react-icons/fi'
-import Swal from 'sweetalert2-optimized'
-import { toast } from 'react-toastify'
-import { BASE_URL } from '../../utils/baseURL'
 import NoDataFound from '../../shared/NoDataFound/NoDataFound'
 import UpdateStaff from './UpdateStaff'
 import Pagination from './../common/pagination/Pagination'
@@ -33,57 +29,6 @@ const AllStaffTable = ({
 
   // get token
   // const token = getCookie(authKey);
-
-  // delete a Staff
-  const handleDelete = (item) => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: `You won't be able to revert this ${item?.user_name} user!`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        const sendData = {
-          _id: item?._id,
-        }
-        try {
-          const response = await fetch(
-            `${BASE_URL}/admin_reg_log?role_type=staff_delete`,
-            {
-              method: 'DELETE',
-              headers: {
-                'Content-Type': 'application/json',
-                credentials: 'include',
-              },
-              body: JSON.stringify(sendData),
-            }
-          )
-          const result = await response.json()
-          // console.log(result);
-          if (result?.statusCode === 200 && result?.success === true) {
-            refetch()
-            Swal.fire({
-              title: 'Deleted!',
-              text: `${item?.user_name} staff has been deleted!`,
-              icon: 'success',
-            })
-          } else {
-            toast.error(result?.message, {
-              autoClose: 1000,
-            })
-          }
-        } catch (error) {
-          toast.error('Network error or server is down', {
-            autoClose: 1000,
-          })
-          console.log(error)
-        }
-      }
-    })
-  }
 
   return (
     <>
@@ -136,19 +81,14 @@ const AllStaffTable = ({
                         {item?.user_phone ? item?.user_phone : '-'}
                       </td>
                       <td className='whitespace-nowrap px-4 py-2 font-semibold capitalize'>
-                        {item?.role_id?.role_name
-                          ? item?.role_id?.role_name
+                        {item?.user_role_id?.role_name
+                          ? item?.user_role_id?.role_name
                           : '-'}
                       </td>
                       <td className='whitespace-nowrap px-4 py-2 font-semibold capitalize'>
                         {item?.user_status}
                       </td>
                       <td className='whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4'>
-                        <MdDeleteForever
-                          onClick={() => handleDelete(item)}
-                          className='cursor-pointer text-red-500 hover:text-red-300'
-                          size={25}
-                        />
                         <FiEdit
                           onClick={() => updateStaffModal(item)}
                           className='cursor-pointer text-gray-500 hover:text-gray-300'
@@ -156,17 +96,17 @@ const AllStaffTable = ({
                         />
                       </td>
                       {/* <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
-                    {user?.role_id?.staff_delete ||
-                    user?.role_id?.staff_update ? (
+                    {user?.user_role_id?.staff_delete ||
+                    user?.user_role_id?.staff_update ? (
                       <>
-                        {user?.role_id?.staff_delete && (
+                        {user?.user_role_id?.staff_delete && (
                           <MdDeleteForever
                             onClick={() => handleDelete(item)}
                             className="cursor-pointer text-red-500 hover:text-red-300"
                             size={25}
                           />
                         )}
-                        {user?.role_id?.staff_update && (
+                        {user?.user_role_id?.staff_update && (
                           <FiEdit
                             onClick={() => updateStaffModal(item)}
                             className="cursor-pointer text-gray-500 hover:text-gray-300"

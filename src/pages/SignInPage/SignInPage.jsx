@@ -27,7 +27,7 @@ const SignInPage = () => {
       user_password: data?.user_password,
     };
     try {
-      const response = await fetch(`${BASE_URL}/admin_reg_log/login`, {
+      const response = await fetch(`${BASE_URL}/user/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -124,18 +124,6 @@ const SignInPage = () => {
                 <FaRegEyeSlash size={20} />
               )}
             </div>
-          </div>
-          <div className="text-[14px] flex justify-between">
-            {/* <p className="text-[14px] mt-4"></p> */}
-            <Link to="/sign-up" className="text-primaryColor">
-              Create account?
-            </Link>
-            <Link
-              to={"/forget-password"}
-              className="text-primaryColor underline cursor-pointer"
-            >
-              Forget Password
-            </Link>
           </div>
           <button
             className="px-10 py-2 text-textColor bg-primaryColor w-full opacity-100 hover:opacity-80 transition-opacity duration-200 ease-in-out rounded-full"
