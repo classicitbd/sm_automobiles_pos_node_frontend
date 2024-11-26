@@ -19,11 +19,14 @@ import SupplierPayment from '@/pages/Supplier/SupplierPaymentPage/SupplierPaymen
 import ProductPage from '@/pages/ProductPage/ProductPage'
 import AddProductPage from '@/pages/ProductPage/AddProductPage/AddProductPage'
 import UpDateProduct from '@/components/Products/UpDateProduct'
+import PrivateRoute from './privateRoute/PrivateRoute'
 
 const route = createBrowserRouter([
   {
     path: '/',
-    element: <DashboardLayout />,
+    element: <PrivateRoute>
+      <DashboardLayout />
+    </PrivateRoute>,
     errorElement: <NotFound />,
     children: [
       {
@@ -108,7 +111,7 @@ const route = createBrowserRouter([
       },
       // '/product/product-update/:id'
       {
-        path:'/product/product-update' ,
+        path: '/product/product-update',
         element: <UpDateProduct />,
       },
     ],

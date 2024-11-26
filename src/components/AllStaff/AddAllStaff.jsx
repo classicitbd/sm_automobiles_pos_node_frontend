@@ -24,7 +24,7 @@ const AddAllStaff = ({
     formState: { errors },
     reset,
   } = useForm()
-  console.log(user)
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
   }
@@ -49,13 +49,13 @@ const AddAllStaff = ({
       user_status: data?.user_status,
       user_phone: data?.user_phone,
       user_password: data?.user_password,
-      role_id: data?.role_id,
+      user_role_id: data?.user_role_id,
       panel_owner_id: user?.panel_owner_id?._id
         ? user?.panel_owner_id?._id
         : user?._id,
       user_publisher_id: user?._id,
     }
-    console.log(sendData)
+
     try {
       const response = await fetch(`${BASE_URL}/user?role_type=staff_create`, {
         method: 'POST',
@@ -233,16 +233,16 @@ const AddAllStaff = ({
             <div className='flex items-center justify-between gap-2'>
               <div className='mt-4 flex-1'>
                 <label
-                  htmlFor='role_id'
+                  htmlFor='user_role_id'
                   className='block text-xs font-medium text-gray-700'
                 >
                   Staff Role <span className='text-red-500'>*</span>
                 </label>
                 <select
-                  {...register('role_id', {
+                  {...register('user_role_id', {
                     required: ' User Role is required',
                   })}
-                  id='role_id'
+                  id='user_role_id'
                   className=' mt-2 rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2 w-full'
                 >
                   {isLoading ? (
@@ -250,7 +250,7 @@ const AddAllStaff = ({
                   ) : (
                     <>
                       {' '}
-                      {roleData.map((role) => (
+                      {roleData?.map((role) => (
                         <option key={role?._id} value={role?._id}>
                           {role?.role_name}
                         </option>
@@ -258,9 +258,9 @@ const AddAllStaff = ({
                     </>
                   )}
                 </select>
-                {errors.role_id && (
+                {errors.user_role_id && (
                   <p className='text-red-600 text-sm'>
-                    {errors.role_id?.message}
+                    {errors.user_role_id?.message}
                   </p>
                 )}
               </div>

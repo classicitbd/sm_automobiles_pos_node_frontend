@@ -23,11 +23,11 @@ const AllStaffPage = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/admin_reg_log?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=staff_show`,
+      `/api/v1/user?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=staff_show`,
     ],
     queryFn: async () => {
       const res = await fetch(
-        `${BASE_URL}/admin_reg_log?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=staff_show`,
+        `${BASE_URL}/user?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=staff_show`,
         {
           headers: {
             credentials: 'include',
@@ -38,7 +38,7 @@ const AllStaffPage = () => {
       return data
     },
   })
-  // console.log(staffData);
+
   // Role data fetch
   const { data: roleData, isLoading } = useGetRole()
 

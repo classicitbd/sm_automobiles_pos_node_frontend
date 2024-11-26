@@ -33,7 +33,7 @@ const UpdateStaff = ({
     const sendData = {
       _id: updateModalValue?._id,
       login_credentials: data?.user_email ? data?.user_email : data?.user_phone,
-      role_id: data?.role_id,
+      user_role_id: data?.user_role_id,
       user_name: data?.user_name,
       user_email: data?.user_email,
       user_status: data?.user_status,
@@ -47,7 +47,7 @@ const UpdateStaff = ({
 
     try {
       const response = await fetch(
-        `${BASE_URL}/admin_reg_log?role_type=staff_update`,
+        `${BASE_URL}/user?role_type=staff_update`,
         {
           method: "PATCH",
           headers: {
@@ -249,31 +249,31 @@ const UpdateStaff = ({
           <div className='flex items-center justify-between gap-2'>
             <div className='mt-4 flex-1'>
               <label
-                htmlFor='role_id'
+                htmlFor='user_role_id'
                 className='block text-xs font-medium text-gray-700'
               >
                 Staff Role <span className='text-red-500'>*</span>
               </label>
               <select
-                {...register('role_id', {
+                {...register('user_role_id', {
                   required: ' User Role is required',
                 })}
-                id='role_id'
+                id='user_role_id'
                 className=' mt-2 rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2 w-full'
-                defaultValue={updateModalValue?.role_id?._id}
+                defaultValue={updateModalValue?.user_role_id?._id}
               >
                 {isLoading ? (
                   <MiniSpinner />
                 ) : (
                   <>
-                    {updateModalValue?.role_id?.role_name && (
+                    {updateModalValue?.user_role_id?.role_name && (
                       <option
                         className='capitalize'
                         disabled
                         selected
-                        defaultValue={updateModalValue?.role_id?._id}
+                        defaultValue={updateModalValue?.user_role_id?._id}
                       >
-                        {updateModalValue?.role_id?.role_name}
+                        {updateModalValue?.user_role_id?.role_name}
                       </option>
                     )}
                     {roleData.map((role) => (
@@ -284,9 +284,9 @@ const UpdateStaff = ({
                   </>
                 )}
               </select>
-              {errors.role_id && (
+              {errors.user_role_id && (
                 <p className='text-red-600 text-sm'>
-                  {errors.role_id?.message}
+                  {errors.user_role_id?.message}
                 </p>
               )}
             </div>

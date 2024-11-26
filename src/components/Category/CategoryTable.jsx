@@ -1,5 +1,5 @@
 import { FiEdit } from 'react-icons/fi'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import UpDateCategory from './UpDateCategory'
 import Pagination from '../common/pagination/Pagination'
 import TableLoadingSkeleton from '../common/loadingSkeleton/TableLoadingSkeleton'
@@ -19,11 +19,17 @@ const CategoryTable = ({
   //Update Handle contoler
   const [categoryUpdateModal, setCategoryUpdateModal] = useState(false)
   const [categoryUpdateData, setCategoryUpdateData] = useState({})
-
+  
   const handleCategoryUpdateModal = (category) => {
     setCategoryUpdateData(category)
     setCategoryUpdateModal(true)
   }
+  
+  const [serialNumber, setSerialNumber] = useState()
+  useEffect(() => {
+    const newSerialNumber = (page - 1) * limit
+    setSerialNumber(newSerialNumber)
+  }, [page, limit])
 
   return (
     <>
@@ -48,29 +54,47 @@ const CategoryTable = ({
                   </thead>
 
                   <tbody className='divide-y divide-gray-200 text-center'>
-                    <tr className='divide-x divide-gray-300  font-semibold text-center text-gray-900'>
-                      <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
-                        2
-                      </td>
-                      <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
-                        Pos System
-                      </td>
-                      <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
-                        Active
-                      </td>
+                    {categoryTypes?.data?.map((category, i) => (
+                      <tr
+                        key={category?._id}
+                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? 'bg-white' : 'bg-tableRowBGColor'
+                          }`}
+                      >
+                        <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
+                          {serialNumber + i + 1}
+                        </td>
+                        <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
+                          {category?.category_name}
+                        </td>
+                        <td className='whitespace-nowrap py-1.5 '>
+                          {category?.category_status === 'active' ? (
+                            <p
+                              className='bg-bgBtnActive text-btnActiveColor px-[10px] py-[4px] rounded-[8px]'
+                            >
+                              <span>Active</span>
+                            </p>
+                          ) : (
+                            <p
+                              className='bg-bgBtnInactive text-btnInactiveColor px-[10px] py-[4px] rounded-[8px]'
+                            >
+                              <span>In-Active</span>
+                            </p>
+                          )}
+                        </td>
+                        <td className='whitespace-nowrap py-1.5 px-2 text-gray-700'>
 
-                      <td className='whitespace-nowrap py-1.5 px-2 text-gray-700'>
-                        <button
-                          className='ml-3'
-                          onClick={() => handleCategoryUpdateModal()}
-                        >
-                          <FiEdit
-                            size={25}
-                            className='cursor-pointer text-gray-500 hover:text-gray-300'
-                          />
-                        </button>
-                      </td>
-                    </tr>
+                          <button
+                            className='ml-3'
+                            onClick={() => handleCategoryUpdateModal(category)}
+                          >
+                            <FiEdit
+                              size={25}
+                              className='cursor-pointer text-gray-500 hover:text-gray-300'
+                            />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

@@ -134,17 +134,17 @@ const StaffRoleTable = () => {
                     </>
                   </td>
                   {/* <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
-                    {user?.role_id?.staff_permission_delete ||
-                    user?.role_id?.staff_permission_update ? (
+                    {user?.user_role_id?.staff_permission_delete ||
+                    user?.user_role_id?.staff_permission_update ? (
                       <>
-                        {user?.role_id?.staff_permission_delete && (
+                        {user?.user_role_id?.staff_permission_delete && (
                           <MdDeleteForever
                             onClick={() => handleDelete(item)}
                             className="cursor-pointer text-red-500 hover:text-red-300"
                             size={25}
                           />
                         )}
-                        {user?.role_id?.staff_permission_update && (
+                        {user?.user_role_id?.staff_permission_update && (
                           <FiEdit
                             onClick={() => updateStaffModal(item)}
                             className="cursor-pointer text-gray-500 hover:text-gray-300"
