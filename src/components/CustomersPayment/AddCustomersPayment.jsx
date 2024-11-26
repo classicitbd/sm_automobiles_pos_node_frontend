@@ -2,16 +2,12 @@
 import MiniSpinner from '@/shared/MiniSpinner/MiniSpinner'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { RxCross1 } from 'react-icons/rx'
+
 import { Button } from '../ui/button'
 import Select from 'react-select'
 //import { toast } from 'react-toastify'
 
-const AddCustomersPayment = ({
-  setCustomersPaymentCreateModal,
-  refetch,
-  user,
-}) => {
+const AddCustomersPayment = () => {
   const options = [
     { _id: 1, value: 'chocolate', label: 'Chocolate' },
     { _id: 2, value: 'strawberry', label: 'Strawberry' },

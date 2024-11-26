@@ -1,11 +1,11 @@
 import MiniSpinner from '@/shared/MiniSpinner/MiniSpinner'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { RxCross1 } from 'react-icons/rx'
+
 import Select from 'react-select'
 import { Button } from '../ui/button'
 
-const AddCustomerDue = ({ setCustomersDueCreateModal, refetch, user }) => {
+const AddCustomerDue = () => {
   const options = [
     { _id: 1, value: 'chocolate', label: 'Chocolate' },
     { _id: 2, value: 'strawberry', label: 'Strawberry' },
