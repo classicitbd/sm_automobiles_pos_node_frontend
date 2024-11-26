@@ -36,8 +36,8 @@ const AddExpenses = ({ setExpensesCreateModal }) => {
     }
   }
 
-  //Login Data post
-  const handleSignIn = async (data) => {
+  //Data post
+  const handleDataPost = async (data) => {
     console.log(data)
   }
   return (
@@ -64,7 +64,7 @@ const AddExpenses = ({ setExpensesCreateModal }) => {
 
             <hr className='mt-2 mb-6' />
 
-            <form onSubmit={handleSubmit(handleSignIn)} className='space-y-4'>
+            <form onSubmit={handleSubmit(handleDataPost)} className='space-y-4'>
               <div>
                 <label
                   htmlFor=''
@@ -203,9 +203,7 @@ const AddExpenses = ({ setExpensesCreateModal }) => {
                   </>
                 )}
                 <input
-                  {...register('expense_voucher', {
-                    required: 'Image or Pdf is Required',
-                  })}
+                  {...register('expense_voucher')}
                   type='file'
                   id='expense_voucher'
                   ref={fileInputRef}
@@ -216,12 +214,6 @@ const AddExpenses = ({ setExpensesCreateModal }) => {
                   Upload 300x300 pixel images in PNG, JPG, or WebP format (max 1
                   MB).
                 </p>
-
-                {errors.expense_voucher && (
-                  <p className='text-red-600'>
-                    {errors.expense_voucher?.message}
-                  </p>
-                )}
               </div>
               <div className='flex justify-end mt-3'>
                 {loading == true ? (

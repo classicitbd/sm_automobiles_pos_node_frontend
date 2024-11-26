@@ -5,8 +5,10 @@ import { useState } from 'react'
 
 import MiniSpinner from '../../shared/MiniSpinner/MiniSpinner'
 import { Button } from '../ui/button'
+import { BASE_URL } from '@/utils/baseURL'
+import { toast } from 'react-toastify'
 
-const AddCategory = ({ setCategoryCreateModal }) => {
+const AddCategory = ({ setCategoryCreateModal, refetch, user }) => {
   const [loading, setLoading] = useState(false)
 
   const {
@@ -19,8 +21,51 @@ const AddCategory = ({ setCategoryCreateModal }) => {
   // const token = getCookie(authKey);
   // Handle Add Category
 
-  const handleDataPost = (data) => {
-    console.log(data)
+  const handleDataPost = async (data) => {
+    setLoading(true)
+    try {
+      const sendData = {
+        category_publisher_id: user?._id,
+        category_name: data?.category_name,
+        category_status: data?.category_status,
+      }
+
+      const response = await fetch(
+        `${BASE_URL}/category?role_type=category_create`,
+        {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(sendData),
+        }
+      )
+      const result = await response.json()
+      if (result?.statusCode === 200 && result?.success === true) {
+        toast.success(
+          result?.message ? result?.message : 'category created successfully',
+          {
+            autoClose: 1000,
+          }
+        )
+        refetch()
+        setLoading(false)
+        setCategoryCreateModal(false)
+      } else {
+        toast.error(result?.message || 'Something went wrong', {
+          autoClose: 1000,
+        })
+        setLoading(false)
+      }
+    } catch (error) {
+      toast.error(error?.message, {
+        autoClose: 1000,
+      })
+      setLoading(false)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

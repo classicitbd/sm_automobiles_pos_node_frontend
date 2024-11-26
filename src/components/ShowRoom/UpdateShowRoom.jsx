@@ -1,21 +1,69 @@
-import MiniSpinner from "@/shared/MiniSpinner/MiniSpinner"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { RxCross1 } from "react-icons/rx"
-import { Button } from "../ui/button"
+import MiniSpinner from '@/shared/MiniSpinner/MiniSpinner'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { RxCross1 } from 'react-icons/rx'
+import { Button } from '../ui/button'
+import { BASE_URL } from '@/utils/baseURL'
+import { toast } from 'react-toastify'
 
-const UpdateShowRoom = ({ setShowRoomUpdateModal }) => {
+const UpdateShowRoom = ({
+  setShowRoomUpdateModal,
+  refetch,
+  user,
+  showRoomUpdateData,
+}) => {
   const [loading, setLoading] = useState(false)
 
-  const {
-    register,
-    handleSubmit,
-  
-  } = useForm()
+  const { register, handleSubmit } = useForm()
 
   //handle Data post
-  const handleDataPost = (data) => {
-    console.log(data)
+  const handleDataPost = async (data) => {
+    setLoading(true)
+    try {
+      const sendData = {
+        _id: showRoomUpdateData?._id,
+        showroom_updated_by: user?._id,
+        showroom_name: data?.showroom_name
+          ? data?.showroom_name
+          : showRoomUpdateData?.showroom_name,
+        showroom_status: data?.showroom_status
+          ? data?.showroom_status
+          : showRoomUpdateData?.showroom_status,
+      }
+
+      const response = await fetch(`${BASE_URL}/showroom`, {
+        method: 'PATCH',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(sendData),
+      })
+      const result = await response.json()
+      if (result?.statusCode === 200 && result?.success === true) {
+        toast.success(
+          result?.message ? result?.message : 'Show Room Update successfully',
+          {
+            autoClose: 1000,
+          }
+        )
+        refetch()
+        setLoading(false)
+        setShowRoomUpdateModal(false)
+      } else {
+        toast.error(result?.message || 'Something went wrong', {
+          autoClose: 1000,
+        })
+        setLoading(false)
+      }
+    } catch (error) {
+      toast.error(error?.message, {
+        autoClose: 1000,
+      })
+      setLoading(false)
+    } finally {
+      setLoading(false)
+    }
   }
   return (
     <div>
@@ -27,7 +75,7 @@ const UpdateShowRoom = ({ setShowRoomUpdateModal }) => {
                 className='text-[26px] font-bold text-gray-800 capitalize'
                 id='modal-title '
               >
-               Update Showroom
+                Update Showroom
               </h3>
               <button
                 type='button'
@@ -50,10 +98,10 @@ const UpdateShowRoom = ({ setShowRoomUpdateModal }) => {
                 <input
                   {...register('showroom_name')}
                   type='text'
+                  defaultValue={showRoomUpdateData?.showroom_name}
                   placeholder='Showroom Name'
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
                 />
-               
               </div>
               <div className='mt-2'>
                 <label className='block text-xs font-medium text-gray-700'>
@@ -61,6 +109,7 @@ const UpdateShowRoom = ({ setShowRoomUpdateModal }) => {
                 </label>
                 <select
                   {...register('showroom_status')}
+                  defaultValue={showRoomUpdateData?.showroom_status}
                   className='mt-2 rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2 w-full'
                 >
                   <option value='active'>Active</option>

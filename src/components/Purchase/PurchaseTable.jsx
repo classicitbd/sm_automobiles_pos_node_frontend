@@ -1,26 +1,26 @@
-import { IoMdEye } from 'react-icons/io'
-import { FiEdit } from 'react-icons/fi'
-import { useState } from 'react'
-import ExpenseDocumentModalShow from './ExpenseDocumentModalShow'
-import UpdateExpenses from './UpdateExpenses'
+import { FiEdit } from "react-icons/fi"
+import PurchaseDocumentModalShow from "./PurchaseDocumentModalShow"
+import UpdatePurchase from "./UpdatePurchase"
+import { IoMdEye } from "react-icons/io"
+import { useState } from "react"
 
-const ExpensesTable = () => {
-  const [openExpenseModal, setOpenExpenseModal] = useState(false)
-  const [getExpenseModalData, setGetExpenseModalData] = useState({})
-  const [openDocumentModal, setOpenDocumentModal] = useState(false)
-  const [getDocumentData, setGetDocumentData] = useState({})
+const PurchaseTable = () => {
+   const [OpenPurchaseModal, setOpenPurchaseModal] = useState(false)
+   const [getPurchaseModalData, setGetPurchaseModalData] = useState({})
+   const [openDocumentModal, setOpenDocumentModal] = useState(false)
+   const [getDocumentData, setGetDocumentData] = useState({})
 
-  //Update handle Function
-  const handleExpensesUpdateModal = (expense) => {
-    setOpenExpenseModal(true)
-    setGetExpenseModalData(expense)
-  }
+   //Update handle Function
+   const handlePurchaseUpdateModal = () => {
+     setOpenPurchaseModal(true)
+     setGetPurchaseModalData()
+   }
 
-  //Document Show Function
-  const handleShowDocumentModal = (expense) => {
-    setOpenDocumentModal(true)
-    setGetDocumentData(expense)
-  }
+   //Document Show Function
+   const handleShowDocumentModal = () => {
+     setOpenDocumentModal(true)
+     setGetDocumentData()
+   }
 
   return (
     <div>
@@ -33,23 +33,23 @@ const ExpensesTable = () => {
                   SL No
                 </th>
                 <th className='whitespace-nowrap p-4 font-medium text-gray-900'>
-                  Expenses Title
+                  Purchase Title
                 </th>
                 <th className='whitespace-nowrap p-4 font-medium text-gray-900'>
-                  Expense Voucher
+                  Purchase Voucher
                 </th>
                 <th className='whitespace-nowrap p-4 font-medium text-gray-900'>
-                  Expense Description
+                  Purchase Description
                 </th>
 
                 <th className='whitespace-nowrap p-4 font-medium text-gray-900'>
-                  Expenses Amount
+                  Purchase Amount
                 </th>
                 <th className='whitespace-nowrap p-4 font-medium text-gray-900'>
-                  Expenses Bank Name
+                  Purchase Bank Name
                 </th>
                 <th className='whitespace-nowrap p-4 font-medium text-gray-900'>
-                  Expenses Date
+                  Purchase Date
                 </th>
 
                 <th className='whitespace-nowrap p-4 font-medium text-gray-900'>
@@ -64,7 +64,7 @@ const ExpensesTable = () => {
                   1
                 </td>
                 <td className='whitespace-nowrap px-4  py-1.5 font-medium text-gray-900'>
-                  Cost for Ring
+                  Cost for Purchase
                 </td>
                 <td className='whitespace-nowrap px-4  py-1.5 text-gray-700 flex justify-center'>
                   <button
@@ -98,7 +98,7 @@ const ExpensesTable = () => {
                 <td className='whitespace-nowrap px-4  py-1.5 text-gray-700'>
                   <button
                     className='ml-[8px]'
-                    onClick={() => handleExpensesUpdateModal()}
+                    onClick={() => handlePurchaseUpdateModal()}
                   >
                     <FiEdit
                       size={25}
@@ -124,18 +124,18 @@ const ExpensesTable = () => {
         />
       )} */}
 
-      {/* Show Expense Update Modal */}
-      {openExpenseModal && (
-        <UpdateExpenses
-          setOpenExpenseModal={setOpenExpenseModal}
-          getExpenseModalData={getExpenseModalData}
+      {/* Show Purchase Update Modal */}
+      {OpenPurchaseModal && (
+        <UpdatePurchase
+          setOpenPurchaseModal={setOpenPurchaseModal}
+          getPurchaseModalData={getPurchaseModalData}
           //refetch={refetch}
           //user={user}
         />
       )}
-      {/* Show Expense Document Modal */}
+      {/* Show Purchase Document Modal */}
       {openDocumentModal && (
-        <ExpenseDocumentModalShow
+        <PurchaseDocumentModalShow
           setOpenDocumentModal={setOpenDocumentModal}
           getDocumentData={getDocumentData}
         />
@@ -144,4 +144,4 @@ const ExpensesTable = () => {
   )
 }
 
-export default ExpensesTable
+export default PurchaseTable

@@ -3,8 +3,15 @@ import { useForm } from 'react-hook-form'
 import { RxCross1 } from 'react-icons/rx'
 import { Button } from '../ui/button'
 import MiniSpinner from '@/shared/MiniSpinner/MiniSpinner'
+import { BASE_URL } from '@/utils/baseURL'
+import { toast } from 'react-toastify'
 
-const UpdateCustomers = ({ setCustomerUpdateModal, customerUpdateData }) => {
+const UpdateCustomers = ({
+  setCustomerUpdateModal,
+  customerUpdateData,
+  refetch,
+  user,
+}) => {
   const [loading, setLoading] = useState(false)
   const { register, handleSubmit } = useForm()
 
@@ -12,8 +19,67 @@ const UpdateCustomers = ({ setCustomerUpdateModal, customerUpdateData }) => {
   // const token = getCookie(authKey);
   // Handle Add Category
 
-  const handleDataPost = (data) => {
-    console.log(data)
+  const handleDataPost = async (data) => {
+     setLoading(true)
+    try {
+      const sendData = {
+        _id: customerUpdateData?._id,
+        customer_updated_by: user?._id,
+        customer_name: data?.customer_name
+          ? data?.customer_name
+          : customerUpdateData?.customer_name,
+        customer_phone: data?.customer_phone
+          ? data?.customer_phone
+          : customerUpdateData?.customer_phone,
+        customer_email: data?.customer_email
+          ? data?.customer_email
+          : customerUpdateData?.customer_email,
+        customer_address: data?.customer_address
+          ? data?.customer_address
+          : customerUpdateData?.customer_address,
+        previous_due: data?.previous_due
+          ? data?.previous_due
+          : customerUpdateData?.previous_due,
+        previous_advance: data?.previous_advance
+          ? data?.previous_advance
+          : customerUpdateData?.previous_advance,
+        customer_status: data?.customer_status,
+        first_payment_status: data?.first_payment_status,
+      }
+
+      const response = await fetch(`${BASE_URL}/customer`, {
+        method: 'PATCH',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(sendData),
+      })
+      const result = await response.json()
+      if (result?.statusCode === 200 && result?.success === true) {
+        toast.success(
+          result?.message ? result?.message : 'Customer Update successfully',
+          {
+            autoClose: 1000,
+          }
+        )
+        refetch()
+        setLoading(false)
+        setCustomerUpdateModal(false)
+      } else {
+        toast.error(result?.message || 'Something went wrong', {
+          autoClose: 1000,
+        })
+        setLoading(false)
+      }
+    } catch (error) {
+      toast.error(error?.message, {
+        autoClose: 1000,
+      })
+      setLoading(false)
+    } finally {
+      setLoading(false)
+    }
   }
   return (
     <div>
@@ -52,6 +118,7 @@ const UpdateCustomers = ({ setCustomerUpdateModal, customerUpdateData }) => {
                   {...register('customer_name', {
                     required: 'Customer name is required',
                   })}
+                  defaultValue={customerUpdateData?.customer_name}
                   type='text'
                   placeholder='Customers Name'
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
@@ -67,6 +134,7 @@ const UpdateCustomers = ({ setCustomerUpdateModal, customerUpdateData }) => {
 
                 <input
                   {...register('customer_address')}
+                  defaultValue={customerUpdateData?.customer_address}
                   type='text'
                   placeholder='Customer Address'
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
@@ -82,6 +150,7 @@ const UpdateCustomers = ({ setCustomerUpdateModal, customerUpdateData }) => {
 
                 <input
                   {...register('customer_email')}
+                  defaultValue={customerUpdateData?.customer_email}
                   type='email'
                   placeholder='Customer Email'
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
@@ -97,6 +166,7 @@ const UpdateCustomers = ({ setCustomerUpdateModal, customerUpdateData }) => {
 
                 <input
                   {...register('customer_phone')}
+                  defaultValue={customerUpdateData?.customer_phone}
                   type='number'
                   placeholder='Customer Phone'
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
@@ -115,6 +185,7 @@ const UpdateCustomers = ({ setCustomerUpdateModal, customerUpdateData }) => {
                       }
                     },
                   })}
+                  defaultValue={customerUpdateData?.previous_advance}
                   type='number'
                   placeholder='Enter  Previous Advance'
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
@@ -133,6 +204,7 @@ const UpdateCustomers = ({ setCustomerUpdateModal, customerUpdateData }) => {
                       }
                     },
                   })}
+                  defaultValue={customerUpdateData?.previous_due}
                   type='number'
                   placeholder='Enter  Previous Due'
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
@@ -146,6 +218,7 @@ const UpdateCustomers = ({ setCustomerUpdateModal, customerUpdateData }) => {
                   </label>
                   <select
                     {...register('customer_status')}
+                    defaultValue={customerUpdateData?.customer_status}
                     className='mt-2 rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2 w-full'
                   >
                     <option value='active'>Active</option>
@@ -158,6 +231,7 @@ const UpdateCustomers = ({ setCustomerUpdateModal, customerUpdateData }) => {
                   </label>
                   <select
                     {...register('first_payment_status')}
+                    defaultValue={customerUpdateData?.first_payment_status}
                     className='mt-2 rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2 w-full'
                   >
                     <option value='active'>Active</option>

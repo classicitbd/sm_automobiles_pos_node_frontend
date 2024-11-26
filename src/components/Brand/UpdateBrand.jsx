@@ -3,15 +3,67 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button } from '../ui/button'
 import { RxCross1 } from 'react-icons/rx'
+import { BASE_URL } from '@/utils/baseURL'
+import { toast } from 'react-toastify'
 
-const UpdateBrand = ({ setBrandUpdateModal }) => {
+const UpdateBrand = ({
+  setBrandUpdateModal,
+  refetch,
+  user,
+  brandUpdateData,
+}) => {
   const [loading, setLoading] = useState(false)
 
   const { register, handleSubmit } = useForm()
 
   //handle Data post
-  const handleDataPost = (data) => {
-    console.log(data)
+  const handleDataPost = async (data) => {
+    setLoading(true)
+    try {
+      const sendData = {
+        _id: brandUpdateData?._id,
+        brand_updated_by: user?._id,
+        brand_name: data?.brand_name
+          ? data?.brand_name
+          : brandUpdateData?.brand_name,
+        brand_status: data?.brand_status
+          ? data?.brand_status
+          : brandUpdateData?.brand_status,
+      }
+
+      const response = await fetch(`${BASE_URL}/brand`, {
+        method: 'PATCH',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(sendData),
+      })
+      const result = await response.json()
+      if (result?.statusCode === 200 && result?.success === true) {
+        toast.success(
+          result?.message ? result?.message : 'Brand Update successfully',
+          {
+            autoClose: 1000,
+          }
+        )
+        refetch()
+        setLoading(false)
+        setBrandUpdateModal(false)
+      } else {
+        toast.error(result?.message || 'Something went wrong', {
+          autoClose: 1000,
+        })
+        setLoading(false)
+      }
+    } catch (error) {
+      toast.error(error?.message, {
+        autoClose: 1000,
+      })
+      setLoading(false)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -48,6 +100,7 @@ const UpdateBrand = ({ setBrandUpdateModal }) => {
                   {...register('brand_name')}
                   type='text'
                   placeholder='Brand Name'
+                  defaultValue={brandUpdateData?.brand_name}
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
                 />
               </div>
@@ -57,6 +110,7 @@ const UpdateBrand = ({ setBrandUpdateModal }) => {
                 </label>
                 <select
                   {...register('brand_status')}
+                  defaultValue={brandUpdateData?.brand_status}
                   className='mt-2 rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2 w-full'
                 >
                   <option value='active'>Active</option>

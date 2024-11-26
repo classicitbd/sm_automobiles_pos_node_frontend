@@ -1,26 +1,22 @@
-import { useForm } from "react-hook-form";
-import { RxCross1 } from "react-icons/rx";
-import { useState } from "react";
+import { useForm } from 'react-hook-form'
+import { RxCross1 } from 'react-icons/rx'
+import { useState } from 'react'
 
-import MiniSpinner from "../../shared/MiniSpinner/MiniSpinner";
-import { Button } from "../ui/button";
-
+import MiniSpinner from '../../shared/MiniSpinner/MiniSpinner'
+import { Button } from '../ui/button'
 
 const AddSupplier = ({ setOpenAddModal }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  
-  } = useForm();
+  } = useForm()
 
   const handleDataPost = async (data) => {
-   console.log(data)
-   
- 
-  };
+    console.log(data)
+  }
 
   return (
     <div>
@@ -169,6 +165,6 @@ const AddSupplier = ({ setOpenAddModal }) => {
       </div>
     </div>
   )
-};
+}
 
-export default AddSupplier;
+export default AddSupplier

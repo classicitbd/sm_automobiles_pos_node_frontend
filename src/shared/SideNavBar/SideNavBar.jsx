@@ -12,7 +12,7 @@ import { ChildMenuItem, DropdownMenu, MenuItem } from './DropdownAndMenuItem'
 import { FiUsers } from 'react-icons/fi'
 import { FaUsers, FaUserTie } from 'react-icons/fa'
 import { MdCheckBoxOutlineBlank } from 'react-icons/md'
-import { LucideUser2 } from 'lucide-react'
+import { SiPurgecss } from 'react-icons/si'
 
 const SideNavBar = () => {
   const { pathname } = useLocation()
@@ -89,6 +89,26 @@ const SideNavBar = () => {
           </DropdownMenu>
 
           <DropdownMenu
+            label='Product'
+            icon={BiTask}
+            isOpen={activeDropdown === 'product'}
+            onClick={() => toggleDropdown('product')}
+          >
+            <ChildMenuItem
+              to='/product'
+              icon={TbCategoryPlus}
+              label='Product List'
+              isActive={isActive('/product')}
+            />
+            <ChildMenuItem
+              to='/add-product'
+              icon={TbCategoryPlus}
+              label='Add Product'
+              isActive={isActive('/add-product')}
+            />
+          </DropdownMenu>
+
+          <DropdownMenu
             label='Staff'
             icon={FiUsers}
             isOpen={activeDropdown === 'staff'}
@@ -114,7 +134,7 @@ const SideNavBar = () => {
             />
           </DropdownMenu>
           <DropdownMenu
-            label='About Supply'
+            label='About Supplier'
             icon={BiTask}
             isOpen={activeDropdown === 'supplier'}
             onClick={() => toggleDropdown('supplier')}
@@ -124,6 +144,12 @@ const SideNavBar = () => {
               icon={FaUsers}
               label='Supplier'
               isActive={isActive('/supplier')}
+            />
+            <ChildMenuItem
+              to='/supplier-payment'
+              icon={FaUsers}
+              label='Supplier Payment'
+              isActive={isActive('/supplier-payment')}
             />
           </DropdownMenu>
           <DropdownMenu
@@ -151,6 +177,18 @@ const SideNavBar = () => {
               label='Customers'
               isActive={isActive('/customers')}
             />
+            <ChildMenuItem
+              to='/customers-payment'
+              icon={FaUserTie}
+              label='Customers Payment'
+              isActive={isActive('/customers-payment')}
+            />
+            <ChildMenuItem
+              to='/customers-due'
+              icon={FaUserTie}
+              label='Customers Due'
+              isActive={isActive('/customers-due')}
+            />
           </DropdownMenu>
           <DropdownMenu
             label='About Expenses'
@@ -163,6 +201,19 @@ const SideNavBar = () => {
               icon={BsExplicit}
               label='Expenses'
               isActive={isActive('/expense')}
+            />
+          </DropdownMenu>
+          <DropdownMenu
+            label='About Purchase'
+            icon={BiTask}
+            isOpen={activeDropdown === 'purchase'}
+            onClick={() => toggleDropdown('purchase')}
+          >
+            <ChildMenuItem
+              to='/purchase'
+              icon={SiPurgecss}
+              label='Purchase'
+              isActive={isActive('/purchase')}
             />
           </DropdownMenu>
         </ul>

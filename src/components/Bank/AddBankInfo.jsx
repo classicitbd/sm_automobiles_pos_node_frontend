@@ -3,8 +3,10 @@ import { useForm } from 'react-hook-form'
 import { Button } from '../ui/button'
 import MiniSpinner from '@/shared/MiniSpinner/MiniSpinner'
 import { RxCross1 } from 'react-icons/rx'
+import { BASE_URL } from '@/utils/baseURL'
+import { toast } from 'react-toastify'
 
-const AddBankInfo = ({ setBankAccountCreateModal }) => {
+const AddBankInfo = ({ setBankAccountCreateModal, refetch, user }) => {
   const [loading, setLoading] = useState(false)
 
   const {
@@ -17,8 +19,51 @@ const AddBankInfo = ({ setBankAccountCreateModal }) => {
   // const token = getCookie(authKey);
   // Handle Add Category
 
-  const handleDataPost = (data) => {
-    console.log(data)
+  const handleDataPost = async (data) => {
+    setLoading(true)
+    try {
+      const sendData = {
+        bank_publisher_id: user?._id,
+        account_name: data?.account_name,
+        account_no: data?.account_no,
+        bank_name: data?.bank_name,
+        bank_balance: data?.bank_balance,
+        bank_status: data?.bank_status,
+      }
+
+      const response = await fetch(`${BASE_URL}/bank?role_type=bank_create`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(sendData),
+      })
+      const result = await response.json()
+      if (result?.statusCode === 200 && result?.success === true) {
+        toast.success(
+          result?.message ? result?.message : 'Bank created successfully',
+          {
+            autoClose: 1000,
+          }
+        )
+        refetch()
+        setLoading(false)
+        setBankAccountCreateModal(false)
+      } else {
+        toast.error(result?.message || 'Something went wrong', {
+          autoClose: 1000,
+        })
+        setLoading(false)
+      }
+    } catch (error) {
+      toast.error(error?.message, {
+        autoClose: 1000,
+      })
+      setLoading(false)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -71,7 +116,7 @@ const AddBankInfo = ({ setBankAccountCreateModal }) => {
                   htmlFor=''
                   className='block text-xs font-medium text-gray-700'
                 >
-                  Account Name <span className='text-red-500'>*</span>
+                  Account NO <span className='text-red-500'>*</span>
                 </label>
 
                 <input
