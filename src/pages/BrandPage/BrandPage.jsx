@@ -34,12 +34,12 @@ const BrandPage = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/brand/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
+      `/api/v1/brand/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=brand_show`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/brand/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
+          `${BASE_URL}/brand/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=brand_show`,
           {
             credentials: 'include',
           }

@@ -34,12 +34,12 @@ const BankPage = () => {
      refetch,
    } = useQuery({
      queryKey: [
-       `/api/v1/bank/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
+       `/api/v1/bank/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=bank_show`,
      ],
      queryFn: async () => {
        try {
          const res = await fetch(
-           `${BASE_URL}/bank/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
+           `${BASE_URL}/bank/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=bank_show`,
            {
              credentials: 'include',
            }

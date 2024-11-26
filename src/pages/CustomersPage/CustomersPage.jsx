@@ -34,12 +34,12 @@ const CustomersPage = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/customer/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
+      `/api/v1/customer/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=customer_show`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/customer/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
+          `${BASE_URL}/customer/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=customer_show`,
           {
             credentials: 'include',
           }

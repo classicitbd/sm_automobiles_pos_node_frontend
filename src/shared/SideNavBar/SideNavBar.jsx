@@ -89,6 +89,26 @@ const SideNavBar = () => {
           </DropdownMenu>
 
           <DropdownMenu
+            label='Product'
+            icon={BiTask}
+            isOpen={activeDropdown === 'product'}
+            onClick={() => toggleDropdown('product')}
+          >
+            <ChildMenuItem
+              to='/product'
+              icon={TbCategoryPlus}
+              label='Product List'
+              isActive={isActive('/product')}
+            />
+            <ChildMenuItem
+              to='/add-product'
+              icon={TbCategoryPlus}
+              label='Add Product'
+              isActive={isActive('/add-product')}
+            />
+          </DropdownMenu>
+
+          <DropdownMenu
             label='Staff'
             icon={FiUsers}
             isOpen={activeDropdown === 'staff'}
@@ -125,6 +145,12 @@ const SideNavBar = () => {
               label='Supplier'
               isActive={isActive('/supplier')}
             />
+            <ChildMenuItem
+              to='/supplier-payment'
+              icon={FaUsers}
+              label='Supplier Payment'
+              isActive={isActive('/supplier-payment')}
+            />
           </DropdownMenu>
           <DropdownMenu
             label='About Bank Account'
@@ -150,6 +176,18 @@ const SideNavBar = () => {
               icon={FaUserTie}
               label='Customers'
               isActive={isActive('/customers')}
+            />
+            <ChildMenuItem
+              to='/customers-payment'
+              icon={FaUserTie}
+              label='Customers Payment'
+              isActive={isActive('/customers-payment')}
+            />
+            <ChildMenuItem
+              to='/customers-due'
+              icon={FaUserTie}
+              label='Customers Due'
+              isActive={isActive('/customers-due')}
             />
           </DropdownMenu>
           <DropdownMenu

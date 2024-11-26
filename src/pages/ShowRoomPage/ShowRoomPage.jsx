@@ -34,12 +34,12 @@ const ShowRoomPage = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/showroom/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
+      `/api/v1/showroom/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=showroom_show`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/showroom/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
+          `${BASE_URL}/showroom/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=showroom_show`,
           {
             credentials: 'include',
           }
