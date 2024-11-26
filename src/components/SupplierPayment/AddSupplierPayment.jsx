@@ -4,12 +4,7 @@ import { Button } from '../ui/button'
 import MiniSpinner from '@/shared/MiniSpinner/MiniSpinner'
 import Select from 'react-select'
 
-
-const AddSupplierPayment = ({
-  setSupplierPaymentCreateModal,
-  refetch,
-  user,
-}) => {
+const AddSupplierPayment = () => {
   const options = [
     { _id: 1, value: 'chocolate', label: 'Chocolate' },
     { _id: 2, value: 'strawberry', label: 'Strawberry' },
