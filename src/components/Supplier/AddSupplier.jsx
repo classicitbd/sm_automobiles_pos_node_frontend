@@ -4,8 +4,10 @@ import { useState } from 'react'
 
 import MiniSpinner from '../../shared/MiniSpinner/MiniSpinner'
 import { Button } from '../ui/button'
+import { toast } from 'react-toastify'
+import { BASE_URL } from '@/utils/baseURL'
 
-const AddSupplier = ({ setOpenAddModal }) => {
+const AddSupplier = ({ setOpenAddModal, refetch, user }) => {
   const [loading, setLoading] = useState(false)
 
   const {
@@ -15,7 +17,53 @@ const AddSupplier = ({ setOpenAddModal }) => {
   } = useForm()
 
   const handleDataPost = async (data) => {
-    console.log(data)
+    setLoading(true)
+    try {
+      const sendData = {
+        supplier_publisher_id: user?._id,
+        supplier_name: data?.supplier_name,
+        supplier_email: data?.supplier_email,
+        supplier_phone: data?.supplier_phone,
+        supplier_address: data?.supplier_address,
+        supplier_status: data?.supplier_status,
+      }
+
+      const response = await fetch(
+        `${BASE_URL}/supplier?role_type=supplier_create`,
+        {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(sendData),
+        }
+      )
+      const result = await response.json()
+      if (result?.statusCode === 200 && result?.success === true) {
+        toast.success(
+          result?.message ? result?.message : 'supplier created successfully',
+          {
+            autoClose: 1000,
+          }
+        )
+        refetch()
+        setLoading(false)
+        setOpenAddModal(false)
+      } else {
+        toast.error(result?.message || 'Something went wrong', {
+          autoClose: 1000,
+        })
+        setLoading(false)
+      }
+    } catch (error) {
+      toast.error(error?.message, {
+        autoClose: 1000,
+      })
+      setLoading(false)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
