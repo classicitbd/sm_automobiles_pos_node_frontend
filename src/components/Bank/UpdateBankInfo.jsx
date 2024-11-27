@@ -40,7 +40,7 @@ const UpdateBankInfo = ({
           : bankAccountUpdateData?.bank_status,
       }
 
-      const response = await fetch(`${BASE_URL}/bank`, {
+      const response = await fetch(`${BASE_URL}/bank?role_type=bank_update`, {
         method: 'PATCH',
         credentials: 'include',
         headers: {

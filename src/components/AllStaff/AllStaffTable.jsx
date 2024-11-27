@@ -1,10 +1,10 @@
 // import { toast } from "react-toastify";
-import { useState } from 'react'
-import { FiEdit } from 'react-icons/fi'
-import NoDataFound from '../../shared/NoDataFound/NoDataFound'
-import UpdateStaff from './UpdateStaff'
-import Pagination from './../common/pagination/Pagination'
-import TableLoadingSkeleton from './../common/loadingSkeleton/TableLoadingSkeleton'
+import { useState } from "react";
+import { FiEdit } from "react-icons/fi";
+import NoDataFound from "../../shared/NoDataFound/NoDataFound";
+import UpdateStaff from "./UpdateStaff";
+import Pagination from "./../common/pagination/Pagination";
+import TableLoadingSkeleton from "./../common/loadingSkeleton/TableLoadingSkeleton";
 
 const AllStaffTable = ({
   refetch,
@@ -19,13 +19,13 @@ const AllStaffTable = ({
   setLimit,
   totalData,
 }) => {
-  const [updateModal, setUpdateModal] = useState(false)
-  const [updateModalValue, setUpdateModalValue] = useState(false)
+  const [updateModal, setUpdateModal] = useState(false);
+  const [updateModalValue, setUpdateModalValue] = useState(false);
   //   console.log(staffData);
   const updateStaffModal = (item) => {
-    setUpdateModal(true)
-    setUpdateModalValue(item)
-  }
+    setUpdateModal(true);
+    setUpdateModalValue(item);
+  };
 
   // get token
   // const token = getCookie(authKey);
@@ -38,60 +38,72 @@ const AllStaffTable = ({
         <div>
           {/* Table for showing data */}
           {staffData?.length > 0 ? (
-            <div className='mt-5 overflow-x-auto rounded'>
-              <table className='min-w-full divide-y-2 divide-gray-200 bg-white text-sm border rounded'>
-                {' '}
-                <thead className=' bg-[#fff9ee] '>
-                  <tr className='divide-x divide-gray-300  font-semibold text-center text-gray-900'>
-                    <th className='whitespace-nowrap px-4 py-2.5   text-gray-800 '>
+            <div className="mt-5 overflow-x-auto rounded">
+              <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border rounded">
+                {" "}
+                <thead className=" bg-[#fff9ee] ">
+                  <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
+                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
                       User Name
                     </th>
 
-                    <th className='whitespace-nowrap px-4 py-2.5   text-gray-800 '>
+                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
                       User Email
                     </th>
-                    <th className='whitespace-nowrap px-4 py-2.5   text-gray-800 '>
+                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
                       User Phone
                     </th>
-                    <th className='whitespace-nowrap px-4 py-2.5   text-gray-800 '>
+                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
                       User Role
                     </th>
-                    <th className='whitespace-nowrap px-4 py-2.5   text-gray-800 '>
+                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
                       Status
                     </th>
-                    <th className='px-4 py-2.5 text-center'>Action</th>
+                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                      Created By
+                    </th>
+                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                      Updated By
+                    </th>
+                    <th className="px-4 py-2.5 text-center">Action</th>
                   </tr>
                 </thead>
-                <tbody className='divide-y divide-gray-200 text-center '>
-                  {staffData?.map((item, i) => (
+                <tbody className="divide-y divide-gray-200 text-center ">
+                  {staffData?.map((user, i) => (
                     <tr
-                      key={item?._id}
+                      key={user?._id}
                       className={`divide-x divide-gray-200 ${
-                        i % 2 === 0 ? 'bg-white' : 'bg-tableRowBGColor'
+                        i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
                       }`}
                     >
-                      <td className='whitespace-nowrap px-4 py-2 font-semibold'>
-                        {item?.user_name}
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                        {user?.user_name}
                       </td>
 
-                      <td className='whitespace-nowrap px-4 py-2 font-semibold '>
-                        {item?.user_email ? item?.user_email : '-'}
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold ">
+                        {user?.user_email ? user?.user_email : "-"}
                       </td>
-                      <td className='whitespace-nowrap px-4 py-2 font-semibold capitalize'>
-                        {item?.user_phone ? item?.user_phone : '-'}
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize">
+                        {user?.user_phone ? user?.user_phone : "-"}
                       </td>
-                      <td className='whitespace-nowrap px-4 py-2 font-semibold capitalize'>
-                        {item?.user_role_id?.role_name
-                          ? item?.user_role_id?.role_name
-                          : '-'}
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize">
+                        {user?.user_role_id?.role_name
+                          ? user?.user_role_id?.role_name
+                          : "-"}
                       </td>
-                      <td className='whitespace-nowrap px-4 py-2 font-semibold capitalize'>
-                        {item?.user_status}
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize">
+                        {user?.user_status}
                       </td>
-                      <td className='whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4'>
+                      <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        {user?.user_publisher_id?.user_name}
+                      </td>
+                      <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        {user?.user_updated_by?.user_name}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
                         <FiEdit
-                          onClick={() => updateStaffModal(item)}
-                          className='cursor-pointer text-gray-500 hover:text-gray-300'
+                          onClick={() => updateStaffModal(user)}
+                          className="cursor-pointer text-gray-500 hover:text-gray-300"
                           size={25}
                         />
                       </td>
@@ -150,7 +162,7 @@ const AllStaffTable = ({
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default AllStaffTable
+export default AllStaffTable;
