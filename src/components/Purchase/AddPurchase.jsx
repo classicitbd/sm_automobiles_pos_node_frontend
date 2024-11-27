@@ -4,9 +4,15 @@ import { useForm } from 'react-hook-form'
 import { RiImageAddFill } from 'react-icons/ri'
 import { RxCross1 } from 'react-icons/rx'
 import { Button } from '../ui/button'
+import { useQuery } from '@tanstack/react-query'
+import { BASE_URL } from '@/utils/baseURL'
+import { toast } from 'react-toastify'
+import { LoaderOverlay } from '../common/loader/LoderOverley'
+import Select from "react-select";
 
-const AddPurchase = ({ setPurchaseCreateModal }) => {
+const AddPurchase = ({ setPurchaseCreateModal, refetch, user }) => {
   const [loading, setLoading] = useState(false)
+  const [purchase_bank_id, setPurchase_bank_id] = useState(null);
   const {
     register,
     handleSubmit,
@@ -18,6 +24,30 @@ const AddPurchase = ({ setPurchaseCreateModal }) => {
   const fileInputRef = useRef(null)
   const [imagePreview, setImagePreview] = useState(null)
   const [pdfFile, setPdfFile] = useState(null)
+
+   //get bank data
+   const { data: bankTypes = [], isLoading } = useQuery({
+    queryFn: async () => {
+      try {
+        const res = await fetch(`${BASE_URL}/bank`, {
+          credentials: "include",
+        });
+
+        if (!res.ok) {
+          const errorData = await res.text(); // Get more info about the error
+          throw new Error(
+            `Error: ${res.status} ${res.statusText} - ${errorData}`
+          );
+        }
+
+        const data = await res.json();
+        return data;
+      } catch (error) {
+        console.error("Fetch error:", error);
+        throw error; // Rethrow to propagate the error to react-query
+      }
+    },
+  });
 
   const handleImageChange = (e) => {
     const file = e.target.files[0]
@@ -36,10 +66,107 @@ const AddPurchase = ({ setPurchaseCreateModal }) => {
     }
   }
 
-  //Data post
-  const handleDataPost = async (data) => {
-    console.log(data)
-  }
+    //Data post
+    const handleDataPost = async (data) => {
+      setLoading(true);
+      try {
+        if (data?.purchase_voucher) {
+          const formData = new FormData();
+  
+          Object.entries(data).forEach(([key, value]) => {
+            if (key === "purchase_voucher") {
+              formData.append(key, data?.purchase_voucher);
+            } else {
+              formData.append(key, value);
+            }
+          });
+  
+          if (purchase_bank_id) {
+            formData.append("purchase_bank_id", purchase_bank_id);
+          }
+  
+          formData.append("purchase_publisher_id", user?._id);
+          const response = await fetch(
+            `${BASE_URL}/purchase/?role_type=purchase_create`,
+            {
+              method: "POST",
+              credentials: "include",
+  
+              body: formData,
+            }
+          );
+          const result = await response.json();
+          if (result?.statusCode === 200 && result?.success === true) {
+            toast.success(
+              result?.message ? result?.message : "purchase created successfully",
+              {
+                autoClose: 1000,
+              }
+            );
+            refetch();
+            setLoading(false);
+            setPurchaseCreateModal(false);
+          } else {
+            toast.error(result?.message || "Something went wrong", {
+              autoClose: 1000,
+            });
+            setLoading(false);
+          }
+        } else {
+          const sendData = {
+            purchase_title: data?.purchase_title,
+            purchase_description: data?.purchase_description,
+            purchase_date: data?.purchase_date,
+            purchase_amount: data?.purchase_amount,
+            purchase_publisher_id: user?._id,
+          };
+          if (purchase_bank_id) {
+            sendData.purchase_bank_id = purchase_bank_id;
+          }
+  
+          const response = await fetch(
+            `${BASE_URL}/purchase?role_type=purchase_create`,
+            {
+              method: "POST",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(sendData),
+            }
+          );
+          const result = await response.json();
+          if (result?.statusCode === 200 && result?.success === true) {
+            toast.success(
+              result?.message ? result?.message : "purchase created successfully",
+              {
+                autoClose: 1000,
+              }
+            );
+            refetch();
+            setLoading(false);
+            setPurchaseCreateModal(false);
+          } else {
+            toast.error(result?.message || "Something went wrong", {
+              autoClose: 1000,
+            });
+            setLoading(false);
+          }
+        }
+      } catch (error) {
+        toast.error(error?.message, {
+          autoClose: 1000,
+        });
+        setLoading(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    if (isLoading) {
+      return <LoaderOverlay />;
+    }
+
   return (
     <div>
       <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'>
@@ -135,13 +262,17 @@ const AddPurchase = ({ setPurchaseCreateModal }) => {
               <label className='block text-xs font-medium text-gray-700'>
                 Bank Name
               </label>
-              <select
-                {...register('purchase_bank_id')}
-                className='mt-1 rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2 w-full'
-              >
-                <option value='active'>Sonali</option>
-                <option value='in-active'>Rupali</option>
-              </select>
+              <Select
+                  id="purchase_bank_id"
+                  name="purchase_bank_id"
+                  aria-label="Bank Type"
+                  options={bankTypes?.data}
+                  getOptionLabel={(x) => x?.bank_name}
+                  getOptionValue={(x) => x?._id}
+                  onChange={(selectedOption) =>
+                    setPurchase_bank_id(selectedOption?._id)
+                  }
+                ></Select>
             </div>
 
             {/* ------Image or Pdf------- */}
