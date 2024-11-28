@@ -106,6 +106,12 @@ const SideNavBar = () => {
               label='Add Product'
               isActive={isActive('/add-product')}
             />
+            <ChildMenuItem
+              to='/stock_manage'
+              icon={TbCategoryPlus}
+              label='Stock Manage'
+              isActive={isActive('/stock_manage')}
+            />
           </DropdownMenu>
 
           <DropdownMenu

@@ -20,6 +20,7 @@ import ProductPage from '@/pages/ProductPage/ProductPage'
 import AddProductPage from '@/pages/ProductPage/AddProductPage/AddProductPage'
 import UpDateProduct from '@/components/Products/UpDateProduct'
 import PrivateRoute from './privateRoute/PrivateRoute'
+import StockManage from '@/pages/StockManage/StockManage'
 
 const route = createBrowserRouter([
   {
@@ -90,6 +91,11 @@ const route = createBrowserRouter([
         element: <CustomerDue />,
       },
 
+      // ------Stock Manage----
+      {
+        path: '/stock_manage',
+        element: <StockManage />,
+      },
       // ------Expenses----
       {
         path: '/expense',
