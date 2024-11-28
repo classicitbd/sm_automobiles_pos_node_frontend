@@ -22,27 +22,23 @@ const UpdateCustomers = ({
   const handleDataPost = async (data) => {
      setLoading(true)
     try {
+
+      if (data?.previous_due && data?.previous_advance) {
+        setLoading(false)
+        return toast.error("Please fill up only one field in advance or due", {
+          autoClose: 1000,
+        });
+      }
+
       const sendData = {
         _id: customerUpdateData?._id,
         customer_updated_by: user?._id,
-        customer_name: data?.customer_name
-          ? data?.customer_name
-          : customerUpdateData?.customer_name,
-        customer_phone: data?.customer_phone
-          ? data?.customer_phone
-          : customerUpdateData?.customer_phone,
-        customer_email: data?.customer_email
-          ? data?.customer_email
-          : customerUpdateData?.customer_email,
-        customer_address: data?.customer_address
-          ? data?.customer_address
-          : customerUpdateData?.customer_address,
-        previous_due: data?.previous_due
-          ? data?.previous_due
-          : customerUpdateData?.previous_due,
-        previous_advance: data?.previous_advance
-          ? data?.previous_advance
-          : customerUpdateData?.previous_advance,
+        customer_name: data?.customer_name,
+        customer_phone: data?.customer_phone,
+        customer_email: data?.customer_email,
+        customer_address: data?.customer_address,
+        previous_due: data?.previous_due,
+        previous_advance: data?.previous_advance,
         customer_status: data?.customer_status,
         first_payment_status: data?.first_payment_status,
       }

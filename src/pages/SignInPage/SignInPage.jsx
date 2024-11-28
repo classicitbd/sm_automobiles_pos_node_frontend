@@ -126,7 +126,7 @@ const SignInPage = () => {
             </div>
           </div>
           <button
-            className="px-10 py-2 text-textColor bg-primaryColor w-full opacity-100 hover:opacity-80 transition-opacity duration-200 ease-in-out rounded-full"
+            className="px-10 py-2 text-white bg-primary w-full opacity-100 hover:opacity-80 transition-opacity duration-200 ease-in-out rounded-full"
             type="submit"
           >
             {loading ? <MiniSpinner /> : "Login"}

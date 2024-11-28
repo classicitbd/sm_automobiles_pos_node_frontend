@@ -1,21 +1,20 @@
+
 import MiniSpinner from "@/shared/MiniSpinner/MiniSpinner";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-
 import Select from "react-select";
 import { Button } from "../ui/button";
 import { LoaderOverlay } from "../common/loader/LoderOverley";
 import { toast } from "react-toastify";
 import { BASE_URL } from "@/utils/baseURL";
-import useGetCustomer from "@/hooks/useGetCustomer";
 import { AuthContext } from "@/context/AuthProvider";
-import { useQuery } from "@tanstack/react-query";
+import useGetActiveProduct from "@/hooks/useGetActiveProduct";
 
-const AddCustomerDue = () => {
+const StockManageForm = () => {
   const { user } = useContext(AuthContext);
 
   const [loading, setLoading] = useState(false);
-  const [customer_id, setCustomer_id] = useState("");
+  const [product_id, setProduct_id] = useState(null);
   const {
     register,
     handleSubmit,
@@ -23,20 +22,22 @@ const AddCustomerDue = () => {
     formState: { errors },
   } = useForm();
 
-  //get customer data
-  const { data: customerTypes, isLoading: customerLoading } = useGetCustomer();
+  //get product data
+  const { data: productTypes, isLoading: productLoading } = useGetActiveProduct();
 
   const handleDataPost = async (data) => {
     setLoading(true);
     try {
       const sendData = {
-        customer_due_publisher_id: user?._id,
-        due_note: data?.due_note,
-        due_amount: data?.due_amount,
-        customer_id: customer_id,
+        stock_publisher_id: user?._id,
+        product_note: data?.product_note,
+        product_selling_price: data?.product_selling_price,
+        product_buying_price: data?.product_buying_price,
+        product_quantity: data?.product_quantity,
+        product_id: product_id,
       };
       const response = await fetch(
-        `${BASE_URL}/customer_due?role_type=customer_due_create`,
+        `${BASE_URL}/stock_manage?role_type=stock_manage_create`,
         {
           method: "POST",
           credentials: "include",
@@ -74,7 +75,7 @@ const AddCustomerDue = () => {
     }
   };
 
-  if (customerLoading) {
+  if (productLoading) {
     return <LoaderOverlay />;
   }
 
@@ -91,25 +92,25 @@ const AddCustomerDue = () => {
                   htmlFor=""
                   className="block text-xs font-medium text-gray-700"
                 >
-                  Due Note
+                  Note
                 </label>
 
-                <input
-                  {...register("due_note")}
+                <textarea
+                  {...register("product_note")}
                   type="text"
-                  placeholder="Due Note"
+                  placeholder="Note"
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
               </div>
 
               <div className="mt-2">
                 <label className="block text-xs font-medium text-gray-700">
-                  Due amount <span className="text-red-500">*</span>
+                  Selling Price <span className="text-red-500">*</span>
                 </label>
 
                 <input
-                  {...register("due_amount", {
-                    required: "Due amount is required",
+                  {...register("product_selling_price", {
+                    required: "Selling Price is required",
                     validate: (value) => {
                       if (value < 0) {
                         return "Amount must be getter than 0";
@@ -117,28 +118,72 @@ const AddCustomerDue = () => {
                     },
                   })}
                   type="number"
-                  placeholder="Enter Due amount"
+                  placeholder="Enter Selling Price"
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
-                {errors.due_amount && (
-                  <p className="text-red-600">{errors.due_amount.message}</p>
+                {errors.product_selling_price && (
+                  <p className="text-red-600">{errors.product_selling_price.message}</p>
+                )}
+              </div>
+              <div className="mt-2">
+                <label className="block text-xs font-medium text-gray-700">
+                  Buying Price <span className="text-red-500">*</span>
+                </label>
+
+                <input
+                  {...register("product_buying_price", {
+                    required: "Buying Price is required",
+                    validate: (value) => {
+                      if (value < 0) {
+                        return "Amount must be getter than 0";
+                      }
+                    },
+                  })}
+                  type="number"
+                  placeholder="Enter Buying Price"
+                  className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                />
+                {errors.product_buying_price && (
+                  <p className="text-red-600">{errors.product_buying_price.message}</p>
+                )}
+              </div>
+              <div className="mt-2">
+                <label className="block text-xs font-medium text-gray-700">
+                  Product Quantity <span className="text-red-500">*</span>
+                </label>
+
+                <input
+                  {...register("product_quantity", {
+                    required: "Product Quantity is required",
+                    validate: (value) => {
+                      if (value < 0) {
+                        return "Amount must be getter than 0";
+                      }
+                    },
+                  })}
+                  type="number"
+                  placeholder="Enter Product Quantity"
+                  className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                />
+                {errors.product_quantity && (
+                  <p className="text-red-600">{errors.product_quantity.message}</p>
                 )}
               </div>
               <div className="mt-3">
                 <label className="block text-xs font-medium text-gray-700 mb-1 mt-2">
-                  Customer Name <span className="text-red-500">*</span>
+                  Product Name <span className="text-red-500">*</span>
                 </label>
 
                 <Select
-                  id="customer_id"
-                  name="customer_id"
-                  aria-label="Customer Name"
+                  id="product_id"
+                  name="product_id"
+                  aria-label="Product Name"
                   required
-                  options={customerTypes?.data}
-                  getOptionLabel={(x) => x?.customer_name}
+                  options={productTypes?.data}
+                  getOptionLabel={(x) => x?.product_name}
                   getOptionValue={(x) => x?._id}
                   onChange={(selectedOption) => {
-                    setCustomer_id(selectedOption?._id);
+                    setProduct_id(selectedOption?._id);
                   }}
                 />
               </div>
@@ -160,4 +205,4 @@ const AddCustomerDue = () => {
   );
 };
 
-export default AddCustomerDue;
+export default StockManageForm;
