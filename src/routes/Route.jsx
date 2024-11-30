@@ -21,6 +21,7 @@ import AddProductPage from '@/pages/ProductPage/AddProductPage/AddProductPage'
 import UpDateProduct from '@/components/Products/UpDateProduct'
 import PrivateRoute from './privateRoute/PrivateRoute'
 import StockManage from '@/pages/StockManage/StockManage'
+import PosPage from '@/pages/Pos/PosPage'
 
 const route = createBrowserRouter([
   {
@@ -33,6 +34,11 @@ const route = createBrowserRouter([
       {
         path: '/',
         element: <div>Home</div>,
+      },
+      // ------Pos Start------
+      {
+        path: '/pos',
+        element: <PosPage />,
       },
       // ------Task Start------
       {

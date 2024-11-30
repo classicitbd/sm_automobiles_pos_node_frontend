@@ -75,7 +75,6 @@ const AddCustomers = ({ setCustomersCreateModal, refetch, user }) => {
     }
   };
   return (
-    <div>
       <div>
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="relative overflow-hidden text-left bg-white rounded-lg shadow-xl w-[850px] p-6 max-h-[100vh] overflow-y-auto scrollbar-thin">
@@ -216,7 +215,6 @@ const AddCustomers = ({ setCustomersCreateModal, refetch, user }) => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 
