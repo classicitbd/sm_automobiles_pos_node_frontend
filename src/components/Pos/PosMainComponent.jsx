@@ -114,7 +114,7 @@ const PosMainComponent = () => {
     <>
       <div className="flex p-6 gap-6 mb-2">
         {/* Left Section: Product List */}
-        <div className="w-full md:w-2/3">
+        <div className="w-full md:w-3/5">
           <div className="flex flex-col gap-4 mb-6">
             {/* Filters */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -182,7 +182,7 @@ const PosMainComponent = () => {
           ) : (
             <>
               {products?.data?.length > 0 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 overflow-y-auto max-h-[700px]">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 overflow-y-auto max-h-[700px]">
                   {products?.data?.map((product, index) => (
                     <div
                       onClick={() => {
@@ -258,7 +258,7 @@ const PosMainComponent = () => {
         </div>
 
         {/* Right Section: Customer and Order Form */}
-        <div className="w-full md:w-1/3">
+        <div className="w-full md:w-2/5">
           <RightSide
             user={user}
             addProducts={addProducts}

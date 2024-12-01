@@ -7,6 +7,9 @@ import { useQuery } from "@tanstack/react-query";
 import { MdDeleteForever } from "react-icons/md";
 import { IoAddCircle, IoRemoveCircle } from "react-icons/io5";
 import { toast } from "react-toastify";
+import useGetBank from "@/hooks/useGetbank";
+import MiniSpinner from "@/shared/MiniSpinner/MiniSpinner";
+import { Button } from "../ui/button";
 
 const RightSide = ({ user, addProducts, setAddProducts }) => {
   const paymentOption = [
@@ -27,6 +30,7 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
     },
   ];
 
+  const [loading, setLoading] = useState(false);
   const [customerAddModal, setCustomerAddModal] = useState(false); //customer add modal
   const [customerInfo, setCustomerInfo] = useState({});
 
@@ -38,9 +42,15 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
   const { order_note, setOrderNote } = useState("");
   const [payment_type, setPaymentType] = useState(null);
   const [partial_payment_amount, setPartial_payment_amount] = useState(0);
+  const [partial_payment_bank_id, setPartial_payment_bank_id] = useState(null);
+  const [partial_payment_bank_tranx_id, setPartial_payment_bank_tranx_id] =
+    useState("");
   const [final_total, setFinalTotal] = useState(0);
 
-  //Fetch ShowRoom Data
+  //get bank data
+  const { data: bankTypes, isLoading: bankLoading } = useGetBank();
+
+  //Fetch Customer Data
   const {
     data: customerTypes = [],
     isLoading: customerLoading,
@@ -81,7 +91,67 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
     setFinalTotal(grand_total - partial_payment_amount);
   }, [addProducts, discount_amount, grand_total, partial_payment_amount]);
 
-  if (customerLoading) {
+  // submit order
+  const HandleSubmitOrder = async () => {
+    setLoading(true);
+    try {
+      if (data?.previous_due && data?.previous_advance) {
+        setLoading(false);
+        return toast.error("Please fill up only one field in advance or due", {
+          autoClose: 1000,
+        });
+      }
+
+      const sendData = {
+        order_publisher_id: user?._id,
+        // customer_name: data?.customer_name,
+        // customer_phone: data?.customer_phone,
+        // customer_email: data?.customer_email,
+        // customer_address: data?.customer_address,
+        // previous_due: data?.previous_due,
+        // previous_advance: data?.previous_advance,
+      };
+
+      console.log(sendData)
+
+      // const response = await fetch(
+      //   `${BASE_URL}/customer?role_type=customer_create`,
+      //   {
+      //     method: "POST",
+      //     credentials: "include",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify(sendData),
+      //   }
+      // );
+      // const result = await response.json();
+      // if (result?.statusCode === 200 && result?.success === true) {
+      //   toast.success(
+      //     result?.message ? result?.message : "Customer created successfully",
+      //     {
+      //       autoClose: 1000,
+      //     }
+      //   );
+      //   refetch();
+      //   setLoading(false);
+      // } else {
+      //   toast.error(result?.message || "Something went wrong", {
+      //     autoClose: 1000,
+      //   });
+      //   setLoading(false);
+      // }
+    } catch (error) {
+      toast.error(error?.message, {
+        autoClose: 1000,
+      });
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (customerLoading || bankLoading) {
     return <LoaderOverlay />;
   }
 
@@ -345,11 +415,19 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
             <div className="flex justify-between">
               <div>
                 <h5>Sub Total</h5>
-                <h5 className="mt-4">Discount</h5>
+                <h5 className="mt-4">
+                  Discount percent <small>(max 99)</small>
+                </h5>
                 <h5 className="mt-4">Grand Total</h5>
-                <h5 className="mt-4">Select Payment Option:</h5>
+                <h5 className="mt-4">Select Payment Option</h5>
                 {payment_type == "partial-payment" && (
                   <h5 className="mt-4">Partial Pay Amount</h5>
+                )}
+                {payment_type == "partial-payment" && (
+                  <h5 className="mt-4">Bank Name</h5>
+                )}
+                {payment_type == "partial-payment" && (
+                  <h5 className="mt-4">Trnx Id</h5>
                 )}
                 <h5 className="mt-4">Need Payment</h5>
               </div>
@@ -390,7 +468,7 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                   <span className="mr-2">: </span>
                   {grand_total.toFixed(2)}
                 </p>
-                <div className="mt-4">
+                <div className="mt-2">
                   <Select
                     id="payment_type"
                     name="payment_type"
@@ -405,7 +483,7 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                     }}
                   />
                 </div>
-                <div className="mt-4">
+                <div className="mt-2">
                   {payment_type == "partial-payment" && (
                     <input
                       value={partial_payment_amount} // Bind input to state
@@ -441,7 +519,37 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                     />
                   )}
                 </div>
-                <p className="mt-4">
+                <div className="mt-2">
+                  {payment_type == "partial-payment" && (
+                    <Select
+                      id="bank_id"
+                      name="bank_id"
+                      aria-label="Bank Naame"
+                      isClearable
+                      options={bankTypes?.data}
+                      getOptionLabel={(x) => x?.bank_name}
+                      getOptionValue={(x) => x?._id}
+                      onChange={(selectedOption) => {
+                        setPartial_payment_bank_id(selectedOption?._id);
+                        setPartial_payment_bank_tranx_id("");
+                      }}
+                    />
+                  )}
+                </div>
+                <div className="mt-2">
+                  {payment_type == "partial-payment" && (
+                    <input
+                      value={partial_payment_bank_tranx_id} // Bind input to state
+                      onChange={(e) =>
+                        setPartial_payment_bank_tranx_id(e.target.value)
+                      }
+                      type="text"
+                      placeholder="Transaction Id"
+                      className="border rounded-md p-1"
+                    />
+                  )}
+                </div>
+                <p className="mt-4 font-bold">
                   <span className="mr-2">: </span>
                   {final_total.toFixed(2)}
                 </p>
@@ -456,9 +564,15 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
           onChange={(e) => setOrderNote(e.target.value)}
         ></textarea>
 
-        <button className="bg-blue-500 text-white rounded-md py-2 px-4 mt-4">
-          Submit
-        </button>
+        {loading == true ? (
+          <div className="px-10 py-2 flex items-center justify-center  bg-primaryColor text-white rounded">
+            <MiniSpinner />
+          </div>
+        ) : (
+          <Button type="btn" onClick={() => HandleSubmitOrder()}>
+            Create
+          </Button>
+        )}
       </div>
       {/* add new customer modal */}
       {customerAddModal && (
