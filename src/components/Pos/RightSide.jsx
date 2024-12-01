@@ -39,12 +39,11 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
   const [sub_total, setSubTotal] = useState(0);
   const [discount_amount, setDiscountInputAmount] = useState(0);
   const [grand_total, setGrandTotal] = useState(0);
-  const { order_note, setOrderNote } = useState("");
+  const [order_note, setOrderNote] = useState("");
   const [payment_type, setPaymentType] = useState(null);
-  const [partial_payment_amount, setPartial_payment_amount] = useState(0);
-  const [partial_payment_bank_id, setPartial_payment_bank_id] = useState(null);
-  const [partial_payment_bank_tranx_id, setPartial_payment_bank_tranx_id] =
-    useState("");
+  const [payment_amount, setpayment_amount] = useState(0);
+  const [payment_bank_id, setpayment_bank_id] = useState(null);
+  const [payment_bank_tranx_id, setpayment_bank_tranx_id] = useState("");
   const [final_total, setFinalTotal] = useState(0);
 
   //get bank data
@@ -88,59 +87,118 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
     setSubTotal(total);
     const discounted = total - (total * discount_amount) / 100;
     setGrandTotal(discounted);
-    setFinalTotal(grand_total - partial_payment_amount);
-  }, [addProducts, discount_amount, grand_total, partial_payment_amount]);
+    setFinalTotal(grand_total - payment_amount);
+  }, [addProducts, discount_amount, grand_total, payment_amount]);
 
   // submit order
   const HandleSubmitOrder = async () => {
-    setLoading(true);
+    // setLoading(true);
     try {
-      if (data?.previous_due && data?.previous_advance) {
+      if (!customer_id) {
         setLoading(false);
-        return toast.error("Please fill up only one field in advance or due", {
+        return toast.error("Please fill up customer name", {
           autoClose: 1000,
         });
+      }
+      if (addProducts?.length === 0) {
+        setLoading(false);
+        return toast.error("Please add at least one product", {
+          autoClose: 1000,
+        });
+      }
+      if (!sub_total) {
+        setLoading(false);
+        return toast.error("Must need at least one product", {
+          autoClose: 1000,
+        });
+      }
+      if (!grand_total) {
+        setLoading(false);
+        return toast.error("Must need at least one product", {
+          autoClose: 1000,
+        });
+      }
+      if (!payment_type) {
+        setLoading(false);
+        return toast.error("Please fill up payment type", {
+          autoClose: 1000,
+        });
+      }
+      if (payment_type == "partial-payment" || payment_type == "full-payment") {
+        if (!payment_bank_id) {
+          setLoading(false);
+          return toast.error("Please fill up bank name", {
+            autoClose: 1000,
+          });
+        }
+        if (!payment_bank_tranx_id) {
+          setLoading(false);
+          return toast.error("Please fill up transaction id", {
+            autoClose: 1000,
+          });
+        }
+        if (payment_type == "partial-payment" && !payment_amount) {
+          setLoading(false);
+          return toast.error("Please fill up bank name", {
+            autoClose: 1000,
+          });
+        }
       }
 
       const sendData = {
         order_publisher_id: user?._id,
-        // customer_name: data?.customer_name,
-        // customer_phone: data?.customer_phone,
-        // customer_email: data?.customer_email,
-        // customer_address: data?.customer_address,
-        // previous_due: data?.previous_due,
-        // previous_advance: data?.previous_advance,
+        order_status: "pending",
+        customer_id: customer_id,
+        customer_previous_due: customerInfo?.previous_due || 0,
+        customer_previous_advance: customerInfo?.previous_advance || 0,
+        first_payment_status: customerInfo?.first_payment_status,
+        payment_type: payment_type,
+        payment_bank_id: payment_bank_id,
+        payment_transaction_id: payment_bank_tranx_id,
+        sub_total_amount: sub_total,
+        discount_percent_amount: discount_amount || 0,
+        grand_total_amount: grand_total,
+        received_amount: payment_amount || 0,
+        due_amount: parseFloat((grand_total - payment_amount).toFixed(2)) || 0, // Parse back to number
+        order_note: order_note,
+        order_products: addProducts?.map((item) => ({
+          product_id: item?._id,
+          product_quantity: item?.purchase_quantity,
+          product_price: item?.product_price,
+          product_buying_price: item?.product_buying_price || 0,
+          product_total_price: item?.total_amount,
+        })),
       };
-
-      console.log(sendData)
-
-      // const response = await fetch(
-      //   `${BASE_URL}/customer?role_type=customer_create`,
-      //   {
-      //     method: "POST",
-      //     credentials: "include",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify(sendData),
-      //   }
-      // );
-      // const result = await response.json();
-      // if (result?.statusCode === 200 && result?.success === true) {
-      //   toast.success(
-      //     result?.message ? result?.message : "Customer created successfully",
-      //     {
-      //       autoClose: 1000,
-      //     }
-      //   );
-      //   refetch();
-      //   setLoading(false);
-      // } else {
-      //   toast.error(result?.message || "Something went wrong", {
-      //     autoClose: 1000,
-      //   });
-      //   setLoading(false);
-      // }
+      if(!payment_bank_id){
+        delete sendData?.payment_bank_id
+      }
+      if(!payment_bank_tranx_id){
+        delete sendData?.payment_transaction_id
+      }
+      const response = await fetch(`${BASE_URL}/order?role_type=order_create`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(sendData),
+      });
+      const result = await response.json();
+      if (result?.statusCode === 200 && result?.success === true) {
+        toast.success(
+          result?.message ? result?.message : "order created successfully",
+          {
+            autoClose: 1000,
+          }
+        );
+        refetch();
+        setLoading(false);
+      } else {
+        toast.error(result?.message || "Something went wrong", {
+          autoClose: 1000,
+        });
+        setLoading(false);
+      }
     } catch (error) {
       toast.error(error?.message, {
         autoClose: 1000,
@@ -421,12 +479,12 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                 <h5 className="mt-4">Grand Total</h5>
                 <h5 className="mt-4">Select Payment Option</h5>
                 {payment_type == "partial-payment" && (
-                  <h5 className="mt-4">Partial Pay Amount</h5>
+                  <h5 className="mt-4">Pay Amount</h5>
                 )}
-                {payment_type == "partial-payment" && (
+                {payment_type !== "due-payment" && (
                   <h5 className="mt-4">Bank Name</h5>
                 )}
-                {payment_type == "partial-payment" && (
+                {payment_type !== "due-payment" && (
                   <h5 className="mt-4">Trnx Id</h5>
                 )}
                 <h5 className="mt-4">Need Payment</h5>
@@ -478,15 +536,24 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                     getOptionLabel={(x) => x?.payment_type}
                     getOptionValue={(x) => x?._id}
                     onChange={(selectedOption) => {
-                      setPaymentType(selectedOption?.payment_value);
-                      setPartial_payment_amount(0);
+                      if (selectedOption?.payment_value == "full-payment") {
+                        setPaymentType(selectedOption?.payment_value);
+                        setpayment_amount(grand_total);
+                        setpayment_bank_id("");
+                        setpayment_bank_tranx_id("");
+                      } else {
+                        setPaymentType(selectedOption?.payment_value);
+                        setpayment_amount(0);
+                        setpayment_bank_id("");
+                        setpayment_bank_tranx_id("");
+                      }
                     }}
                   />
                 </div>
                 <div className="mt-2">
                   {payment_type == "partial-payment" && (
                     <input
-                      value={partial_payment_amount} // Bind input to state
+                      value={payment_amount} // Bind input to state
                       onChange={(e) => {
                         const value = parseInt(e.target.value, 10);
 
@@ -495,7 +562,7 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                           value >= 0 &&
                           value <= grand_total.toFixed(2)
                         ) {
-                          setPartial_payment_amount(value); // Update state only for valid input
+                          setpayment_amount(value); // Update state only for valid input
                         } else if (value > 99) {
                           toast.error(
                             `Must be less than ${grand_total.toFixed(2)}`,
@@ -510,7 +577,7 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
 
                         // Reset the value if it exceeds the limit
                         if (isNaN(value) || value > grand_total.toFixed(2)) {
-                          setPartial_payment_amount(grand_total.toFixed(2)); // Reset to max allowed value
+                          setpayment_amount(grand_total.toFixed(2)); // Reset to max allowed value
                         }
                       }}
                       type="number"
@@ -520,29 +587,26 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                   )}
                 </div>
                 <div className="mt-2">
-                  {payment_type == "partial-payment" && (
+                  {payment_type !== "due-payment" && (
                     <Select
                       id="bank_id"
                       name="bank_id"
-                      aria-label="Bank Naame"
+                      aria-label="Bank Name"
                       isClearable
                       options={bankTypes?.data}
                       getOptionLabel={(x) => x?.bank_name}
                       getOptionValue={(x) => x?._id}
                       onChange={(selectedOption) => {
-                        setPartial_payment_bank_id(selectedOption?._id);
-                        setPartial_payment_bank_tranx_id("");
+                        setpayment_bank_id(selectedOption?._id);
                       }}
                     />
                   )}
                 </div>
                 <div className="mt-2">
-                  {payment_type == "partial-payment" && (
+                  {payment_type !== "due-payment" && (
                     <input
-                      value={partial_payment_bank_tranx_id} // Bind input to state
-                      onChange={(e) =>
-                        setPartial_payment_bank_tranx_id(e.target.value)
-                      }
+                      value={payment_bank_tranx_id} // Bind input to state
+                      onChange={(e) => setpayment_bank_tranx_id(e.target.value)}
                       type="text"
                       placeholder="Transaction Id"
                       className="border rounded-md p-1"
