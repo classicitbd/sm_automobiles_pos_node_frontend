@@ -6,7 +6,7 @@ import { BiTask } from 'react-icons/bi'
 import { GoHome } from 'react-icons/go'
 import { BsExplicit, BsShieldPlus } from 'react-icons/bs'
 import { PiUsersThree } from 'react-icons/pi'
-import { TbCategoryPlus } from 'react-icons/tb'
+import { TbCategoryPlus, TbHttpPost } from 'react-icons/tb'
 
 import { ChildMenuItem, DropdownMenu, MenuItem } from './DropdownAndMenuItem'
 import { FiUsers } from 'react-icons/fi'
@@ -59,6 +59,13 @@ const SideNavBar = () => {
             icon={GoHome}
             label='Dashboard'
             isActive={isActive('/')}
+            onClick={closeAllDropdowns} // Close all dropdowns when clicked
+          />
+          <MenuItem
+            to='/pos'
+            icon={TbHttpPost}
+            label='POS'
+            isActive={isActive('/pos')}
             onClick={closeAllDropdowns} // Close all dropdowns when clicked
           />
 
@@ -140,7 +147,7 @@ const SideNavBar = () => {
             />
           </DropdownMenu>
           <DropdownMenu
-            label='About Supplier'
+            label='Supplier'
             icon={BiTask}
             isOpen={activeDropdown === 'supplier'}
             onClick={() => toggleDropdown('supplier')}
@@ -159,7 +166,7 @@ const SideNavBar = () => {
             />
           </DropdownMenu>
           <DropdownMenu
-            label='About Bank Account'
+            label='Bank Account'
             icon={BiTask}
             isOpen={activeDropdown === 'bankAccount'}
             onClick={() => toggleDropdown('bankAccount')}
@@ -172,7 +179,7 @@ const SideNavBar = () => {
             />
           </DropdownMenu>
           <DropdownMenu
-            label='About Customers'
+            label='Customers'
             icon={BiTask}
             isOpen={activeDropdown === 'customers'}
             onClick={() => toggleDropdown('customers')}
@@ -197,7 +204,7 @@ const SideNavBar = () => {
             />
           </DropdownMenu>
           <DropdownMenu
-            label='About Expenses'
+            label='Expenses'
             icon={BiTask}
             isOpen={activeDropdown === 'expenses'}
             onClick={() => toggleDropdown('expenses')}
@@ -210,7 +217,7 @@ const SideNavBar = () => {
             />
           </DropdownMenu>
           <DropdownMenu
-            label='About Purchase'
+            label='Purchase'
             icon={BiTask}
             isOpen={activeDropdown === 'purchase'}
             onClick={() => toggleDropdown('purchase')}

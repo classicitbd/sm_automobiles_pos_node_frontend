@@ -1,7 +1,8 @@
 import { IoMdClose, IoIosMenu } from "react-icons/io";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
+import { AuthContext } from "@/context/AuthProvider";
 
 const DashBoardNavbar = ({
   setSidebarOpen,
@@ -12,9 +13,8 @@ const DashBoardNavbar = ({
   // Assuming you are using functional components with hooks
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [setIsFullscreen] = useState(false);
-  // const { logout } = useContext(AuthContext);
+  const { loading, user } = useContext(AuthContext);
   const menuRef = useRef(null);
-  // const { user, loading } = useContext(AuthContext);
   // Toggle dropdown visibility
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -47,7 +47,7 @@ const DashBoardNavbar = ({
     }
   };
 
-  // if (loading) return null;
+  if (loading) return null;
   return (
     <nav className="border-b">
       <div className="  py-1 px-4 sm:px-10 md:pl-3 md:pr-16">
@@ -96,23 +96,22 @@ const DashBoardNavbar = ({
                   >
                     <div>
                       <h3 className="text-sm sm:text-[16px] -mb-1">
-                        {/* {user?.user_name} */} Saifulla
+                        {user?.user_name}
                       </h3>
-                      <p className=" text-[#7b809a] text-xs sm:text-sm text-right capitalize">
-                        {/* {user?.user_role} */}Admin
-                      </p>
                     </div>
                     <button
                       className=" relative hidden sm:flex items-center rounded  text-sm focus:outline-none focus:ring-1 focus:ring-white focus:ring-offset-1 focus:ring-offset-gray-800"
                       id="user-menu-button"
                     >
-                      {/* <img
-                        src={user?.user_image ? user?.user_image : profile}
-                        alt="user"
-                        width={35}
-                        height={35}
-                        className="rounded h-[40px] w-[40px]"
-                      /> */}
+                      {user?.user_image && (
+                        <img
+                          src={user?.user_image}
+                          alt="user"
+                          width={35}
+                          height={35}
+                          className="rounded h-[40px] w-[40px]"
+                        />
+                      )}
                       <FaUser />
                     </button>
                   </div>

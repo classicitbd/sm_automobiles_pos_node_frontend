@@ -27,7 +27,7 @@ const CustomersPage = () => {
     setPage(1)
   }
 
-  //Fetch ShowRoom Data
+  //Fetch Customer Data
   const {
     data: customers = [],
     isLoading,

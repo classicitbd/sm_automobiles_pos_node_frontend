@@ -194,6 +194,7 @@ const AddProducts = () => {
                 id="category_id"
                 name="category_id"
                 aria-label="Category Name"
+                isClearable
                 required
                 options={categoryTypes?.data}
                 getOptionLabel={(x) => x?.category_name}
@@ -215,6 +216,7 @@ const AddProducts = () => {
                 aria-label="Brand Name"
                 options={brandTypes?.data}
                 getOptionLabel={(x) => x?.brand_name}
+                isClearable
                 getOptionValue={(x) => x?._id}
                 onChange={(selectedOption) => {
                   setBrand_id(selectedOption?._id);
