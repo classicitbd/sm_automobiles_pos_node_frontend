@@ -1,11 +1,17 @@
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import Pagination from "../common/pagination/Pagination";
-import { IoMdEye } from "react-icons/io";
+
 import { useEffect, useState } from "react";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
-import { FiEdit } from "react-icons/fi";
+import { CiMenuKebab } from "react-icons/ci";
 import { BASE_URL } from "@/utils/baseURL";
 import { toast } from "react-toastify";
+import { Button } from "../ui/button";
+import { FaEye, FaFileDownload, FaRegFilePdf } from "react-icons/fa";
+
+import { FiEdit } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import OrderUpDateModal from "./OrderUpDateModal";
 
 const OrderTable = ({
   setPage,
@@ -19,10 +25,38 @@ const OrderTable = ({
   orders,
 }) => {
   const [serialNumber, setSerialNumber] = useState();
+  const [orderDocumentModal, setOrderDocumentModal] = useState(null);
+  const [orderUpdateModal, setOrderUpdateModal] = useState(false);
+  const [orderUpdateModalData, setOrderUpdateModalData] = useState({});
+
   useEffect(() => {
     const newSerialNumber = (page - 1) * limit;
     setSerialNumber(newSerialNumber);
   }, [page, limit]);
+
+  const handleShowDocumentModal = (id) => {
+    setOrderDocumentModal((prevId) => (prevId === id ? null : id));
+  };
+
+  // Close modal on outside click
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (!event.target.closest(".modal-container")) {
+        setOrderDocumentModal(null);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
+  //Handle Order update  Function
+
+  const handleOrderUpdate = (order) => {
+    setOrderUpdateModal(true);
+    setOrderUpdateModalData(order);
+  };
 
   //   handle order status
   const handleOrderStatus = async (order_status, _id, products) => {
@@ -76,6 +110,28 @@ const OrderTable = ({
 
   return (
     <>
+      <div className="flex justify-end gap-4">
+        <Link>
+          {" "}
+          <Button
+            type="button"
+            variant="secondary"
+            //onClick={() => ()}
+          >
+            <FaFileDownload /> Export Csv
+          </Button>
+        </Link>
+
+        <Link to="/orderpdf">
+          {" "}
+          <Button
+            type="button"
+            //onClick={() => ()}
+          >
+            <FaRegFilePdf /> Export pdf
+          </Button>
+        </Link>
+      </div>
       {isLoading === true ? (
         <TableLoadingSkeleton />
       ) : (
@@ -186,22 +242,39 @@ const OrderTable = ({
                               <option value="returned">Returned</option>
                             )}
                           </select>
-                          <button type="button" className="ml-3">
-                            <FiEdit
-                              size={25}
-                              className="cursor-pointer text-gray-500 hover:text-gray-300"
-                            />
-                          </button>
-                          <button
-                            className="ml-[8px]"
-                            // onClick={() => handleShowDocumentModal(order)}
-                            disabled={!order?.order_voucher ? true : false}
-                          >
-                            <IoMdEye
-                              size={30}
-                              className="cursor-pointer text-gray-500 hover:text-gray-300"
-                            />
-                          </button>
+                          <div>
+                            <div>
+                              <button
+                                className="ml-[8px]"
+                                onClick={() =>
+                                  handleShowDocumentModal(order?._id)
+                                }
+                              >
+                                <CiMenuKebab
+                                  size={30}
+                                  className="cursor-pointer text-gray-500 hover:text-gray-300 font-bold"
+                                />
+                              </button>
+                              {orderDocumentModal == order?._id && (
+                                <div className=" bg-bgray-200 shadow-xl w-[150px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
+                                  <Link to={`/order-details/${order?._id}`}>
+                                    {" "}
+                                    <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium">
+                                      <FaEye size={16} /> View
+                                    </button>
+                                  </Link>
+
+                                  <button
+                                    className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
+                                    onClick={() => handleOrderUpdate(order)}
+                                  >
+                                    <FiEdit size={18} />
+                                    Edit
+                                  </button>
+                                </div>
+                              )}
+                            </div>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -212,6 +285,7 @@ const OrderTable = ({
               <NoDataFound />
             )}
           </div>
+
           {totalData > 10 && (
             <Pagination
               setPage={setPage}
@@ -222,6 +296,15 @@ const OrderTable = ({
             />
           )}
         </div>
+      )}
+
+      {orderUpdateModal && (
+        <OrderUpDateModal
+          setOrderUpdateModal={setOrderUpdateModal}
+          orderUpdateModalData={orderUpdateModalData}
+          refetch={refetch}
+          user={user}
+        />
       )}
     </>
   );

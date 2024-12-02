@@ -1,9 +1,11 @@
-import { FiEdit } from 'react-icons/fi'
-import UpdateCustomers from './UpdateCustomers'
-import { useEffect, useState } from 'react'
-import TableLoadingSkeleton from '../common/loadingSkeleton/TableLoadingSkeleton'
-import NoDataFound from '@/shared/NoDataFound/NoDataFound'
-import Pagination from '../common/pagination/Pagination'
+import { FiEdit } from "react-icons/fi";
+import UpdateCustomers from "./UpdateCustomers";
+import { useEffect, useState } from "react";
+import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
+import NoDataFound from "@/shared/NoDataFound/NoDataFound";
+import Pagination from "../common/pagination/Pagination";
+import { Link } from "react-router-dom";
+import { FaEye } from "react-icons/fa";
 
 const CustomersTable = ({
   setPage,
@@ -17,13 +19,13 @@ const CustomersTable = ({
   customers,
 }) => {
   //Update Handle contoler
-  const [customerUpdateModal, setCustomerUpdateModal] = useState(false)
-  const [customerUpdateData, setCustomerUpdateData] = useState({})
+  const [customerUpdateModal, setCustomerUpdateModal] = useState(false);
+  const [customerUpdateData, setCustomerUpdateData] = useState({});
 
   const handleCustomerUpdateModal = (customer) => {
-    setCustomerUpdateData(customer)
-    setCustomerUpdateModal(true)
-  }
+    setCustomerUpdateData(customer);
+    setCustomerUpdateModal(true);
+  };
 
   const [serialNumber, setSerialNumber] = useState();
   useEffect(() => {
@@ -37,42 +39,38 @@ const CustomersTable = ({
         <TableLoadingSkeleton />
       ) : (
         <div>
-          <div className='rounded-lg border border-gray-200 mt-6'>
+          <div className="rounded-lg border border-gray-200 mt-6">
             {customers?.data?.length > 0 ? (
-              <div className='overflow-x-auto rounded-t-lg'>
-                <table className='min-w-full divide-y-2 divide-gray-200 bg-white text-sm'>
-                  <thead className='ltr:text-left rtl:text-right bg-[#fff9ee]'>
-                    <tr className='divide-x divide-gray-300  font-semibold text-center text-gray-900'>
-                      <td className='whitespace-nowrap p-4 '>SL No</td>
-                      <td className='whitespace-nowrap p-4 '>Customers Name</td>
-                      <td className='whitespace-nowrap p-4 '>
+              <div className="overflow-x-auto rounded-t-lg">
+                <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+                  <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
+                    <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
+                      <td className="whitespace-nowrap p-4 ">SL No</td>
+                      <td className="whitespace-nowrap p-4 ">Customers Name</td>
+                      <td className="whitespace-nowrap p-4 ">
                         Customer Address
                       </td>
-                      <td className='whitespace-nowrap p-4 '>Customer Email</td>
-                      <td className='whitespace-nowrap p-4 '>Customer Phone</td>
-                      <td className='whitespace-nowrap p-4 '>
+                      <td className="whitespace-nowrap p-4 ">Customer Email</td>
+                      <td className="whitespace-nowrap p-4 ">Customer Phone</td>
+                      <td className="whitespace-nowrap p-4 ">
                         Previous Advance
                       </td>
-                      <td className='whitespace-nowrap p-4 '>Previous Due</td>
-                      <td className='whitespace-nowrap p-4 '>
+                      <td className="whitespace-nowrap p-4 ">Previous Due</td>
+                      <td className="whitespace-nowrap p-4 ">
                         Customer Status
                       </td>
-                      <td className='whitespace-nowrap p-4 '>
+                      <td className="whitespace-nowrap p-4 ">
                         First Payment Status
                       </td>
-                      <td className='whitespace-nowrap p-4 '>
-                        Created By
-                      </td>
-                      <td className='whitespace-nowrap p-4 '>
-                        Updated By
-                      </td>
+                      <td className="whitespace-nowrap p-4 ">Created By</td>
+                      <td className="whitespace-nowrap p-4 ">Updated By</td>
 
-                      <td className='whitespace-nowrap p-4 '>Action</td>
+                      <td className="whitespace-nowrap p-4 ">Action</td>
                     </tr>
                   </thead>
 
-                  <tbody className='divide-y divide-gray-200 text-center'>
-                  {customers?.data?.map((customer, i) => (
+                  <tbody className="divide-y divide-gray-200 text-center">
+                    {customers?.data?.map((customer, i) => (
                       <tr
                         key={customer?._id}
                         className={`divide-x divide-gray-200 ${
@@ -128,9 +126,9 @@ const CustomersTable = ({
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {customer?.customer_updated_by?.user_name}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
+                        <td className="whitespace-nowrap py-1.5 px-2 text-gray-700 flex items-center">
                           <button
-                            className="ml-3"
+                            className=""
                             onClick={() => handleCustomerUpdateModal(customer)}
                           >
                             <FiEdit
@@ -138,6 +136,14 @@ const CustomersTable = ({
                               className="cursor-pointer text-gray-500 hover:text-gray-300"
                             />
                           </button>
+                          <Link to="/allPaymentDueOrderList">
+                            <button className="ml-3">
+                              <FaEye
+                                className="cursor-pointer text-gray-500 hover:text-gray-300"
+                                size={25}
+                              />
+                            </button>
+                          </Link>
                         </td>
                       </tr>
                     ))}
@@ -167,7 +173,7 @@ const CustomersTable = ({
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default CustomersTable
+export default CustomersTable;
