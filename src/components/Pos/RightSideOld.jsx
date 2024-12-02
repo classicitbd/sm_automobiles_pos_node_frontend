@@ -12,6 +12,23 @@ import MiniSpinner from "@/shared/MiniSpinner/MiniSpinner";
 import { Button } from "../ui/button";
 
 const RightSide = ({ user, addProducts, setAddProducts }) => {
+  const paymentOption = [
+    {
+      _id: 1,
+      payment_type: "Full Payment",
+      payment_value: "full-payment",
+    },
+    {
+      _id: 2,
+      payment_type: "Partial Payment",
+      payment_value: "partial-payment",
+    },
+    {
+      _id: 3,
+      payment_type: "Due Payment",
+      payment_value: "due-payment",
+    },
+  ];
 
   const [loading, setLoading] = useState(false);
   const [customerAddModal, setCustomerAddModal] = useState(false); //customer add modal
@@ -23,6 +40,11 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
   const [discount_amount, setDiscountInputAmount] = useState(0);
   const [grand_total, setGrandTotal] = useState(0);
   const [order_note, setOrderNote] = useState("");
+  const [payment_type, setPaymentType] = useState(null);
+  const [payment_amount, setpayment_amount] = useState(0);
+  const [payment_bank_id, setpayment_bank_id] = useState(null);
+  const [payment_bank_tranx_id, setpayment_bank_tranx_id] = useState("");
+  const [final_total, setFinalTotal] = useState(0);
 
   //get bank data
   const { data: bankTypes, isLoading: bankLoading } = useGetBank();
@@ -65,7 +87,8 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
     setSubTotal(total);
     const discounted = total - (total * discount_amount) / 100;
     setGrandTotal(discounted);
-  }, [addProducts, discount_amount, grand_total]);
+    setFinalTotal(grand_total - payment_amount);
+  }, [addProducts, discount_amount, grand_total, payment_amount]);
 
   // submit order
   const HandleSubmitOrder = async () => {
@@ -95,15 +118,48 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
           autoClose: 1000,
         });
       }
+      if (!payment_type) {
+        setLoading(false);
+        return toast.error("Please fill up payment type", {
+          autoClose: 1000,
+        });
+      }
+      if (payment_type == "partial-payment" || payment_type == "full-payment") {
+        if (!payment_bank_id) {
+          setLoading(false);
+          return toast.error("Please fill up bank name", {
+            autoClose: 1000,
+          });
+        }
+        if (!payment_bank_tranx_id) {
+          setLoading(false);
+          return toast.error("Please fill up transaction id", {
+            autoClose: 1000,
+          });
+        }
+        if (payment_type == "partial-payment" && !payment_amount) {
+          setLoading(false);
+          return toast.error("Please fill up bank name", {
+            autoClose: 1000,
+          });
+        }
+      }
+
       const sendData = {
         order_publisher_id: user?._id,
         order_status: "pending",
         customer_id: customer_id,
         customer_previous_due: customerInfo?.previous_due || 0,
         customer_previous_advance: customerInfo?.previous_advance || 0,
+        first_payment_status: customerInfo?.first_payment_status,
+        payment_type: payment_type,
+        payment_bank_id: payment_bank_id,
+        payment_transaction_id: payment_bank_tranx_id,
         sub_total_amount: sub_total,
         discount_percent_amount: discount_amount || 0,
         grand_total_amount: grand_total,
+        received_amount: payment_amount || 0,
+        due_amount: parseFloat((grand_total - payment_amount).toFixed(2)) || 0, // Parse back to number
         order_note: order_note,
         order_products: addProducts?.map((item) => ({
           product_id: item?._id,
@@ -113,6 +169,12 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
           product_total_price: item?.total_amount,
         })),
       };
+      if(!payment_bank_id){
+        delete sendData?.payment_bank_id
+      }
+      if(!payment_bank_tranx_id){
+        delete sendData?.payment_transaction_id
+      }
       const response = await fetch(`${BASE_URL}/order?role_type=order_create`, {
         method: "POST",
         credentials: "include",
@@ -415,6 +477,17 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                   Discount percent <small>(max 99)</small>
                 </h5>
                 <h5 className="mt-4">Grand Total</h5>
+                <h5 className="mt-4">Select Payment Option</h5>
+                {payment_type == "partial-payment" && (
+                  <h5 className="mt-4">Pay Amount</h5>
+                )}
+                {payment_type !== "due-payment" && (
+                  <h5 className="mt-4">Bank Name</h5>
+                )}
+                {payment_type !== "due-payment" && (
+                  <h5 className="mt-4">Trnx Id</h5>
+                )}
+                <h5 className="mt-4">Need Payment</h5>
               </div>
               <div>
                 <p className="font-bold">
@@ -452,6 +525,97 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                 <p className="mt-4 font-bold">
                   <span className="mr-2">: </span>
                   {grand_total.toFixed(2)}
+                </p>
+                <div className="mt-2">
+                  <Select
+                    id="payment_type"
+                    name="payment_type"
+                    aria-label="Payment Type"
+                    isClearable
+                    options={paymentOption}
+                    getOptionLabel={(x) => x?.payment_type}
+                    getOptionValue={(x) => x?._id}
+                    onChange={(selectedOption) => {
+                      if (selectedOption?.payment_value == "full-payment") {
+                        setPaymentType(selectedOption?.payment_value);
+                        setpayment_amount(grand_total);
+                        setpayment_bank_id("");
+                        setpayment_bank_tranx_id("");
+                      } else {
+                        setPaymentType(selectedOption?.payment_value);
+                        setpayment_amount(0);
+                        setpayment_bank_id("");
+                        setpayment_bank_tranx_id("");
+                      }
+                    }}
+                  />
+                </div>
+                <div className="mt-2">
+                  {payment_type == "partial-payment" && (
+                    <input
+                      value={payment_amount} // Bind input to state
+                      onChange={(e) => {
+                        const value = parseInt(e.target.value, 10);
+
+                        if (
+                          !isNaN(value) &&
+                          value >= 0 &&
+                          value <= grand_total.toFixed(2)
+                        ) {
+                          setpayment_amount(value); // Update state only for valid input
+                        } else if (value > 99) {
+                          toast.error(
+                            `Must be less than ${grand_total.toFixed(2)}`,
+                            {
+                              autoClose: 1000,
+                            }
+                          );
+                        }
+                      }}
+                      onBlur={(e) => {
+                        const value = parseInt(e.target.value, 10);
+
+                        // Reset the value if it exceeds the limit
+                        if (isNaN(value) || value > grand_total.toFixed(2)) {
+                          setpayment_amount(grand_total.toFixed(2)); // Reset to max allowed value
+                        }
+                      }}
+                      type="number"
+                      placeholder="Partial payment amount"
+                      className="border rounded-md p-1"
+                    />
+                  )}
+                </div>
+                <div className="mt-2">
+                  {payment_type !== "due-payment" && (
+                    <Select
+                      id="bank_id"
+                      name="bank_id"
+                      aria-label="Bank Name"
+                      isClearable
+                      options={bankTypes?.data}
+                      getOptionLabel={(x) => x?.bank_name}
+                      getOptionValue={(x) => x?._id}
+                      onChange={(selectedOption) => {
+                        setpayment_bank_id(selectedOption?._id);
+                      }}
+                    />
+                  )}
+                </div>
+                <div className="mt-2">
+                  {payment_type !== "due-payment" && (
+                    <input
+                      value={payment_bank_tranx_id} // Bind input to state
+                      onChange={(e) => setpayment_bank_tranx_id(e.target.value)}
+                      type="text"
+                      placeholder="Transaction Id"
+                      className="border rounded-md p-1"
+                    />
+                  )}
+                </div>
+                <p className="mt-4 font-bold">
+                  <span className="mr-2">: </span>
+                  {final_total.toFixed(2)}
                 </p>
               </div>
             </div>

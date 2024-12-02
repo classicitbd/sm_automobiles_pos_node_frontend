@@ -10,7 +10,7 @@ import { TbCategoryPlus, TbHttpPost } from 'react-icons/tb'
 
 import { ChildMenuItem, DropdownMenu, MenuItem } from './DropdownAndMenuItem'
 import { FiUsers } from 'react-icons/fi'
-import { FaUsers, FaUserTie } from 'react-icons/fa'
+import { FaShoppingCart, FaUsers, FaUserTie } from 'react-icons/fa'
 import { MdCheckBoxOutlineBlank } from 'react-icons/md'
 import { SiPurgecss } from 'react-icons/si'
 
@@ -68,6 +68,20 @@ const SideNavBar = () => {
             isActive={isActive('/pos')}
             onClick={closeAllDropdowns} // Close all dropdowns when clicked
           />
+
+          <DropdownMenu
+            label='Order'
+            icon={BiTask}
+            isOpen={activeDropdown === 'order'}
+            onClick={() => toggleDropdown('order')}
+          >
+            <ChildMenuItem
+              to='/order'
+              icon={FaShoppingCart}
+              label='All Order'
+              isActive={isActive('/category')}
+            />
+          </DropdownMenu>
 
           <DropdownMenu
             label='Task'
