@@ -79,7 +79,7 @@ const SideNavBar = () => {
               to='/order'
               icon={FaShoppingCart}
               label='All Order'
-              isActive={isActive('/category')}
+              isActive={isActive('/order')}
             />
           </DropdownMenu>
 
