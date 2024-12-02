@@ -6,6 +6,8 @@ import UpdateSupplier from "./UpdateSupplier";
 import { FiEdit } from "react-icons/fi";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import Pagination from "../common/pagination/Pagination";
+import { Link } from "react-router-dom";
+import { FaEye } from "react-icons/fa";
 const SupplierTable = ({
   allSupplier,
   setPage,
@@ -121,6 +123,14 @@ const SupplierTable = ({
                           className="cursor-pointer text-gray-500 hover:text-gray-300"
                         />
                       </button>
+                      <Link to="/supplierpaymentlist">
+                        <button className="ml-3">
+                          <FaEye
+                            className="cursor-pointer text-gray-500 hover:text-gray-300"
+                            size={25}
+                          />
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 ))}
