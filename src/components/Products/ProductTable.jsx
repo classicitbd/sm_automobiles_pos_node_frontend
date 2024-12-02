@@ -110,15 +110,14 @@ const ProductTable = ({
                           {product?.product_updated_by?.user_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
-                          <button
-                            className="ml-3"
-                            // onClick={() => handleproductUpdateModal(product)}
-                          >
-                            <FiEdit
-                              size={25}
-                              className="cursor-pointer text-gray-500 hover:text-gray-300"
-                            />
-                          </button>
+                          {/* <button type="button" className="ml-3">
+                            <Link to={`/update-product/${product?._id}`}>
+                              <FiEdit
+                                size={25}
+                                className="cursor-pointer text-gray-500 hover:text-gray-300"
+                              />
+                            </Link>
+                          </button> */}
                           <button
                             className="ml-[8px]"
                             // onClick={() => handleShowDocumentModal(product)}
