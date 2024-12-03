@@ -1,10 +1,41 @@
 import { FaEye, FaPrint, FaRegArrowAltCircleLeft } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import "./OrderDetails.css";
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "@/utils/baseURL";
+import TableLoadingSkeleton from "@/components/common/loadingSkeleton/TableLoadingSkeleton";
+import { DateTimeFormat } from "@/utils/dateTimeFormet";
 
 const OrderDetails = () => {
-  const { id } = useParams();
-  console.log(id);
+  const { _id } = useParams();
+
+  //Fetch OrderDetails Data
+  const { data: orderDetail = {}, isLoading } = useQuery({
+    queryKey: [`/api/v1/order/${_id}?role_type=order_details_show`],
+    queryFn: async () => {
+      try {
+        const res = await fetch(
+          `${BASE_URL}/order/${_id}?role_type=order_details_show`,
+          {
+            credentials: "include",
+          }
+        );
+
+        if (!res.ok) {
+          const errorData = await res.text();
+          throw new Error(
+            `Error: ${res.status} ${res.statusText} - ${errorData}`
+          );
+        }
+
+        const data = await res.json();
+        return data?.data;
+      } catch (error) {
+        console.error("Fetch error:", error);
+        throw error;
+      }
+    },
+  });
 
   const handlePrint = () => {
     const printContent = document.getElementById("invoicePrintArea");
@@ -22,6 +53,12 @@ const OrderDetails = () => {
       location.reload();
     }, 10);
   };
+
+  if (isLoading) {
+    return <TableLoadingSkeleton />;
+  }
+
+  console.log(orderDetail);
 
   return (
     <div className="">
@@ -66,7 +103,10 @@ const OrderDetails = () => {
                         src="https://hips.hearstapps.com/hmg-prod/images/close-up-of-blossoming-rose-flower-royalty-free-image-1580853844.jpg?crop=0.668xw:1.00xh;0.248xw,0&resize=980:*"
                         alt="logo"
                       />
-                      <h4 className="ps-1" style={{ marginBottom: "0", marginLeft:'8px'}}>
+                      <h4
+                        className="ps-1"
+                        style={{ marginBottom: "0", marginLeft: "8px" }}
+                      >
                         Classic It
                       </h4>
                     </div>
@@ -85,47 +125,45 @@ const OrderDetails = () => {
                 >
                   <ul>
                     <li>
-                      <span>Courier Name </span>
-                      <span className="courier_name">
-                        <h4 className="">
-                          :{" "}
-                          <strong style={{ fontSize: "18px" }}>
-                            Sundorban
-                          </strong>
-                        </h4>
-                      </span>
-                    </li>
-                    <li>
                       <span>Customer Name</span>
-                      <span>:Najmul Islam</span>
+                      <span>: {orderDetail?.customer_id?.customer_name}</span>
                     </li>
 
                     <li>
                       <span>Customer Email</span>
-                      <span>: najmul123@gmail.com</span>
+                      <span>: {orderDetail?.customer_id?.customer_email}</span>
                     </li>
                     <li>
                       <span>Customer Phone</span>
-                      <span>: 0175864926</span>
+                      <span>: {orderDetail?.customer_id?.customer_phone}</span>
                     </li>
                     <li>
                       <span>Address</span>
-                      <span>: Lalmatia, b-block</span>
+                      <span>
+                        : {orderDetail?.customer_id?.customer_address}
+                      </span>
                     </li>
                   </ul>
                   <ul>
                     <li>
-                      <span>Invoice No</span>
-                      <span>: INV-SALE-000019</span>
+                      <span>Order No</span>
+                      <span>: {orderDetail?.order_id}</span>
                     </li>
                     <li>
                       <span>Order Date</span>
-                      <span>: 29 Aug 24</span>
+                      <span>: {DateTimeFormat(orderDetail?.createdAt)}</span>
                     </li>
 
                     <li>
-                      <span>Delivery Method</span>
-                      <span>: Cash On Delivery</span>
+                      <span>Grand Total</span>
+                      <span
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        : {orderDetail?.grand_total_amount}
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -175,6 +213,16 @@ const OrderDetails = () => {
                             textAlign: "center",
                           }}
                         >
+                          Category
+                        </th>
+                        <th
+                          style={{
+                            width: "10%",
+                            padding: "5px",
+                            color: "rgb(0 0 1 / 70%)",
+                            textAlign: "center",
+                          }}
+                        >
                           Unit Price
                         </th>
                         <th
@@ -195,39 +243,39 @@ const OrderDetails = () => {
                             textAlign: "center",
                           }}
                         >
-                          Discount
-                        </th>
-                        <th
-                          style={{
-                            width: "10%",
-                            padding: "5px",
-                            color: "rgb(0 0 1 / 70%)",
-                            textAlign: "center",
-                          }}
-                        >
                           Amount
                         </th>
                       </tr>
                     </thead>
                     <tbody className="sales___invoice">
-                      <tr>
-                        <td>{1}</td>
-                        <td>
-                          <img
-                            style={{
-                              width: "65px",
-                              height: "65px",
-                              padding: "5px 0",
-                            }}
-                            src="https://hips.hearstapps.com/hmg-prod/images/close-up-of-blossoming-rose-flower-royalty-free-image-1580853844.jpg?crop=0.668xw:1.00xh;0.248xw,0&resize=980:*"
-                          />
-                        </td>
-                        <td>Item name</td>
-                        <td style={{ textAlign: "center" }}>Unit Price</td>
-                        <td style={{ textAlign: "center" }}>2</td>
-                        <td style={{ textAlign: "center" }}>10</td>
-                        <td style={{ textAlign: "center" }}>120</td>
-                      </tr>
+                      {orderDetail?.order_products?.map((product, index) => (
+                        <tr key={index}>
+                          <td>{index + 1}</td>
+                          <td>
+                            <img
+                              style={{
+                                width: "65px",
+                                height: "65px",
+                                padding: "5px 0",
+                              }}
+                              src={product?.product_id?.product_image}
+                            />
+                          </td>
+                          <td>{product?.product_id?.product_name}</td>
+                          <td style={{ textAlign: "center" }}>
+                            {product?.product_id?.category_id?.category_name}
+                          </td>
+                          <td style={{ textAlign: "center" }}>
+                            {product?.product_price}
+                          </td>
+                          <td style={{ textAlign: "center" }}>
+                            {product?.product_quantity}
+                          </td>
+                          <td style={{ textAlign: "center" }}>
+                            {product?.product_total_price}
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
 
@@ -245,7 +293,7 @@ const OrderDetails = () => {
                   >
                     {" "}
                     <strong style={{ color: "red" }}>Note: </strong>
-                    Write Note
+                    {orderDetail?.order_note}
                   </p>
 
                   <div
@@ -257,16 +305,16 @@ const OrderDetails = () => {
                       className="barcode__space"
                     >
                       <li>
-                        <div style={{ paddingBottom: "25px" }}>
-                          {/* <img
-                                          style={{
-                                            width: "250px",
-                                            height: "50px",
-                                          }}
-                                          src=''
-                                          alt=""
-                                        /> */}
-                          QR code
+                        <div style={{ paddingBottom: "10px" }}>
+                          <img
+                            style={{
+                              width: "200px",
+                              height: "150px",
+                              marginLeft: "200px",
+                            }}
+                            src={orderDetail?.order_barcode_image}
+                            alt=""
+                          />
                         </div>
                         <p>
                           Have a great day! Thank you for shopping on Classic IT
@@ -277,29 +325,17 @@ const OrderDetails = () => {
                       <li className="float-end">
                         <p>
                           <span>Subtotal</span>
-                          <span>2000</span>
-                        </p>
-                        <p>
-                          <span>Shipping</span>
-                          <span>500</span>
+                          <span>{orderDetail?.sub_total_amount}</span>
                         </p>
 
                         <p>
-                          <span>Discount On Subtotal</span>
-                          <span>1200</span>
+                          <span>Discount(percent)</span>
+                          <span>{orderDetail?.discount_percent_amount}</span>
                         </p>
 
                         <p>
                           <span>Total Amount</span>
-                          <span>158</span>
-                        </p>
-                        <p>
-                          <span>Paid Amount</span>
-                          <span>021</span>
-                        </p>
-                        <p>
-                          <span>Due Amount</span>
-                          <span>158</span>
+                          <span>{orderDetail?.grand_total_amount}</span>
                         </p>
                       </li>
                     </ul>
