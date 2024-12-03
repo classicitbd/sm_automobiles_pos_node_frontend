@@ -27,7 +27,7 @@ const BankPage = () => {
      setPage(1)
    }
 
-   //Fetch ShowRoom Data
+   //Fetch Bank Data
    const {
      data: banks = [],
      isLoading,

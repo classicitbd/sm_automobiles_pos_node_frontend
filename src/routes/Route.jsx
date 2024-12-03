@@ -24,7 +24,6 @@ import StockManage from "@/pages/StockManage/StockManage";
 import PosPage from "@/pages/Pos/PosPage";
 import OrderPage from "@/pages/order/OrderPage";
 import OrderDetails from "@/components/order/OrderDetails/OrderDetails";
-import OrderPdf from "@/components/order/OrderDetails/OrderPdf/OrderPdf";
 import AllList from "@/components/Customers/CustomerPaymentDueOrderList/AllList";
 import SypllierPaymentList from "@/components/Supplier/SypllierPaymentList";
 
@@ -146,12 +145,8 @@ const route = createBrowserRouter([
         element: <OrderPage />,
       },
       {
-        path: "/order-details/:id",
+        path: "/order-details/:_id",
         element: <OrderDetails />,
-      },
-      {
-        path: "/orderpdf",
-        element: <OrderPdf />,
       },
     ],
   },

@@ -7,11 +7,34 @@ import { CiMenuKebab } from "react-icons/ci";
 import { BASE_URL } from "@/utils/baseURL";
 import { toast } from "react-toastify";
 import { Button } from "../ui/button";
-import { FaEye, FaFileDownload, FaRegFilePdf } from "react-icons/fa";
-
+import {
+  FaDownload,
+  FaEye,
+  FaFileDownload,
+  FaRegFilePdf,
+} from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import OrderUpDateModal from "./OrderUpDateModal";
+import { CSVLink } from "react-csv";
+import { DateTimeFormat } from "@/utils/dateTimeFormet";
+import {
+  Document as PDFDocument,
+  Page,
+  StyleSheet,
+  Text,
+  View,
+  PDFDownloadLink,
+} from "@react-pdf/renderer";
+import MiniSpinner from "@/shared/MiniSpinner/MiniSpinner";
+
+const styles = StyleSheet.create({
+  totalText: {
+    fontWeight: "semibold",
+    fontSize: "10px",
+    color: "black",
+  },
+});
 
 const OrderTable = ({
   setPage,
@@ -39,17 +62,17 @@ const OrderTable = ({
   };
 
   // Close modal on outside click
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (!event.target.closest(".modal-container")) {
-        setOrderDocumentModal(null);
-      }
-    };
-    document.addEventListener("mousedown", handleOutsideClick);
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const handleOutsideClick = (event) => {
+  //     if (!event.target.closest(".modal-container")) {
+  //       setOrderDocumentModal(null);
+  //     }
+  //   };
+  //   document.addEventListener("mousedown", handleOutsideClick);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleOutsideClick);
+  //   };
+  // }, []);
 
   //Handle Order update  Function
 
@@ -59,16 +82,24 @@ const OrderTable = ({
   };
 
   //   handle order status
-  const handleOrderStatus = async (order_status, _id, products) => {
+  const handleOrderStatus = async (
+    order_status,
+    _id,
+    orders,
+    customer_id,
+    grand_total_amount
+  ) => {
     try {
       const sendData = {
         _id: _id,
         order_status: order_status,
         order_updated_by: user?._id,
         order_status_update: true,
-        order_products: products?.map((item) => ({
-          product_id: item?.product_id?._id,
-          product_quantity: item?.product_quantity,
+        customer_id: customer_id,
+        grand_total_amount: grand_total_amount,
+        order_orders: orders?.map((item) => ({
+          order_id: item?.order_id?._id,
+          order_quantity: item?.order_quantity,
           product_price: item?.product_price,
           product_buying_price: item?.product_buying_price,
           product_total_price: item?.product_total_price,
@@ -108,29 +139,227 @@ const OrderTable = ({
     }
   };
 
+  // Handle CSV Download data
+  const csvData =
+    orders?.data?.map((order) => ({
+      Date: DateTimeFormat(order?.createdAt),
+      Customer_Name: order?.customer_id?.customer_name,
+      Customer_Email: order?.customer_id?.customer_email,
+      Customer_Phone: order?.customer_id?.customer_phone,
+      Customer_Address: order?.customer_id?.customer_address,
+      Order_ID: order?.order_id,
+      Order_Status: order?.order_status,
+      Sub_Total: order?.sub_total_amount,
+      Discount_Percent: order?.discount_percent_amount,
+      Grand_Total: order?.grand_total_amount,
+      Order_Note: order?.order_note,
+    })) || [];
+
+  // Handle PDF Download data
+  const document = (
+    <PDFDocument>
+      <Page size={"A4"}>
+        <View style={{ margin: "10px" }}>
+          {/* to header */}
+          <View style={{ marginBottom: "20px" }}>
+            <Text
+              style={{
+                fontWeight: "bold",
+                textAlign: "center",
+                fontSize: "24px",
+                margin: "20px 0",
+                letterSpacing: "1px",
+              }}
+            >
+              Classic It
+            </Text>
+            <Text style={{ fontSize: "10px", textAlign: "center" }}>
+              Classic It Limited, 238/1 Uttara Sector 13, Dhaka-1207,
+              Bangladesh,
+            </Text>
+            <Text style={{ fontSize: "10px", textAlign: "center" }}>
+              +8801746544488, +88017465449, classicit.com
+            </Text>
+          </View>
+          <View>
+            {/* Column Headers */}
+            <View
+              style={{
+                flexDirection: "row",
+                borderTop: "1px",
+                borderLeft: "1px",
+                borderRight: "1px",
+                borderBottom: "1px",
+                padding: "10px 0",
+                backgroundColor: "#000F24",
+                borderColor: "#F5F7F8",
+                color: "white",
+              }}
+            >
+              <View
+                style={{
+                  width: "80px",
+                  fontSize: "10px",
+                  fontWeight: "bold",
+                  padding: "0 5px",
+                }}
+              >
+                <Text>#SL</Text>
+              </View>
+              <View
+                style={{ width: "100px", fontSize: "10px", fontWeight: "bold" }}
+              >
+                <Text>Date</Text>
+              </View>
+              <View
+                style={{ width: "100px", fontSize: "10px", fontWeight: "bold" }}
+              >
+                <Text>Customer Name</Text>
+              </View>
+              <View
+                style={{ width: "100px", fontSize: "10px", fontWeight: "bold" }}
+              >
+                <Text>Customer Contract</Text>
+              </View>
+              <View
+                style={{ width: "100px", fontSize: "10px", fontWeight: "bold" }}
+              >
+                <Text>Customer Address</Text>
+              </View>
+              <View
+                style={{ width: "100px", fontSize: "10px", fontWeight: "bold" }}
+              >
+                <Text>Order ID</Text>
+              </View>
+              <View
+                style={{ width: "100px", fontSize: "10px", fontWeight: "bold" }}
+              >
+                <Text>Order Status</Text>
+              </View>
+              <View
+                style={{ width: "100px", fontSize: "10px", fontWeight: "bold" }}
+              >
+                <Text>Sub Total</Text>
+              </View>
+              <View
+                style={{ width: "100px", fontSize: "10px", fontWeight: "bold" }}
+              >
+                <Text>Percent Amount</Text>
+              </View>
+              <View
+                style={{ width: "100px", fontSize: "10px", fontWeight: "bold" }}
+              >
+                <Text>Grand Total</Text>
+              </View>
+            </View>
+
+            {/* Data Row */}
+            {orders?.data?.map((order, i) => (
+              <View
+                key={i}
+                style={{
+                  flexDirection: "row",
+                  borderBottom: "1px",
+                  borderLeft: "1px",
+                  borderRight: "1px",
+                  padding: "10px 0",
+                  borderColor: "#F5F7F8",
+                  backgroundColor: i % 2 === 0 ? "#F5F7F8" : "white",
+                }}
+              >
+                <View
+                  style={{
+                    width: "80px",
+                    fontSize: "10px",
+                    textAlign: "left",
+                    paddingLeft: "10px",
+                  }}
+                >
+                  <Text>{i + 1}</Text>
+                </View>
+                <View style={{ width: "100px", fontSize: "10px" }}>
+                  <Text style={styles.totalText}>
+                    {DateTimeFormat(order?.createdAt)}
+                  </Text>
+                </View>
+                <View style={{ width: "100px" }}>
+                  <Text style={styles.totalText}>
+                    {order?.customer_id?.customer_name}
+                  </Text>
+                </View>
+                <View style={{ width: "100px" }}>
+                  <Text style={styles.totalText}>
+                    {order?.customer_id?.customer_phone
+                      ? order?.customer_id?.customer_phone
+                      : order?.customer_id?.customer_email}
+                  </Text>
+                </View>
+                <View style={{ width: "100px", fontSize: "10px" }}>
+                  <Text style={styles.totalText}>
+                    {order?.customer_id?.customer_address}
+                  </Text>
+                </View>
+                <View style={{ width: "100px", fontSize: "10px" }}>
+                  <Text style={styles.totalText}>{order?.order_id}</Text>
+                </View>
+                <View style={{ width: "100px", fontSize: "10px" }}>
+                  <Text style={styles.totalText}>{order?.order_status}</Text>
+                </View>
+                <View style={{ width: "100px", fontSize: "10px" }}>
+                  <Text style={styles.totalText}>
+                    {order?.sub_total_amount}
+                  </Text>
+                </View>
+                <View style={{ width: "100px", fontSize: "10px" }}>
+                  <Text style={styles.totalText}>
+                    {order?.discount_percent_amount}
+                  </Text>
+                </View>
+                <View style={{ width: "100px", fontSize: "10px" }}>
+                  <Text style={styles.totalText}>
+                    {order?.grand_total_amount}
+                  </Text>
+                </View>
+              </View>
+            ))}
+          </View>
+          <View style={{ marginBottom: "20px", marginTop: "20px" }}>
+            <Text style={{ fontSize: "10px", textAlign: "left" }}>
+              All information generated from Classic It at{" "}
+              {DateTimeFormat(new Date())}
+            </Text>
+          </View>
+        </View>
+      </Page>
+    </PDFDocument>
+  );
+
   return (
     <>
       <div className="flex justify-end gap-4">
-        <Link>
-          {" "}
-          <Button
-            type="button"
-            variant="secondary"
-            //onClick={() => ()}
-          >
-            <FaFileDownload /> Export Csv
-          </Button>
-        </Link>
+        <CSVLink
+          filename="order-list.csv"
+          className="flex items-center gap-2 text-sm font-semibold bg-secondary-400 text-text-default shadow-sm hover:bg-secondary-400/80 px-4 rounded-lg py-2"
+          type="button"
+          data={csvData}
+        >
+          <FaFileDownload /> Export CSV
+        </CSVLink>
 
-        <Link to="/orderpdf">
-          {" "}
-          <Button
-            type="button"
-            //onClick={() => ()}
-          >
-            <FaRegFilePdf /> Export pdf
-          </Button>
-        </Link>
+        <div>
+          <PDFDownloadLink document={document} fileName="order-list">
+            {({ loading }) =>
+              loading ? (
+                <MiniSpinner />
+              ) : (
+                <button className="flex items-center gap-2 text-sm font-semibold bg-primary text-white shadow-sm hover:bg-primaryVariant-400 px-4 rounded-lg py-2">
+                  <FaDownload className="text-xl text-textColor group-hover:text-secondary" />
+                  <span className="text-[10px] text-textColor">Download</span>
+                </button>
+              )
+            }
+          </PDFDownloadLink>
+        </div>
       </div>
       {isLoading === true ? (
         <TableLoadingSkeleton />
@@ -213,7 +442,9 @@ const OrderTable = ({
                               handleOrderStatus(
                                 e.target.value,
                                 order?._id,
-                                order?.order_products
+                                order?.order_orders,
+                                order?.customer_id?._id,
+                                order?.grand_total_amount
                               )
                             }
                             id="order_status"
@@ -235,9 +466,11 @@ const OrderTable = ({
                             {order?.order_status == "processing" && (
                               <option value="confirmed">Confirmed</option>
                             )}
-                            {order?.order_status !== "cancelled" && (
-                              <option value="cancelled">Cancelled</option>
-                            )}
+                            {order?.order_status !== "cancelled" &&
+                              order?.order_status !== "returned" &&
+                              order?.order_status !== "confirmed" && (
+                                <option value="cancelled">Cancelled</option>
+                              )}
                             {order?.order_status == "confirmed" && (
                               <option value="returned">Returned</option>
                             )}
