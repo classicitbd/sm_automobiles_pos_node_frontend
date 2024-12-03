@@ -23,7 +23,7 @@ const SignInPage = () => {
   const handleSignIn = async (data) => {
     setLoading(true);
     const sendData = {
-      login_credentials: data?.login_credentials,
+      user_phone: data?.user_phone,
       user_password: data?.user_password,
     };
     try {
@@ -74,22 +74,22 @@ const SignInPage = () => {
 
         <form onSubmit={handleSubmit(handleSignIn)} className="space-y-4">
           <div className="form-control w-full">
-            <label htmlFor="login_credentials" className="label">
-              <span className="label-text">Email or Phone Number</span>
+            <label htmlFor="user_phone" className="label">
+              <span className="label-text">Phone Number</span>
             </label>
             <input
-              id="login_credentials"
+              id="user_phone"
               type="text"
-              placeholder="login with email or phone number"
+              placeholder="login with phone number"
               className="border rounded px-3 py-2 w-full"
-              {...register("login_credentials", {
-                required: "Email or Phone number is required",
+              {...register("user_phone", {
+                required: "Phone number is required",
               })}
             />
-            {errors.login_credentials && (
+            {errors.user_phone && (
               <p className="text-red-600">
                 {" "}
-                {errors?.login_credentials?.message}
+                {errors?.user_phone?.message}
               </p>
             )}
           </div>

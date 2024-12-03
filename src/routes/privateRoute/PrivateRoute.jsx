@@ -11,11 +11,7 @@ const PrivateRoute = ({ children }) => {
     return <LoaderOverlay />;
   }
 
-  if (
-    user &&
-    user?.user_status == "active" &&
-    user?.login_credentials
-  ) {
+  if (user && user?.user_status == "active" && user?.user_phone) {
     return children;
   }
 

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { FiEdit } from "react-icons/fi";
-import UpdateShowRoom from "./UpdateShowRoom";
+import Updateproduct_unit from "./UpdateProductUnit";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import Pagination from "../common/pagination/Pagination";
 
-const ShowRoomTable = ({
-  showRoomNames,
+const ProductUnitTable = ({
+  product_unitNames,
   setPage,
   setLimit,
   page,
@@ -16,14 +16,14 @@ const ShowRoomTable = ({
   user,
   isLoading,
 }) => {
-  const [showRoomUpdateModal, setShowRoomUpdateModal] = useState(false);
-  const [showRoomUpdateData, setShowRoomUpdateData] = useState({});
+  const [product_unitUpdateModal, setproduct_unitUpdateModal] = useState(false);
+  const [product_unitUpdateData, setproduct_unitUpdateData] = useState({});
 
   //handle Update Function..
 
-  const handleShowRoomUpdateModal = (showrrom) => {
-    setShowRoomUpdateData(showrrom);
-    setShowRoomUpdateModal(true);
+  const handleproduct_unitUpdateModal = (showrrom) => {
+    setproduct_unitUpdateData(showrrom);
+    setproduct_unitUpdateModal(true);
   };
 
   const [serialNumber, setSerialNumber] = useState();
@@ -38,15 +38,17 @@ const ShowRoomTable = ({
       ) : (
         <div>
           <div className="rounded-lg border border-gray-200 mt-6">
-            {showRoomNames?.data?.length > 0 ? (
+            {product_unitNames?.data?.length > 0 ? (
               <div className="overflow-x-auto rounded-t-lg">
                 <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                   <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
                     <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
-                      <td className="whitespace-nowrap p-4 ">Showroom Name</td>
                       <td className="whitespace-nowrap p-4 ">
-                        Showroom Status
+                        Product Unit Name
+                      </td>
+                      <td className="whitespace-nowrap p-4 ">
+                        Product Unit Status
                       </td>
                       <td className="whitespace-nowrap p-4 ">Create By</td>
                       <td className="whitespace-nowrap p-4 ">Updated By</td>
@@ -56,9 +58,9 @@ const ShowRoomTable = ({
                   </thead>
 
                   <tbody className="divide-y divide-gray-200 text-center">
-                    {showRoomNames?.data?.map((showroom, i) => (
+                    {product_unitNames?.data?.map((product_unit, i) => (
                       <tr
-                        key={showroom?._id}
+                        key={product_unit?._id}
                         className={`divide-x divide-gray-200 ${
                           i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
                         }`}
@@ -67,10 +69,10 @@ const ShowRoomTable = ({
                           {serialNumber + i + 1}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {showroom?.showroom_name}
+                          {product_unit?.product_unit_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 ">
-                          {showroom?.showroom_status === "active" ? (
+                          {product_unit?.product_unit_status === "active" ? (
                             <p className="bg-bgBtnActive text-btnActiveColor px-[10px] py-[4px] rounded-[8px]">
                               <span>Active</span>
                             </p>
@@ -81,15 +83,17 @@ const ShowRoomTable = ({
                           )}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {showroom?.showroom_publisher_id?.user_name}
+                          {product_unit?.product_unit_publisher_id?.user_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {showroom?.showroom_updated_by?.user_name}
+                          {product_unit?.product_unit_updated_by?.user_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                           <button
                             className="ml-3"
-                            onClick={() => handleShowRoomUpdateModal(showroom)}
+                            onClick={() =>
+                              handleproduct_unitUpdateModal(product_unit)
+                            }
                           >
                             <FiEdit
                               size={25}
@@ -114,11 +118,11 @@ const ShowRoomTable = ({
             limit={limit}
           />
 
-          {/* Show Showroom Update Modal */}
-          {showRoomUpdateModal && (
-            <UpdateShowRoom
-              setShowRoomUpdateModal={setShowRoomUpdateModal}
-              showRoomUpdateData={showRoomUpdateData}
+          {/* Show product_unit Update Modal */}
+          {product_unitUpdateModal && (
+            <Updateproduct_unit
+              setproduct_unitUpdateModal={setproduct_unitUpdateModal}
+              product_unitUpdateData={product_unitUpdateData}
               refetch={refetch}
               user={user}
             />
@@ -129,4 +133,4 @@ const ShowRoomTable = ({
   );
 };
 
-export default ShowRoomTable;
+export default ProductUnitTable;

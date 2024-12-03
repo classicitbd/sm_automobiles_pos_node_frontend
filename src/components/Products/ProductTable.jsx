@@ -43,7 +43,6 @@ const ProductTable = ({
                       <td className="whitespace-nowrap p-4 ">Buying Price</td>
                       <td className="whitespace-nowrap p-4 ">Quantity</td>
                       <td className="whitespace-nowrap p-4 ">Alert Quantity</td>
-                      <td className="whitespace-nowrap p-4 ">Unit</td>
                       <td className="whitespace-nowrap p-4 ">Category</td>
                       <td className="whitespace-nowrap p-4 ">Brand</td>
                       <td className="whitespace-nowrap p-4 ">Status</td>
@@ -84,13 +83,10 @@ const ProductTable = ({
                           {product?.product_buying_price}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {product?.product_quantity}
+                          {product?.product_quantity}{" "}{"Liter"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {product?.product_stock_low_alert}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {product?.product_unit}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {product?.category_id?.category_name}

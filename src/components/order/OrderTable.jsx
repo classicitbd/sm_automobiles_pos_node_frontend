@@ -144,7 +144,6 @@ const OrderTable = ({
     orders?.data?.map((order) => ({
       Date: DateTimeFormat(order?.createdAt),
       Customer_Name: order?.customer_id?.customer_name,
-      Customer_Email: order?.customer_id?.customer_email,
       Customer_Phone: order?.customer_id?.customer_phone,
       Customer_Address: order?.customer_id?.customer_address,
       Order_ID: order?.order_id,
@@ -289,9 +288,7 @@ const OrderTable = ({
                 </View>
                 <View style={{ width: "100px" }}>
                   <Text style={styles.totalText}>
-                    {order?.customer_id?.customer_phone
-                      ? order?.customer_id?.customer_phone
-                      : order?.customer_id?.customer_email}
+                    {order?.customer_id?.customer_phone}
                   </Text>
                 </View>
                 <View style={{ width: "100px", fontSize: "10px" }}>
@@ -374,7 +371,6 @@ const OrderTable = ({
                       <td className="whitespace-nowrap p-4 ">SL No</td>
                       <td className="whitespace-nowrap p-4 ">Customer Name</td>
                       <td className="whitespace-nowrap p-4 ">Phone</td>
-                      <td className="whitespace-nowrap p-4 ">Email</td>
                       <td className="whitespace-nowrap p-4 ">
                         Customer Status
                       </td>
@@ -405,9 +401,6 @@ const OrderTable = ({
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {order?.customer_id?.customer_phone}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {order?.customer_id?.customer_email}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {order?.customer_id?.customer_status === "active"

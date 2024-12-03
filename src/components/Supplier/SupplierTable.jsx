@@ -51,12 +51,11 @@ const SupplierTable = ({
                   <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
                     Supplier Name
                   </th>
-
-                  <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
-                    Supplier Email
-                  </th>
                   <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
                     Supplier Phone
+                  </th>
+                  <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    Due Amount
                   </th>
                   <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
                     Address
@@ -88,10 +87,10 @@ const SupplierTable = ({
                       {supplier?.supplier_name}
                     </td>
                     <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                      {supplier?.supplier_email}
+                      {supplier?.supplier_phone}
                     </td>
                     <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                      {supplier?.supplier_phone}
+                      {supplier?.supplier_wallet_amount}
                     </td>
                     <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                       {supplier?.supplier_address}
@@ -123,7 +122,7 @@ const SupplierTable = ({
                           className="cursor-pointer text-gray-500 hover:text-gray-300"
                         />
                       </button>
-                      <Link to="/supplierpaymentlist">
+                      <Link to={`/supplierpaymentlist/${supplier?._id}`}>
                         <button className="ml-3">
                           <FaEye
                             className="cursor-pointer text-gray-500 hover:text-gray-300"

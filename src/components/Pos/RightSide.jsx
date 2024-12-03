@@ -196,9 +196,6 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                     Phone
                   </th>
                   <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
-                    Email
-                  </th>
-                  <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
                     Due
                   </th>
                   <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
@@ -216,9 +213,6 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                   </td>
                   <td className="whitespace-nowrap py-3 px-2 font-medium text-gray-700 text-center border">
                     {customerInfo?.customer_phone}
-                  </td>
-                  <td className="whitespace-nowrap py-3 px-2 font-medium text-gray-700 text-center border">
-                    {customerInfo?.customer_email}
                   </td>
                   <td className="whitespace-nowrap py-3 px-2 font-medium text-gray-700 text-center border">
                     {customerInfo?.previous_due

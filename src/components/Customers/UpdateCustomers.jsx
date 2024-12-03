@@ -35,7 +35,6 @@ const UpdateCustomers = ({
         customer_updated_by: user?._id,
         customer_name: data?.customer_name,
         customer_phone: data?.customer_phone,
-        customer_email: data?.customer_email,
         customer_address: data?.customer_address,
         previous_due: data?.previous_due,
         previous_advance: data?.previous_advance,
@@ -133,22 +132,6 @@ const UpdateCustomers = ({
                   defaultValue={customerUpdateData?.customer_address}
                   type='text'
                   placeholder='Customer Address'
-                  className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
-                />
-              </div>
-              <div className='mt-2'>
-                <label
-                  htmlFor=''
-                  className='block text-xs font-medium text-gray-700'
-                >
-                  Customer Email
-                </label>
-
-                <input
-                  {...register('customer_email')}
-                  defaultValue={customerUpdateData?.customer_email}
-                  type='email'
-                  placeholder='Customer Email'
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
                 />
               </div>

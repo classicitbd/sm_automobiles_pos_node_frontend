@@ -55,7 +55,7 @@ const AddSupplierPayment = () => {
       const sendData = {
         supplier_payment_publisher_id: user?._id,
         supplier_id: supplier_id,
-        transaction_id: data?.transaction_id,
+        reference_id: data?.reference_id,
         payment_bank_id: payment_bank_id,
         supplier_payment_title: data?.supplier_payment_title,
         supplier_payment_description: data?.supplier_payment_description,
@@ -140,30 +140,22 @@ const AddSupplierPayment = () => {
                   htmlFor=""
                   className="block text-xs font-medium text-gray-700"
                 >
-                  Supplier Payment Description
-                </label>
-
-                <textarea
-                  {...register("supplier_payment_description")}
-                  type="text"
-                  placeholder="Supplier Payment Description"
-                  className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
-                />
-              </div>
-              <div className="mt-2">
-                <label
-                  htmlFor=""
-                  className="block text-xs font-medium text-gray-700"
-                >
-                  Supplier Payment Date
+                  Supplier Payment Date<span className="text-red-500">*</span>
                 </label>
 
                 <input
-                  {...register("supplier_payment_date")}
+                  {...register("supplier_payment_date", {
+                    required: "Date is Required",
+                  })}
                   type="date"
                   placeholder="Supplier Payment Date"
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
+                {errors.supplier_payment_date && (
+                  <p className="text-red-600">
+                    {errors.supplier_payment_date.message}
+                  </p>
+                )}
               </div>
 
               <div className="mt-2">
@@ -196,15 +188,20 @@ const AddSupplierPayment = () => {
                   htmlFor=""
                   className="block text-xs font-medium text-gray-700"
                 >
-                  Transaction id No
+                  Reference ID<span className="text-red-500">*</span>
                 </label>
 
                 <input
-                  {...register("transaction_id")}
+                  {...register("reference_id", {
+                    required: "Reference ID required",
+                  })}
                   type="text"
-                  placeholder="Transaction id No"
+                  placeholder="Reference ID"
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
+                {errors.reference_id && (
+                  <p className="text-red-600">{errors.reference_id.message}</p>
+                )}
               </div>
               <div className="mt-3">
                 <label className="block text-xs font-medium text-gray-700 mb-1 mt-2">
@@ -214,6 +211,7 @@ const AddSupplierPayment = () => {
                 <Select
                   id="supplier_id"
                   name="supplier_id"
+                  required
                   aria-label="Supplier Name"
                   options={supplierTypes?.data}
                   getOptionLabel={(x) => x?.supplier_name}
@@ -233,6 +231,7 @@ const AddSupplierPayment = () => {
                   name="payment_bank_id"
                   aria-label="Bank Type"
                   isClearable
+                  required
                   options={bankTypes?.data}
                   getOptionLabel={(x) => x?.bank_name}
                   getOptionValue={(x) => x?._id}

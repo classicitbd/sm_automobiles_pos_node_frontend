@@ -95,7 +95,7 @@ const AddCategory = ({ setCategoryCreateModal, refetch, user }) => {
             <form onSubmit={handleSubmit(handleDataPost)} className=''>
               <div>
                 <label
-                  htmlFor='UserEmail'
+                  htmlFor='category_name'
                   className='block text-xs font-medium text-gray-700'
                 >
                   Category Name <span className='text-red-500'>*</span>

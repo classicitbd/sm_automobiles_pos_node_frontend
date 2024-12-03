@@ -130,10 +130,6 @@ const OrderDetails = () => {
                     </li>
 
                     <li>
-                      <span>Customer Email</span>
-                      <span>: {orderDetail?.customer_id?.customer_email}</span>
-                    </li>
-                    <li>
                       <span>Customer Phone</span>
                       <span>: {orderDetail?.customer_id?.customer_phone}</span>
                     </li>
