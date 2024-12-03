@@ -50,7 +50,6 @@ const CustomersTable = ({
                       <td className="whitespace-nowrap p-4 ">
                         Customer Address
                       </td>
-                      <td className="whitespace-nowrap p-4 ">Customer Email</td>
                       <td className="whitespace-nowrap p-4 ">Customer Phone</td>
                       <td className="whitespace-nowrap p-4 ">
                         Previous Advance
@@ -85,9 +84,6 @@ const CustomersTable = ({
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {customer?.customer_address}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {customer?.customer_email}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {customer?.customer_phone}

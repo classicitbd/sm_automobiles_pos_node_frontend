@@ -10,9 +10,7 @@ import AddStaffRolePage from "@/pages/StaffAndRolePage/AddStaffRolePage/AddStaff
 import BankPage from "@/pages/BankPage/BankPage";
 import CustomersPage from "@/pages/CustomersPage/CustomersPage";
 import BrandPage from "@/pages/BrandPage/BrandPage";
-import ShowRoomPage from "@/pages/ShowRoomPage/ShowRoomPage";
 import ExpensesPage from "@/pages/ExpensesPage/ExpensesPage";
-import PurchasePage from "@/pages/PurchasePage/PurchasePage";
 import CustomerPayment from "@/pages/CustomersPage/CustomerPaymentPage/CustomerPayment";
 import CustomerDue from "@/pages/CustomersPage/CustomerDuePage/CustomerDue";
 import SupplierPayment from "@/pages/Supplier/SupplierPaymentPage/SupplierPayment";
@@ -26,6 +24,7 @@ import OrderPage from "@/pages/order/OrderPage";
 import OrderDetails from "@/components/order/OrderDetails/OrderDetails";
 import AllList from "@/components/Customers/CustomerPaymentDueOrderList/AllList";
 import SypllierPaymentList from "@/components/Supplier/SypllierPaymentList";
+import ProductUnitPage from "@/pages/ProductUnitPage/ProductUnitPage";
 
 const route = createBrowserRouter([
   {
@@ -56,8 +55,8 @@ const route = createBrowserRouter([
         element: <BrandPage />,
       },
       {
-        path: "/showroom",
-        element: <ShowRoomPage />,
+        path: "/units",
+        element: <ProductUnitPage />,
       },
       // ------Supplier----
 
@@ -66,11 +65,11 @@ const route = createBrowserRouter([
         element: <SupplierPage />,
       },
       {
-        path: "/supplier-payment",
+        path: "/supplier-payment-create",
         element: <SupplierPayment />,
       },
       {
-        path: "/supplierpaymentlist",
+        path: "/supplierpaymentlist/:supplier_id",
         element: <SypllierPaymentList />,
       },
       // ------Staff And Role----
@@ -120,11 +119,6 @@ const route = createBrowserRouter([
       {
         path: "/expense",
         element: <ExpensesPage />,
-      },
-      // ------Purchase----
-      {
-        path: "/purchase",
-        element: <PurchasePage />,
       },
       // ------Product----
       {

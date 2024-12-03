@@ -94,7 +94,7 @@ const UpDateCategory = ({
             <form onSubmit={handleSubmit(handleDataPost)} className=''>
               <div>
                 <label
-                  htmlFor='UserEmail'
+                  htmlFor='category_name'
                   className='block text-xs font-medium text-gray-700'
                 >
                   Category Name

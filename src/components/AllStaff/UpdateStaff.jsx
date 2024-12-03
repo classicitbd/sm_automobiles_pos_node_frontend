@@ -32,10 +32,8 @@ const UpdateStaff = ({
     setLoading(true);
     const sendData = {
       _id: updateModalValue?._id,
-      login_credentials: data?.user_email ? data?.user_email : data?.user_phone,
       user_role_id: data?.user_role_id,
       user_name: data?.user_name,
-      user_email: data?.user_email,
       user_status: data?.user_status,
       user_phone: data?.user_phone,
       user_password: data?.user_password,
@@ -128,28 +126,6 @@ const UpdateStaff = ({
             {errors.user_name && (
               <p className='text-red-600 text-sm'>
                 {errors.user_name?.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <label
-              htmlFor='user_email'
-              className='block text-xs font-medium text-gray-700 mt-2'
-            >
-              User Email
-            </label>
-
-            <input
-              {...register('user_email')}
-              type='text'
-              id='user_email'
-              defaultValue={updateModalValue?.user_email}
-              placeholder='Enter user email'
-              className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
-            />
-            {errors.user_email && (
-              <p className='text-red-600 text-sm'>
-                {errors.user_email?.message}
               </p>
             )}
           </div>

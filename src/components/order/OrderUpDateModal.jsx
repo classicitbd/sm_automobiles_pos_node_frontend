@@ -90,7 +90,7 @@ const OrderUpDateModal = ({
             <form onSubmit={handleSubmit(handleDataPost)} className="">
               <div>
                 <label
-                  htmlFor="UserEmail"
+                  htmlFor="customer_name"
                   className="block text-xs font-medium text-gray-700"
                 >
                   Customer Name

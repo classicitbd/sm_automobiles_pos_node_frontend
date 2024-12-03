@@ -13,7 +13,7 @@ import { BASE_URL } from "@/utils/baseURL";
 import { AuthContext } from "@/context/AuthProvider";
 
 const AddProducts = () => {
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [category_id, setCategory_id] = useState("");
   const [brand_id, setBrand_id] = useState("");
@@ -164,29 +164,9 @@ const AddProducts = () => {
                 className="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
               />
             </div>
-            <div>
-              <label
-                htmlFor=""
-                className="block text-xs font-medium text-gray-700"
-              >
-                Product Unit <span className="text-red-500">*</span>
-              </label>
-
-              <input
-                {...register("product_unit", {
-                  required: "Product Unit is required",
-                })}
-                type="text"
-                placeholder="Product Unit"
-                className="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
-              />
-              {errors.product_unit && (
-                <p className="text-red-600">{errors.product_unit?.message}</p>
-              )}
-            </div>
 
             <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1 mt-2">
+              <label className="block text-xs font-medium text-gray-700 mb-1">
                 Category Name <span className="text-red-500">*</span>
               </label>
 
@@ -206,7 +186,7 @@ const AddProducts = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1 mt-2">
+              <label className="block text-xs font-medium text-gray-700 mb-1">
                 Brand Name
               </label>
 
@@ -236,7 +216,6 @@ const AddProducts = () => {
                 <option value="in-active">In-Active</option>
               </select>
             </div>
-
           </div>
 
           <div className="grid grid-cols-2 gap-5">

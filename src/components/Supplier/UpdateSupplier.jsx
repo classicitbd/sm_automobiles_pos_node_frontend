@@ -23,7 +23,6 @@ const UpdateSupplier = ({ setUpdateModal, updateModalValue, refetch, user }) => 
         _id: updateModalValue?._id,
         supplier_updated_by: user?._id,
         supplier_name: data?.supplier_name,
-        supplier_email: data?.supplier_email,
         supplier_phone: data?.supplier_phone,
         supplier_address: data?.supplier_address,
         supplier_status: data?.supplier_status,
@@ -111,28 +110,6 @@ const UpdateSupplier = ({ setUpdateModal, updateModalValue, refetch, user }) => 
             {errors.supplier_name && (
               <p className='text-red-600 text-sm'>
                 {errors.supplier_name?.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <label
-              htmlFor='supplier_email'
-              className='block text-xs font-medium text-gray-700 mt-2'
-            >
-              Supplier Email
-            </label>
-
-            <input
-              {...register('supplier_email')}
-              type='text'
-              id='supplier_email'
-              defaultValue={updateModalValue?.supplier_email}
-              placeholder='Enter Supplier email'
-              className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
-            />
-            {errors.supplier_email && (
-              <p className='text-red-600 text-sm'>
-                {errors.supplier_email?.message}
               </p>
             )}
           </div>
