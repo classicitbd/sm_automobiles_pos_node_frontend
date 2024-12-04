@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import CategoryTable from '../../components/Category/CategoryTable'
 import AddCategory from '../../components/Category/AddCategory'
-
 import { AuthContext } from './../../context/AuthProvider'
 import useDebounced from '../../hooks/useDebounced'
 import { Button } from '@/components/ui/button'
@@ -35,12 +34,12 @@ function CategoryPage() {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/category/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
+      `/api/v1/category?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/category/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
+          `${BASE_URL}/category?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
           {
             credentials: 'include',
           }

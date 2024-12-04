@@ -27,9 +27,6 @@ const UpDateCategory = ({
         category_name: data?.category_name
           ? data?.category_name
           : categoryUpdateData?.category_name,
-        category_status: data?.category_status
-          ? data?.category_status
-          : categoryUpdateData?.category_status,
       }
 
       const response = await fetch(`${BASE_URL}/category`, {
@@ -106,19 +103,6 @@ const UpDateCategory = ({
                   defaultValue={categoryUpdateData?.category_name}
                   className='mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2'
                 />
-              </div>
-              <div className='mt-2'>
-                <label className='block text-xs font-medium text-gray-700'>
-                  Category Status
-                </label>
-                <select
-                  {...register('category_status')}
-                  defaultValue={categoryUpdateData?.category_status}
-                  className='mt-2 rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2 w-full'
-                >
-                  <option value='active'>Active</option>
-                  <option value='in-active'>In-Active</option>
-                </select>
               </div>
 
               <div className='flex gap-8 mt-6 justify-end'>

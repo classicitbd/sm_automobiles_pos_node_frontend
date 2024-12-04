@@ -52,14 +52,10 @@ const CustomersTable = ({
                       </td>
                       <td className="whitespace-nowrap p-4 ">Customer Phone</td>
                       <td className="whitespace-nowrap p-4 ">
-                        Previous Advance
+                        Wallet Balance
                       </td>
-                      <td className="whitespace-nowrap p-4 ">Previous Due</td>
                       <td className="whitespace-nowrap p-4 ">
                         Customer Status
-                      </td>
-                      <td className="whitespace-nowrap p-4 ">
-                        First Payment Status
                       </td>
                       <td className="whitespace-nowrap p-4 ">Created By</td>
                       <td className="whitespace-nowrap p-4 ">Updated By</td>
@@ -89,24 +85,18 @@ const CustomersTable = ({
                           {customer?.customer_phone}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {customer?.previous_advance}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {customer?.previous_due}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 ">
-                          {customer?.customer_status === "active" ? (
-                            <p className="bg-bgBtnActive text-btnActiveColor px-[10px] py-[4px] rounded-[8px]">
-                              <span>Active</span>
-                            </p>
+                          {customer?.customer_wallet > 0 ? (
+                            <span className="text-green-500">
+                              {customer?.customer_wallet}
+                            </span>
                           ) : (
-                            <p className="bg-bgBtnInactive text-btnInactiveColor px-[10px] py-[4px] rounded-[8px]">
-                              <span>In-Active</span>
-                            </p>
+                            <span className="text-red-500">
+                              {customer?.customer_wallet}
+                            </span>
                           )}
                         </td>
                         <td className="whitespace-nowrap py-1.5 ">
-                          {customer?.first_payment_status === "active" ? (
+                          {customer?.customer_status === "active" ? (
                             <p className="bg-bgBtnActive text-btnActiveColor px-[10px] py-[4px] rounded-[8px]">
                               <span>Active</span>
                             </p>
@@ -157,7 +147,7 @@ const CustomersTable = ({
             page={page}
             limit={limit}
           />
-          {/* Show Bank Update Modal */}
+          {/* Show customer Update Modal */}
           {customerUpdateModal && (
             <UpdateCustomers
               setCustomerUpdateModal={setCustomerUpdateModal}

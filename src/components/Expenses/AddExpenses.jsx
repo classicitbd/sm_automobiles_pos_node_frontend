@@ -348,7 +348,7 @@ const AddExpenses = ({ setExpensesCreateModal, refetch, user }) => {
               </div>
               <div className="flex justify-end mt-3">
                 {loading == true ? (
-                  <div className="px-10 py-2 flex items-center justify-center  bg-primaryColor text-white rounded">
+                  <div className="px-10 py-2 flex items-center justify-center  bg-primary text-white rounded">
                     <MiniSpinner />
                   </div>
                 ) : (

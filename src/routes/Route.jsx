@@ -13,7 +13,6 @@ import BrandPage from "@/pages/BrandPage/BrandPage";
 import ExpensesPage from "@/pages/ExpensesPage/ExpensesPage";
 import CustomerPayment from "@/pages/CustomersPage/CustomerPaymentPage/CustomerPayment";
 import CustomerDue from "@/pages/CustomersPage/CustomerDuePage/CustomerDue";
-import SupplierPayment from "@/pages/Supplier/SupplierPaymentPage/SupplierPayment";
 import ProductPage from "@/pages/ProductPage/ProductPage";
 import AddProductPage from "@/pages/ProductPage/AddProductPage/AddProductPage";
 import UpDateProduct from "@/components/Products/UpDateProduct";
@@ -25,6 +24,8 @@ import OrderDetails from "@/components/order/OrderDetails/OrderDetails";
 import AllList from "@/components/Customers/CustomerPaymentDueOrderList/AllList";
 import SypllierPaymentList from "@/components/Supplier/SypllierPaymentList";
 import ProductUnitPage from "@/pages/ProductUnitPage/ProductUnitPage";
+import SiteSetting from "@/pages/SiteSetting/SiteSetting";
+import SaleTargetPage from "@/pages/SaleTarget/SaleTargetPage";
 
 const route = createBrowserRouter([
   {
@@ -58,15 +59,19 @@ const route = createBrowserRouter([
         path: "/units",
         element: <ProductUnitPage />,
       },
+      {
+        path: "/site_setting",
+        element: <SiteSetting />,
+      },
+      {
+        path: "/sale-target",
+        element: <SaleTargetPage />,
+      },
       // ------Supplier----
 
       {
         path: "/supplier",
         element: <SupplierPage />,
-      },
-      {
-        path: "/supplier-payment-create",
-        element: <SupplierPayment />,
       },
       {
         path: "/supplierpaymentlist/:supplier_id",

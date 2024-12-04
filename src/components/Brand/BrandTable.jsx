@@ -46,7 +46,6 @@ const BrandTable = ({
                     <tr className='divide-x divide-gray-300  font-semibold text-center text-gray-900'>
                       <td className='whitespace-nowrap p-4 '>SL No</td>
                       <td className='whitespace-nowrap p-4 '>Brand Name</td>
-                      <td className='whitespace-nowrap p-4 '>Brand Status</td>
                       <td className='whitespace-nowrap p-4 '>Created By</td>
                       <td className='whitespace-nowrap p-4 '>Updated By</td>
 
@@ -66,21 +65,6 @@ const BrandTable = ({
                         </td>
                         <td className='whitespace-nowrap py-1.5 font-medium text-gray-700'>
                           {brand?.brand_name}
-                        </td>
-                        <td className='whitespace-nowrap py-1.5 '>
-                          {brand?.brand_status === 'active' ? (
-                            <p
-                              className='bg-bgBtnActive text-btnActiveColor px-[10px] py-[4px] rounded-[8px]'
-                            >
-                              <span>Active</span>
-                            </p>
-                          ) : (
-                            <p
-                              className='bg-bgBtnInactive text-btnInactiveColor px-[10px] py-[4px] rounded-[8px]'
-                            >
-                              <span>In-Active</span>
-                            </p>
-                          )}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                       {brand?.brand_publisher_id?.user_name}

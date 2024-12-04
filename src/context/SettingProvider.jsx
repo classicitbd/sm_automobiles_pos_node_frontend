@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useEffect, useState } from "react";
 import { BASE_URL } from "../utils/baseURL";
 
@@ -9,7 +10,7 @@ const SettingProvider = ({ children }) => {
 
   const fetchUserData = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/siteSetting`, {
+      const response = await fetch(`${BASE_URL}/site_setting`, {
         method: "GET",
         headers: {
           "content-type": "application/json",

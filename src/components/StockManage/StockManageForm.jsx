@@ -1,4 +1,3 @@
-
 import MiniSpinner from "@/shared/MiniSpinner/MiniSpinner";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -23,7 +22,8 @@ const StockManageForm = () => {
   } = useForm();
 
   //get product data
-  const { data: productTypes, isLoading: productLoading } = useGetActiveProduct();
+  const { data: productTypes, isLoading: productLoading } =
+    useGetActiveProduct();
 
   const handleDataPost = async (data) => {
     setLoading(true);
@@ -122,7 +122,9 @@ const StockManageForm = () => {
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
                 {errors.product_selling_price && (
-                  <p className="text-red-600">{errors.product_selling_price.message}</p>
+                  <p className="text-red-600">
+                    {errors.product_selling_price.message}
+                  </p>
                 )}
               </div>
               <div className="mt-2">
@@ -144,7 +146,9 @@ const StockManageForm = () => {
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
                 {errors.product_buying_price && (
-                  <p className="text-red-600">{errors.product_buying_price.message}</p>
+                  <p className="text-red-600">
+                    {errors.product_buying_price.message}
+                  </p>
                 )}
               </div>
               <div className="mt-2">
@@ -166,7 +170,9 @@ const StockManageForm = () => {
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
                 {errors.product_quantity && (
-                  <p className="text-red-600">{errors.product_quantity.message}</p>
+                  <p className="text-red-600">
+                    {errors.product_quantity.message}
+                  </p>
                 )}
               </div>
               <div className="mt-3">
@@ -190,7 +196,7 @@ const StockManageForm = () => {
 
               <div className="flex justify-end mt-3">
                 {loading == true ? (
-                  <div className="px-10 py-2 flex items-center justify-center  bg-primaryColor text-white rounded">
+                  <div className="px-10 py-2 flex items-center justify-center  bg-primary text-white rounded">
                     <MiniSpinner />
                   </div>
                 ) : (

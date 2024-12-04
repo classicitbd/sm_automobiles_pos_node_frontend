@@ -66,29 +66,31 @@ const AddCustomersPayment = () => {
       const response = await fetch(
         `${BASE_URL}/customer_payment?role_type=customer_payment_create`,
         {
-          method: 'POST',
-          credentials: 'include',
+          method: "POST",
+          credentials: "include",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(sendData),
         }
-      )
-      const result = await response.json()
+      );
+      const result = await response.json();
       if (result?.statusCode === 200 && result?.success === true) {
         toast.success(
-          result?.message ? result?.message : 'Customer Payment created successfully',
+          result?.message
+            ? result?.message
+            : "Customer Payment created successfully",
           {
             autoClose: 1000,
           }
-        )
-        reset()
-        setLoading(false)
+        );
+        reset();
+        setLoading(false);
       } else {
-        toast.error(result?.message || 'Something went wrong', {
+        toast.error(result?.message || "Something went wrong", {
           autoClose: 1000,
-        })
-        setLoading(false)
+        });
+        setLoading(false);
       }
     } catch (error) {
       toast.error(error?.message, {
@@ -205,7 +207,7 @@ const AddCustomersPayment = () => {
 
               <div className="flex justify-end mt-3">
                 {loading == true ? (
-                  <div className="px-10 py-2 flex items-center justify-center  bg-primaryColor text-white rounded">
+                  <div className="px-10 py-2 flex items-center justify-center  bg-primary text-white rounded">
                     <MiniSpinner />
                   </div>
                 ) : (

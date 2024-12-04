@@ -11,10 +11,18 @@ const UpdateProductUnit = ({
   refetch,
   user,
   product_unitUpdateData,
+  settingData,
 }) => {
   const [loading, setLoading] = useState(false);
+  const [unitValue, setUnitValue] = useState(
+    product_unitUpdateData?.product_unit_name
+  );
 
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   //handle Data post
   const handleDataPost = async (data) => {
@@ -26,19 +34,22 @@ const UpdateProductUnit = ({
         product_unit_name: data?.product_unit_name
           ? data?.product_unit_name
           : product_unitUpdateData?.product_unit_name,
-        product_unit_status: data?.product_unit_status
-          ? data?.product_unit_status
-          : product_unitUpdateData?.product_unit_status,
+        product_unit_value: data?.product_unit_value
+          ? data?.product_unit_value
+          : product_unitUpdateData?.product_unit_value,
       };
 
-      const response = await fetch(`${BASE_URL}/product_unit`, {
-        method: "PATCH",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(sendData),
-      });
+      const response = await fetch(
+        `${BASE_URL}/product_unit?role_type=product_unit_update`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(sendData),
+        }
+      );
       const result = await response.json();
       if (result?.statusCode === 200 && result?.success === true) {
         toast.success(
@@ -102,26 +113,45 @@ const UpdateProductUnit = ({
                   type="text"
                   defaultValue={product_unitUpdateData?.product_unit_name}
                   placeholder="product_unit Name"
+                  onChange={(e) => setUnitValue(e.target.value)}
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
+                {errors.product_unit_name && (
+                  <p className="text-red-600">
+                    {errors.product_unit_name?.message}
+                  </p>
+                )}
               </div>
               <div className="mt-2">
-                <label className="block text-xs font-medium text-gray-700">
-                  product unit Status
+                <label className="block font-medium text-gray-700">
+                  product unit Value<span className="text-red-500">*</span>
                 </label>
-                <select
-                  {...register("product_unit_status")}
-                  defaultValue={product_unitUpdateData?.product_unit_status}
-                  className="mt-2 rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2 w-full"
-                >
-                  <option value="active">Active</option>
-                  <option value="in-active">In-Active</option>
-                </select>
+                <div className="flex items-center justify-center gap-4">
+                  <p>1 {unitValue}</p>
+                  <p>=</p>
+                  <div className="flex items-center gap-4">
+                    <input
+                      {...register("product_unit_value", {
+                        required: "product unit Value is required",
+                      })}
+                      defaultValue={product_unitUpdateData?.product_unit_value}
+                      type="text"
+                      placeholder="product unit Value"
+                      className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                    />
+                    {settingData?.unit_name}
+                    {errors.product_unit_value && (
+                      <p className="text-red-600">
+                        {errors.product_unit_value?.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
               </div>
 
               <div className="flex justify-end mt-3">
                 {loading == true ? (
-                  <div className="px-10 py-2 flex items-center justify-center  bg-primaryColor text-white rounded">
+                  <div className="px-10 py-2 flex items-center justify-center  bg-primary text-white rounded">
                     <MiniSpinner />
                   </div>
                 ) : (
