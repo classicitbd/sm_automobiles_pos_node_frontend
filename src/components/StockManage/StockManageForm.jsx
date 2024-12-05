@@ -14,6 +14,7 @@ const StockManageForm = () => {
 
   const [loading, setLoading] = useState(false);
   const [product_id, setProduct_id] = useState(null);
+  const [supplier_id, setSupplier_id] = useState(null);
   const {
     register,
     handleSubmit,
@@ -35,6 +36,10 @@ const StockManageForm = () => {
         product_buying_price: data?.product_buying_price,
         product_quantity: data?.product_quantity,
         product_id: product_id,
+        supplier_id: supplier_id,
+        total_price: parseInt(
+          data?.product_buying_price * data?.product_quantity
+        ),
       };
       const response = await fetch(
         `${BASE_URL}/stock_manage?role_type=stock_manage_create`,
@@ -190,6 +195,7 @@ const StockManageForm = () => {
                   getOptionValue={(x) => x?._id}
                   onChange={(selectedOption) => {
                     setProduct_id(selectedOption?._id);
+                    setSupplier_id(selectedOption?.supplier_id);
                   }}
                 />
               </div>

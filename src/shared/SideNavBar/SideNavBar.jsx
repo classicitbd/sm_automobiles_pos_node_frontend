@@ -10,7 +10,7 @@ import { TbCategoryPlus, TbHttpPost } from "react-icons/tb";
 
 import { ChildMenuItem, DropdownMenu, MenuItem } from "./DropdownAndMenuItem";
 import { FiUsers } from "react-icons/fi";
-import { FaShoppingCart, FaUsers, FaUserTie } from "react-icons/fa";
+import { FaShoppingCart, FaUsers } from "react-icons/fa";
 import { MdSettingsSuggest } from "react-icons/md";
 
 const SideNavBar = () => {
@@ -142,34 +142,45 @@ const SideNavBar = () => {
             isActive={isActive("/bank-account")}
             onClick={closeAllDropdowns} // Close all dropdowns when clicked
           />
-          <DropdownMenu
+          <MenuItem
+            to="/customers"
+            icon={FaUsers}
             label="Customers"
+            isActive={isActive("/customers")}
+            onClick={closeAllDropdowns} // Close all dropdowns when clicked
+          />
+
+          <DropdownMenu
+            label="Payment"
             icon={BiTask}
-            isOpen={activeDropdown === "customers"}
-            onClick={() => toggleDropdown("customers")}
+            isOpen={activeDropdown === "payment"}
+            onClick={() => toggleDropdown("payment")}
           >
             <ChildMenuItem
-              to="/customers"
-              icon={FaUserTie}
-              label="Customers"
-              isActive={isActive("/customers")}
+              to="/payment"
+              icon={TbCategoryPlus}
+              label="Payment List"
+              isActive={isActive("/payment")}
             />
             <ChildMenuItem
-              to="/customers-payment"
-              icon={FaUserTie}
-              label="Customers Payment"
-              isActive={isActive("/customers-payment")}
+              to="/today-payment"
+              icon={TbCategoryPlus}
+              label="Today Payment List"
+              isActive={isActive("/today-payment")}
             />
             <ChildMenuItem
-              to="/customers-due"
-              icon={FaUserTie}
-              label="Customers Due"
-              isActive={isActive("/customers-due")}
+              to="/due-payment"
+              icon={TbCategoryPlus}
+              label="Due Payment List"
+              isActive={isActive("/due-payment")}
+            />
+            <ChildMenuItem
+              to="/add-payment"
+              icon={TbCategoryPlus}
+              label="Add Payment"
+              isActive={isActive("/add-payment")}
             />
           </DropdownMenu>
-
-
-
 
           <DropdownMenu
             label="Product"

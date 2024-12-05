@@ -82,10 +82,10 @@ const AddSaleTarget = ({
 
   // user search
   const customFilter = (option, inputValue) => {
-    const userNameMatch = option.data.user_name
+    const userNameMatch = option?.data?.user_name
       ?.toLowerCase()
       .includes(inputValue.toLowerCase());
-    const userPhoneMatch = option.data.user_phone
+    const userPhoneMatch = option?.data?.user_phone
       ?.toLowerCase()
       .includes(inputValue.toLowerCase());
     return userNameMatch || userPhoneMatch;

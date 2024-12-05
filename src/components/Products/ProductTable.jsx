@@ -1,10 +1,11 @@
 import { FiEdit } from "react-icons/fi";
 import Pagination from "../common/pagination/Pagination";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import { IoMdEye } from "react-icons/io";
+import { SettingContext } from "@/context/SettingProvider";
 
 const ProductTable = ({
   setPage,
@@ -17,6 +18,8 @@ const ProductTable = ({
   isLoading,
   products,
 }) => {
+  const { settingData } = useContext(SettingContext);
+
   const [serialNumber, setSerialNumber] = useState();
   useEffect(() => {
     const newSerialNumber = (page - 1) * limit;
@@ -43,6 +46,7 @@ const ProductTable = ({
                       <td className="whitespace-nowrap p-4 ">Buying Price</td>
                       <td className="whitespace-nowrap p-4 ">Quantity</td>
                       <td className="whitespace-nowrap p-4 ">Alert Quantity</td>
+                      <td className="whitespace-nowrap p-4 ">Messurement</td>
                       <td className="whitespace-nowrap p-4 ">Category</td>
                       <td className="whitespace-nowrap p-4 ">Brand</td>
                       <td className="whitespace-nowrap p-4 ">Status</td>
@@ -83,10 +87,24 @@ const ProductTable = ({
                           {product?.product_buying_price}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {product?.product_quantity}{" "}{"Liter"}
+                          {product?.product_quantity}{" "}
+                          {product?.product_unit_id?.product_unit_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {product?.product_stock_low_alert}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {"1"} {product?.product_unit_id?.product_unit_name}
+                          {" = "}
+                          {product?.product_unit_id?.product_unit_value}{" "}
+                          {settingData?.unit_name}
+                          <br />
+                          <p className="underline">Total</p>
+                          <br />
+                          {product?.product_quantity} {product?.product_unit_id?.product_unit_name}
+                          {" = "}
+                          {product?.product_unit_id?.product_unit_value * product?.product_quantity}{" "}
+                          {settingData?.unit_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {product?.category_id?.category_name}

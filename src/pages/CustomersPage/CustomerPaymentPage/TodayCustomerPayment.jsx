@@ -1,11 +1,11 @@
-import CustomerPaymentTable from "@/components/CustomersPayment/CustomerPaymentTable";
+import TodayCustomerPaymentTable from "@/components/CustomersPayment/TodayCustomerPaymentTable";
 import { AuthContext } from "@/context/AuthProvider";
 import useDebounced from "@/hooks/useDebounced";
 import { BASE_URL } from "@/utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
 
-const CustomerPayment = () => {
+const TodayCustomerPayment = () => {
 
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(10)
@@ -32,12 +32,12 @@ const CustomerPayment = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/check/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_show`,
+      `/api/v1/check/today_dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_show`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/check/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_show`,
+          `${BASE_URL}/check/today_dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_show`,
           {
             credentials: 'include',
           }
@@ -78,7 +78,7 @@ const CustomerPayment = () => {
       </div>
 
       {/*checks Payment Table */}
-      <CustomerPaymentTable
+      <TodayCustomerPaymentTable
         checks={checks}
         setPage={setPage}
         setLimit={setLimit}
@@ -94,4 +94,4 @@ const CustomerPayment = () => {
   );
 };
 
-export default CustomerPayment;
+export default TodayCustomerPayment;

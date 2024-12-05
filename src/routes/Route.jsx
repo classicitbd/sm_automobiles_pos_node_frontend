@@ -10,9 +10,7 @@ import AddStaffRolePage from "@/pages/StaffAndRolePage/AddStaffRolePage/AddStaff
 import BankPage from "@/pages/BankPage/BankPage";
 import CustomersPage from "@/pages/CustomersPage/CustomersPage";
 import BrandPage from "@/pages/BrandPage/BrandPage";
-import ExpensesPage from "@/pages/ExpensesPage/ExpensesPage";
 import CustomerPayment from "@/pages/CustomersPage/CustomerPaymentPage/CustomerPayment";
-import CustomerDue from "@/pages/CustomersPage/CustomerDuePage/CustomerDue";
 import ProductPage from "@/pages/ProductPage/ProductPage";
 import AddProductPage from "@/pages/ProductPage/AddProductPage/AddProductPage";
 import UpDateProduct from "@/components/Products/UpDateProduct";
@@ -26,6 +24,9 @@ import SypllierPaymentList from "@/components/Supplier/SypllierPaymentList";
 import ProductUnitPage from "@/pages/ProductUnitPage/ProductUnitPage";
 import SiteSetting from "@/pages/SiteSetting/SiteSetting";
 import SaleTargetPage from "@/pages/SaleTarget/SaleTargetPage";
+import CustomerAddPayment from "@/pages/CustomersPage/CustomerPaymentPage/CustomerAddPayment";
+import TodayCustomerPayment from "@/pages/CustomersPage/CustomerPaymentPage/TodayCustomerPayment";
+import DueCustomerPayment from "@/pages/CustomersPage/CustomerPaymentPage/DueCustomerPayment";
 
 const route = createBrowserRouter([
   {
@@ -107,23 +108,26 @@ const route = createBrowserRouter([
         element: <AllList />,
       },
       {
-        path: "/customers-payment",
+        path: "/payment",
         element: <CustomerPayment />,
       },
       {
-        path: "/customers-due",
-        element: <CustomerDue />,
+        path: "/today-payment",
+        element: <TodayCustomerPayment />,
+      },
+      {
+        path: "/due-payment",
+        element: <DueCustomerPayment />,
+      },
+      {
+        path: "/add-payment",
+        element: <CustomerAddPayment />,
       },
 
       // ------Stock Manage----
       {
         path: "/stock_manage",
         element: <StockManage />,
-      },
-      // ------Expenses----
-      {
-        path: "/expense",
-        element: <ExpensesPage />,
       },
       // ------Product----
       {
