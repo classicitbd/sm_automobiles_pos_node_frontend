@@ -12,7 +12,6 @@ import MiniSpinner from "@/shared/MiniSpinner/MiniSpinner";
 import { Button } from "../ui/button";
 
 const RightSide = ({ user, addProducts, setAddProducts }) => {
-
   const [loading, setLoading] = useState(false);
   const [customerAddModal, setCustomerAddModal] = useState(false); //customer add modal
   const [customerInfo, setCustomerInfo] = useState({});
@@ -459,7 +458,7 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
         ></textarea>
 
         {loading == true ? (
-          <div className="px-10 py-2 flex items-center justify-center  bg-primaryColor text-white rounded">
+          <div className="px-10 py-2 flex items-center justify-center  bg-primary text-white rounded">
             <MiniSpinner />
           </div>
         ) : (

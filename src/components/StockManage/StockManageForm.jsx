@@ -1,4 +1,3 @@
-
 import MiniSpinner from "@/shared/MiniSpinner/MiniSpinner";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -15,6 +14,7 @@ const StockManageForm = () => {
 
   const [loading, setLoading] = useState(false);
   const [product_id, setProduct_id] = useState(null);
+  const [supplier_id, setSupplier_id] = useState(null);
   const {
     register,
     handleSubmit,
@@ -23,7 +23,8 @@ const StockManageForm = () => {
   } = useForm();
 
   //get product data
-  const { data: productTypes, isLoading: productLoading } = useGetActiveProduct();
+  const { data: productTypes, isLoading: productLoading } =
+    useGetActiveProduct();
 
   const handleDataPost = async (data) => {
     setLoading(true);
@@ -35,6 +36,10 @@ const StockManageForm = () => {
         product_buying_price: data?.product_buying_price,
         product_quantity: data?.product_quantity,
         product_id: product_id,
+        supplier_id: supplier_id,
+        total_price: parseInt(
+          data?.product_buying_price * data?.product_quantity
+        ),
       };
       const response = await fetch(
         `${BASE_URL}/stock_manage?role_type=stock_manage_create`,
@@ -122,7 +127,9 @@ const StockManageForm = () => {
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
                 {errors.product_selling_price && (
-                  <p className="text-red-600">{errors.product_selling_price.message}</p>
+                  <p className="text-red-600">
+                    {errors.product_selling_price.message}
+                  </p>
                 )}
               </div>
               <div className="mt-2">
@@ -144,7 +151,9 @@ const StockManageForm = () => {
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
                 {errors.product_buying_price && (
-                  <p className="text-red-600">{errors.product_buying_price.message}</p>
+                  <p className="text-red-600">
+                    {errors.product_buying_price.message}
+                  </p>
                 )}
               </div>
               <div className="mt-2">
@@ -166,7 +175,9 @@ const StockManageForm = () => {
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
                 {errors.product_quantity && (
-                  <p className="text-red-600">{errors.product_quantity.message}</p>
+                  <p className="text-red-600">
+                    {errors.product_quantity.message}
+                  </p>
                 )}
               </div>
               <div className="mt-3">
@@ -184,13 +195,14 @@ const StockManageForm = () => {
                   getOptionValue={(x) => x?._id}
                   onChange={(selectedOption) => {
                     setProduct_id(selectedOption?._id);
+                    setSupplier_id(selectedOption?.supplier_id);
                   }}
                 />
               </div>
 
               <div className="flex justify-end mt-3">
                 {loading == true ? (
-                  <div className="px-10 py-2 flex items-center justify-center  bg-primaryColor text-white rounded">
+                  <div className="px-10 py-2 flex items-center justify-center  bg-primary text-white rounded">
                     <MiniSpinner />
                   </div>
                 ) : (

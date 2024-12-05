@@ -1,14 +1,12 @@
-import { useContext, useEffect, useState } from 'react'
-import CategoryTable from '../../components/Category/CategoryTable'
-import AddCategory from '../../components/Category/AddCategory'
-import { AuthContext } from './../../context/AuthProvider'
-import useDebounced from '../../hooks/useDebounced'
-import { Button } from '@/components/ui/button'
-import { useQuery } from '@tanstack/react-query'
-import { BASE_URL } from '@/utils/baseURL'
+import TodayCustomerPaymentTable from "@/components/CustomersPayment/TodayCustomerPaymentTable";
+import { AuthContext } from "@/context/AuthProvider";
+import useDebounced from "@/hooks/useDebounced";
+import { BASE_URL } from "@/utils/baseURL";
+import { useQuery } from "@tanstack/react-query";
+import { useContext, useEffect, useState } from "react";
 
-function CategoryPage() {
-  const [categoryCreateModal, setCategoryCreateModal] = useState(false)
+const TodayCustomerPayment = () => {
+
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(10)
   const [searchValue, setSearchValue] = useState('')
@@ -27,19 +25,19 @@ function CategoryPage() {
     setPage(1)
   }
 
-  // Fetch category data
+  //Fetch check Data
   const {
-    data: categoryTypes = [],
+    data: checks = [],
     isLoading,
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/category?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
+      `/api/v1/check/today_dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_show`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/category?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
+          `${BASE_URL}/check/today_dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_show`,
           {
             credentials: 'include',
           }
@@ -61,55 +59,39 @@ function CategoryPage() {
     },
   })
 
-  //console.log(categoryTypes)
-
   return (
-    <div className='bg-white rounded-lg py-6 px-4 shadow'>
-      <div className='flex justify-between mt-6'>
+    <div className="bg-white rounded-lg py-6 px-4 shadow mx-auto">
+     <div className='flex justify-between mt-6'>
         <div>
-          <h1 className='text-2xl'>Category</h1>
-        </div>
-
-        <div>
-          <Button type='button' onClick={() => setCategoryCreateModal(true)}>
-            Create Category
-          </Button>
+          <h1 className='text-2xl'>checks Information</h1>
         </div>
       </div>
-      {/* search Category... */}
+      {/* search checks... */}
       <div className='mt-3'>
         <input
           type='text'
           defaultValue={searchTerm}
           onChange={(e) => handleSearchValue(e.target.value)}
-          placeholder='Search Category...'
+          placeholder='Search checks...'
           className='w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200'
         />
       </div>
-      {/* Category Data Show and update and delete operation file */}
 
-      <CategoryTable
-        categoryTypes={categoryTypes}
+      {/*checks Payment Table */}
+      <TodayCustomerPaymentTable
+        checks={checks}
         setPage={setPage}
         setLimit={setLimit}
         page={page}
         limit={limit}
-        totalData={categoryTypes?.totalData}
+        totalData={checks?.totalData}
         refetch={refetch}
         user={user}
         isLoading={isLoading}
       />
 
-      {/* Create category modal */}
-      {categoryCreateModal && (
-        <AddCategory
-          refetch={refetch}
-          setCategoryCreateModal={setCategoryCreateModal}
-          user={user}
-        />
-      )}
     </div>
-  )
-}
+  );
+};
 
-export default CategoryPage
+export default TodayCustomerPayment;

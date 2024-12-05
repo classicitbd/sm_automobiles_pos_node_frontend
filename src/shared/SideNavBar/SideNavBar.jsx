@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { logo } from "../../utils/imageImport";
 import { Link, useLocation } from "react-router-dom";
-
+import { GiTargetShot } from "react-icons/gi";
 import { BiTask } from "react-icons/bi";
 import { GoHome } from "react-icons/go";
 import { BsExplicit, BsShieldPlus } from "react-icons/bs";
@@ -10,8 +10,8 @@ import { TbCategoryPlus, TbHttpPost } from "react-icons/tb";
 
 import { ChildMenuItem, DropdownMenu, MenuItem } from "./DropdownAndMenuItem";
 import { FiUsers } from "react-icons/fi";
-import { FaShoppingCart, FaUsers, FaUserTie } from "react-icons/fa";
-import { MdCheckBoxOutlineBlank } from "react-icons/md";
+import { FaShoppingCart, FaUsers } from "react-icons/fa";
+import { MdSettingsSuggest } from "react-icons/md";
 
 const SideNavBar = () => {
   const { pathname } = useLocation();
@@ -79,13 +79,21 @@ const SideNavBar = () => {
               label="Brand"
               isActive={isActive("/brand")}
             />
-            {/* <ChildMenuItem
+            <ChildMenuItem
               to="/units"
               icon={TbCategoryPlus}
               label="Units"
               isActive={isActive("/units")}
-            /> */}
+            />
           </DropdownMenu>
+
+          <MenuItem
+            to="/site_setting"
+            icon={MdSettingsSuggest}
+            label="Site Setting"
+            isActive={isActive("/site_setting")}
+            onClick={closeAllDropdowns} // Close all dropdowns when clicked
+          />
 
           <DropdownMenu
             label="Staff"
@@ -112,23 +120,65 @@ const SideNavBar = () => {
               isActive={isActive("/staff-role")}
             />
           </DropdownMenu>
-          <DropdownMenu
+
+          <MenuItem
+            to="/sale-target"
+            icon={GiTargetShot}
+            label="Sales Target"
+            isActive={isActive("/sale-target")}
+            onClick={closeAllDropdowns} // Close all dropdowns when clicked
+          />
+          <MenuItem
+            to="/supplier"
+            icon={FaUsers}
             label="Supplier"
+            isActive={isActive("/supplier")}
+            onClick={closeAllDropdowns} // Close all dropdowns when clicked
+          />
+          <MenuItem
+            to="/bank-account"
+            icon={FaUsers}
+            label="Bank Account"
+            isActive={isActive("/bank-account")}
+            onClick={closeAllDropdowns} // Close all dropdowns when clicked
+          />
+          <MenuItem
+            to="/customers"
+            icon={FaUsers}
+            label="Customers"
+            isActive={isActive("/customers")}
+            onClick={closeAllDropdowns} // Close all dropdowns when clicked
+          />
+
+          <DropdownMenu
+            label="Payment"
             icon={BiTask}
-            isOpen={activeDropdown === "supplier"}
-            onClick={() => toggleDropdown("supplier")}
+            isOpen={activeDropdown === "payment"}
+            onClick={() => toggleDropdown("payment")}
           >
             <ChildMenuItem
-              to="/supplier"
-              icon={FaUsers}
-              label="Supplier"
-              isActive={isActive("/supplier")}
+              to="/payment"
+              icon={TbCategoryPlus}
+              label="Payment List"
+              isActive={isActive("/payment")}
             />
             <ChildMenuItem
-              to="/supplier-payment-create"
-              icon={FaUsers}
-              label="Payment Create"
-              isActive={isActive("/supplier-payment-create")}
+              to="/today-payment"
+              icon={TbCategoryPlus}
+              label="Today Payment List"
+              isActive={isActive("/today-payment")}
+            />
+            <ChildMenuItem
+              to="/due-payment"
+              icon={TbCategoryPlus}
+              label="Due Payment List"
+              isActive={isActive("/due-payment")}
+            />
+            <ChildMenuItem
+              to="/add-payment"
+              icon={TbCategoryPlus}
+              label="Add Payment"
+              isActive={isActive("/add-payment")}
             />
           </DropdownMenu>
 
@@ -157,19 +207,6 @@ const SideNavBar = () => {
               isActive={isActive("/stock_manage")}
             />
           </DropdownMenu>
-          <DropdownMenu
-            label="Bank Account"
-            icon={BiTask}
-            isOpen={activeDropdown === "bankAccount"}
-            onClick={() => toggleDropdown("bankAccount")}
-          >
-            <ChildMenuItem
-              to="/bank-account"
-              icon={MdCheckBoxOutlineBlank}
-              label="Bank Account"
-              isActive={isActive("/bank-account")}
-            />
-          </DropdownMenu>
 
           <MenuItem
             to="/pos"
@@ -193,31 +230,6 @@ const SideNavBar = () => {
             />
           </DropdownMenu>
 
-          <DropdownMenu
-            label="Customers"
-            icon={BiTask}
-            isOpen={activeDropdown === "customers"}
-            onClick={() => toggleDropdown("customers")}
-          >
-            <ChildMenuItem
-              to="/customers"
-              icon={FaUserTie}
-              label="Customers"
-              isActive={isActive("/customers")}
-            />
-            <ChildMenuItem
-              to="/customers-payment"
-              icon={FaUserTie}
-              label="Customers Payment"
-              isActive={isActive("/customers-payment")}
-            />
-            <ChildMenuItem
-              to="/customers-due"
-              icon={FaUserTie}
-              label="Customers Due"
-              isActive={isActive("/customers-due")}
-            />
-          </DropdownMenu>
           <DropdownMenu
             label="Expenses"
             icon={BiTask}

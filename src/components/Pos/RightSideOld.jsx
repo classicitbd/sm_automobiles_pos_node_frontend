@@ -169,11 +169,11 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
           product_total_price: item?.total_amount,
         })),
       };
-      if(!payment_bank_id){
-        delete sendData?.payment_bank_id
+      if (!payment_bank_id) {
+        delete sendData?.payment_bank_id;
       }
-      if(!payment_bank_tranx_id){
-        delete sendData?.payment_transaction_id
+      if (!payment_bank_tranx_id) {
+        delete sendData?.payment_transaction_id;
       }
       const response = await fetch(`${BASE_URL}/order?role_type=order_create`, {
         method: "POST",
@@ -623,7 +623,7 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
         ></textarea>
 
         {loading == true ? (
-          <div className="px-10 py-2 flex items-center justify-center  bg-primaryColor text-white rounded">
+          <div className="px-10 py-2 flex items-center justify-center  bg-primary text-white rounded">
             <MiniSpinner />
           </div>
         ) : (

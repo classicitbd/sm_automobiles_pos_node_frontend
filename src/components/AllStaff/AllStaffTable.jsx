@@ -50,6 +50,12 @@ const AllStaffTable = ({
                       User Phone
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                      User Salary
+                    </th>
+                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                      User Address
+                    </th>
+                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
                       User Role
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
@@ -77,6 +83,12 @@ const AllStaffTable = ({
                       </td>
                       <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize">
                         {user?.user_phone ? user?.user_phone : "-"}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize">
+                        {user?.user_salary ? user?.user_salary : "-"}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize">
+                        {user?.user_phone ? user?.user_address : "-"}
                       </td>
                       <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize">
                         {user?.user_role_id?.role_name

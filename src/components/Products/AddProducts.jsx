@@ -11,12 +11,16 @@ import { LoaderOverlay } from "../common/loader/LoderOverley";
 import { toast } from "react-toastify";
 import { BASE_URL } from "@/utils/baseURL";
 import { AuthContext } from "@/context/AuthProvider";
+import useGetProductUnit from "@/hooks/useGetUnit";
+import useGetSupplier from "@/hooks/useGetSupplier";
 
 const AddProducts = () => {
   const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [category_id, setCategory_id] = useState("");
   const [brand_id, setBrand_id] = useState("");
+  const [product_unit_id, setProduct_unit_id] = useState("");
+  const [supplier_id, setSupplier_id] = useState("");
 
   const {
     register,
@@ -30,6 +34,12 @@ const AddProducts = () => {
 
   //get brand data
   const { data: brandTypes, isLoading: brandLoading } = useGetBrand();
+
+  //get unit data
+  const { data: unitTypes, isLoading: unitLoading } = useGetProductUnit();
+
+  //get supplier data
+  const { data: supplierTypes, isLoading: supplierLoading } = useGetSupplier();
 
   //Image preview For Product....
 
@@ -75,6 +85,8 @@ const AddProducts = () => {
 
     formData.append("product_publisher_id", user?._id);
     formData.append("category_id", category_id);
+    formData.append("product_unit_id", product_unit_id);
+    formData.append("supplier_id", supplier_id);
     const response = await fetch(
       `${BASE_URL}/product/?role_type=product_create`,
       {
@@ -101,7 +113,7 @@ const AddProducts = () => {
     }
   };
 
-  if (categoryLoading || brandLoading) {
+  if (categoryLoading || brandLoading || unitLoading || supplierLoading) {
     return <LoaderOverlay />;
   }
 
@@ -129,6 +141,26 @@ const AddProducts = () => {
               {errors.product_name && (
                 <p className="text-red-600">{errors.product_name?.message}</p>
               )}
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-gray-700 mb-1">
+                Unit Name <span className="text-red-500">*</span>
+              </label>
+
+              <Select
+                id="product_unit_id"
+                name="product_unit_id"
+                aria-label="Unit Name"
+                isClearable
+                required
+                options={unitTypes?.data}
+                getOptionLabel={(x) => x?.product_unit_name}
+                getOptionValue={(x) => x?._id}
+                onChange={(selectedOption) => {
+                  setProduct_unit_id(selectedOption?._id);
+                }}
+              />
             </div>
 
             <div className="mt-2">
@@ -215,6 +247,25 @@ const AddProducts = () => {
                 <option value="active">Active</option>
                 <option value="in-active">In-Active</option>
               </select>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-gray-700 mb-1">
+                Supplier Name <span className="text-red-500">*</span>
+              </label>
+
+              <Select
+                id="supplier_id"
+                name="supplier_id"
+                aria-label="Supplier Name"
+                isClearable
+                required
+                options={supplierTypes?.data}
+                getOptionLabel={(x) => x?.supplier_name}
+                getOptionValue={(x) => x?._id}
+                onChange={(selectedOption) => {
+                  setSupplier_id(selectedOption?._id);
+                }}
+              />
             </div>
           </div>
 

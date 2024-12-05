@@ -1,22 +1,23 @@
-import AddProductUnit from "@/components/ProductUnit/AddProductUnit";
-import ProductUnitTable from "@/components/ProductUnit/ProductUnitTable";
+import AddSaleTarget from "@/components/SaleTarget/AddSaleTarget";
+import SaleTargetTable from "@/components/SaleTarget/SaleTargetTable";
 import { Button } from "@/components/ui/button";
 import { AuthContext } from "@/context/AuthProvider";
 import { SettingContext } from "@/context/SettingProvider";
 import useDebounced from "@/hooks/useDebounced";
+import UseGetUser from "@/hooks/UseGetUser";
 import MiniSpinner from "@/shared/MiniSpinner/MiniSpinner";
 import { BASE_URL } from "@/utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
 
-const ProductUnitPage = () => {
-  const [productUnitCreateModal, setProductUnitCreateModal] = useState(false);
+const SaleTargetPage = () => {
+  const [saleTargetCreateModal, setSaleTargetCreateModal] = useState(false);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [searchValue, setSearchValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const { user } = useContext(AuthContext);
-  const{settingData, loading: settingLoading} = useContext(SettingContext)
+  const { settingData, loading: settingLoading } = useContext(SettingContext);
 
   const searchText = useDebounced({ searchQuery: searchValue, delay: 500 });
   useEffect(() => {
@@ -30,19 +31,19 @@ const ProductUnitPage = () => {
     setPage(1);
   };
 
-  //Fetch product_unit Data
+  //Fetch sale_target Data
   const {
-    data: product_unitNames = [],
+    data: saleTargetData = [],
     isLoading,
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/product_unit/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=product_unit_show`,
+      `/api/v1/sale_target?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=sale_target_show`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/product_unit/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=product_unit_show`,
+          `${BASE_URL}/sale_target?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=sale_target_show`,
           {
             credentials: "include",
           }
@@ -64,24 +65,27 @@ const ProductUnitPage = () => {
     },
   });
 
-  if(settingLoading){
-    return <MiniSpinner/>
+  //get user data
+  const { data: userTypes, isLoading: userLoading } = UseGetUser();
+
+  if (settingLoading || userLoading) {
+    return <MiniSpinner />;
   }
 
   return (
     <div className="bg-white rounded-lg py-6 px-4 shadow">
       <div className="flex justify-between mt-6">
         <div>
-          <h1 className="text-2xl">Product Unit</h1>
+          <h1 className="text-2xl">Sale Target</h1>
         </div>
 
         <div>
-          <Button type="button" onClick={() => setProductUnitCreateModal(true)}>
-            Create Product Unit
+          <Button type="button" onClick={() => setSaleTargetCreateModal(true)}>
+            Create Sale Target
           </Button>
         </div>
       </div>
-      {/* search Product Unit... */}
+      {/* search Sale Target... */}
       <div className="mt-3">
         <input
           type="text"
@@ -91,30 +95,32 @@ const ProductUnitPage = () => {
           className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
         />
       </div>
-      {/*Product Unit Data Show and update and delete operation file */}
-      <ProductUnitTable
-        product_unitNames={product_unitNames}
+      {/*Sale Target Data Show and update and delete operation file */}
+      <SaleTargetTable
+        saleTargetData={saleTargetData}
         setPage={setPage}
         setLimit={setLimit}
         page={page}
         limit={limit}
-        totalData={product_unitNames?.totalData}
+        totalData={saleTargetData?.totalData}
         refetch={refetch}
         user={user}
         isLoading={isLoading}
         settingData={settingData}
+        userTypes={userTypes}
       />
-      {/*Product Unit Create  modal */}
-      {productUnitCreateModal && (
-        <AddProductUnit
-          setProductUnitCreateModal={setProductUnitCreateModal}
+      {/*Sale Target Create  modal */}
+      {saleTargetCreateModal && (
+        <AddSaleTarget
+          setSaleTargetCreateModal={setSaleTargetCreateModal}
           refetch={refetch}
           user={user}
           settingData={settingData}
+          userTypes={userTypes}
         />
       )}
     </div>
   );
 };
 
-export default ProductUnitPage;
+export default SaleTargetPage;

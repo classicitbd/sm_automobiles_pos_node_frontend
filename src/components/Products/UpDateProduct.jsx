@@ -15,8 +15,8 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
 const AddProducts = () => {
-  const { product_id } = useParams()
-  const {user} = useContext(AuthContext);
+  const { product_id } = useParams();
+  const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [category_id, setCategory_id] = useState("");
   const [brand_id, setBrand_id] = useState("");
@@ -28,15 +28,14 @@ const AddProducts = () => {
     formState: { errors },
   } = useForm();
 
-
   const { data: product, isLoading: productLoading } = useQuery({
     queryKey: [`/api/v1/product/${product_id}`],
     queryFn: async () => {
-      const res = await fetch(`${BASE_URL}/product/${product_id}`)
-      const data = await res.json()
+      const res = await fetch(`${BASE_URL}/product/${product_id}`);
+      const data = await res.json();
       return data?.data;
     },
-  })
+  });
 
   //get category data
   const { data: categoryTypes, isLoading: categoryLoading } = useGetCategory();
@@ -250,7 +249,6 @@ const AddProducts = () => {
                 <option value="in-active">In-Active</option>
               </select>
             </div>
-
           </div>
 
           <div className="grid grid-cols-2 gap-5">
@@ -340,7 +338,7 @@ const AddProducts = () => {
 
           <div className="flex justify-end mt-3">
             {loading == true ? (
-              <div className="px-10 py-2 flex items-center justify-center  bg-primaryColor text-white rounded">
+              <div className="px-10 py-2 flex items-center justify-center  bg-primary text-white rounded">
                 <MiniSpinner />
               </div>
             ) : (

@@ -6,8 +6,14 @@ import MiniSpinner from "@/shared/MiniSpinner/MiniSpinner";
 import { BASE_URL } from "@/utils/baseURL";
 import { toast } from "react-toastify";
 
-const AddProductUnit = ({ setProductUnitCreateModal, refetch, user }) => {
+const AddProductUnit = ({
+  setProductUnitCreateModal,
+  refetch,
+  user,
+  settingData,
+}) => {
   const [loading, setLoading] = useState(false);
+  const [unitValue, setUnitValue] = useState("");
 
   const {
     register,
@@ -22,7 +28,7 @@ const AddProductUnit = ({ setProductUnitCreateModal, refetch, user }) => {
       const sendData = {
         product_unit_publisher_id: user?._id,
         product_unit_name: data?.product_unit_name,
-        product_unit_status: data?.product_unit_status,
+        product_unit_value: data?.product_unit_value,
       };
 
       const response = await fetch(
@@ -100,6 +106,7 @@ const AddProductUnit = ({ setProductUnitCreateModal, refetch, user }) => {
                   })}
                   type="text"
                   placeholder="product unit Name"
+                  onChange={(e) => setUnitValue(e.target.value)}
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
                 {errors.product_unit_name && (
@@ -109,21 +116,35 @@ const AddProductUnit = ({ setProductUnitCreateModal, refetch, user }) => {
                 )}
               </div>
               <div className="mt-2">
-                <label className="block text-xs font-medium text-gray-700">
-                  product unit Status
+                <label className="block font-medium text-gray-700">
+                  product unit Value<span className="text-red-500">*</span>
                 </label>
-                <select
-                  {...register("product_unit_status")}
-                  className="mt-2 rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2 w-full"
-                >
-                  <option value="active">Active</option>
-                  <option value="in-active">In-Active</option>
-                </select>
+                <div className="flex items-center justify-center gap-4">
+                  <p>1 {unitValue}</p>
+                  <p>=</p>
+                  <div className="flex items-center gap-4">
+                    <input
+                      {...register("product_unit_value", {
+                        required: "product unit Value is required",
+                      })}
+                      defaultValue="1"
+                      type="text"
+                      placeholder="product unit Value"
+                      className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                    />
+                    {settingData?.unit_name}
+                    {errors.product_unit_value && (
+                      <p className="text-red-600">
+                        {errors.product_unit_value?.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
               </div>
 
               <div className="flex justify-end mt-3">
                 {loading == true ? (
-                  <div className="px-10 py-2 flex items-center justify-center  bg-primaryColor text-white rounded">
+                  <div className="px-10 py-2 flex items-center justify-center  bg-primary text-white rounded">
                     <MiniSpinner />
                   </div>
                 ) : (
