@@ -27,6 +27,8 @@ import SaleTargetPage from "@/pages/SaleTarget/SaleTargetPage";
 import CustomerAddPayment from "@/pages/CustomersPage/CustomerPaymentPage/CustomerAddPayment";
 import TodayCustomerPayment from "@/pages/CustomersPage/CustomerPaymentPage/TodayCustomerPayment";
 import DueCustomerPayment from "@/pages/CustomersPage/CustomerPaymentPage/DueCustomerPayment";
+import PaidSupplierPaymentList from "@/pages/Supplier/PaidSupplierPaymentList";
+import UnpaidSupplierPaymentList from "@/pages/Supplier/UnpaidSupplierPaymentList";
 
 const route = createBrowserRouter([
   {
@@ -73,6 +75,14 @@ const route = createBrowserRouter([
       {
         path: "/supplier",
         element: <SupplierPage />,
+      },
+      {
+        path: "/paid-payment",
+        element: <PaidSupplierPaymentList />,
+      },
+      {
+        path: "/unpaid-payment",
+        element: <UnpaidSupplierPaymentList />,
       },
       {
         path: "/supplierpaymentlist/:supplier_id",
