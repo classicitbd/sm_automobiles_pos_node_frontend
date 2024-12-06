@@ -16,12 +16,18 @@ const CreateAPaymentModal = ({
   refetch,
   user,
 }) => {
+
+  const paymentOption = [
+    { id: 1, value: "cash", label: "Cash" },
+    { id: 2, value: "check", label: "Check" },
+  ];
+
   const [loading, setLoading] = useState(false);
   const [payment_bank_id, setPayment_bank_id] = useState(null);
+  const [supplier_payment_method, setPaymentBy] = useState("");
 
   const {
     register,
-
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -36,12 +42,15 @@ const CreateAPaymentModal = ({
       const sendData = {
         supplier_payment_publisher_id: user?._id,
         supplier_id: updatePaymentCreateModalValue?._id,
-        reference_id: data?.reference_id,
-        payment_bank_id: payment_bank_id,
+        supplier_payment_method,
         supplier_payment_title: data?.supplier_payment_title,
         supplier_payment_date: data?.supplier_payment_date,
         supplier_payment_amount: data?.supplier_payment_amount,
       };
+      if (supplier_payment_method == "check") {
+        (sendData.payment_bank_id = payment_bank_id),
+          (sendData.reference_id = data?.reference_id)
+      }
       const response = await fetch(
         `${BASE_URL}/supplier_payment?role_type=supplier_payment_create`,
         {
@@ -131,6 +140,25 @@ const CreateAPaymentModal = ({
               </p>
             )}
           </div>
+          <div className="mt-3">
+            <label className="block text-xs font-medium text-gray-700 mb-1 mt-2">
+              Payment By
+            </label>
+
+            <Select
+              id="supplier_payment_method"
+              name="supplier_payment_method"
+              aria-label="Payment By"
+              required
+              isClearable
+              options={paymentOption}
+              getOptionLabel={(x) => x?.label}
+              getOptionValue={(x) => x?.value}
+              onChange={(selectedOption) => {
+                setPaymentBy(selectedOption?.value);
+              }}
+            />
+          </div>
           <div className="mt-2">
             <label
               htmlFor=""
@@ -180,45 +208,49 @@ const CreateAPaymentModal = ({
               </p>
             )}
           </div>
-          <div className="mt-3">
-            <label className="block text-xs font-medium text-gray-700 mb-1 mt-2">
-              Payment Bank Name
-            </label>
+          {supplier_payment_method === "check" && (
+            <div className="mt-3">
+              <label className="block text-xs font-medium text-gray-700 mb-1 mt-2">
+                Payment Bank Name
+              </label>
 
-            <Select
-              id="payment_bank_id"
-              name="payment_bank_id"
-              aria-label="Bank Type"
-              isClearable
-              required
-              options={bankTypes?.data}
-              getOptionLabel={(x) => x?.bank_name}
-              getOptionValue={(x) => x?._id}
-              onChange={(selectedOption) =>
-                setPayment_bank_id(selectedOption?._id)
-              }
-            ></Select>
-          </div>
-          <div className="mt-2">
-            <label
-              htmlFor=""
-              className="block text-xs font-medium text-gray-700"
-            >
-              Reference ID<span className="text-red-500">*</span>
-            </label>
+              <Select
+                id="payment_bank_id"
+                name="payment_bank_id"
+                aria-label="Bank Type"
+                isClearable
+                required
+                options={bankTypes?.data}
+                getOptionLabel={(x) => x?.bank_name}
+                getOptionValue={(x) => x?._id}
+                onChange={(selectedOption) =>
+                  setPayment_bank_id(selectedOption?._id)
+                }
+              ></Select>
+            </div>
+          )}
+          {supplier_payment_method === "check" && (
+            <div className="mt-2">
+              <label
+                htmlFor=""
+                className="block text-xs font-medium text-gray-700"
+              >
+                Reference ID<span className="text-red-500">*</span>
+              </label>
 
-            <input
-              {...register("reference_id", {
-                required: "Reference ID required",
-              })}
-              type="text"
-              placeholder="Reference ID"
-              className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
-            />
-            {errors.reference_id && (
-              <p className="text-red-600">{errors.reference_id.message}</p>
-            )}
-          </div>
+              <input
+                {...register("reference_id", {
+                  required: "Reference ID required",
+                })}
+                type="text"
+                placeholder="Reference ID"
+                className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+              />
+              {errors.reference_id && (
+                <p className="text-red-600">{errors.reference_id.message}</p>
+              )}
+            </div>
+          )}
 
           <div className="flex justify-end mt-3">
             {loading == true ? (

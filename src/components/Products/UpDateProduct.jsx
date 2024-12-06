@@ -14,7 +14,7 @@ import { AuthContext } from "@/context/AuthProvider";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
-const AddProducts = () => {
+const UpDateProduct = () => {
   const { product_id } = useParams();
   const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
@@ -353,4 +353,4 @@ const AddProducts = () => {
   );
 };
 
-export default AddProducts;
+export default UpDateProduct;

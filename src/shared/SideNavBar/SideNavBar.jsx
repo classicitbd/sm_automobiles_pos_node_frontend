@@ -128,13 +128,33 @@ const SideNavBar = () => {
             isActive={isActive("/sale-target")}
             onClick={closeAllDropdowns} // Close all dropdowns when clicked
           />
-          <MenuItem
-            to="/supplier"
-            icon={FaUsers}
+          <DropdownMenu
             label="Supplier"
-            isActive={isActive("/supplier")}
-            onClick={closeAllDropdowns} // Close all dropdowns when clicked
-          />
+            icon={BiTask}
+            isOpen={activeDropdown === "supplier"}
+            onClick={() => toggleDropdown("supplier")}
+          >
+            <ChildMenuItem
+              to="/supplier"
+              icon={FaUsers}
+              label="Supplier List"
+              isActive={isActive("/supplier")}
+            />
+            <ChildMenuItem
+              to="/paid-payment"
+              icon={TbCategoryPlus}
+              label="Paid Payment List"
+              isActive={isActive("/paid-payment")}
+            />
+            <ChildMenuItem
+              to="/unpaid-payment"
+              icon={TbCategoryPlus}
+              label="Un-Paid Payment List"
+              isActive={isActive("/unpaid-payment")}
+            />
+          </DropdownMenu>
+
+
           <MenuItem
             to="/bank-account"
             icon={FaUsers}

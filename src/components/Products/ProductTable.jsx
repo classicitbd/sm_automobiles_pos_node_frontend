@@ -6,6 +6,7 @@ import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import { IoMdEye } from "react-icons/io";
 import { SettingContext } from "@/context/SettingProvider";
+import UpdatePriceModal from "./UpdatePriceModal";
 
 const ProductTable = ({
   setPage,
@@ -19,6 +20,9 @@ const ProductTable = ({
   products,
 }) => {
   const { settingData } = useContext(SettingContext);
+
+  const [updatePriceModal, setUpdatePriceModal] = useState(false);
+  const [updatePriceModalValue, setUpdatePriceModalValue] = useState({});
 
   const [serialNumber, setSerialNumber] = useState();
   useEffect(() => {
@@ -60,9 +64,8 @@ const ProductTable = ({
                     {products?.data?.map((product, i) => (
                       <tr
                         key={product?._id}
-                        className={`divide-x divide-gray-200 ${
-                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                        }`}
+                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                          }`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
@@ -124,14 +127,16 @@ const ProductTable = ({
                           {product?.product_updated_by?.user_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
-                          {/* <button type="button" className="ml-3">
-                            <Link to={`/update-product/${product?._id}`}>
-                              <FiEdit
-                                size={25}
-                                className="cursor-pointer text-gray-500 hover:text-gray-300"
-                              />
-                            </Link>
-                          </button> */}
+                          <button type="button" className="ml-3">
+                            <FiEdit
+                              onClick={() => {
+                                setUpdatePriceModalValue(product)
+                                setUpdatePriceModal(true)
+                              }}
+                              size={25}
+                              className="cursor-pointer text-gray-500 hover:text-gray-300"
+                            />
+                          </button>
                           <button
                             className="ml-[8px]"
                             // onClick={() => handleShowDocumentModal(product)}
@@ -163,6 +168,10 @@ const ProductTable = ({
           )}
         </div>
       )}
+      {/* update price modal open */}
+      {
+        updatePriceModal && <UpdatePriceModal user={user} refetch={refetch} updatePriceModalValue={updatePriceModalValue} setUpdatePriceModal={setUpdatePriceModal} />
+      }
     </>
   );
 };
