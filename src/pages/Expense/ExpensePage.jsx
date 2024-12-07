@@ -63,10 +63,10 @@ const ExpensePage = () => {
     <div className="bg-white rounded-lg py-6 px-4 shadow">
       <div className="flex justify-between mt-6">
         <div>
-          <h1 className="text-2xl">Sale Target</h1>
+          <h1 className="text-2xl">Expenses</h1>
         </div>
       </div>
-      {/* search Sale Target... */}
+      {/* search Expenses... */}
       <div className="mt-3">
         <input
           type="text"
@@ -76,7 +76,7 @@ const ExpensePage = () => {
           className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
         />
       </div>
-      {/*Sale Target Data Show and update and delete operation file */}
+      {/*Expenses Data Show and update and delete operation file */}
       <ExpensesTable
         expenses={expenses}
         setPage={setPage}

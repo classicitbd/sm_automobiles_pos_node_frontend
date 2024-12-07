@@ -57,6 +57,9 @@ const ExpensesTable = ({
                         Bank Name
                       </th>
                       <th className="whitespace-nowrap p-4 font-medium text-gray-900">
+                        Reference No
+                      </th>
+                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
                         Expenses Date
                       </th>
                       <th className="whitespace-nowrap p-4 font-medium text-gray-900">
@@ -95,6 +98,9 @@ const ExpensesTable = ({
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {expense?.expense_bank_id?.bank_name || "N/A"}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {expense?.reference_id || "N/A"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {DateTimeFormat(expense?.createdAt)}

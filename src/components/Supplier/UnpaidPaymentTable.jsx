@@ -4,6 +4,8 @@ import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import { FaEye } from "react-icons/fa";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import Swal from "sweetalert2-optimized";
+import { BASE_URL } from "@/utils/baseURL";
+import { toast } from "react-toastify";
 
 const UnpaidPaymentTable = ({
   setPage,
@@ -22,17 +24,63 @@ const UnpaidPaymentTable = ({
     setSerialNumber(newSerialNumber);
   }, [page, limit]);
 
-  const handlePaymentPaidStatus = (_id, action) => {
-    console.log(_id, action);
+  const handlePaymentPaidStatus = (paymentInfo) => {
     Swal.fire({
-      title: "Are you sure You Want to Paid?",
-      text: `You won't be able to revert this Paid Amount!`,
-      icon: "warning",
+      title: 'Are you sure?',
+      text: `You won't be able to Paid this ${paymentInfo?.supplier_id?.supplier_name} Payment !`,
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Paid it!",
-    });
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, update it!',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const sendData = {
+          _id: paymentInfo?._id,
+          supplier_payment_status: "paid",
+          reference_id: paymentInfo?.reference_id,
+          supplier_payment_title: paymentInfo?.supplier_payment_title,
+          supplier_payment_method: paymentInfo?.supplier_payment_method,
+          supplier_payment_amount: paymentInfo?.supplier_payment_amount,
+          supplier_id: paymentInfo?.supplier_id?._id,
+          payment_bank_id: paymentInfo?.payment_bank_id?._id,
+          supplier_payment_updated_by: user?._id,
+        }
+        try {
+          const response = await fetch(
+            `
+            ${BASE_URL}/supplier_payment?role_type=supplier_payment_update`,
+            {
+              method: 'PATCH',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              credentials: 'include',
+              body: JSON.stringify(sendData),
+            }
+          )
+          const result = await response.json()
+          // console.log(result);
+          if (result?.statusCode === 200 && result?.success === true) {
+            refetch()
+            Swal.fire({
+              title: 'Updated!',
+              text: `${paymentInfo?.supplier_id?.supplier_name} Payment has been Updated!`,
+              icon: 'success',
+            })
+          } else {
+            toast.error(result?.message, {
+              autoClose: 1000,
+            })
+          }
+        } catch (error) {
+          toast.error('Network error or server is down', {
+            autoClose: 1000,
+          })
+          console.error(error)
+        }
+      }
+    })
   };
 
   return (
@@ -68,9 +116,8 @@ const UnpaidPaymentTable = ({
                     {unpaidPaymentLists?.data?.map((paymentInfo, i) => (
                       <tr
                         key={paymentInfo?._id}
-                        className={`divide-x divide-gray-200 ${
-                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                        }`}
+                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                          }`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
@@ -108,7 +155,7 @@ const UnpaidPaymentTable = ({
                           <button
                             className="bg-success-400 text-white px-[14px] py-[4px] rounded-[8px]"
                             onClick={() =>
-                              handlePaymentPaidStatus(paymentInfo?._id, "Paid")
+                              handlePaymentPaidStatus(paymentInfo)
                             }
                           >
                             <span>Paid</span>
