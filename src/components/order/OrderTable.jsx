@@ -63,15 +63,17 @@ const OrderTable = ({
 
   // Close modal on outside click
   // useEffect(() => {
-  //   const handleOutsideClick = (event) => {
-  //     if (!event.target.closest(".modal-container")) {
-  //       setOrderDocumentModal(null);
-  //     }
-  //   };
-  //   document.addEventListener("mousedown", handleOutsideClick);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleOutsideClick);
-  //   };
+  //   if (typeof window !== "undefined") {
+  //     const handleOutsideClick = (event) => {
+  //       if (!event.target.closest(".modal-container")) {
+  //         setOrderDocumentModal(null);
+  //       }
+  //     };
+  //     document.addEventListener("mousedown", handleOutsideClick);
+  //     return () => {
+  //       document.removeEventListener("mousedown", handleOutsideClick);
+  //     };
+  //   }
   // }, []);
 
   //Handle Order update  Function

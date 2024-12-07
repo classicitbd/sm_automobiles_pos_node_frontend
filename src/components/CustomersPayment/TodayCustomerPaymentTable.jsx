@@ -1,9 +1,10 @@
-
 import { useEffect, useState } from "react";
 import Pagination from "../common/pagination/Pagination";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import { FaEye } from "react-icons/fa";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
+import { BASE_URL } from "@/utils/baseURL";
+import { toast } from "react-toastify";
 
 const TodayCustomerPaymentTable = ({
   setPage,
@@ -21,6 +22,48 @@ const TodayCustomerPaymentTable = ({
     const newSerialNumber = (page - 1) * limit;
     setSerialNumber(newSerialNumber);
   }, [page, limit]);
+
+  // Today Payment Status
+ 
+  const handleOrderStatus = async (toDay_Payment_status) => {
+    console.log(toDay_Payment_status);
+
+    // try {
+    //   const sendData = {
+    //   };
+    //   const response = await fetch(`${BASE_URL}
+    //     ?role_type=order_update`, {
+    //     method: "PATCH",
+    //     credentials: "include",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(sendData),
+    //   });
+    //   const result = await response.json();
+    //   if (result?.statusCode === 200 && result?.success === true) {
+    //     toast.success(
+    //       result?.message ? result?.message : "Status Update successfully",
+    //       {
+    //         autoClose: 1000,
+    //       }
+    //     );
+    //     refetch();
+    //   } else {
+    //     toast.error(result?.message || "Something went wrong", {
+    //       autoClose: 1000,
+    //     });
+    //     refetch();
+    //   }
+    // } catch (error) {
+    //   toast.error(error?.message, {
+    //     autoClose: 1000,
+    //   });
+    //   refetch();
+    // } finally {
+    //   refetch();
+    // }
+  };
 
   return (
     <>
@@ -102,12 +145,25 @@ const TodayCustomerPaymentTable = ({
                           {check?.check_updated_by?.user_name || "-"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700 flex items-center">
-                          <button className="ml-3">
-                            <FaEye
-                              className="cursor-pointer text-gray-500 hover:text-gray-300"
-                              size={25}
-                            />
-                          </button>
+                          <select
+                            onChange={(e) => handleOrderStatus(e.target.value)}
+                            id=""
+                            className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl cursor-pointer"
+                          >
+                            <option selected value="pending">
+                              Pending
+                            </option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                          </select>
+                          <div>
+                            <button className="ml-3">
+                              <FaEye
+                                className="cursor-pointer text-gray-500 hover:text-gray-300"
+                                size={25}
+                              />
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
