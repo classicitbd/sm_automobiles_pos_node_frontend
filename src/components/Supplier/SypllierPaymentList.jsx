@@ -97,7 +97,7 @@ const SypllierPaymentList = () => {
               <div className="overflow-x-auto rounded-t-lg">
                 <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                   <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                    <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
+                    <tr className="divide-x  divide-gray-300  font-semibold text-center text-gray-900">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
                       <td className="whitespace-nowrap p-4 ">Payment Title</td>
                       <td className="whitespace-nowrap p-4 ">Payment Date</td>
