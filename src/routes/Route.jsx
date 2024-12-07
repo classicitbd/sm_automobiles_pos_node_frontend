@@ -33,6 +33,10 @@ import ViewSaleTargetPage from "@/pages/SaleTarget/ViewSaleTargetPage/ViewSaleTa
 import BankInPage from "@/pages/BankPage/BankInPage";
 import BankOutPage from "@/pages/BankPage/BankOutPage";
 import ExpensePage from "@/pages/Expense/ExpensePage";
+import ViewAddMoneyList from "@/components/Supplier/ViewAddMoneyList";
+import CustomerDueList from "@/components/Customers/CustomerDueList";
+import CustomerPaymentList from "@/components/Customers/CustomerPaymentList";
+import CustomerOrderList from "@/components/Customers/CustomerOrderList";
 
 const route = createBrowserRouter([
   {
@@ -93,8 +97,12 @@ const route = createBrowserRouter([
         element: <UnpaidSupplierPaymentList />,
       },
       {
-        path: "/supplierpaymentlist/:supplier_id",
+        path: "/supplier-paymentlist/:supplier_id",
         element: <SypllierPaymentList />,
+      },
+      {
+        path: "/supplier-moneylist/:supplier_id",
+        element: <ViewAddMoneyList />,
       },
       // ------Staff And Role----
       {
@@ -132,6 +140,18 @@ const route = createBrowserRouter([
       {
         path: "/allPaymentDueOrderList",
         element: <AllList />,
+      },
+      {
+        path: "/customer-viewOrder/:customer_id",
+        element: <CustomerOrderList />,
+      },
+      {
+        path: "/customer-paymentList/:customer_id",
+        element: <CustomerPaymentList />,
+      },
+      {
+        path: "/customer-dueList/:customer_id",
+        element: <CustomerDueList />,
       },
       {
         path: "/payment",
