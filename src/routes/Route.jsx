@@ -29,6 +29,9 @@ import TodayCustomerPayment from "@/pages/CustomersPage/CustomerPaymentPage/Toda
 import DueCustomerPayment from "@/pages/CustomersPage/CustomerPaymentPage/DueCustomerPayment";
 import PaidSupplierPaymentList from "@/pages/Supplier/PaidSupplierPaymentList";
 import UnpaidSupplierPaymentList from "@/pages/Supplier/UnpaidSupplierPaymentList";
+import ViewSaleTargetPage from "@/pages/SaleTarget/ViewSaleTargetPage/ViewSaleTargetPage";
+import BankInPage from "@/pages/BankPage/BankInPage";
+import BankOutPage from "@/pages/BankPage/BankOutPage";
 
 const route = createBrowserRouter([
   {
@@ -70,6 +73,10 @@ const route = createBrowserRouter([
         path: "/sale-target",
         element: <SaleTargetPage />,
       },
+      {
+        path: "/sale-target-view/:id",
+        element: <ViewSaleTargetPage />,
+      },
       // ------Supplier----
 
       {
@@ -106,6 +113,14 @@ const route = createBrowserRouter([
       {
         path: "/bank-account",
         element: <BankPage />,
+      },
+      {
+        path: "/bank-in/:id",
+        element: <BankInPage />,
+      },
+      {
+        path: "/bank-out/:id",
+        element: <BankOutPage />,
       },
 
       // ------Customers----

@@ -4,6 +4,9 @@ import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import Pagination from "../common/pagination/Pagination";
 import UpdateSaleTarget from "./UpdateSaleTarget";
+import { CiMenuKebab } from "react-icons/ci";
+import { Link } from "react-router-dom";
+import { FaEye } from "react-icons/fa";
 
 const SaleTargetTable = ({
   saleTargetData,
@@ -27,6 +30,30 @@ const SaleTargetTable = ({
     setSaleTargetUpdateData(saleTarget);
     setSaleTargetUpdateModal(true);
   };
+
+  // -------------//
+
+  // handle document modal open for edit view
+  const [bankDocumentModal, setBankDocumentModal] = useState(null);
+
+  const handleShowDocumentModal = (id) => {
+    setBankDocumentModal((prevId) => (prevId === id ? null : id));
+  };
+
+  // Close modal on outside click
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (!event.target.closest(".modal-container")) {
+        setBankDocumentModal(null);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
+  //-----------//
 
   const [serialNumber, setSerialNumber] = useState();
   useEffect(() => {
@@ -99,18 +126,42 @@ const SaleTargetTable = ({
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {sale_target?.sale_target_updated_by?.user_name}
                         </td>
+                        {/* <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
+                         
+
+                        </td> */}
+
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                           <button
-                            className="ml-3"
+                            className="ml-[8px]"
                             onClick={() =>
-                              handlesaleTargetUpdateModal(sale_target)
+                              handleShowDocumentModal(sale_target?._id)
                             }
                           >
-                            <FiEdit
-                              size={25}
-                              className="cursor-pointer text-gray-500 hover:text-gray-300"
+                            <CiMenuKebab
+                              size={30}
+                              className="cursor-pointer text-gray-500 hover:text-gray-300 font-bold"
                             />
                           </button>
+                          {bankDocumentModal == sale_target?._id && (
+                            <div className=" bg-bgray-200 shadow-xl w-[150px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
+                              <button
+                                className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
+                                onClick={() =>
+                                  handlesaleTargetUpdateModal(sale_target)
+                                }
+                              >
+                                <FiEdit size={18} />
+                                Edit
+                              </button>
+                              <Link to={`/sale-target-view/${user?._id}`}>
+                                {" "}
+                                <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium">
+                                  <FaEye size={16} /> View
+                                </button>
+                              </Link>
+                            </div>
+                          )}
                         </td>
                       </tr>
                     ))}
