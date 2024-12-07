@@ -3,6 +3,9 @@ import Pagination from "../common/pagination/Pagination";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import { FaEye } from "react-icons/fa";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
+import Swal from "sweetalert2-optimized";
+import { BASE_URL } from "@/utils/baseURL";
+import { toast } from "react-toastify";
 
 const DueCustomerPaymentTable = ({
   setPage,
@@ -23,44 +26,66 @@ const DueCustomerPaymentTable = ({
 
   // Today Payment Status
 
-  const handleOrderStatus = async (due_Payment_status) => {
-    console.log(due_Payment_status);
-
-    // try {
-    //   const sendData = {
-    //   };
-    //   const response = await fetch(`${BASE_URL}
-    //     ?role_type=order_update`, {
-    //     method: "PATCH",
-    //     credentials: "include",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(sendData),
-    //   });
-    //   const result = await response.json();
-    //   if (result?.statusCode === 200 && result?.success === true) {
-    //     toast.success(
-    //       result?.message ? result?.message : "Status Update successfully",
-    //       {
-    //         autoClose: 1000,
-    //       }
-    //     );
-    //     refetch();
-    //   } else {
-    //     toast.error(result?.message || "Something went wrong", {
-    //       autoClose: 1000,
-    //     });
-    //     refetch();
-    //   }
-    // } catch (error) {
-    //   toast.error(error?.message, {
-    //     autoClose: 1000,
-    //   });
-    //   refetch();
-    // } finally {
-    //   refetch();
-    // }
+  const handleOrderStatus = (toDay_Payment_status, checkInfo) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `You won't be able to Paid this ${checkInfo?.customer_id?.customer_name} Payment !`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, update it!',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const sendData = {
+          _id: checkInfo?._id,
+          check_status: toDay_Payment_status,
+          bank_id: checkInfo?.bank_id?._id,
+          pay_amount: checkInfo?.pay_amount,
+          payment_note: checkInfo?.payment_note,
+          check_number: checkInfo?.check_number,
+          check_updated_by: user?._id,
+          customer_id: checkInfo?.customer_id?._id,
+          customer_phone: checkInfo?.customer_id?.customer_phone,
+          order_id: checkInfo?.order_id?._id,
+          invoice_number: checkInfo?.order_id?.order_id,
+          payment_method: checkInfo?.payment_method,
+        }
+        try {
+          const response = await fetch(
+            `
+            ${BASE_URL}/check?role_type=check_update`,
+            {
+              method: 'PATCH',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              credentials: 'include',
+              body: JSON.stringify(sendData),
+            }
+          )
+          const result = await response.json()
+          // console.log(result);
+          if (result?.statusCode === 200 && result?.success === true) {
+            refetch()
+            Swal.fire({
+              title: 'Updated!',
+              text: `${checkInfo?.customer_id?.customer_name} Payment has been Updated!`,
+              icon: 'success',
+            })
+          } else {
+            toast.error(result?.message, {
+              autoClose: 1000,
+            })
+          }
+        } catch (error) {
+          toast.error('Network error or server is down', {
+            autoClose: 1000,
+          })
+          console.error(error)
+        }
+      }
+    })
   };
   return (
     <>
@@ -98,9 +123,8 @@ const DueCustomerPaymentTable = ({
                     {checks?.data?.map((check, i) => (
                       <tr
                         key={check?._id}
-                        className={`divide-x divide-gray-200 ${
-                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                        }`}
+                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                          }`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
@@ -142,19 +166,22 @@ const DueCustomerPaymentTable = ({
                           {check?.check_updated_by?.user_name || "-"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700 flex items-center">
-                          <select
-                            onChange={(e) => handleOrderStatus(e.target.value)}
-                            id=""
-                            className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl cursor-pointer"
-                          >
-                            <option selected value="pending">
-                              Pending
-                            </option>
-                            <option value="approved">Approved</option>
-                            <option value="rejected">Rejected</option>
-                          </select>
+                          {
+                            check?.check_status == "pending" && (
+                              <select
+                                onChange={(e) => handleOrderStatus(e.target.value, check)}
+                                id=""
+                                className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl cursor-pointer"
+                              >
+                                <option selected disabled>
+                                  Select A Status
+                                </option>
+                                <option value="approved">Approved</option>
+                                <option value="rejected">Rejected</option>
+                              </select>
+                            )
+                          }
                           <div>
-                            {" "}
                             <button className="ml-3">
                               <FaEye
                                 className="cursor-pointer text-gray-500 hover:text-gray-300"

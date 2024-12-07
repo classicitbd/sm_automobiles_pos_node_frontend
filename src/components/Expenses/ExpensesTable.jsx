@@ -1,11 +1,9 @@
-import { IoMdEye } from "react-icons/io";
-import { FiEdit } from "react-icons/fi";
+
 import { useEffect, useState } from "react";
-import ExpenseDocumentModalShow from "./ExpenseDocumentModalShow";
-import UpdateExpenses from "./UpdateExpenses";
 import Pagination from "../common/pagination/Pagination";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
+import { DateTimeFormat } from "@/utils/dateTimeFormet";
 
 const ExpensesTable = ({
   setPage,
@@ -18,22 +16,6 @@ const ExpensesTable = ({
   isLoading,
   expenses,
 }) => {
-  const [openExpenseModal, setOpenExpenseModal] = useState(false);
-  const [getExpenseModalData, setGetExpenseModalData] = useState({});
-  const [openDocumentModal, setOpenDocumentModal] = useState(false);
-  const [getDocumentData, setGetDocumentData] = useState({});
-
-  //Update handle Function
-  const handleExpensesUpdateModal = (expense) => {
-    setOpenExpenseModal(true);
-    setGetExpenseModalData(expense);
-  };
-
-  //Document Show Function
-  const handleShowDocumentModal = (expense) => {
-    setOpenDocumentModal(true);
-    setGetDocumentData(expense);
-  };
 
   const [serialNumber, setSerialNumber] = useState();
   useEffect(() => {
@@ -60,17 +42,22 @@ const ExpensesTable = ({
                         Expenses Title
                       </th>
                       <th className="whitespace-nowrap p-4 font-medium text-gray-900">
-                        Expense Voucher
-                      </th>
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
-                        Expense Description
-                      </th>
-
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
                         Expenses Amount
                       </th>
                       <th className="whitespace-nowrap p-4 font-medium text-gray-900">
-                        Expenses Bank Name
+                        Product Name
+                      </th>
+                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
+                        Supplier Name
+                      </th>
+                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
+                        Supplier Phone
+                      </th>
+                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
+                        Bank Name
+                      </th>
+                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
+                        Reference No
                       </th>
                       <th className="whitespace-nowrap p-4 font-medium text-gray-900">
                         Expenses Date
@@ -81,67 +68,48 @@ const ExpensesTable = ({
                       <th className="whitespace-nowrap p-4 font-medium text-gray-900">
                         Updated By
                       </th>
-
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
-                        Action
-                      </th>
                     </tr>
                   </thead>
 
                   <tbody className="divide-y divide-gray-200 text-center">
-                  {expenses?.data?.map((expense, i) => (
+                    {expenses?.data?.map((expense, i) => (
                       <tr
                         key={expense?._id}
-                        className={`divide-x divide-gray-200 ${
-                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                        }`}
+                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                          }`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {expense?.expense_title}
-                        </td>
-                        <td className="whitespace-nowrap px-4  py-1.5 text-gray-700 flex justify-center">
-                        <button
-                          className="ml-[8px]"
-                          onClick={() => handleShowDocumentModal(expense)}
-                          disabled={!expense?.expense_voucher ? true : false}
-                        >
-                          <IoMdEye
-                            size={25}
-                            className="cursor-pointer text-gray-500 hover:text-gray-300"
-                          />
-                        </button>
-                      </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {expense?.expense_description}
+                          {expense?.expense_title || "N/A"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {expense?.expense_amount}
+                          {expense?.expense_amount || "N/A"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {expense?.expense_bank_id?.bank_name}
+                          {expense?.expense_product_id?.product_name || "N/A"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {expense?.expense_date}
+                          {expense?.expense_supplier_id?.supplier_name || "N/A"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {expense?.expense_publisher_id?.user_name}
+                          {expense?.expense_supplier_id?.supplier_phone || "N/A"}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {expense?.expense_bank_id?.bank_name || "N/A"}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {expense?.reference_id || "N/A"}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {DateTimeFormat(expense?.createdAt)}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {(expense?.expense_publisher_id?.user_name)}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {expense?.expense_updated_by?.user_name}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
-                          <button
-                            className="ml-3"
-                            onClick={() => handleExpensesUpdateModal(expense)}
-                          >
-                            <FiEdit
-                              size={25}
-                              className="cursor-pointer text-gray-500 hover:text-gray-300"
-                            />
-                          </button>
                         </td>
                       </tr>
                     ))}
@@ -152,33 +120,16 @@ const ExpensesTable = ({
               <NoDataFound />
             )}
             {/* pagination */}
-          
-              <Pagination
-                setPage={setPage}
-                setLimit={setLimit}
-                totalData={totalData}
-                page={page}
-                limit={limit}
-              />
-            
-          </div>
 
-          {/* Show Expense Update Modal */}
-          {openExpenseModal && (
-            <UpdateExpenses
-              setOpenExpenseModal={setOpenExpenseModal}
-              getExpenseModalData={getExpenseModalData}
-              refetch={refetch}
-              user={user}
+            <Pagination
+              setPage={setPage}
+              setLimit={setLimit}
+              totalData={totalData}
+              page={page}
+              limit={limit}
             />
-          )}
-          {/* Show Expense Document Modal */}
-          {openDocumentModal && (
-            <ExpenseDocumentModalShow
-              setOpenDocumentModal={setOpenDocumentModal}
-              getDocumentData={getDocumentData}
-            />
-          )}
+
+          </div>
         </div>
       )}
     </>

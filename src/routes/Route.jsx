@@ -19,7 +19,6 @@ import StockManage from "@/pages/StockManage/StockManage";
 import PosPage from "@/pages/Pos/PosPage";
 import OrderPage from "@/pages/order/OrderPage";
 import OrderDetails from "@/components/order/OrderDetails/OrderDetails";
-import AllList from "@/components/Customers/CustomerPaymentDueOrderList/AllList";
 import SypllierPaymentList from "@/components/Supplier/SypllierPaymentList";
 import ProductUnitPage from "@/pages/ProductUnitPage/ProductUnitPage";
 import SiteSetting from "@/pages/SiteSetting/SiteSetting";
@@ -32,8 +31,8 @@ import UnpaidSupplierPaymentList from "@/pages/Supplier/UnpaidSupplierPaymentLis
 import ViewSaleTargetPage from "@/pages/SaleTarget/ViewSaleTargetPage/ViewSaleTargetPage";
 import BankInPage from "@/pages/BankPage/BankInPage";
 import BankOutPage from "@/pages/BankPage/BankOutPage";
+import ExpensePage from "@/pages/Expense/ExpensePage";
 import ViewAddMoneyList from "@/components/Supplier/ViewAddMoneyList";
-import CustomerDueList from "@/components/Customers/CustomerDueList";
 import CustomerPaymentList from "@/components/Customers/CustomerPaymentList";
 import CustomerOrderList from "@/components/Customers/CustomerOrderList";
 
@@ -137,20 +136,12 @@ const route = createBrowserRouter([
         element: <CustomersPage />,
       },
       {
-        path: "/allPaymentDueOrderList",
-        element: <AllList />,
-      },
-      {
         path: "/customer-viewOrder/:customer_id",
         element: <CustomerOrderList />,
       },
       {
         path: "/customer-paymentList/:customer_id",
         element: <CustomerPaymentList />,
-      },
-      {
-        path: "/customer-dueList/:customer_id",
-        element: <CustomerDueList />,
       },
       {
         path: "/payment",
@@ -167,6 +158,10 @@ const route = createBrowserRouter([
       {
         path: "/add-payment",
         element: <CustomerAddPayment />,
+      },
+      {
+        path: "/expense",
+        element: <ExpensePage />,
       },
 
       // ------Stock Manage----

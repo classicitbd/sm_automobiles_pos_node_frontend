@@ -66,8 +66,8 @@ const AddCustomersPayment = () => {
   const handleDataPost = async (data) => {
     setLoading(true);
     try {
-      if (order_Info?.grand_total_amount < data?.pay_amount) {
-        toast.error("Pay amount must be less than or equal grand total");
+      if (order_Info?.due_amount < data?.pay_amount) {
+        toast.error("Pay amount must be less than or equal due amount");
         setLoading(false);
         return;
       }
@@ -400,6 +400,8 @@ const AddCustomersPayment = () => {
                         <td className="whitespace-nowrap p-4 ">Sub Total</td>
                         <td className="whitespace-nowrap p-4 ">Discount</td>
                         <td className="whitespace-nowrap p-4 ">Grand Total</td>
+                        <td className="whitespace-nowrap p-4 ">Received Amount</td>
+                        <td className="whitespace-nowrap p-4 ">Due Amount</td>
                       </tr>
                     </thead>
 
@@ -416,6 +418,12 @@ const AddCustomersPayment = () => {
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {order_Info?.grand_total_amount}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {order_Info?.received_amount}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {order_Info?.due_amount}
                         </td>
                       </tr>
                     </tbody>

@@ -154,14 +154,6 @@ const CustomersTable = ({
                                 <FiEdit size={18} />
                                 Edit
                               </button>
-
-                              <Link to="/allPaymentDueOrderList">
-                                {" "}
-                                <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium">
-                                  <FaEye size={18} />
-                                  Payment Due Order List
-                                </button>
-                              </Link>
                               <Link to={`/customer-viewOrder/${customer?._id}`}>
                                 {" "}
                                 <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium">
@@ -176,13 +168,6 @@ const CustomersTable = ({
                                 <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium">
                                   <FaEye size={18} />
                                   Customer Payment List
-                                </button>
-                              </Link>
-                              <Link to={`/customer-dueList/${customer?._id}`}>
-                                {" "}
-                                <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium">
-                                  <FaEye size={18} />
-                                  Customer Due List
                                 </button>
                               </Link>
                             </div>

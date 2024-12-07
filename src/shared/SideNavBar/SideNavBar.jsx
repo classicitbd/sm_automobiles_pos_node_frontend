@@ -171,7 +171,7 @@ const SideNavBar = () => {
           />
 
           <DropdownMenu
-            label="Payment"
+            label="Customer Payment"
             icon={BiTask}
             isOpen={activeDropdown === "payment"}
             onClick={() => toggleDropdown("payment")}
@@ -229,6 +229,14 @@ const SideNavBar = () => {
           </DropdownMenu>
 
           <MenuItem
+            to="/expense"
+            icon={BiTask}
+            label="Expenses"
+            isActive={isActive("/expense")}
+            onClick={closeAllDropdowns} // Close all dropdowns when clicked
+          />
+
+          <MenuItem
             to="/pos"
             icon={TbHttpPost}
             label="POS"
@@ -250,19 +258,6 @@ const SideNavBar = () => {
             />
           </DropdownMenu>
 
-          <DropdownMenu
-            label="Expenses"
-            icon={BiTask}
-            isOpen={activeDropdown === "expenses"}
-            onClick={() => toggleDropdown("expenses")}
-          >
-            <ChildMenuItem
-              to="/expense"
-              icon={BsExplicit}
-              label="Expenses"
-              isActive={isActive("/expense")}
-            />
-          </DropdownMenu>
         </ul>
       </div>
     </div>
