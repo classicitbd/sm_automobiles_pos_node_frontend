@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { FiEdit } from "react-icons/fi";
+import { AiTwotoneBank } from "react-icons/ai";
 
 import UpdateBankInfo from "./UpdateBankInfo";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import Pagination from "../common/pagination/Pagination";
-import { CiMenuKebab } from "react-icons/ci";
+import { CiBank, CiMenuKebab } from "react-icons/ci";
+import { Link } from "react-router-dom";
 
 const BankInfoTable = ({
   setPage,
@@ -133,6 +135,19 @@ const BankInfoTable = ({
                                 <FiEdit size={18} />
                                 Edit
                               </button>
+                              <Link to={`/bank-in/${bank?._id}`}>
+                                {" "}
+                                <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium ">
+                                  <CiBank size={18} />
+                                  View Bank in
+                                </button>
+                              </Link>
+                              <Link to={`/bank-out/${bank?._id}`}>
+                                {" "}
+                                <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium ">
+                                  <AiTwotoneBank size={18} /> View Bank Out
+                                </button>
+                              </Link>
                             </div>
                           )}
                         </td>
