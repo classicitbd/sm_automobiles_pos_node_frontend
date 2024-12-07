@@ -32,6 +32,7 @@ import UnpaidSupplierPaymentList from "@/pages/Supplier/UnpaidSupplierPaymentLis
 import ViewSaleTargetPage from "@/pages/SaleTarget/ViewSaleTargetPage/ViewSaleTargetPage";
 import BankInPage from "@/pages/BankPage/BankInPage";
 import BankOutPage from "@/pages/BankPage/BankOutPage";
+import ExpensePage from "@/pages/Expense/ExpensePage";
 
 const route = createBrowserRouter([
   {
@@ -147,6 +148,10 @@ const route = createBrowserRouter([
       {
         path: "/add-payment",
         element: <CustomerAddPayment />,
+      },
+      {
+        path: "/expense",
+        element: <ExpensePage />,
       },
 
       // ------Stock Manage----
