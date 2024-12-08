@@ -154,7 +154,6 @@ const SideNavBar = () => {
             />
           </DropdownMenu>
 
-
           <MenuItem
             to="/bank-account"
             icon={FaUsers}
@@ -258,6 +257,31 @@ const SideNavBar = () => {
             />
           </DropdownMenu>
 
+          <DropdownMenu
+            label="PDF FILE"
+            icon={BiTask}
+            isOpen={activeDropdown === "pdf"}
+            onClick={() => toggleDropdown("pdf")}
+          >
+            <ChildMenuItem
+              to="/pdf-print"
+              icon={TbCategoryPlus}
+              label="PDF-Print"
+              isActive={isActive("/pdf-print")}
+            />
+            <ChildMenuItem
+              to="/supplier-print"
+              icon={TbCategoryPlus}
+              label="SupplierPdf-Print"
+              isActive={isActive("/supplier-print")}
+            />
+            <ChildMenuItem
+              to="/voucher-pdf"
+              icon={TbCategoryPlus}
+              label="Payment Voucher"
+              isActive={isActive("/voucher-pdf")}
+            />
+          </DropdownMenu>
         </ul>
       </div>
     </div>
