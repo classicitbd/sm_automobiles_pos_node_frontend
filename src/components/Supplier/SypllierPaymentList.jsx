@@ -72,6 +72,16 @@ const SypllierPaymentList = () => {
 
   return (
     <>
+      {/* search Supplier Payment History... */}
+      <div className='mt-3'>
+        <input
+          type='text'
+          defaultValue={searchTerm}
+          onChange={(e) => handleSearchValue(e.target.value)}
+          placeholder='Search Ref Id...'
+          className='w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200'
+        />
+      </div>
       {isLoading === true ? (
         <TableLoadingSkeleton />
       ) : (
@@ -82,13 +92,12 @@ const SypllierPaymentList = () => {
             </h3>
             <div className="flex items-center justify-between my-5 mx-28">
               <div className="text-[26px] font-bold text-gray-800">
-                <p>Supplier Name: </p>
-                <p>Supplier Phone: </p>
+                <p>Supplier Name: {supplierPayments?.data?.supplierDetails?.supplier_name}</p>
+                <p>Supplier Phone: {supplierPayments?.data?.supplierDetails?.supplier_phone}</p>
               </div>
-              <div>
-                <p>Supplier Address: </p>
-                <p>Supplier Status: </p>
-                <p>Supplier Created By: </p>
+              <div className="text-[26px] font-bold text-gray-800">
+                <p>Supplier Address: {supplierPayments?.data?.supplierDetails?.supplier_address}</p>
+                <p>Supplier Wallet Ammount: {supplierPayments?.data?.supplierDetails?.supplier_wallet_amount}</p>
               </div>
             </div>
           </div>
@@ -104,9 +113,9 @@ const SypllierPaymentList = () => {
                       <td className="whitespace-nowrap p-4 ">Payment Amount</td>
                       <td className="whitespace-nowrap p-4 ">Bank Name</td>
                       <td className="whitespace-nowrap p-4 ">
-                        Payment TRNX ID
+                        Payment Reference ID
                       </td>
-                      <td className="whitespace-nowrap p-4 ">Description</td>
+                      <td className="whitespace-nowrap p-4 ">Payment Status</td>
                       <td className="whitespace-nowrap p-4 ">Created By</td>
                     </tr>
                   </thead>
@@ -116,9 +125,8 @@ const SypllierPaymentList = () => {
                       (payment, i) => (
                         <tr
                           key={payment?._id}
-                          className={`divide-x divide-gray-200 ${
-                            i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                          }`}
+                          className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                            }`}
                         >
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                             {serialNumber + i + 1}
@@ -136,10 +144,10 @@ const SypllierPaymentList = () => {
                             {payment?.payment_bank_id?.bank_name}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {payment?.transaction_id}
+                            {payment?.reference_id}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {payment?.supplier_payment_description}
+                            {payment?.supplier_payment_status}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                             {payment?.supplier_payment_publisher_id?.user_name}

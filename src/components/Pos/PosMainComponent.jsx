@@ -184,61 +184,109 @@ const PosMainComponent = () => {
               {products?.data?.length > 0 ? (
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 overflow-y-auto max-h-[700px]">
                   {products?.data?.map((product, index) => (
-                    <div
-                      onClick={() => {
-                        const findProduct = addProducts.find(
-                          (item) => item?._id === product?._id
-                        );
-                        if (findProduct) {
-                          toast.error("Already added this product", {
-                            autoClose: 1000,
-                          });
-                          return; // Exit if the product is already added
-                        }
-                        setAddProducts((prev) => [
-                          ...prev,
-                          { ...product, purchase_quantity: 1, total_amount: product?.product_price },
-                        ]);
-                      }}
-                      key={index}
-                      className="border rounded-md overflow-hidden shadow-md flex flex-col justify-between cursor-pointer hover:shadow-lg transition duration-300 ease-in-out"
-                    >
-                      <img
-                        src={product?.product_image}
-                        alt={`Product ${index + 1}`}
-                        className="w-full h-40 object-cover"
-                      />
-                      <div className="p-2">
-                        <p className="font-bold">
-                          {product?.product_name}
-                          <small> /{product?.product_unit}</small>
-                        </p>
-                        <p className="text-sm mt-1">
-                          Quantity:{" "}
-                          <span className="font-bold">
-                            {product?.product_quantity}
-                          </span>
-                        </p>
-                        <p className="text-sm mt-1">
-                          Category: {product?.category_id?.category_name}
-                        </p>
-                        {product?.brand_id?.brand_name ? (
-                          <p className="text-sm mt-1">
-                            Brand: {product?.brand_id?.brand_name}
-                          </p>
-                        ) : (
-                          <p className="text-sm mt-1 opacity-0">
-                            Brand: Placeholder
-                          </p>
-                        )}
-                        <p className="text-sm mt-1">
-                          ID: {product?.product_id}
-                        </p>
-                      </div>
-                      <div className="bg-blue-500 text-white text-center text-xs py-1">
-                        {product?.product_price}
-                      </div>
-                    </div>
+                    <>
+                      {
+                        product?.product_quantity > 0 ?
+                          <div
+                            onClick={() => {
+                              const findProduct = addProducts.find(
+                                (item) => item?._id === product?._id
+                              );
+                              if (findProduct) {
+                                toast.error("Already added this product", {
+                                  autoClose: 1000,
+                                });
+                                return; // Exit if the product is already added
+                              }
+                              setAddProducts((prev) => [
+                                ...prev,
+                                { ...product, purchase_quantity: 1, total_amount: product?.product_price, discount_percent: 0, grand_total: product?.product_price },
+                              ]);
+                            }}
+                            key={index}
+                            className="border rounded-md overflow-hidden shadow-md flex flex-col justify-between cursor-pointer hover:shadow-lg transition duration-300 ease-in-out"
+                          >
+                            <img
+                              src={product?.product_image}
+                              alt={`Product ${index + 1}`}
+                              className="w-full h-40 object-cover"
+                            />
+                            <div className="p-2">
+                              <p className="font-bold">
+                                {product?.product_name}
+                                <small> /{product?.product_unit}</small>
+                              </p>
+                              <p className="text-sm mt-1">
+                                Quantity:{" "}
+                                <span className="font-bold">
+                                  {product?.product_quantity}
+                                </span>
+                              </p>
+                              <p className="text-sm mt-1">
+                                Category: {product?.category_id?.category_name}
+                              </p>
+                              {product?.brand_id?.brand_name ? (
+                                <p className="text-sm mt-1">
+                                  Brand: {product?.brand_id?.brand_name}
+                                </p>
+                              ) : (
+                                <p className="text-sm mt-1 opacity-0">
+                                  Brand: Placeholder
+                                </p>
+                              )}
+                              <p className="text-sm mt-1">
+                                ID: {product?.product_id}
+                              </p>
+                            </div>
+                            <div className="bg-blue-500 text-white text-center text-xs py-1">
+                              {product?.product_price}
+                            </div>
+                          </div>
+                          :
+                          <div
+                            key={index}
+                            className="border rounded-md overflow-hidden shadow-md flex flex-col justify-between hover:shadow-lg transition duration-300 ease-in-out"
+                            disabled
+                          >
+                            <img
+                              src={product?.product_image}
+                              alt={`Product ${index + 1}`}
+                              className="w-full h-40 object-cover"
+                            />
+                            <div className="p-2">
+                              <p className="font-bold">
+                                {product?.product_name}
+                                <small> /{product?.product_unit}</small>
+                              </p>
+                              <p className="text-sm mt-1">
+                                Quantity:{" "}
+                                <span className="font-bold">
+                                  {product?.product_quantity}
+                                </span>
+                              </p>
+                              <p className="text-sm mt-1">
+                                Category: {product?.category_id?.category_name}
+                              </p>
+                              {product?.brand_id?.brand_name ? (
+                                <p className="text-sm mt-1">
+                                  Brand: {product?.brand_id?.brand_name}
+                                </p>
+                              ) : (
+                                <p className="text-sm mt-1 opacity-0">
+                                  Brand: Placeholder
+                                </p>
+                              )}
+                              <p className="text-sm mt-1">
+                                ID: {product?.product_id}
+                              </p>
+                            </div>
+                            <div className="bg-blue-500 text-white text-center text-xs py-1">
+                              {product?.product_price}
+                            </div>
+                          </div>
+                      }
+
+                    </>
                   ))}
                 </div>
               ) : (
