@@ -35,6 +35,9 @@ import ExpensePage from "@/pages/Expense/ExpensePage";
 import ViewAddMoneyList from "@/components/Supplier/ViewAddMoneyList";
 import CustomerPaymentList from "@/components/Customers/CustomerPaymentList";
 import CustomerOrderList from "@/components/Customers/CustomerOrderList";
+import PdfPrintPage from "@/pages/AllPdfPrintPage/PdfPrintPage";
+import SupplierPdf from "@/pages/AllPdfPrintPage/SupplierPdf";
+import PaymentVoucher from "@/pages/AllPdfPrintPage/PaymentVoucher";
 
 const route = createBrowserRouter([
   {
@@ -190,6 +193,19 @@ const route = createBrowserRouter([
       {
         path: "/order-details/:_id",
         element: <OrderDetails />,
+      },
+      // 'Pdf Print'
+      {
+        path: "/pdf-print",
+        element: <PdfPrintPage />,
+      },
+      {
+        path: "/supplier-print",
+        element: <SupplierPdf />,
+      },
+      {
+        path: "/voucher-pdf",
+        element: <PaymentVoucher />,
       },
     ],
   },
