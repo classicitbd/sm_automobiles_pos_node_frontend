@@ -10,11 +10,63 @@ import { toast } from "react-toastify";
 import useGetBank from "@/hooks/useGetbank";
 import MiniSpinner from "@/shared/MiniSpinner/MiniSpinner";
 import { Button } from "../ui/button";
+import { useForm } from "react-hook-form";
 
 const RightSide = ({ user, addProducts, setAddProducts }) => {
+
+  const paymentOption = [
+    {
+      _id: 1,
+      payment_type: "Full Payment",
+      payment_value: "full-payment",
+    },
+    {
+      _id: 2,
+      payment_type: "Partial Payment",
+      payment_value: "partial-payment",
+    },
+    {
+      _id: 3,
+      payment_type: "Due Payment",
+      payment_value: "due-payment",
+    },
+  ];
+
+  const partialPaymentOption = [
+    { id: 1, value: "cash", label: "Cash" },
+    { id: 2, value: "check", label: "Check" },
+  ];
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
   const [loading, setLoading] = useState(false);
   const [customerAddModal, setCustomerAddModal] = useState(false); //customer add modal
-  const [customerInfo, setCustomerInfo] = useState({});
+  const [customerInfo, setCustomerInfo] = useState({});  //customer info data
+  const [product_discount, setProductDiscount] = useState(0); //product discount
+  const [product_discount_idInfo, setProductDiscountIDInfo] = useState(null); //product discount id set
+
+  // set add product discount ammount and calculate grand total price
+  useEffect(() => {
+
+    setAddProducts((prev) =>
+      prev.map((item) =>
+        item?._id === product_discount_idInfo?._id
+          ? {
+            ...item,
+            discount_percent:
+              product_discount,
+            grand_total:
+              product_discount_idInfo?.total_amount - (product_discount_idInfo?.total_amount * product_discount) / 100,
+          }
+          : item
+      )
+    )
+  }, [product_discount, product_discount_idInfo, setAddProducts]);
 
   // set all data in state
   const [customer_id, setCustomer_id] = useState("");
@@ -22,6 +74,11 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
   const [discount_amount, setDiscountInputAmount] = useState(0);
   const [grand_total, setGrandTotal] = useState(0);
   const [order_note, setOrderNote] = useState("");
+  const [payment_type, setPaymentType] = useState(null); //payment type
+  const [received_amount, setReceivedAmount] = useState(0); //received amount
+  const [due_amount, setDueAmount] = useState(0); //due amount
+  const [payment_method, setPaymentBy] = useState(""); //payment method bank or cah
+  const [bank_id, setBank_id] = useState(""); //bank id
 
   //get bank data
   const { data: bankTypes, isLoading: bankLoading } = useGetBank();
@@ -32,10 +89,10 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
     isLoading: customerLoading,
     refetch,
   } = useQuery({
-    queryKey: [`/api/v1/customer`],
+    queryKey: [`/api/v1/customer?customer_publisher_id=${user?._id}`],
     queryFn: async () => {
       try {
-        const res = await fetch(`${BASE_URL}/customer`, {
+        const res = await fetch(`${BASE_URL}/customer?customer_publisher_id=${user?._id}`, {
           credentials: "include",
         });
 
@@ -58,7 +115,7 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
   // Calculate discounted total whenever addProducts or discount_amount changes
   useEffect(() => {
     const total = addProducts?.reduce(
-      (prev, next) => prev + parseInt(next.total_amount || 0),
+      (prev, next) => prev + parseFloat(next.grand_total || 0),
       0
     );
     setSubTotal(total);
@@ -69,86 +126,97 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
   // submit order
   const HandleSubmitOrder = async () => {
     // setLoading(true);
-    try {
-      if (!customer_id) {
-        setLoading(false);
-        return toast.error("Please fill up customer name", {
-          autoClose: 1000,
-        });
-      }
-      if (addProducts?.length === 0) {
-        setLoading(false);
-        return toast.error("Please add at least one product", {
-          autoClose: 1000,
-        });
-      }
-      if (!sub_total) {
-        setLoading(false);
-        return toast.error("Must need at least one product", {
-          autoClose: 1000,
-        });
-      }
-      if (!grand_total) {
-        setLoading(false);
-        return toast.error("Must need at least one product", {
-          autoClose: 1000,
-        });
-      }
-      const sendData = {
-        order_publisher_id: user?._id,
-        order_status: "pending",
-        customer_id: customer_id,
-        customer_previous_due: customerInfo?.previous_due || 0,
-        customer_previous_advance: customerInfo?.previous_advance || 0,
-        sub_total_amount: sub_total,
-        discount_percent_amount: discount_amount || 0,
-        grand_total_amount: grand_total,
-        order_note: order_note,
-        order_products: addProducts?.map((item) => ({
-          product_id: item?._id,
-          product_quantity: item?.purchase_quantity,
-          product_price: item?.product_price,
-          product_buying_price: item?.product_buying_price || 0,
-          product_total_price: item?.total_amount,
-        })),
-      };
-      const response = await fetch(`${BASE_URL}/order?role_type=order_create`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(sendData),
-      });
-      const result = await response.json();
-      if (result?.statusCode === 200 && result?.success === true) {
-        toast.success(
-          result?.message ? result?.message : "order created successfully",
-          {
-            autoClose: 1000,
-          }
-        );
-        refetch();
-        setLoading(false);
-      } else {
-        toast.error(result?.message || "Something went wrong", {
-          autoClose: 1000,
-        });
-        setLoading(false);
-      }
-    } catch (error) {
-      toast.error(error?.message, {
-        autoClose: 1000,
-      });
-      setLoading(false);
-    } finally {
-      setLoading(false);
-    }
+    // try {
+    //   if (!customer_id) {
+    //     setLoading(false);
+    //     return toast.error("Please fill up customer name", {
+    //       autoClose: 1000,
+    //     });
+    //   }
+    //   if (addProducts?.length === 0) {
+    //     setLoading(false);
+    //     return toast.error("Please add at least one product", {
+    //       autoClose: 1000,
+    //     });
+    //   }
+    //   if (!sub_total) {
+    //     setLoading(false);
+    //     return toast.error("Must need at least one product", {
+    //       autoClose: 1000,
+    //     });
+    //   }
+    //   if (!grand_total) {
+    //     setLoading(false);
+    //     return toast.error("Must need at least one product", {
+    //       autoClose: 1000,
+    //     });
+    //   }
+    //   const sendData = {
+    //     order_publisher_id: user?._id,
+    //     order_status: "pending",
+    //     customer_id: customer_id,
+    //     customer_previous_due: customerInfo?.previous_due || 0,
+    //     customer_previous_advance: customerInfo?.previous_advance || 0,
+    //     sub_total_amount: sub_total,
+    //     discount_percent_amount: discount_amount || 0,
+    //     grand_total_amount: grand_total,
+    //     order_note: order_note,
+    //     order_products: addProducts?.map((item) => ({
+    //       product_id: item?._id,
+    //       product_quantity: item?.purchase_quantity,
+    //       product_price: item?.product_price,
+    //       product_buying_price: item?.product_buying_price || 0,
+    //       product_total_price: item?.total_amount,
+    //     })),
+    //   };
+    //   const response = await fetch(`${BASE_URL}/order?role_type=order_create`, {
+    //     method: "POST",
+    //     credentials: "include",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(sendData),
+    //   });
+    //   const result = await response.json();
+    //   if (result?.statusCode === 200 && result?.success === true) {
+    //     toast.success(
+    //       result?.message ? result?.message : "order created successfully",
+    //       {
+    //         autoClose: 1000,
+    //       }
+    //     );
+    //     refetch();
+    //     setLoading(false);
+    //   } else {
+    //     toast.error(result?.message || "Something went wrong", {
+    //       autoClose: 1000,
+    //     });
+    //     setLoading(false);
+    //   }
+    // } catch (error) {
+    //   toast.error(error?.message, {
+    //     autoClose: 1000,
+    //   });
+    //   setLoading(false);
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   if (customerLoading || bankLoading) {
     return <LoaderOverlay />;
   }
+
+  // customer search
+  const customFilter = (option, inputValue) => {
+    const customerNameMatch = option?.data?.customer_name
+      ?.toLowerCase()
+      .includes(inputValue.toLowerCase());
+    const customerPhoneMatch = option?.data?.customer_phone
+      ?.toLowerCase()
+      .includes(inputValue.toLowerCase());
+    return customerNameMatch || customerPhoneMatch;
+  };
 
   return (
     <>
@@ -170,15 +238,19 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
           <Select
             id="customer_id"
             name="customer_id"
-            aria-label="Customer Name"
+            aria-label="customer Name"
             isClearable
+            required
             options={customerTypes?.data}
-            getOptionLabel={(x) => x?.customer_name}
-            getOptionValue={(x) => x?._id}
+            getOptionLabel={(x) => `${x.customer_name} (${x.customer_phone})`}
+            getOptionValue={(x) => x._id}
             onChange={(selectedOption) => {
               setCustomer_id(selectedOption?._id);
               setCustomerInfo(selectedOption);
             }}
+            filterOption={customFilter} // Custom filtering by name and phone
+            placeholder="Search by name or phone"
+            noOptionsMessage={() => "No customers found"}
           />
         </div>
 
@@ -195,13 +267,7 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                     Phone
                   </th>
                   <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
-                    Due
-                  </th>
-                  <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
-                    Advance
-                  </th>
-                  <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
-                    Payment Status
+                    Account Balance
                   </th>
                 </tr>
               </thead>
@@ -214,19 +280,15 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                     {customerInfo?.customer_phone}
                   </td>
                   <td className="whitespace-nowrap py-3 px-2 font-medium text-gray-700 text-center border">
-                    {customerInfo?.previous_due
-                      ? customerInfo?.previous_due
-                      : 0}
-                  </td>
-                  <td className="whitespace-nowrap py-3 px-2 font-medium text-gray-700 text-center border">
-                    {customerInfo?.previous_advance
-                      ? customerInfo?.previous_advance
-                      : 0}
-                  </td>
-                  <td className="whitespace-nowrap py-3 px-2 font-medium text-gray-700 text-center border">
-                    {customerInfo?.first_payment_status == "active"
-                      ? "Paid"
-                      : "Unpaid"}
+                    {customerInfo?.customer_wallet > 0 ? (
+                      <span className="text-green-500">
+                        {customerInfo?.customer_wallet}
+                      </span>
+                    ) : (
+                      <span className="text-red-500">
+                        {customerInfo?.customer_wallet}
+                      </span>
+                    )}
                   </td>
                 </tr>
               </tbody>
@@ -245,7 +307,7 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                 <thead className=" bg-[#fff9ee] ">
                   <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
                     <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
-                      Image
+                      ID
                     </th>
                     <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
                       Name
@@ -260,6 +322,12 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                       Total
                     </th>
                     <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
+                      Discount (%)
+                    </th>
+                    <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
+                      Grand Total
+                    </th>
+                    <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
                       Action
                     </th>
                   </tr>
@@ -268,16 +336,10 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                   {addProducts?.length > 0 &&
                     addProducts?.map((product, index) => (
                       <tr key={index}>
-                        <td className="whitespace-nowrap font-medium text-gray-700 border">
-                          <div className=" flex items-center justify-center">
-                            <img
-                              src={product?.product_image}
-                              alt=""
-                              className="w-20"
-                            />
-                          </div>
-                        </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 text-center border">
+                          {product?.product_id}
+                        </td>
+                        <td className="whitespace-nowrap font-medium text-gray-700 text-center border">
                           {product?.product_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 text-center border">
@@ -291,17 +353,25 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                                   prev.map((item) =>
                                     item._id === product._id
                                       ? {
-                                          ...item,
-                                          purchase_quantity:
-                                            item.purchase_quantity > 1
-                                              ? item.purchase_quantity - 1
-                                              : item.purchase_quantity,
-                                          total_amount:
-                                            item.purchase_quantity > 1
-                                              ? item.total_amount -
-                                                product?.product_price
-                                              : item.total_amount,
-                                        }
+                                        ...item,
+                                        purchase_quantity:
+                                          item?.purchase_quantity > 1
+                                            ? item?.purchase_quantity - 1
+                                            : item?.purchase_quantity,
+                                        total_amount:
+                                          item?.purchase_quantity > 1
+                                            ? item?.total_amount -
+                                            product?.product_price
+                                            : item?.total_amount,
+                                        grand_total:
+                                          item?.purchase_quantity > 1
+                                            ?
+                                            (item?.total_amount -
+                                              product?.product_price) - ((item?.total_amount -
+                                                product?.product_price) * item?.discount_percent) / 100
+                                            :
+                                            item?.grand_total,
+                                      }
                                       : item
                                   )
                                 );
@@ -320,20 +390,31 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                                     prev.map((item) =>
                                       item._id === product._id
                                         ? {
-                                            ...item,
-                                            purchase_quantity:
-                                              newQuantity <
+                                          ...item,
+                                          purchase_quantity:
+                                            newQuantity <
                                               product?.product_quantity
-                                                ? newQuantity
-                                                : product?.product_quantity,
-                                            total_amount:
-                                              newQuantity <
+                                              ? newQuantity
+                                              : product?.product_quantity,
+                                          total_amount:
+                                            newQuantity <
                                               product?.product_quantity
-                                                ? newQuantity *
-                                                  product?.product_price
-                                                : product?.product_quantity *
-                                                  product?.product_price,
-                                          }
+                                              ? newQuantity *
+                                              product?.product_price
+                                              : product?.product_quantity *
+                                              product?.product_price,
+                                          grand_total:
+                                            newQuantity <
+                                              product?.product_quantity
+                                              ?
+                                              (newQuantity *
+                                                product?.product_price) - ((newQuantity *
+                                                  product?.product_price) * item?.discount_percent) / 100
+                                              :
+                                              (product?.product_quantity *
+                                                product?.product_price) - ((product?.product_quantity *
+                                                  product?.product_price) * item?.discount_percent) / 100,
+                                        }
                                         : item
                                     )
                                   );
@@ -349,19 +430,28 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                                   prev.map((item) =>
                                     item._id === product._id
                                       ? {
-                                          ...item,
-                                          purchase_quantity:
-                                            item.purchase_quantity <
+                                        ...item,
+                                        purchase_quantity:
+                                          item?.purchase_quantity <
                                             product?.product_quantity
-                                              ? item.purchase_quantity + 1
-                                              : item.purchase_quantity,
-                                          total_amount:
-                                            item.purchase_quantity <
+                                            ? item?.purchase_quantity + 1
+                                            : item?.purchase_quantity,
+                                        total_amount:
+                                          item?.purchase_quantity <
                                             product?.product_quantity
-                                              ? item.total_amount +
-                                                product?.product_price
-                                              : item.total_amount,
-                                        }
+                                            ? item?.total_amount +
+                                            product?.product_price
+                                            : item?.total_amount,
+                                        grand_total:
+                                          item?.purchase_quantity <
+                                            product?.product_quantity
+                                            ?
+                                            (item?.total_amount +
+                                              product?.product_price) - ((item?.total_amount +
+                                                product?.product_price) * item?.discount_percent) / 100
+                                            :
+                                            item?.grand_total,
+                                      }
                                       : item
                                   )
                                 );
@@ -374,6 +464,38 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                         </td>
                         <td className="whitespace-nowrap font-medium text-gray-700 text-center border">
                           {product?.total_amount}
+                        </td>
+                        <td className="whitespace-nowrap font-medium text-gray-700 text-center border">
+                          <input
+                            value={product?.discount_percent} // Bind input to state
+                            onChange={(e) => {
+                              const value = parseInt(e.target.value, 10);
+
+                              if (!isNaN(value) && value >= 0 && value <= 99) {
+                                setProductDiscount(value); // Update state only for valid input
+                                setProductDiscountIDInfo(product)
+                              } else if (value > 99) {
+                                toast.error("Must be less than 100", {
+                                  autoClose: 100,
+                                });
+                              }
+                            }}
+                            onBlur={(e) => {
+                              const value = parseInt(e.target.value, 10);
+
+                              // Reset the value if it exceeds the limit
+                              if (isNaN(value) || value > 99) {
+                                setProductDiscount(99); // Reset to max allowed value
+                                setProductDiscountIDInfo(product)
+                              }
+                            }}
+                            type="number"
+                            placeholder="Discount On SubTotal"
+                            className="rounded-md border-gray-200 shadow-sm sm:text-sm p-1 border-2 w-16 text-center"
+                          />
+                        </td>
+                        <td className="whitespace-nowrap font-medium text-gray-700 text-center border">
+                          {product?.grand_total}
                         </td>
                         <td className="border p-4">
                           <div className="flex items-center justify-center">
@@ -408,6 +530,24 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                   Discount percent <small>(max 99)</small>
                 </h5>
                 <h5 className="mt-4">Grand Total</h5>
+                <h5 className="mt-4">Select Payment Option</h5>
+                {payment_type == "partial-payment" &&
+                  <h5 className="mt-4">Payment Method</h5>
+                }
+                {payment_type == "partial-payment" &&
+                  <h5 className="mt-6">Pay Amount</h5>
+                }
+                {payment_type == "partial-payment" && payment_method === "check" &&
+                  <h5 className="mt-6">Payment Bank Name</h5>
+                }
+                {payment_type == "partial-payment" && payment_method === "check" &&
+                  <h5 className="mt-7">Check Number</h5>
+                }
+                {payment_type == "partial-payment" && payment_method === "check" &&
+                  <h5 className="mt-7">Check Issue Date</h5>
+                }
+                <h5 className="mt-7">Received Amount</h5>
+                <h5 className="mt-7">Due Amount</h5>
               </div>
               <div>
                 <p className="font-bold">
@@ -446,6 +586,143 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                   <span className="mr-2">: </span>
                   {grand_total.toFixed(2)}
                 </p>
+                <div className="mt-2">
+                  <Select
+                    id="payment_type"
+                    name="payment_type"
+                    aria-label="Payment Type"
+                    isClearable
+                    required
+                    options={paymentOption}
+                    getOptionLabel={(x) => x?.payment_type}
+                    getOptionValue={(x) => x?._id}
+                    onChange={(selectedOption) => {
+                      if (selectedOption?.payment_value == "full-payment") {
+                        setReceivedAmount(grand_total);
+                        setDueAmount(0);
+                      } else if (selectedOption?.payment_value == "due-payment") {
+                        setReceivedAmount(0);
+                        setDueAmount(grand_total);
+                      } else {
+                        setReceivedAmount(0);
+                        setDueAmount(0);
+                      }
+                      setPaymentType(selectedOption?.payment_value);
+                    }}
+                  />
+                </div>
+
+                {/* {payment_type == "partial-payment" select paymrnt method */}
+                {payment_type == "partial-payment" &&
+                  < div className="mt-2">
+                    <Select
+                      id="payment_method"
+                      name="payment_method"
+                      aria-label="Payment By"
+                      required
+                      isClearable
+                      options={partialPaymentOption}
+                      getOptionLabel={(x) => x?.label}
+                      getOptionValue={(x) => x?.value}
+                      onChange={(selectedOption) => {
+                        setPaymentBy(selectedOption?.value);
+                      }}
+                    />
+                  </div>
+                }
+
+                {
+                  payment_type == "partial-payment" &&
+                  <div>
+                    <input
+                      {...register("pay_amount", {
+                        required: "Pay Amount is required",
+                        validate: (value) => {
+                          if (value < 0) {
+                            return "Amount must be getter than 0";
+                          }
+                        },
+                      })}
+                      type="number"
+                      placeholder="Pay Amount"
+                      className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                    />
+                    {errors?.pay_amount && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors?.pay_amount?.message}
+                      </p>
+                    )}
+                  </div>
+                }
+
+                {payment_type == "partial-payment" && payment_method === "check" && (
+                  <div className="mt-3">
+
+                    <Select
+                      id="bank_id"
+                      name="bank_id"
+                      required
+                      isClearable
+                      aria-label="Payment Bank Name"
+                      options={bankTypes?.data}
+                      getOptionLabel={(x) => x?.bank_name}
+                      getOptionValue={(x) => x?._id}
+                      onChange={(selectedOption) => {
+                        setBank_id(selectedOption?._id);
+                      }}
+                    />
+                  </div>
+                )}
+
+                {payment_type == "partial-payment" && payment_method === "check" && (
+                  <div className="mt-4">
+                    <input
+                      {...register("check_number", {
+                        required: "Check Number is required",
+                      })}
+                      type="text"
+                      placeholder="Check Number"
+                      className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                    />
+
+                    {errors?.check_number && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors?.check_number?.message}
+                      </p>
+                    )}
+                  </div>
+                )}
+
+                {payment_type == "partial-payment" && payment_method === "check" && (
+                  <div className="mt-4">
+                    <input
+                      {...register("check_withdraw_date", {
+                        required: "Check Issue Date is required",
+                      })}
+                      type="date"
+                      min={new Date().toISOString().split("T")[0]} // Prevents selecting dates before today
+                      placeholder="Check Issue Date"
+                      className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                    />
+
+                    {errors?.check_withdraw_date && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors?.check_withdraw_date?.message}
+                      </p>
+                    )}
+                  </div>
+                )}
+
+
+
+                <p className="mt-4 font-bold">
+                  <span className="mr-2">: </span>
+                  {received_amount.toFixed(2)}
+                </p>
+                <p className="mt-4 font-bold">
+                  <span className="mr-2">: </span>
+                  {due_amount.toFixed(2)}
+                </p>
               </div>
             </div>
           </>
@@ -466,15 +743,17 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
             Create
           </Button>
         )}
-      </div>
+      </div >
       {/* add new customer modal */}
-      {customerAddModal && (
-        <AddCustomer
-          setCustomerAddModal={setCustomerAddModal}
-          user={user}
-          refetch={refetch}
-        />
-      )}
+      {
+        customerAddModal && (
+          <AddCustomer
+            setCustomerAddModal={setCustomerAddModal}
+            user={user}
+            refetch={refetch}
+          />
+        )
+      }
     </>
   );
 };
