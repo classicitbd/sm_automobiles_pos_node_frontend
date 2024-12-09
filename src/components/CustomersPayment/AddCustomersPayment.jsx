@@ -215,6 +215,8 @@ const AddCustomersPayment = () => {
                       }
                     },
                   })}
+                  min={0.01} // Allow decimal values with minimum 0.01
+                  step="0.01" // Ensure step supports decimal precision
                   type="number"
                   placeholder="Pay Amount"
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
