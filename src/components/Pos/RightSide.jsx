@@ -13,7 +13,7 @@ import { Button } from "../ui/button";
 import { set, useForm } from "react-hook-form";
 import { parse } from "postcss";
 
-const RightSide = ({ user, addProducts, setAddProducts }) => {
+const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
 
   const paymentOption = [
     {
@@ -332,6 +332,9 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                         Quantity
                       </th>
                       <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
+                        Mesurement
+                      </th>
+                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
                         Total
                       </th>
                       <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
@@ -474,6 +477,9 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                                 <IoAddCircle size={30} />
                               </button>
                             </div>
+                          </td>
+                          <td className="whitespace-nowrap font-medium text-gray-700 text-center border">
+                          {product?.purchase_quantity}{" "}{product?.product_unit_id?.product_unit_name}{" = "}{product?.purchase_quantity * product?.product_unit_id?.product_unit_value}{" "}{settingData?.unit_name}
                           </td>
                           <td className="whitespace-nowrap font-medium text-gray-700 text-center border">
                             {product?.total_amount}

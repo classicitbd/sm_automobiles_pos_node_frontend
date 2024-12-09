@@ -311,6 +311,7 @@ const PosMainComponent = () => {
             user={user}
             addProducts={addProducts}
             setAddProducts={setAddProducts}
+            settingData={settingData}
           />
         </div>
       </div>

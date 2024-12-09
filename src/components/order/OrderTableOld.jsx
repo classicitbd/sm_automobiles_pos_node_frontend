@@ -1,19 +1,40 @@
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import Pagination from "../common/pagination/Pagination";
+
 import { useEffect, useState } from "react";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import { CiMenuKebab } from "react-icons/ci";
 import { BASE_URL } from "@/utils/baseURL";
 import { toast } from "react-toastify";
+import { Button } from "../ui/button";
 import {
+  FaDownload,
   FaEye,
   FaFileDownload,
+  FaRegFilePdf,
 } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import OrderUpDateModal from "./OrderUpDateModal";
 import { CSVLink } from "react-csv";
 import { DateTimeFormat } from "@/utils/dateTimeFormet";
+import {
+  Document as PDFDocument,
+  Page,
+  StyleSheet,
+  Text,
+  View,
+  PDFDownloadLink,
+} from "@react-pdf/renderer";
+import MiniSpinner from "@/shared/MiniSpinner/MiniSpinner";
+
+const styles = StyleSheet.create({
+  totalText: {
+    fontWeight: "semibold",
+    fontSize: "10px",
+    color: "black",
+  },
+});
 
 const OrderTable = ({
   setPage,
@@ -41,19 +62,19 @@ const OrderTable = ({
   };
 
   // Close modal on outside click
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const handleOutsideClick = (event) => {
-        if (!event.target.closest(".modal-container")) {
-          setOrderDocumentModal(null);
-        }
-      };
-      document.addEventListener("mousedown", handleOutsideClick);
-      return () => {
-        document.removeEventListener("mousedown", handleOutsideClick);
-      };
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     const handleOutsideClick = (event) => {
+  //       if (!event.target.closest(".modal-container")) {
+  //         setOrderDocumentModal(null);
+  //       }
+  //     };
+  //     document.addEventListener("mousedown", handleOutsideClick);
+  //     return () => {
+  //       document.removeEventListener("mousedown", handleOutsideClick);
+  //     };
+  //   }
+  // }, []);
 
   //Handle Order update  Function
 
@@ -135,9 +156,186 @@ const OrderTable = ({
       Order_Note: order?.order_note,
     })) || [];
 
+  // Handle PDF Download data
+  const document = (
+    <PDFDocument>
+      <Page size={"A4"}>
+        <View style={{ margin: "10px" }}>
+          {/* to header */}
+          <View style={{ marginBottom: "20px" }}>
+            <Text
+              style={{
+                fontWeight: "bold",
+                textAlign: "center",
+                fontSize: "24px",
+                margin: "20px 0",
+                letterSpacing: "1px",
+              }}
+            >
+              Classic It
+            </Text>
+            <Text style={{ fontSize: "10px", textAlign: "center" }}>
+              Classic It Limited, 238/1 Uttara Sector 13, Dhaka-1207,
+              Bangladesh,
+            </Text>
+            <Text style={{ fontSize: "10px", textAlign: "center" }}>
+              +8801746544488, +88017465449, classicit.com
+            </Text>
+          </View>
+          <View>
+            {/* Column Headers */}
+            <View
+              style={{
+                flexDirection: "row",
+                borderTop: "1px",
+                borderLeft: "1px",
+                borderRight: "1px",
+                borderBottom: "1px",
+                padding: "10px 0",
+                backgroundColor: "#000F24",
+                borderColor: "#F5F7F8",
+                color: "white",
+              }}
+            >
+              <View
+                style={{
+                  width: "80px",
+                  fontSize: "10px",
+                  fontWeight: "bold",
+                  padding: "0 5px",
+                }}
+              >
+                <Text>#SL</Text>
+              </View>
+              <View
+                style={{ width: "100px", fontSize: "10px", fontWeight: "bold" }}
+              >
+                <Text>Date</Text>
+              </View>
+              <View
+                style={{ width: "100px", fontSize: "10px", fontWeight: "bold" }}
+              >
+                <Text>Customer Name</Text>
+              </View>
+              <View
+                style={{ width: "100px", fontSize: "10px", fontWeight: "bold" }}
+              >
+                <Text>Customer Contract</Text>
+              </View>
+              <View
+                style={{ width: "100px", fontSize: "10px", fontWeight: "bold" }}
+              >
+                <Text>Customer Address</Text>
+              </View>
+              <View
+                style={{ width: "100px", fontSize: "10px", fontWeight: "bold" }}
+              >
+                <Text>Order ID</Text>
+              </View>
+              <View
+                style={{ width: "100px", fontSize: "10px", fontWeight: "bold" }}
+              >
+                <Text>Order Status</Text>
+              </View>
+              <View
+                style={{ width: "100px", fontSize: "10px", fontWeight: "bold" }}
+              >
+                <Text>Sub Total</Text>
+              </View>
+              <View
+                style={{ width: "100px", fontSize: "10px", fontWeight: "bold" }}
+              >
+                <Text>Percent Amount</Text>
+              </View>
+              <View
+                style={{ width: "100px", fontSize: "10px", fontWeight: "bold" }}
+              >
+                <Text>Grand Total</Text>
+              </View>
+            </View>
+
+            {/* Data Row */}
+            {orders?.data?.map((order, i) => (
+              <View
+                key={i}
+                style={{
+                  flexDirection: "row",
+                  borderBottom: "1px",
+                  borderLeft: "1px",
+                  borderRight: "1px",
+                  padding: "10px 0",
+                  borderColor: "#F5F7F8",
+                  backgroundColor: i % 2 === 0 ? "#F5F7F8" : "white",
+                }}
+              >
+                <View
+                  style={{
+                    width: "80px",
+                    fontSize: "10px",
+                    textAlign: "left",
+                    paddingLeft: "10px",
+                  }}
+                >
+                  <Text>{i + 1}</Text>
+                </View>
+                <View style={{ width: "100px", fontSize: "10px" }}>
+                  <Text style={styles.totalText}>
+                    {DateTimeFormat(order?.createdAt)}
+                  </Text>
+                </View>
+                <View style={{ width: "100px" }}>
+                  <Text style={styles.totalText}>
+                    {order?.customer_id?.customer_name}
+                  </Text>
+                </View>
+                <View style={{ width: "100px" }}>
+                  <Text style={styles.totalText}>
+                    {order?.customer_id?.customer_phone}
+                  </Text>
+                </View>
+                <View style={{ width: "100px", fontSize: "10px" }}>
+                  <Text style={styles.totalText}>
+                    {order?.customer_id?.customer_address}
+                  </Text>
+                </View>
+                <View style={{ width: "100px", fontSize: "10px" }}>
+                  <Text style={styles.totalText}>{order?.order_id}</Text>
+                </View>
+                <View style={{ width: "100px", fontSize: "10px" }}>
+                  <Text style={styles.totalText}>{order?.order_status}</Text>
+                </View>
+                <View style={{ width: "100px", fontSize: "10px" }}>
+                  <Text style={styles.totalText}>
+                    {order?.sub_total_amount}
+                  </Text>
+                </View>
+                <View style={{ width: "100px", fontSize: "10px" }}>
+                  <Text style={styles.totalText}>
+                    {order?.discount_percent_amount}
+                  </Text>
+                </View>
+                <View style={{ width: "100px", fontSize: "10px" }}>
+                  <Text style={styles.totalText}>
+                    {order?.grand_total_amount}
+                  </Text>
+                </View>
+              </View>
+            ))}
+          </View>
+          <View style={{ marginBottom: "20px", marginTop: "20px" }}>
+            <Text style={{ fontSize: "10px", textAlign: "left" }}>
+              All information generated from Classic It at{" "}
+              {DateTimeFormat(new Date())}
+            </Text>
+          </View>
+        </View>
+      </Page>
+    </PDFDocument>
+  );
+
   return (
     <>
-      {/* <div className="flex justify-end gap-4">
+      <div className="flex justify-end gap-4">
         <CSVLink
           filename="order-list.csv"
           className="flex items-center gap-2 text-sm font-semibold bg-secondary-400 text-text-default shadow-sm hover:bg-secondary-400/80 px-4 rounded-lg py-2"
@@ -146,7 +344,22 @@ const OrderTable = ({
         >
           <FaFileDownload /> Export CSV
         </CSVLink>
-      </div> */}
+
+        <div>
+          <PDFDownloadLink document={document} fileName="order-list">
+            {({ loading }) =>
+              loading ? (
+                <MiniSpinner />
+              ) : (
+                <button className="flex items-center gap-2 text-sm font-semibold bg-primary text-white shadow-sm hover:bg-primaryVariant-400 px-4 rounded-lg py-2">
+                  <FaDownload className="text-xl text-textColor group-hover:text-secondary" />
+                  <span className="text-[10px] text-textColor">Download</span>
+                </button>
+              )
+            }
+          </PDFDownloadLink>
+        </div>
+      </div>
       {isLoading === true ? (
         <TableLoadingSkeleton />
       ) : (
@@ -160,17 +373,17 @@ const OrderTable = ({
                       <td className="whitespace-nowrap p-4 ">SL No</td>
                       <td className="whitespace-nowrap p-4 ">Customer Name</td>
                       <td className="whitespace-nowrap p-4 ">Phone</td>
+                      <td className="whitespace-nowrap p-4 ">
+                        Customer Status
+                      </td>
                       <td className="whitespace-nowrap p-4 ">Order Id</td>
                       <td className="whitespace-nowrap p-4 ">Sub Total</td>
                       <td className="whitespace-nowrap p-4 ">Discount(%)</td>
                       <td className="whitespace-nowrap p-4 ">Grand Total</td>
-                      <td className="whitespace-nowrap p-4 ">Received Amount</td>
-                      <td className="whitespace-nowrap p-4 ">Due Amount</td>
-                      <td className="whitespace-nowrap p-4 ">Grand Total</td>
                       <td className="whitespace-nowrap p-4 ">Order Status</td>
                       <td className="whitespace-nowrap p-4 ">Created By</td>
                       <td className="whitespace-nowrap p-4 ">Updated By</td>
-                      {/* <td className="whitespace-nowrap p-4 ">Action</td> */}
+                      <td className="whitespace-nowrap p-4 ">Action</td>
                     </tr>
                   </thead>
 
@@ -178,8 +391,9 @@ const OrderTable = ({
                     {orders?.data?.map((order, i) => (
                       <tr
                         key={order?._id}
-                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                          }`}
+                        className={`divide-x divide-gray-200 ${
+                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                        }`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
@@ -189,6 +403,11 @@ const OrderTable = ({
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {order?.customer_id?.customer_phone}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {order?.customer_id?.customer_status === "active"
+                            ? "Active"
+                            : "In-Active"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {order?.order_id}
@@ -202,12 +421,6 @@ const OrderTable = ({
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {order?.grand_total_amount}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {order?.received_amount}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {order?.due_amount}
-                        </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 uppercase">
                           {order?.order_status}
                         </td>
@@ -217,7 +430,8 @@ const OrderTable = ({
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {order?.order_updated_by?.user_name}
                         </td>
-                        {/* <td className="whitespace-nowrap py-1.5 px-2 text-gray-700 flex items-center justify-between">
+                        <td className="whitespace-nowrap py-1.5 px-2 text-gray-700 flex items-center justify-between">
+                          {/* handle order status */}
                           <select
                             onChange={(e) =>
                               handleOrderStatus(
@@ -289,7 +503,7 @@ const OrderTable = ({
                               )}
                             </div>
                           </div>
-                        </td> */}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
