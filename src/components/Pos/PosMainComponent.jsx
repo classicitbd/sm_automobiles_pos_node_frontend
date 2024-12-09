@@ -13,9 +13,11 @@ import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import RightSide from "./RightSide";
 import Pagination from "../common/pagination/Pagination";
 import { toast } from "react-toastify";
+import { SettingContext } from "@/context/SettingProvider";
 
 const PosMainComponent = () => {
   const { setSidebarOpen, user, loading } = useContext(AuthContext);
+  const { settingData, loading: settingLoading } = useContext(SettingContext)
 
   //   product data state
   const [addProducts, setAddProducts] = useState([]);
@@ -106,7 +108,7 @@ const PosMainComponent = () => {
     },
   });
 
-  if (categoryLoading || brandLoading || loading) {
+  if (categoryLoading || brandLoading || loading || settingLoading) {
     return <LoaderOverlay />;
   }
 
@@ -214,13 +216,18 @@ const PosMainComponent = () => {
                             <div className="p-2">
                               <p className="font-bold">
                                 {product?.product_name}
-                                <small> /{product?.product_unit}</small>
                               </p>
                               <p className="text-sm mt-1">
                                 Quantity:{" "}
                                 <span className="font-bold">
-                                  {product?.product_quantity}
+                                  {product?.product_quantity}{" "}{product?.product_unit_id?.product_unit_name}
                                 </span>
+                              </p>
+                              <p className="font-semibold">
+                                {"1"}{" "}{product?.product_unit_id?.product_unit_name}{" = "}{product?.product_unit_id?.product_unit_value}{" "}{settingData?.unit_name}
+                              </p>
+                              <p className="font-semibold">
+                                {product?.product_quantity}{" "}{product?.product_unit_id?.product_unit_name}{" = "}{product?.product_quantity * product?.product_unit_id?.product_unit_value}{" "}{settingData?.unit_name}
                               </p>
                               <p className="text-sm mt-1">
                                 Category: {product?.category_id?.category_name}
@@ -234,7 +241,7 @@ const PosMainComponent = () => {
                                   Brand: Placeholder
                                 </p>
                               )}
-                              <p className="text-sm mt-1">
+                              <p className="text-sm mt-1 font-semibold">
                                 ID: {product?.product_id}
                               </p>
                             </div>
@@ -244,9 +251,9 @@ const PosMainComponent = () => {
                           </div>
                           :
                           <div
+                            disabled
                             key={index}
                             className="border rounded-md overflow-hidden shadow-md flex flex-col justify-between hover:shadow-lg transition duration-300 ease-in-out"
-                            disabled
                           >
                             <img
                               src={product?.product_image}
@@ -256,13 +263,6 @@ const PosMainComponent = () => {
                             <div className="p-2">
                               <p className="font-bold">
                                 {product?.product_name}
-                                <small> /{product?.product_unit}</small>
-                              </p>
-                              <p className="text-sm mt-1">
-                                Quantity:{" "}
-                                <span className="font-bold">
-                                  {product?.product_quantity}
-                                </span>
                               </p>
                               <p className="text-sm mt-1">
                                 Category: {product?.category_id?.category_name}
@@ -276,7 +276,7 @@ const PosMainComponent = () => {
                                   Brand: Placeholder
                                 </p>
                               )}
-                              <p className="text-sm mt-1">
+                              <p className="text-sm mt-1 font-semibold">
                                 ID: {product?.product_id}
                               </p>
                             </div>
