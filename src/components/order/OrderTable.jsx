@@ -166,7 +166,6 @@ const OrderTable = ({
                       <td className="whitespace-nowrap p-4 ">Grand Total</td>
                       <td className="whitespace-nowrap p-4 ">Received Amount</td>
                       <td className="whitespace-nowrap p-4 ">Due Amount</td>
-                      <td className="whitespace-nowrap p-4 ">Grand Total</td>
                       <td className="whitespace-nowrap p-4 ">Order Status</td>
                       <td className="whitespace-nowrap p-4 ">Created By</td>
                       <td className="whitespace-nowrap p-4 ">Updated By</td>

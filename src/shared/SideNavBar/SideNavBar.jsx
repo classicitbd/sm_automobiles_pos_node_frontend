@@ -255,6 +255,18 @@ const SideNavBar = () => {
               label="All Order"
               isActive={isActive("/order")}
             />
+            <ChildMenuItem
+              to="/management-order"
+              icon={FaShoppingCart}
+              label="Management Order"
+              isActive={isActive("/management-order")}
+            />
+            <ChildMenuItem
+              to="/warehouse-order"
+              icon={FaShoppingCart}
+              label="Warehouse Order"
+              isActive={isActive("/warehouse-order")}
+            />
           </DropdownMenu>
 
           <DropdownMenu

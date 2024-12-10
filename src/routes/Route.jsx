@@ -38,6 +38,8 @@ import CustomerOrderList from "@/components/Customers/CustomerOrderList";
 import PdfPrintPage from "@/pages/AllPdfPrintPage/PdfPrintPage";
 import SupplierPdf from "@/pages/AllPdfPrintPage/SupplierPdf";
 import PaymentVoucher from "@/pages/AllPdfPrintPage/PaymentVoucher";
+import ManagementOrder from "@/pages/order/ManagementOrder";
+import WarehouseOrder from "@/pages/order/WarehouseOrder";
 
 const route = createBrowserRouter([
   {
@@ -189,6 +191,14 @@ const route = createBrowserRouter([
       {
         path: "/order",
         element: <OrderPage />,
+      },
+      {
+        path: "/management-order",
+        element: <ManagementOrder />,
+      },
+      {
+        path: "/warehouse-order",
+        element: <WarehouseOrder />,
       },
       {
         path: "/order-details/:_id",
