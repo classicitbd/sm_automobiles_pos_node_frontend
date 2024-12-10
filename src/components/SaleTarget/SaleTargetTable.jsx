@@ -78,6 +78,7 @@ const SaleTargetTable = ({
                       <td className="whitespace-nowrap p-4 ">Start Date</td>
                       <td className="whitespace-nowrap p-4 ">End Date</td>
                       <td className="whitespace-nowrap p-4 ">Total Target</td>
+                      <td className="whitespace-nowrap p-4 ">Fill Up</td>
                       <td className="whitespace-nowrap p-4 ">Get Amount</td>
                       <td className="whitespace-nowrap p-4 ">Status</td>
                       <td className="whitespace-nowrap p-4 ">Create By</td>
@@ -111,6 +112,9 @@ const SaleTargetTable = ({
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {sale_target?.sale_target} {settingData?.unit_name}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {sale_target?.sale_target_filup}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {sale_target?.sale_target_amount}

@@ -202,7 +202,7 @@ const PosMainComponent = () => {
                               }
                               setAddProducts((prev) => [
                                 ...prev,
-                                { ...product, purchase_quantity: 1, total_amount: product?.product_price, discount_percent: 0, grand_total: product?.product_price },
+                                { ...product, purchase_quantity: 1, total_amount: product?.product_price, discount_percent: 0, grand_total: product?.product_price, total_messurement: 1 * product?.product_unit_id?.product_unit_value },
                               ]);
                             }}
                             key={index}

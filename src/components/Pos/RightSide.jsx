@@ -161,6 +161,7 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
           total_amount: parseFloat(item?.total_amount.toFixed(2)),
           discount_percent: item?.discount_percent || 0,
           grand_total: parseFloat(item?.grand_total.toFixed(2)),
+          total_messurement: parseInt(item?.total_messurement),
         })),
         sub_total_amount: parseFloat(sub_total.toFixed(2)),
         discount_percent_amount: discount_amount || 0,
@@ -171,6 +172,10 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
         // due_amount: parseFloat(due_amount.toFixed(2)),
         order_note: order_note,
         payment_type: payment_type,
+        total_messurement_count: addProducts?.reduce(
+          (prev, next) => prev + parseInt(next?.total_messurement || 0),
+          0
+        )
       };
       if (payment_type !== "due-payment") {
         sendData.payment_method = payment_method;
@@ -387,6 +392,12 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                                                   product?.product_price) * item?.discount_percent) / 100
                                               :
                                               item?.grand_total,
+                                          total_messurement:
+                                            item?.purchase_quantity > 1
+                                              ?
+                                              (product?.purchase_quantity - 1) * product?.product_unit_id?.product_unit_value
+                                              :
+                                              item?.total_messurement,
                                         }
                                         : item
                                     )
@@ -430,6 +441,13 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                                                 (product?.product_quantity *
                                                   product?.product_price) - ((product?.product_quantity *
                                                     product?.product_price) * item?.discount_percent) / 100,
+                                            total_messurement:
+                                              newQuantity <
+                                                product?.product_quantity
+                                                ?
+                                                newQuantity * product?.product_unit_id?.product_unit_value
+                                                :
+                                                item?.total_messurement,
                                           }
                                           : item
                                       )
@@ -467,6 +485,13 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                                                   product?.product_price) * item?.discount_percent) / 100
                                               :
                                               item?.grand_total,
+                                          total_messurement:
+                                            item?.purchase_quantity <
+                                              product?.product_quantity
+                                              ?
+                                              (product?.purchase_quantity + 1) * product?.product_unit_id?.product_unit_value
+                                              :
+                                              item?.total_messurement,
                                         }
                                         : item
                                     )
@@ -479,7 +504,7 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                             </div>
                           </td>
                           <td className="whitespace-nowrap font-medium text-gray-700 text-center border">
-                          {product?.purchase_quantity}{" "}{product?.product_unit_id?.product_unit_name}{" = "}{product?.purchase_quantity * product?.product_unit_id?.product_unit_value}{" "}{settingData?.unit_name}
+                            {product?.purchase_quantity}{" "}{product?.product_unit_id?.product_unit_name}{" = "}{product?.total_messurement}{" "}{settingData?.unit_name}
                           </td>
                           <td className="whitespace-nowrap font-medium text-gray-700 text-center border">
                             {product?.total_amount}
