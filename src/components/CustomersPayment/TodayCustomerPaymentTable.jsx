@@ -40,7 +40,7 @@ const TodayCustomerPaymentTable = ({
           _id: checkInfo?._id,
           check_status: toDay_Payment_status,
           bank_id: checkInfo?.bank_id?._id,
-          pay_amount: checkInfo?.pay_amount,
+          pay_amount: parseFloat(checkInfo?.pay_amount).toFixed(2),
           payment_note: checkInfo?.payment_note,
           check_number: checkInfo?.check_number,
           check_updated_by: user?._id,

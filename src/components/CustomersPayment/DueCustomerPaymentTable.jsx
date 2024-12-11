@@ -25,23 +25,22 @@ const DueCustomerPaymentTable = ({
   }, [page, limit]);
 
   // Today Payment Status
-
   const handleOrderStatus = (toDay_Payment_status, checkInfo) => {
     Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: `You won't be able to Paid this ${checkInfo?.customer_id?.customer_name} Payment !`,
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, update it!',
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, update it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
         const sendData = {
           _id: checkInfo?._id,
           check_status: toDay_Payment_status,
           bank_id: checkInfo?.bank_id?._id,
-          pay_amount: checkInfo?.pay_amount,
+          pay_amount: parseFloat(checkInfo?.pay_amount).toFixed(2),
           payment_note: checkInfo?.payment_note,
           check_number: checkInfo?.check_number,
           check_updated_by: user?._id,
@@ -50,42 +49,42 @@ const DueCustomerPaymentTable = ({
           order_id: checkInfo?.order_id?._id,
           invoice_number: checkInfo?.order_id?.order_id,
           payment_method: checkInfo?.payment_method,
-        }
+        };
         try {
           const response = await fetch(
             `
             ${BASE_URL}/check?role_type=check_update`,
             {
-              method: 'PATCH',
+              method: "PATCH",
               headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
               },
-              credentials: 'include',
+              credentials: "include",
               body: JSON.stringify(sendData),
             }
-          )
-          const result = await response.json()
+          );
+          const result = await response.json();
           // console.log(result);
           if (result?.statusCode === 200 && result?.success === true) {
-            refetch()
+            refetch();
             Swal.fire({
-              title: 'Updated!',
+              title: "Updated!",
               text: `${checkInfo?.customer_id?.customer_name} Payment has been Updated!`,
-              icon: 'success',
-            })
+              icon: "success",
+            });
           } else {
             toast.error(result?.message, {
               autoClose: 1000,
-            })
+            });
           }
         } catch (error) {
-          toast.error('Network error or server is down', {
+          toast.error("Network error or server is down", {
             autoClose: 1000,
-          })
-          console.error(error)
+          });
+          console.error(error);
         }
       }
-    })
+    });
   };
   return (
     <>
@@ -123,8 +122,9 @@ const DueCustomerPaymentTable = ({
                     {checks?.data?.map((check, i) => (
                       <tr
                         key={check?._id}
-                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                          }`}
+                        className={`divide-x divide-gray-200 ${
+                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                        }`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
@@ -166,21 +166,21 @@ const DueCustomerPaymentTable = ({
                           {check?.check_updated_by?.user_name || "-"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700 flex items-center">
-                          {
-                            check?.check_status == "pending" && (
-                              <select
-                                onChange={(e) => handleOrderStatus(e.target.value, check)}
-                                id=""
-                                className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl cursor-pointer"
-                              >
-                                <option selected disabled>
-                                  Select A Status
-                                </option>
-                                <option value="approved">Approved</option>
-                                <option value="rejected">Rejected</option>
-                              </select>
-                            )
-                          }
+                          {check?.check_status == "pending" && (
+                            <select
+                              onChange={(e) =>
+                                handleOrderStatus(e.target.value, check)
+                              }
+                              id=""
+                              className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl cursor-pointer"
+                            >
+                              <option selected disabled>
+                                Select A Status
+                              </option>
+                              <option value="approved">Approved</option>
+                              <option value="rejected">Rejected</option>
+                            </select>
+                          )}
                           <div>
                             <button className="ml-3">
                               <FaEye
