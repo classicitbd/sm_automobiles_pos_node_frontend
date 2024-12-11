@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
-import { IoMdEye } from "react-icons/io";
+
 import { SettingContext } from "@/context/SettingProvider";
 import UpdatePriceModal from "./UpdatePriceModal";
+import { CiMenuKebab } from "react-icons/ci";
+import { MdOutlineHistory } from "react-icons/md";
 
 const ProductTable = ({
   setPage,
@@ -29,6 +31,26 @@ const ProductTable = ({
     const newSerialNumber = (page - 1) * limit;
     setSerialNumber(newSerialNumber);
   }, [page, limit]);
+
+  // handle document modal open for edit view
+  const [bankDocumentModal, setBankDocumentModal] = useState(null);
+
+  const handleShowDocumentModal = (id) => {
+    setBankDocumentModal((prevId) => (prevId === id ? null : id));
+  };
+
+  // Close modal on outside click
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (!event.target.closest(".modal-container")) {
+        setBankDocumentModal(null);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
   return (
     <>
@@ -64,8 +86,9 @@ const ProductTable = ({
                     {products?.data?.map((product, i) => (
                       <tr
                         key={product?._id}
-                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                          }`}
+                        className={`divide-x divide-gray-200 ${
+                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                        }`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
@@ -104,9 +127,11 @@ const ProductTable = ({
                           <br />
                           <p className="underline">Total</p>
                           <br />
-                          {product?.product_quantity} {product?.product_unit_id?.product_unit_name}
+                          {product?.product_quantity}{" "}
+                          {product?.product_unit_id?.product_unit_name}
                           {" = "}
-                          {product?.product_unit_id?.product_unit_value * product?.product_quantity}{" "}
+                          {product?.product_unit_id?.product_unit_value *
+                            product?.product_quantity}{" "}
                           {settingData?.unit_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
@@ -126,27 +151,55 @@ const ProductTable = ({
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {product?.product_updated_by?.user_name}
                         </td>
+
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
-                          <button type="button" className="ml-3">
-                            <FiEdit
-                              onClick={() => {
-                                setUpdatePriceModalValue(product)
-                                setUpdatePriceModal(true)
-                              }}
-                              size={25}
-                              className="cursor-pointer text-gray-500 hover:text-gray-300"
-                            />
-                          </button>
                           <button
                             className="ml-[8px]"
-                            // onClick={() => handleShowDocumentModal(product)}
-                            disabled={!product?.product_voucher ? true : false}
+                            onClick={() =>
+                              handleShowDocumentModal(product?._id)
+                            }
                           >
-                            <IoMdEye
+                            <CiMenuKebab
                               size={30}
-                              className="cursor-pointer text-gray-500 hover:text-gray-300"
+                              className="cursor-pointer text-gray-500 hover:text-gray-300 font-bold"
                             />
                           </button>
+                          {bankDocumentModal == product?._id && (
+                            <div className=" bg-bgray-200 shadow-xl w-[200px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
+                              <button
+                                className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
+                                onClick={() => {
+                                  setUpdatePriceModalValue(product);
+                                  setUpdatePriceModal(true);
+                                }}
+                              >
+                                <FiEdit size={18} />
+                                Edit
+                              </button>
+                              <Link
+                                to={`/price-update-history/${product?._id}`}
+                              >
+                                <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium ">
+                                  <MdOutlineHistory size={18} />
+                                  Price Update History
+                                </button>
+                              </Link>
+                              <Link to={`/purchage-history/${product?._id}`}>
+                                {" "}
+                                <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium ">
+                                  <MdOutlineHistory size={18} />
+                                  Purchage History
+                                </button>
+                              </Link>
+                              <Link to={`/order-history/${product?._id}`}>
+                                {" "}
+                                <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium ">
+                                  <MdOutlineHistory size={18} />
+                                  Order History
+                                </button>
+                              </Link>
+                            </div>
+                          )}
                         </td>
                       </tr>
                     ))}
@@ -169,9 +222,14 @@ const ProductTable = ({
         </div>
       )}
       {/* update price modal open */}
-      {
-        updatePriceModal && <UpdatePriceModal user={user} refetch={refetch} updatePriceModalValue={updatePriceModalValue} setUpdatePriceModal={setUpdatePriceModal} />
-      }
+      {updatePriceModal && (
+        <UpdatePriceModal
+          user={user}
+          refetch={refetch}
+          updatePriceModalValue={updatePriceModalValue}
+          setUpdatePriceModal={setUpdatePriceModal}
+        />
+      )}
     </>
   );
 };

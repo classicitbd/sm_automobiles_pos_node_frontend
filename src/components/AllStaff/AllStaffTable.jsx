@@ -1,10 +1,13 @@
 // import { toast } from "react-toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import NoDataFound from "../../shared/NoDataFound/NoDataFound";
 import UpdateStaff from "./UpdateStaff";
 import Pagination from "./../common/pagination/Pagination";
 import TableLoadingSkeleton from "./../common/loadingSkeleton/TableLoadingSkeleton";
+import { Link } from "react-router-dom";
+import { CiMenuKebab } from "react-icons/ci";
+import { FaUserCheck } from "react-icons/fa";
 
 const AllStaffTable = ({
   refetch,
@@ -27,6 +30,26 @@ const AllStaffTable = ({
     setUpdateModalValue(item);
   };
 
+  // handle document modal open for edit view
+  const [bankDocumentModal, setBankDocumentModal] = useState(null);
+
+  const handleShowDocumentModal = (id) => {
+    setBankDocumentModal((prevId) => (prevId === id ? null : id));
+  };
+
+  // Close modal on outside click
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (!event.target.closest(".modal-container")) {
+        setBankDocumentModal(null);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
   // get token
   // const token = getCookie(authKey);
 
@@ -44,19 +67,19 @@ const AllStaffTable = ({
                 <thead className=" bg-[#fff9ee] ">
                   <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
-                      User Name
+                      Staff Name
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
-                      User Phone
+                      Staff Phone
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
-                      User Salary
+                      Staff Salary
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
-                      User Address
+                      Staff Address
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
-                      User Role
+                      Staff Role
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
                       Status
@@ -104,12 +127,42 @@ const AllStaffTable = ({
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                         {user?.user_updated_by?.user_name}
                       </td>
-                      <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
-                        <FiEdit
-                          onClick={() => updateStaffModal(user)}
-                          className="cursor-pointer text-gray-500 hover:text-gray-300"
-                          size={25}
-                        />
+
+                      <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
+                        <button
+                          className="ml-[8px]"
+                          onClick={() => handleShowDocumentModal(user?._id)}
+                        >
+                          <CiMenuKebab
+                            size={30}
+                            className="cursor-pointer text-gray-500 hover:text-gray-300 font-bold"
+                          />
+                        </button>
+                        {bankDocumentModal == user?._id && (
+                          <div className=" bg-bgray-200 shadow-xl w-[150px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
+                            <button
+                              className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
+                              onClick={() => updateStaffModal(user)}
+                            >
+                              <FiEdit size={18} />
+                              Edit
+                            </button>
+                            <Link to={`/staff-Perfomance/${user?._id}`}>
+                              {" "}
+                              <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium ">
+                                <FaUserCheck size={18} />
+                                See Perfomance
+                              </button>
+                            </Link>
+                            <Link to={`/sale-target/${user?._id}`}>
+                              {" "}
+                              <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium ">
+                                <FaUserCheck size={18} />
+                                Sale Target View
+                              </button>
+                            </Link>
+                          </div>
+                        )}
                       </td>
                       {/* <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
                     {user?.user_role_id?.staff_delete ||

@@ -1,22 +1,22 @@
-import { useContext, useEffect, useState } from 'react'
-import AllStaffTable from '../../../components/AllStaff/AllStaffTable'
-import AddAllStaff from '../../../components/AllStaff/AddAllStaff'
+import { useContext, useEffect, useState } from "react";
+import AllStaffTable from "../../../components/AllStaff/AllStaffTable";
+import AddAllStaff from "../../../components/AllStaff/AddAllStaff";
 
-import { BASE_URL } from '../../../utils/baseURL'
-import { useQuery } from '@tanstack/react-query'
-import { AuthContext } from '../../../context/AuthProvider'
-import useGetRole from '../../../hooks/useGetRole'
-import useDebounced from '../../../hooks/useDebounced'
-import { Button } from '@/components/ui/button'
+import { BASE_URL } from "../../../utils/baseURL";
+import { useQuery } from "@tanstack/react-query";
+import { AuthContext } from "../../../context/AuthProvider";
+import useGetRole from "../../../hooks/useGetRole";
+import useDebounced from "../../../hooks/useDebounced";
+import { Button } from "@/components/ui/button";
 
 const AllStaffPage = () => {
   //Add staff modal open state
-  const [openAddStaffModal, setOpenAddStaffModal] = useState(false)
-  const [limit, setLimit] = useState(10)
-  const [page, setPage] = useState(1)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [searchValue, setSearchValue] = useState('')
-  const { user } = useContext(AuthContext)
+  const [openAddStaffModal, setOpenAddStaffModal] = useState(false);
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const { user } = useContext(AuthContext);
   const {
     data: staffData,
     isLoading: isLoadingStaff,
@@ -30,36 +30,36 @@ const AllStaffPage = () => {
         `${BASE_URL}/user/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=staff_show`,
         {
           headers: {
-            credentials: 'include',
+            credentials: "include",
           },
         }
-      )
-      const data = await res.json()
-      return data
+      );
+      const data = await res.json();
+      return data;
     },
-  })
+  });
 
   // Role data fetch
-  const { data: roleData, isLoading } = useGetRole()
+  const { data: roleData, isLoading } = useGetRole();
 
   // handle item search function....
-  const searchText = useDebounced({ searchQuery: searchValue, delay: 500 })
+  const searchText = useDebounced({ searchQuery: searchValue, delay: 500 });
   useEffect(() => {
-    setSearchTerm(searchText)
-  }, [searchText])
+    setSearchTerm(searchText);
+  }, [searchText]);
 
   // handle item search function....
   const handleSearchValue = (value) => {
-    setSearchValue(value)
-    setLimit(10)
-    setPage(1)
-  }
+    setSearchValue(value);
+    setLimit(10);
+    setPage(1);
+  };
 
   return (
-    <div className='bg-white rounded py-6 px-4 shadow'>
-      <div className='flex justify-between mt-6'>
+    <div className="bg-white rounded py-6 px-4 shadow">
+      <div className="flex justify-between mt-6">
         <div>
-          <h1 className='text-2xl'>All Staff List </h1>
+          <h1 className="text-2xl">All Staff List </h1>
         </div>
         <div>
           <div>
@@ -69,13 +69,13 @@ const AllStaffPage = () => {
           </div>
         </div>
       </div>
-      <div className='mt-3'>
+      <div className="mt-3">
         <input
-          type='text'
+          type="text"
           defaultValue={searchTerm}
           onChange={(e) => handleSearchValue(e.target.value)}
-          placeholder='Search Category...'
-          className='w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200'
+          placeholder="Search Category..."
+          className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
         />
       </div>
       {/* show All Staff Table List Component*/}
@@ -104,7 +104,7 @@ const AllStaffPage = () => {
         />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default AllStaffPage
+export default AllStaffPage;

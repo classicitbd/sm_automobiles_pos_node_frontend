@@ -158,12 +158,12 @@ const SaleTargetTable = ({
                                 <FiEdit size={18} />
                                 Edit
                               </button>
-                              <Link to={`/sale-target-view/${user?._id}`}>
+                              {/* <Link to={`/sale-target-view/${user?._id}`}>
                                 {" "}
                                 <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium">
                                   <FaEye size={16} /> View
                                 </button>
-                              </Link>
+                              </Link> */}
                             </div>
                           )}
                         </td>
