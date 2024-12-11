@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { BASE_URL } from "@/utils/baseURL";
 import { AuthContext } from "@/context/AuthProvider";
 import useGetActiveProduct from "@/hooks/useGetActiveProduct";
+import useGetSupplier from "@/hooks/useGetSupplier";
 
 const StockManageForm = () => {
   const { user } = useContext(AuthContext);
@@ -21,6 +22,9 @@ const StockManageForm = () => {
     reset,
     formState: { errors },
   } = useForm();
+
+  //get supplier data
+  const { data: supplierTypes, isLoading: supplierLoading } = useGetSupplier();
 
   //get product data
   const { data: productTypes, isLoading: productLoading } =
@@ -80,7 +84,7 @@ const StockManageForm = () => {
     }
   };
 
-  if (productLoading) {
+  if (productLoading || supplierLoading) {
     return <LoaderOverlay />;
   }
 
@@ -195,7 +199,25 @@ const StockManageForm = () => {
                   getOptionValue={(x) => x?._id}
                   onChange={(selectedOption) => {
                     setProduct_id(selectedOption?._id);
-                    setSupplier_id(selectedOption?.supplier_id);
+                  }}
+                />
+              </div>
+              <div className="mt-3">
+                <label className="block text-xs font-medium text-gray-700 mb-1">
+                  Supplier Name <span className="text-red-500">*</span>
+                </label>
+
+                <Select
+                  id="supplier_id"
+                  name="supplier_id"
+                  aria-label="Supplier Name"
+                  isClearable
+                  required
+                  options={supplierTypes?.data}
+                  getOptionLabel={(x) => x?.supplier_name}
+                  getOptionValue={(x) => x?._id}
+                  onChange={(selectedOption) => {
+                    setSupplier_id(selectedOption?._id);
                   }}
                 />
               </div>
