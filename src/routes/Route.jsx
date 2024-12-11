@@ -45,6 +45,7 @@ import SalleTargetView from "@/components/AllStaff/SalleTargetView";
 import PriceHistory from "@/components/Products/PriceHistory";
 import PurchageHistory from "@/components/Products/PurchageHistory";
 import OrderHistory from "@/components/Products/OrderHistory";
+import IncomePage from "@/pages/income/IncomePage";
 
 const route = createBrowserRouter([
   {
@@ -180,6 +181,10 @@ const route = createBrowserRouter([
       {
         path: "/expense",
         element: <ExpensePage />,
+      },
+      {
+        path: "/income",
+        element: <IncomePage />,
       },
 
       // ------Stock Manage----

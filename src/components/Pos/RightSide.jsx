@@ -14,7 +14,6 @@ import { set, useForm } from "react-hook-form";
 import { parse } from "postcss";
 
 const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
-
   const paymentOption = [
     {
       _id: 1,
@@ -47,26 +46,26 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
 
   const [loading, setLoading] = useState(false);
   const [customerAddModal, setCustomerAddModal] = useState(false); //customer add modal
-  const [customerInfo, setCustomerInfo] = useState({});  //customer info data
+  const [customerInfo, setCustomerInfo] = useState({}); //customer info data
   const [product_discount, setProductDiscount] = useState(0); //product discount
   const [product_discount_idInfo, setProductDiscountIDInfo] = useState(null); //product discount id set
 
   // set add product discount ammount and calculate grand total price
   useEffect(() => {
-
     setAddProducts((prev) =>
       prev.map((item) =>
         item?._id === product_discount_idInfo?._id
           ? {
-            ...item,
-            discount_percent:
-              product_discount,
-            grand_total:
-              product_discount_idInfo?.total_amount - (product_discount_idInfo?.total_amount * product_discount) / 100,
-          }
+              ...item,
+              discount_percent: product_discount,
+              grand_total:
+                product_discount_idInfo?.total_amount -
+                (product_discount_idInfo?.total_amount * product_discount) /
+                  100,
+            }
           : item
       )
-    )
+    );
   }, [product_discount, product_discount_idInfo, setAddProducts]);
 
   // set all data in state
@@ -94,9 +93,12 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
     queryKey: [`/api/v1/customer?customer_publisher_id=${user?._id}`],
     queryFn: async () => {
       try {
-        const res = await fetch(`${BASE_URL}/customer?customer_publisher_id=${user?._id}`, {
-          credentials: "include",
-        });
+        const res = await fetch(
+          `${BASE_URL}/customer?customer_publisher_id=${user?._id}`,
+          {
+            credentials: "include",
+          }
+        );
 
         if (!res.ok) {
           const errorData = await res.text();
@@ -164,7 +166,7 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
           total_messurement: parseInt(item?.total_messurement),
         })),
         sub_total_amount: parseFloat(sub_total.toFixed(2)),
-        discount_percent_amount: discount_amount || 0,
+        discount_percent_amount: parseFloat(discount_amount).toFixed(2) || 0,
         grand_total_amount: parseFloat(grand_total.toFixed(2)),
         received_amount: 0,
         due_amount: parseFloat(grand_total.toFixed(2)),
@@ -175,7 +177,7 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
         total_messurement_count: addProducts?.reduce(
           (prev, next) => prev + parseInt(next?.total_messurement || 0),
           0
-        )
+        ),
       };
       if (payment_type !== "due-payment") {
         sendData.payment_method = payment_method;
@@ -374,31 +376,33 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                                     prev.map((item) =>
                                       item._id === product._id
                                         ? {
-                                          ...item,
-                                          purchase_quantity:
-                                            item?.purchase_quantity > 1
-                                              ? item?.purchase_quantity - 1
-                                              : item?.purchase_quantity,
-                                          total_amount:
-                                            item?.purchase_quantity > 1
-                                              ? item?.total_amount -
-                                              product?.product_price
-                                              : item?.total_amount,
-                                          grand_total:
-                                            item?.purchase_quantity > 1
-                                              ?
-                                              (item?.total_amount -
-                                                product?.product_price) - ((item?.total_amount -
-                                                  product?.product_price) * item?.discount_percent) / 100
-                                              :
-                                              item?.grand_total,
-                                          total_messurement:
-                                            item?.purchase_quantity > 1
-                                              ?
-                                              (product?.purchase_quantity - 1) * product?.product_unit_id?.product_unit_value
-                                              :
-                                              item?.total_messurement,
-                                        }
+                                            ...item,
+                                            purchase_quantity:
+                                              item?.purchase_quantity > 1
+                                                ? item?.purchase_quantity - 1
+                                                : item?.purchase_quantity,
+                                            total_amount:
+                                              item?.purchase_quantity > 1
+                                                ? item?.total_amount -
+                                                  product?.product_price
+                                                : item?.total_amount,
+                                            grand_total:
+                                              item?.purchase_quantity > 1
+                                                ? item?.total_amount -
+                                                  product?.product_price -
+                                                  ((item?.total_amount -
+                                                    product?.product_price) *
+                                                    item?.discount_percent) /
+                                                    100
+                                                : item?.grand_total,
+                                            total_messurement:
+                                              item?.purchase_quantity > 1
+                                                ? (product?.purchase_quantity -
+                                                    1) *
+                                                  product?.product_unit_id
+                                                    ?.product_unit_value
+                                                : item?.total_messurement,
+                                          }
                                         : item
                                     )
                                   );
@@ -417,38 +421,42 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                                       prev.map((item) =>
                                         item._id === product._id
                                           ? {
-                                            ...item,
-                                            purchase_quantity:
-                                              newQuantity <
+                                              ...item,
+                                              purchase_quantity:
+                                                newQuantity <
                                                 product?.product_quantity
-                                                ? newQuantity
-                                                : product?.product_quantity,
-                                            total_amount:
-                                              newQuantity <
+                                                  ? newQuantity
+                                                  : product?.product_quantity,
+                                              total_amount:
+                                                newQuantity <
                                                 product?.product_quantity
-                                                ? newQuantity *
-                                                product?.product_price
-                                                : product?.product_quantity *
-                                                product?.product_price,
-                                            grand_total:
-                                              newQuantity <
+                                                  ? newQuantity *
+                                                    product?.product_price
+                                                  : product?.product_quantity *
+                                                    product?.product_price,
+                                              grand_total:
+                                                newQuantity <
                                                 product?.product_quantity
-                                                ?
-                                                (newQuantity *
-                                                  product?.product_price) - ((newQuantity *
-                                                    product?.product_price) * item?.discount_percent) / 100
-                                                :
-                                                (product?.product_quantity *
-                                                  product?.product_price) - ((product?.product_quantity *
-                                                    product?.product_price) * item?.discount_percent) / 100,
-                                            total_messurement:
-                                              newQuantity <
+                                                  ? newQuantity *
+                                                      product?.product_price -
+                                                    (newQuantity *
+                                                      product?.product_price *
+                                                      item?.discount_percent) /
+                                                      100
+                                                  : product?.product_quantity *
+                                                      product?.product_price -
+                                                    (product?.product_quantity *
+                                                      product?.product_price *
+                                                      item?.discount_percent) /
+                                                      100,
+                                              total_messurement:
+                                                newQuantity <
                                                 product?.product_quantity
-                                                ?
-                                                newQuantity * product?.product_unit_id?.product_unit_value
-                                                :
-                                                item?.total_messurement,
-                                          }
+                                                  ? newQuantity *
+                                                    product?.product_unit_id
+                                                      ?.product_unit_value
+                                                  : item?.total_messurement,
+                                            }
                                           : item
                                       )
                                     );
@@ -464,35 +472,37 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                                     prev.map((item) =>
                                       item._id === product._id
                                         ? {
-                                          ...item,
-                                          purchase_quantity:
-                                            item?.purchase_quantity <
+                                            ...item,
+                                            purchase_quantity:
+                                              item?.purchase_quantity <
                                               product?.product_quantity
-                                              ? item?.purchase_quantity + 1
-                                              : item?.purchase_quantity,
-                                          total_amount:
-                                            item?.purchase_quantity <
+                                                ? item?.purchase_quantity + 1
+                                                : item?.purchase_quantity,
+                                            total_amount:
+                                              item?.purchase_quantity <
                                               product?.product_quantity
-                                              ? item?.total_amount +
-                                              product?.product_price
-                                              : item?.total_amount,
-                                          grand_total:
-                                            item?.purchase_quantity <
+                                                ? item?.total_amount +
+                                                  product?.product_price
+                                                : item?.total_amount,
+                                            grand_total:
+                                              item?.purchase_quantity <
                                               product?.product_quantity
-                                              ?
-                                              (item?.total_amount +
-                                                product?.product_price) - ((item?.total_amount +
-                                                  product?.product_price) * item?.discount_percent) / 100
-                                              :
-                                              item?.grand_total,
-                                          total_messurement:
-                                            item?.purchase_quantity <
+                                                ? item?.total_amount +
+                                                  product?.product_price -
+                                                  ((item?.total_amount +
+                                                    product?.product_price) *
+                                                    item?.discount_percent) /
+                                                    100
+                                                : item?.grand_total,
+                                            total_messurement:
+                                              item?.purchase_quantity <
                                               product?.product_quantity
-                                              ?
-                                              (product?.purchase_quantity + 1) * product?.product_unit_id?.product_unit_value
-                                              :
-                                              item?.total_messurement,
-                                        }
+                                                ? (product?.purchase_quantity +
+                                                    1) *
+                                                  product?.product_unit_id
+                                                    ?.product_unit_value
+                                                : item?.total_messurement,
+                                          }
                                         : item
                                     )
                                   );
@@ -504,7 +514,11 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                             </div>
                           </td>
                           <td className="whitespace-nowrap font-medium text-gray-700 text-center border">
-                            {product?.purchase_quantity}{" "}{product?.product_unit_id?.product_unit_name}{" = "}{product?.total_messurement}{" "}{settingData?.unit_name}
+                            {product?.purchase_quantity}{" "}
+                            {product?.product_unit_id?.product_unit_name}
+                            {" = "}
+                            {product?.total_messurement}{" "}
+                            {settingData?.unit_name}
                           </td>
                           <td className="whitespace-nowrap font-medium text-gray-700 text-center border">
                             {product?.total_amount}
@@ -515,12 +529,16 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                               onChange={(e) => {
                                 const value = parseFloat(e.target.value);
 
-                                if (!isNaN(value) && value >= 0 && value <= 99.99) {
+                                if (
+                                  !isNaN(value) &&
+                                  value >= 0 &&
+                                  value <= 99.99
+                                ) {
                                   setProductDiscount(value); // Update state only for valid input
-                                  setProductDiscountIDInfo(product)
+                                  setProductDiscountIDInfo(product);
                                 } else if (value > 99.99) {
                                   setProductDiscount(99.99); // Update state only for valid input
-                                  setProductDiscountIDInfo(product)
+                                  setProductDiscountIDInfo(product);
                                 }
                               }}
                               onBlur={(e) => {
@@ -529,7 +547,7 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                                 // Reset the value if it exceeds the limit
                                 if (isNaN(value) || value > 99.99) {
                                   setProductDiscount(99.99); // Reset to max allowed value
-                                  setProductDiscountIDInfo(product)
+                                  setProductDiscountIDInfo(product);
                                 }
                               }}
                               type="number"
@@ -574,21 +592,25 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                   </h5>
                   <h5 className="mt-4">Grand Total</h5>
                   <h5 className="mt-4">Select Payment Option</h5>
-                  {(payment_type == "full-payment" || payment_type == "partial-payment") &&
+                  {(payment_type == "full-payment" ||
+                    payment_type == "partial-payment") && (
                     <h5 className="mt-4">Payment Method</h5>
-                  }
-                  {payment_type == "partial-payment" &&
+                  )}
+                  {payment_type == "partial-payment" && (
                     <h5 className="mt-6">Pay Amount</h5>
-                  }
-                  {payment_type !== "due-payment" && payment_method === "check" &&
-                    <h5 className="mt-6">Payment Bank Name</h5>
-                  }
-                  {payment_type !== "due-payment" && payment_method === "check" &&
-                    <h5 className="mt-7">Check Number</h5>
-                  }
-                  {payment_type !== "due-payment" && payment_method === "check" &&
-                    <h5 className="mt-7">Check Issue Date</h5>
-                  }
+                  )}
+                  {payment_type !== "due-payment" &&
+                    payment_method === "check" && (
+                      <h5 className="mt-6">Payment Bank Name</h5>
+                    )}
+                  {payment_type !== "due-payment" &&
+                    payment_method === "check" && (
+                      <h5 className="mt-7">Check Number</h5>
+                    )}
+                  {payment_type !== "due-payment" &&
+                    payment_method === "check" && (
+                      <h5 className="mt-7">Check Issue Date</h5>
+                    )}
                   <h5 className="mt-7">Received Amount</h5>
                   <h5 className="mt-7">Due Amount</h5>
                 </div>
@@ -644,14 +666,16 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                           setPayAmount(grand_total.toFixed(2));
                           setReceivedAmount(grand_total);
                           setDueAmount(0);
-                        } else if (selectedOption?.payment_value == "due-payment") {
+                        } else if (
+                          selectedOption?.payment_value == "due-payment"
+                        ) {
                           setReceivedAmount(0);
                           setDueAmount(grand_total);
                           setPayAmount(0);
                         } else {
                           setReceivedAmount(0);
                           setDueAmount(0);
-                          setPayAmount(0)
+                          setPayAmount(0);
                         }
                         setPaymentType(selectedOption?.payment_value);
                         setPaymentBy("");
@@ -660,8 +684,9 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                   </div>
 
                   {/* {payment_type !== "due-payment" select paymrnt method */}
-                  {(payment_type == "full-payment" || payment_type == "partial-payment") &&
-                    < div className="mt-2">
+                  {(payment_type == "full-payment" ||
+                    payment_type == "partial-payment") && (
+                    <div className="mt-2">
                       <Select
                         id="payment_method"
                         name="payment_method"
@@ -676,19 +701,24 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                         }}
                       />
                     </div>
-                  }
+                  )}
 
-                  {
-                    payment_type == "partial-payment" &&
+                  {payment_type == "partial-payment" && (
                     <div>
                       <input
                         value={pay_amount} // Bind input to state
                         onChange={(e) => {
                           const value = parseFloat(e.target.value); // Use parseFloat for decimal values
 
-                          if (!isNaN(value) && value > 0 && value <= parseFloat(grand_total.toFixed(2))) {
+                          if (
+                            !isNaN(value) &&
+                            value > 0 &&
+                            value <= parseFloat(grand_total.toFixed(2))
+                          ) {
                             setPayAmount(value); // Update state only for valid input
-                          } else if (value > parseFloat(grand_total.toFixed(2))) {
+                          } else if (
+                            value > parseFloat(grand_total.toFixed(2))
+                          ) {
                             setPayAmount(parseFloat(grand_total.toFixed(2))); // Limit to grand_total
                           }
                         }}
@@ -696,7 +726,10 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                           const value = parseFloat(e.target.value); // Use parseFloat for decimal values
 
                           // Reset the value if it exceeds the limit or is invalid
-                          if (isNaN(value) || value > parseFloat(grand_total.toFixed(2))) {
+                          if (
+                            isNaN(value) ||
+                            value > parseFloat(grand_total.toFixed(2))
+                          ) {
                             setPayAmount(parseFloat(grand_total.toFixed(2))); // Reset to max allowed value
                           } else if (value <= 0) {
                             setPayAmount(""); // Clear if the value is invalid
@@ -714,68 +747,67 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                         </p>
                       )}
                     </div>
-
-                  }
-
-                  {payment_type !== "due-payment" && payment_method === "check" && (
-                    <div className="mt-3">
-
-                      <Select
-                        id="bank_id"
-                        name="bank_id"
-                        required
-                        isClearable
-                        aria-label="Payment Bank Name"
-                        options={bankTypes?.data}
-                        getOptionLabel={(x) => x?.bank_name}
-                        getOptionValue={(x) => x?._id}
-                        onChange={(selectedOption) => {
-                          setBank_id(selectedOption?._id);
-                        }}
-                      />
-                    </div>
                   )}
 
-                  {payment_type !== "due-payment" && payment_method === "check" && (
-                    <div className="mt-4">
-                      <input
-                        {...register("check_number", {
-                          required: "Check Number is required",
-                        })}
-                        type="text"
-                        placeholder="Check Number"
-                        className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
-                      />
+                  {payment_type !== "due-payment" &&
+                    payment_method === "check" && (
+                      <div className="mt-3">
+                        <Select
+                          id="bank_id"
+                          name="bank_id"
+                          required
+                          isClearable
+                          aria-label="Payment Bank Name"
+                          options={bankTypes?.data}
+                          getOptionLabel={(x) => x?.bank_name}
+                          getOptionValue={(x) => x?._id}
+                          onChange={(selectedOption) => {
+                            setBank_id(selectedOption?._id);
+                          }}
+                        />
+                      </div>
+                    )}
 
-                      {errors?.check_number && (
-                        <p className="text-red-500 text-xs mt-1">
-                          {errors?.check_number?.message}
-                        </p>
-                      )}
-                    </div>
-                  )}
+                  {payment_type !== "due-payment" &&
+                    payment_method === "check" && (
+                      <div className="mt-4">
+                        <input
+                          {...register("check_number", {
+                            required: "Check Number is required",
+                          })}
+                          type="text"
+                          placeholder="Check Number"
+                          className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                        />
 
-                  {payment_type !== "due-payment" && payment_method === "check" && (
-                    <div className="mt-4">
-                      <input
-                        {...register("check_withdraw_date", {
-                          required: "Check Issue Date is required",
-                        })}
-                        type="date"
-                        min={new Date().toISOString().split("T")[0]} // Prevents selecting dates before today
-                        placeholder="Check Issue Date"
-                        className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
-                      />
+                        {errors?.check_number && (
+                          <p className="text-red-500 text-xs mt-1">
+                            {errors?.check_number?.message}
+                          </p>
+                        )}
+                      </div>
+                    )}
 
-                      {errors?.check_withdraw_date && (
-                        <p className="text-red-500 text-xs mt-1">
-                          {errors?.check_withdraw_date?.message}
-                        </p>
-                      )}
-                    </div>
-                  )}
+                  {payment_type !== "due-payment" &&
+                    payment_method === "check" && (
+                      <div className="mt-4">
+                        <input
+                          {...register("check_withdraw_date", {
+                            required: "Check Issue Date is required",
+                          })}
+                          type="date"
+                          min={new Date().toISOString().split("T")[0]} // Prevents selecting dates before today
+                          placeholder="Check Issue Date"
+                          className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                        />
 
-
+                        {errors?.check_withdraw_date && (
+                          <p className="text-red-500 text-xs mt-1">
+                            {errors?.check_withdraw_date?.message}
+                          </p>
+                        )}
+                      </div>
+                    )}
 
                   <p className="mt-4 font-bold">
                     <span className="mr-2">: </span>
@@ -801,22 +833,18 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
               <MiniSpinner />
             </div>
           ) : (
-            <Button type="submit">
-              Create
-            </Button>
+            <Button type="submit">Create</Button>
           )}
-        </div >
+        </div>
       </form>
       {/* add new customer modal */}
-      {
-        customerAddModal && (
-          <AddCustomer
-            setCustomerAddModal={setCustomerAddModal}
-            user={user}
-            refetch={refetch}
-          />
-        )
-      }
+      {customerAddModal && (
+        <AddCustomer
+          setCustomerAddModal={setCustomerAddModal}
+          user={user}
+          refetch={refetch}
+        />
+      )}
     </>
   );
 };
