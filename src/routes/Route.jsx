@@ -40,6 +40,11 @@ import SupplierPdf from "@/pages/AllPdfPrintPage/SupplierPdf";
 import PaymentVoucher from "@/pages/AllPdfPrintPage/PaymentVoucher";
 import ManagementOrder from "@/pages/order/ManagementOrder";
 import WarehouseOrder from "@/pages/order/WarehouseOrder";
+import StaffPerfomance from "@/components/AllStaff/StaffPerfomance";
+import SalleTargetView from "@/components/AllStaff/SalleTargetView";
+import PriceHistory from "@/components/Products/PriceHistory";
+import PurchageHistory from "@/components/Products/PurchageHistory";
+import OrderHistory from "@/components/Products/OrderHistory";
 import IncomePage from "@/pages/income/IncomePage";
 
 const route = createBrowserRouter([
@@ -121,6 +126,14 @@ const route = createBrowserRouter([
         path: "/create-staff-role",
         element: <AddStaffRolePage />,
       },
+      {
+        path: "/staff-Perfomance/:user_id",
+        element: <StaffPerfomance />,
+      },
+      {
+        path: "/sale-target/:user_id",
+        element: <SalleTargetView />,
+      },
 
       // ------Bank Account----
       {
@@ -187,6 +200,18 @@ const route = createBrowserRouter([
       {
         path: "/add-product",
         element: <AddProductPage />,
+      },
+      {
+        path: "/price-update-history/:product_id",
+        element: <PriceHistory />,
+      },
+      {
+        path: "/purchage-history/:product_id",
+        element: <PurchageHistory />,
+      },
+      {
+        path: "/order-history/:product_id",
+        element: <OrderHistory />,
       },
       // '/product/product-update/:id'
       {
