@@ -26,13 +26,13 @@ const UnpaidPaymentTable = ({
 
   const handlePaymentPaidStatus = (paymentInfo) => {
     Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: `You won't be able to Paid this ${paymentInfo?.supplier_id?.supplier_name} Payment !`,
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, update it!',
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, update it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
         const sendData = {
@@ -45,42 +45,42 @@ const UnpaidPaymentTable = ({
           supplier_id: paymentInfo?.supplier_id?._id,
           payment_bank_id: paymentInfo?.payment_bank_id?._id,
           supplier_payment_updated_by: user?._id,
-        }
+        };
         try {
           const response = await fetch(
             `
             ${BASE_URL}/supplier_payment?role_type=supplier_payment_update`,
             {
-              method: 'PATCH',
+              method: "PATCH",
               headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
               },
-              credentials: 'include',
+              credentials: "include",
               body: JSON.stringify(sendData),
             }
-          )
-          const result = await response.json()
+          );
+          const result = await response.json();
           // console.log(result);
           if (result?.statusCode === 200 && result?.success === true) {
-            refetch()
+            refetch();
             Swal.fire({
-              title: 'Updated!',
+              title: "Updated!",
               text: `${paymentInfo?.supplier_id?.supplier_name} Payment has been Updated!`,
-              icon: 'success',
-            })
+              icon: "success",
+            });
           } else {
             toast.error(result?.message, {
               autoClose: 1000,
-            })
+            });
           }
         } catch (error) {
-          toast.error('Network error or server is down', {
+          toast.error("Network error or server is down", {
             autoClose: 1000,
-          })
-          console.error(error)
+          });
+          console.error(error);
         }
       }
-    })
+    });
   };
 
   return (
@@ -116,8 +116,9 @@ const UnpaidPaymentTable = ({
                     {unpaidPaymentLists?.data?.map((paymentInfo, i) => (
                       <tr
                         key={paymentInfo?._id}
-                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                          }`}
+                        className={`divide-x divide-gray-200 ${
+                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                        }`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
@@ -154,9 +155,7 @@ const UnpaidPaymentTable = ({
                           {" "}
                           <button
                             className="bg-success-400 text-white px-[14px] py-[4px] rounded-[8px]"
-                            onClick={() =>
-                              handlePaymentPaidStatus(paymentInfo)
-                            }
+                            onClick={() => handlePaymentPaidStatus(paymentInfo)}
                           >
                             <span>Paid</span>
                           </button>
