@@ -77,7 +77,7 @@ const AddCustomersPayment = () => {
         order_id,
         invoice_number,
         payment_method,
-        pay_amount: data?.pay_amount,
+        pay_amount: parseFloat(data?.pay_amount).toFixed(2),
         payment_note: data?.payment_note,
         check_publisher_id: user?._id,
       };

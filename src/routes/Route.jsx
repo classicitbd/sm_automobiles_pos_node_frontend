@@ -40,6 +40,7 @@ import SupplierPdf from "@/pages/AllPdfPrintPage/SupplierPdf";
 import PaymentVoucher from "@/pages/AllPdfPrintPage/PaymentVoucher";
 import ManagementOrder from "@/pages/order/ManagementOrder";
 import WarehouseOrder from "@/pages/order/WarehouseOrder";
+import IncomePage from "@/pages/income/IncomePage";
 
 const route = createBrowserRouter([
   {
@@ -167,6 +168,10 @@ const route = createBrowserRouter([
       {
         path: "/expense",
         element: <ExpensePage />,
+      },
+      {
+        path: "/income",
+        element: <IncomePage />,
       },
 
       // ------Stock Manage----
