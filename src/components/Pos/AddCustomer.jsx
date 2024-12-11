@@ -78,9 +78,9 @@ const AddCustomer = ({ setCustomerAddModal, user, refetch }) => {
     }
   };
   return (
-    <div>
+    <div className="">
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div className="relative overflow-hidden text-left bg-white rounded-lg shadow-xl w-[650px] p-6 max-h-[100vh] overflow-y-auto scrollbar-thin">
+        <div className="relative overflow-hidden text-left bg-white rounded-lg shadow-xl w-[320px] sm:w-[650px] p-6 max-h-[100vh] overflow-y-auto scrollbar-thin">
           <div className="flex items-center justify-between mt-4">
             <h3
               className="text-[26px] font-bold text-gray-800 capitalize"
