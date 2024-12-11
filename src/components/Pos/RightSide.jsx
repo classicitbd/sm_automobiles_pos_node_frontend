@@ -12,6 +12,7 @@ import MiniSpinner from "@/shared/MiniSpinner/MiniSpinner";
 import { Button } from "../ui/button";
 import { set, useForm } from "react-hook-form";
 import { parse } from "postcss";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
   const paymentOption = [
@@ -145,7 +146,7 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
     // setLoading(true);
     try {
       if (addProducts?.length === 0) {
-        setLoading(false);
+        setLoading(true);
         return toast.error("Please add at least one product", {
           autoClose: 1000,
         });
@@ -243,16 +244,17 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
         <div className="grid gap-4">
           {/* customer add and select */}
           <div>
-            <div className="flex items-center justify-between mb-2">
-              <label className="block text-xs font-medium text-gray-700 mb-1 mt-2">
+            <div className="flex items-center justify-between">
+              <label className="block  font-medium text-gray-700 mb-1 ">
                 Customer Name <span className="text-red-500">*</span>
               </label>
               <button
                 onClick={() => setCustomerAddModal(true)}
                 type="button"
-                className="btn bg-primary rounded px-2 py-1 text-white"
+                className="btn bg-primary rounded px-2.5 py-0.5 text-white flex items-center mb-1 gap-x-1"
               >
-                + Add
+                <IoMdAddCircleOutline size={18} />
+                ADD
               </button>
             </div>
             <Select
@@ -319,38 +321,38 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
           {addProducts?.length > 0 && (
             <>
               {/* product information */}
-              <p className="font-semibold underline text-gray-700 mb-1 mt-2 text-center">
+              <p className="font-semibold underline text-gray-700 sm:mb-1 mt-2 text-center">
                 Product Information:
               </p>
-              <div className="mt-5 overflow-x-auto rounded">
+              <div className="sm:mt-5 overflow-x-auto rounded">
                 <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border rounded">
                   <thead className=" bg-[#fff9ee] ">
                     <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
-                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
+                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-3">
                         ID
                       </th>
-                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
+                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-3">
                         Name
                       </th>
-                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
+                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-3">
                         Price
                       </th>
-                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
+                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-3">
                         Quantity
                       </th>
-                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
+                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-3">
                         Mesurement
                       </th>
-                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
+                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-3">
                         Total
                       </th>
-                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
+                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-3">
                         Discount (%)
                       </th>
-                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
+                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-3">
                         Grand Total
                       </th>
-                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
+                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-3">
                         Action
                       </th>
                     </tr>
@@ -359,16 +361,16 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                     {addProducts?.length > 0 &&
                       addProducts?.map((product, index) => (
                         <tr key={index}>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 text-center border">
+                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 text-center border px-3">
                             {product?.product_id}
                           </td>
-                          <td className="whitespace-nowrap font-medium text-gray-700 text-center border">
+                          <td className="whitespace-nowrap font-medium text-gray-700 text-center border px-3">
                             {product?.product_name}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 text-center border">
+                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 text-center border px-3">
                             {product?.product_price}
                           </td>
-                          <td className="text-center p-2 border">
+                          <td className="text-center p-2 border px-3">
                             <div className="flex items-center justify-between">
                               <button
                                 onClick={() => {
@@ -410,7 +412,7 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                                 type="button"
                                 className="cursor-pointer text-red-500 hover:text-red-300"
                               >
-                                <IoRemoveCircle size={28} />
+                                <IoRemoveCircle size={28} className="mr-2" />
                               </button>
                               <input
                                 type="text"
@@ -509,21 +511,21 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                                 }}
                                 className="cursor-pointer text-green-500 hover:text-green-300"
                               >
-                                <IoAddCircle size={30} />
+                                <IoAddCircle size={30} className="ml-2" />
                               </button>
                             </div>
                           </td>
-                          <td className="whitespace-nowrap font-medium text-gray-700 text-center border">
+                          <td className="whitespace-nowrap font-medium text-gray-700 text-center border px-3">
                             {product?.purchase_quantity}{" "}
                             {product?.product_unit_id?.product_unit_name}
                             {" = "}
                             {product?.total_messurement}{" "}
                             {settingData?.unit_name}
                           </td>
-                          <td className="whitespace-nowrap font-medium text-gray-700 text-center border">
+                          <td className="whitespace-nowrap font-medium text-gray-700 text-center border px-3">
                             {product?.total_amount}
                           </td>
-                          <td className="whitespace-nowrap font-medium text-gray-700 text-center border">
+                          <td className="whitespace-nowrap font-medium text-gray-700 text-center border px-3">
                             <input
                               value={product?.discount_percent} // Bind input to state
                               onChange={(e) => {
@@ -552,10 +554,10 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                               }}
                               type="number"
                               placeholder="Discount On SubTotal"
-                              className="rounded-md border-gray-200 shadow-sm sm:text-sm p-1 border-2 w-16 text-center"
+                              className="rounded-md border-gray-200 shadow-sm sm:text-sm p-1 border-2 w-16 text-center px-3"
                             />
                           </td>
-                          <td className="whitespace-nowrap font-medium text-gray-700 text-center border">
+                          <td className="whitespace-nowrap font-medium text-gray-700 text-center border px-3">
                             {product?.grand_total.toFixed(2)}
                           </td>
                           <td className="border p-4">
@@ -584,240 +586,232 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
 
           {addProducts?.length && (
             <>
-              <div className="flex justify-between">
-                <div>
-                  <h5>Sub Total</h5>
-                  <h5 className="mt-4">
-                    Discount percent <small>(max 99)</small>
-                  </h5>
-                  <h5 className="mt-4">Grand Total</h5>
-                  <h5 className="mt-4">Select Payment Option</h5>
-                  {(payment_type == "full-payment" ||
-                    payment_type == "partial-payment") && (
-                    <h5 className="mt-4">Payment Method</h5>
-                  )}
-                  {payment_type == "partial-payment" && (
-                    <h5 className="mt-6">Pay Amount</h5>
-                  )}
-                  {payment_type !== "due-payment" &&
-                    payment_method === "check" && (
-                      <h5 className="mt-6">Payment Bank Name</h5>
-                    )}
-                  {payment_type !== "due-payment" &&
-                    payment_method === "check" && (
-                      <h5 className="mt-7">Check Number</h5>
-                    )}
-                  {payment_type !== "due-payment" &&
-                    payment_method === "check" && (
-                      <h5 className="mt-7">Check Issue Date</h5>
-                    )}
-                  <h5 className="mt-7">Received Amount</h5>
-                  <h5 className="mt-7">Due Amount</h5>
+              <div className="grid grid-cols-2 gap-y-4 gap-x-1 sm:gap-x-2">
+                <h5>Sub Total</h5>
+                <p className="font-bold">
+                  <span className="">: </span>
+                  {sub_total.toFixed(2)}
+                </p>
+                <h5 className="">
+                  Discount percent <small>(max 99)</small>
+                </h5>
+                <p className="">
+                 
+                  <input
+                    value={discount_amount} // Bind input to state
+                    onChange={(e) => {
+                      const value = parseFloat(e.target.value); // Use parseFloat for decimal values
+
+                      if (!isNaN(value) && value >= 0 && value <= 99.99) {
+                        setDiscountInputAmount(value); // Update state only for valid input
+                      } else if (value > 99.99) {
+                        setDiscountInputAmount(99.99); // Reset to max allowed value
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = parseFloat(e.target.value); // Use parseFloat for decimal values
+
+                      // Reset the value if it exceeds the limit
+                      if (isNaN(value) || value > 99.99) {
+                        setDiscountInputAmount(99.99); // Reset to max allowed value
+                      }
+                    }}
+                    min={0} // Allow decimal values with minimum 0.01
+                    step="0.01" // Ensure step supports decimal precision
+                    type="number"
+                    placeholder="Discount On SubTotal"
+                    className="border rounded-md p-1"
+                  />
+                </p>
+                <h5 className="">Grand Total</h5>
+                <p className=" font-bold">
+                  <span className="mr-2">: </span>
+                  {grand_total.toFixed(2)}
+                </p>
+                <h5 className="">Select Payment Option</h5>
+                <div className="">
+                  <Select
+                    id="payment_type"
+                    name="payment_type"
+                    aria-label="Payment Type"
+                    isClearable
+                    required
+                    options={paymentOption}
+                    getOptionLabel={(x) => x?.payment_type}
+                    getOptionValue={(x) => x?._id}
+                    onChange={(selectedOption) => {
+                      if (selectedOption?.payment_value == "full-payment") {
+                        setPayAmount(grand_total.toFixed(2));
+                        setReceivedAmount(grand_total);
+                        setDueAmount(0);
+                      } else if (
+                        selectedOption?.payment_value == "due-payment"
+                      ) {
+                        setReceivedAmount(0);
+                        setDueAmount(grand_total);
+                        setPayAmount(0);
+                      } else {
+                        setReceivedAmount(0);
+                        setDueAmount(0);
+                        setPayAmount(0);
+                      }
+                      setPaymentType(selectedOption?.payment_value);
+                      setPaymentBy("");
+                    }}
+                  />
                 </div>
-                <div>
-                  <p className="font-bold">
-                    <span className="mr-2">: </span>
-                    {sub_total.toFixed(2)}
-                  </p>
-                  <p className="mt-4">
-                    <span className="mr-2 font-bold">: </span>
+                {(payment_type == "full-payment" ||
+                  payment_type == "partial-payment") && (
+                  <h5 className="">Payment Method</h5>
+                )}
+                {/* {payment_type !== "due-payment" select paymrnt method */}
+                {(payment_type == "full-payment" ||
+                  payment_type == "partial-payment") && (
+                  <div className="">
+                    <Select
+                      id="payment_method"
+                      name="payment_method"
+                      aria-label="Payment By"
+                      required
+                      isClearable
+                      options={partialPaymentOption}
+                      getOptionLabel={(x) => x?.label}
+                      getOptionValue={(x) => x?.value}
+                      onChange={(selectedOption) => {
+                        setPaymentBy(selectedOption?.value);
+                      }}
+                    />
+                  </div>
+                )}
+                {payment_type == "partial-payment" && (
+                  <h5 className="">Pay Amount</h5>
+                )}
+                {payment_type == "partial-payment" && (
+                  <div>
                     <input
-                      value={discount_amount} // Bind input to state
+                      value={pay_amount} // Bind input to state
                       onChange={(e) => {
                         const value = parseFloat(e.target.value); // Use parseFloat for decimal values
 
-                        if (!isNaN(value) && value >= 0 && value <= 99.99) {
-                          setDiscountInputAmount(value); // Update state only for valid input
-                        } else if (value > 99.99) {
-                          setDiscountInputAmount(99.99); // Reset to max allowed value
+                        if (
+                          !isNaN(value) &&
+                          value > 0 &&
+                          value <= parseFloat(grand_total.toFixed(2))
+                        ) {
+                          setPayAmount(value); // Update state only for valid input
+                        } else if (value > parseFloat(grand_total.toFixed(2))) {
+                          setPayAmount(parseFloat(grand_total.toFixed(2))); // Limit to grand_total
                         }
                       }}
                       onBlur={(e) => {
                         const value = parseFloat(e.target.value); // Use parseFloat for decimal values
 
-                        // Reset the value if it exceeds the limit
-                        if (isNaN(value) || value > 99.99) {
-                          setDiscountInputAmount(99.99); // Reset to max allowed value
+                        // Reset the value if it exceeds the limit or is invalid
+                        if (
+                          isNaN(value) ||
+                          value > parseFloat(grand_total.toFixed(2))
+                        ) {
+                          setPayAmount(parseFloat(grand_total.toFixed(2))); // Reset to max allowed value
+                        } else if (value <= 0) {
+                          setPayAmount(""); // Clear if the value is invalid
                         }
                       }}
+                      type="number"
                       min={0.01} // Allow decimal values with minimum 0.01
                       step="0.01" // Ensure step supports decimal precision
-                      type="number"
-                      placeholder="Discount On SubTotal"
-                      className="border rounded-md p-1"
+                      placeholder="Pay Amount"
+                      className=" w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                     />
-                  </p>
-                  <p className="mt-4 font-bold">
-                    <span className="mr-2">: </span>
-                    {grand_total.toFixed(2)}
-                  </p>
-                  <div className="mt-2">
-                    <Select
-                      id="payment_type"
-                      name="payment_type"
-                      aria-label="Payment Type"
-                      isClearable
-                      required
-                      options={paymentOption}
-                      getOptionLabel={(x) => x?.payment_type}
-                      getOptionValue={(x) => x?._id}
-                      onChange={(selectedOption) => {
-                        if (selectedOption?.payment_value == "full-payment") {
-                          setPayAmount(grand_total.toFixed(2));
-                          setReceivedAmount(grand_total);
-                          setDueAmount(0);
-                        } else if (
-                          selectedOption?.payment_value == "due-payment"
-                        ) {
-                          setReceivedAmount(0);
-                          setDueAmount(grand_total);
-                          setPayAmount(0);
-                        } else {
-                          setReceivedAmount(0);
-                          setDueAmount(0);
-                          setPayAmount(0);
-                        }
-                        setPaymentType(selectedOption?.payment_value);
-                        setPaymentBy("");
-                      }}
-                    />
+                    {errors?.pay_amount && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors?.pay_amount?.message}
+                      </p>
+                    )}
                   </div>
+                )}
 
-                  {/* {payment_type !== "due-payment" select paymrnt method */}
-                  {(payment_type == "full-payment" ||
-                    payment_type == "partial-payment") && (
-                    <div className="mt-2">
+                {payment_type !== "due-payment" &&
+                  payment_method === "check" && (
+                    <h5 className="">Payment Bank Name</h5>
+                  )}
+                {payment_type !== "due-payment" &&
+                  payment_method === "check" && (
+                    <div className="">
                       <Select
-                        id="payment_method"
-                        name="payment_method"
-                        aria-label="Payment By"
+                        id="bank_id"
+                        name="bank_id"
                         required
                         isClearable
-                        options={partialPaymentOption}
-                        getOptionLabel={(x) => x?.label}
-                        getOptionValue={(x) => x?.value}
+                        aria-label="Payment Bank Name"
+                        options={bankTypes?.data}
+                        getOptionLabel={(x) => x?.bank_name}
+                        getOptionValue={(x) => x?._id}
                         onChange={(selectedOption) => {
-                          setPaymentBy(selectedOption?.value);
+                          setBank_id(selectedOption?._id);
                         }}
                       />
                     </div>
                   )}
 
-                  {payment_type == "partial-payment" && (
-                    <div>
+                {payment_type !== "due-payment" &&
+                  payment_method === "check" && (
+                    <h5 className="">Check Number</h5>
+                  )}
+                {payment_type !== "due-payment" &&
+                  payment_method === "check" && (
+                    <div className="">
                       <input
-                        value={pay_amount} // Bind input to state
-                        onChange={(e) => {
-                          const value = parseFloat(e.target.value); // Use parseFloat for decimal values
-
-                          if (
-                            !isNaN(value) &&
-                            value > 0 &&
-                            value <= parseFloat(grand_total.toFixed(2))
-                          ) {
-                            setPayAmount(value); // Update state only for valid input
-                          } else if (
-                            value > parseFloat(grand_total.toFixed(2))
-                          ) {
-                            setPayAmount(parseFloat(grand_total.toFixed(2))); // Limit to grand_total
-                          }
-                        }}
-                        onBlur={(e) => {
-                          const value = parseFloat(e.target.value); // Use parseFloat for decimal values
-
-                          // Reset the value if it exceeds the limit or is invalid
-                          if (
-                            isNaN(value) ||
-                            value > parseFloat(grand_total.toFixed(2))
-                          ) {
-                            setPayAmount(parseFloat(grand_total.toFixed(2))); // Reset to max allowed value
-                          } else if (value <= 0) {
-                            setPayAmount(""); // Clear if the value is invalid
-                          }
-                        }}
-                        type="number"
-                        min={0.01} // Allow decimal values with minimum 0.01
-                        step="0.01" // Ensure step supports decimal precision
-                        placeholder="Pay Amount"
-                        className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                        {...register("check_number", {
+                          required: "Check Number is required",
+                        })}
+                        type="text"
+                        placeholder="Check Number"
+                        className=" w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                       />
-                      {errors?.pay_amount && (
+
+                      {errors?.check_number && (
                         <p className="text-red-500 text-xs mt-1">
-                          {errors?.pay_amount?.message}
+                          {errors?.check_number?.message}
                         </p>
                       )}
                     </div>
                   )}
 
-                  {payment_type !== "due-payment" &&
-                    payment_method === "check" && (
-                      <div className="mt-3">
-                        <Select
-                          id="bank_id"
-                          name="bank_id"
-                          required
-                          isClearable
-                          aria-label="Payment Bank Name"
-                          options={bankTypes?.data}
-                          getOptionLabel={(x) => x?.bank_name}
-                          getOptionValue={(x) => x?._id}
-                          onChange={(selectedOption) => {
-                            setBank_id(selectedOption?._id);
-                          }}
-                        />
-                      </div>
-                    )}
+                {payment_type !== "due-payment" &&
+                  payment_method === "check" && (
+                    <h5 className="">Check Issue Date</h5>
+                  )}
 
-                  {payment_type !== "due-payment" &&
-                    payment_method === "check" && (
-                      <div className="mt-4">
-                        <input
-                          {...register("check_number", {
-                            required: "Check Number is required",
-                          })}
-                          type="text"
-                          placeholder="Check Number"
-                          className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
-                        />
+                {payment_type !== "due-payment" &&
+                  payment_method === "check" && (
+                    <div className="">
+                      <input
+                        {...register("check_withdraw_date", {
+                          required: "Check Issue Date is required",
+                        })}
+                        type="date"
+                        min={new Date().toISOString().split("T")[0]} // Prevents selecting dates before today
+                        placeholder="Check Issue Date"
+                        className=" w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                      />
 
-                        {errors?.check_number && (
-                          <p className="text-red-500 text-xs mt-1">
-                            {errors?.check_number?.message}
-                          </p>
-                        )}
-                      </div>
-                    )}
-
-                  {payment_type !== "due-payment" &&
-                    payment_method === "check" && (
-                      <div className="mt-4">
-                        <input
-                          {...register("check_withdraw_date", {
-                            required: "Check Issue Date is required",
-                          })}
-                          type="date"
-                          min={new Date().toISOString().split("T")[0]} // Prevents selecting dates before today
-                          placeholder="Check Issue Date"
-                          className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
-                        />
-
-                        {errors?.check_withdraw_date && (
-                          <p className="text-red-500 text-xs mt-1">
-                            {errors?.check_withdraw_date?.message}
-                          </p>
-                        )}
-                      </div>
-                    )}
-
-                  <p className="mt-4 font-bold">
-                    <span className="mr-2">: </span>
-                    {received_amount.toFixed(2)}
-                  </p>
-                  <p className="mt-4 font-bold">
-                    <span className="mr-2">: </span>
-                    {due_amount.toFixed(2)}
-                  </p>
-                </div>
+                      {errors?.check_withdraw_date && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {errors?.check_withdraw_date?.message}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                <h5 className="">Received Amount</h5>
+                <p className="font-bold">
+                  <span className="">: </span>
+                  {received_amount.toFixed(2)}
+                </p>
+                <h5 className="">Due Amount</h5>
+                <p className="font-bold">
+                  <span className="">: </span>
+                  {due_amount.toFixed(2)}
+                </p>
               </div>
             </>
           )}

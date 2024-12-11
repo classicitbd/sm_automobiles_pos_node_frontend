@@ -114,14 +114,14 @@ const PosMainComponent = () => {
 
   return (
     <>
-      <div className="flex p-6 gap-6 mb-2">
+      <div className="sm:flex p-3 sm:p-6 gap-6 mb-2">
         {/* Left Section: Product List */}
         <div className="w-full md:w-3/5">
           <div className="flex flex-col gap-4 mb-6">
             {/* Filters */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1 mt-2">
+                <label className="block text-xs font-medium text-gray-700 mb-1 sm:mt-2">
                   Category Name
                 </label>
 
@@ -140,7 +140,7 @@ const PosMainComponent = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1 mt-2">
+                <label className="block text-xs font-medium text-gray-700 mb-1 sm:mt-2">
                   Brand Name
                 </label>
 
@@ -184,108 +184,126 @@ const PosMainComponent = () => {
           ) : (
             <>
               {products?.data?.length > 0 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 overflow-y-auto max-h-[700px]">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2 sm:gap-4 overflow-y-auto max-h-[600px] scrollbar-thin p-2">
                   {products?.data?.map((product, index) => (
                     <>
-                      {
-                        product?.product_quantity > 0 ?
-                          <div
-                            onClick={() => {
-                              const findProduct = addProducts.find(
-                                (item) => item?._id === product?._id
-                              );
-                              if (findProduct) {
-                                toast.error("Already added this product", {
-                                  autoClose: 1000,
-                                });
-                                return; // Exit if the product is already added
-                              }
-                              setAddProducts((prev) => [
-                                ...prev,
-                                { ...product, purchase_quantity: 1, total_amount: product?.product_price, discount_percent: 0, grand_total: product?.product_price, total_messurement: 1 * product?.product_unit_id?.product_unit_value },
-                              ]);
-                            }}
-                            key={index}
-                            className="border rounded-md overflow-hidden shadow-md flex flex-col justify-between cursor-pointer hover:shadow-lg transition duration-300 ease-in-out"
-                          >
-                            <img
-                              src={product?.product_image}
-                              alt={`Product ${index + 1}`}
-                              className="w-full h-40 object-cover"
-                            />
-                            <div className="p-2">
-                              <p className="font-bold">
-                                {product?.product_name}
+                      {product?.product_quantity > 0 ? (
+                        <div
+                          onClick={() => {
+                            const findProduct = addProducts.find(
+                              (item) => item?._id === product?._id
+                            );
+                            if (findProduct) {
+                              toast.error("Already added this product", {
+                                autoClose: 1000,
+                              });
+                              return; // Exit if the product is already added
+                            }
+                            setAddProducts((prev) => [
+                              ...prev,
+                              {
+                                ...product,
+                                purchase_quantity: 1,
+                                total_amount: product?.product_price,
+                                discount_percent: 0,
+                                grand_total: product?.product_price,
+                                total_messurement:
+                                  1 *
+                                  product?.product_unit_id?.product_unit_value,
+                              },
+                            ]);
+                          }}
+                          key={index}
+                          className="border rounded-md overflow-hidden shadow-md flex flex-col justify-between cursor-pointer hover:shadow-lg transition duration-300 ease-in-out"
+                        >
+                          <img
+                            src={product?.product_image}
+                            alt={`Product ${index + 1}`}
+                            className="w-full h-40 object-cover p-3"
+                          />
+                          <div className="px-1.5 sm:px-2 ">
+                            <p className="font-bold">{product?.product_name}</p>
+                            <p className="text-sm sm:mt-1">
+                              Quantity:{" "}
+                              <span className="font-bold">
+                                {product?.product_quantity}{" "}
+                                {product?.product_unit_id?.product_unit_name}
+                              </span>
+                            </p>
+                            <p className="font-semibold">
+                              {"1"}{" "}
+                              {product?.product_unit_id?.product_unit_name}
+                              {" = "}
+                              {
+                                product?.product_unit_id?.product_unit_value
+                              }{" "}
+                              {settingData?.unit_name}
+                            </p>
+                            <p className="font-semibold">
+                              {product?.product_quantity}{" "}
+                              {product?.product_unit_id?.product_unit_name}
+                              {" = "}
+                              {product?.product_quantity *
+                                product?.product_unit_id
+                                  ?.product_unit_value}{" "}
+                              {settingData?.unit_name.slice(0, 1)}
+                            </p>
+                            <p className="text-sm sm:mt-1">
+                              Category : {product?.category_id?.category_name}
+                            </p>
+                            {product?.brand_id?.brand_name ? (
+                              <p className="text-sm sm:mt-1">
+                                Brand : {product?.brand_id?.brand_name}
                               </p>
-                              <p className="text-sm mt-1">
-                                Quantity:{" "}
-                                <span className="font-bold">
-                                  {product?.product_quantity}{" "}{product?.product_unit_id?.product_unit_name}
-                                </span>
+                            ) : (
+                              <p className="text-sm mt-1 opacity-0">
+                                Brand : Placeholder
                               </p>
-                              <p className="font-semibold">
-                                {"1"}{" "}{product?.product_unit_id?.product_unit_name}{" = "}{product?.product_unit_id?.product_unit_value}{" "}{settingData?.unit_name}
+                            )}
+                            <p className="text-sm mt-1 font-semibold">
+                              ID : {product?.product_id}
+                            </p>
+                          </div>
+                          <div className="bg-blue-500 text-white text-center text-xs py-1.5">
+                            {product?.product_price}
+                          </div>
+                        </div>
+                      ) : (
+                        <div
+                          disabled
+                          key={index}
+                          className="border rounded-md overflow-hidden shadow-md flex flex-col justify-between hover:shadow-lg transition duration-300 ease-in-out"
+                        >
+                          <img
+                            src={product?.product_image}
+                            alt={`Product ${index + 1}`}
+                            className="w-full h-40 object-cover p-3"
+                          />
+                          <div className="px-1.5 sm:px-2">
+                            <p className="font-bold">{product?.product_name}</p>
+                            <p className="text-sm sm:mt-1">
+                              Category: {product?.category_id?.category_name}
+                            </p>
+                            {product?.brand_id?.brand_name ? (
+                              <p className="text-sm sm:mt-1">
+                                Brand : {product?.brand_id?.brand_name}
                               </p>
-                              <p className="font-semibold">
-                                {product?.product_quantity}{" "}{product?.product_unit_id?.product_unit_name}{" = "}{product?.product_quantity * product?.product_unit_id?.product_unit_value}{" "}{settingData?.unit_name}
+                            ) : (
+                              <p className="text-sm sm:mt-1 opacity-0">
+                                Brand : Placeholder
                               </p>
-                              <p className="text-sm mt-1">
-                                Category: {product?.category_id?.category_name}
-                              </p>
-                              {product?.brand_id?.brand_name ? (
-                                <p className="text-sm mt-1">
-                                  Brand: {product?.brand_id?.brand_name}
-                                </p>
-                              ) : (
-                                <p className="text-sm mt-1 opacity-0">
-                                  Brand: Placeholder
-                                </p>
-                              )}
-                              <p className="text-sm mt-1 font-semibold">
-                                ID: {product?.product_id}
-                              </p>
-                            </div>
-                            <div className="bg-blue-500 text-white text-center text-xs py-1">
+                            )}
+                            <p className="text-sm my-1 font-semibold">
+                              ID : {product?.product_id}
+                            </p>
+                          </div>
+                          {product?.product_price && (
+                            <div className="bg-blue-500 text-white text-center text-xs py-1.5">
                               {product?.product_price}
                             </div>
-                          </div>
-                          :
-                          <div
-                            disabled
-                            key={index}
-                            className="border rounded-md overflow-hidden shadow-md flex flex-col justify-between hover:shadow-lg transition duration-300 ease-in-out"
-                          >
-                            <img
-                              src={product?.product_image}
-                              alt={`Product ${index + 1}`}
-                              className="w-full h-40 object-cover"
-                            />
-                            <div className="p-2">
-                              <p className="font-bold">
-                                {product?.product_name}
-                              </p>
-                              <p className="text-sm mt-1">
-                                Category: {product?.category_id?.category_name}
-                              </p>
-                              {product?.brand_id?.brand_name ? (
-                                <p className="text-sm mt-1">
-                                  Brand: {product?.brand_id?.brand_name}
-                                </p>
-                              ) : (
-                                <p className="text-sm mt-1 opacity-0">
-                                  Brand: Placeholder
-                                </p>
-                              )}
-                              <p className="text-sm mt-1 font-semibold">
-                                ID: {product?.product_id}
-                              </p>
-                            </div>
-                            <div className="bg-blue-500 text-white text-center text-xs py-1">
-                              {product?.product_price}
-                            </div>
-                          </div>
-                      }
-
+                          )}
+                        </div>
+                      )}
                     </>
                   ))}
                 </div>
