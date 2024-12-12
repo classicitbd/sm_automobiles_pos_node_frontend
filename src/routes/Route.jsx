@@ -48,6 +48,11 @@ import OrderHistory from "@/components/Products/OrderHistory";
 import IncomePage from "@/pages/income/IncomePage";
 import ProfitPage from "@/pages/ProfitPage/ProfitPage";
 import LeisurePage from "@/pages/LeisurePage/LeisurePage";
+import Customers from "@/components/CustomersPayment/Employe/Customers";
+import Orders from "@/components/CustomersPayment/Employe/Orders";
+import Profile from "@/components/CustomersPayment/Employe/Profile";
+import Salery from "@/components/CustomersPayment/Employe/Salery";
+import SaleTarget from "@/components/CustomersPayment/Employe/SaleTarget";
 
 const route = createBrowserRouter([
   {
@@ -257,6 +262,27 @@ const route = createBrowserRouter([
       {
         path: "/leisure",
         element: <LeisurePage />,
+      },
+      //Employe.......
+      {
+        path: "/empolye-customers",
+        element: <Customers />,
+      },
+      {
+        path: "/empolye-orders",
+        element: <Orders />,
+      },
+      {
+        path: "/empolye-profile",
+        element: <Profile />,
+      },
+      {
+        path: "/empolye-salery",
+        element: <Salery />,
+      },
+      {
+        path: "/empolye-sale-Target",
+        element: <SaleTarget />,
       },
     ],
   },
