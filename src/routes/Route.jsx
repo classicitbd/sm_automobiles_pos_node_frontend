@@ -49,6 +49,13 @@ import IncomePage from "@/pages/income/IncomePage";
 import ProfitPage from "@/pages/ProfitPage/ProfitPage";
 import LeisurePage from "@/pages/LeisurePage/LeisurePage";
 import OutOfWarehouse from "@/pages/order/OutOfWarehouse";
+import Customers from "@/components/CustomersPayment/Employe/Customers";
+import Orders from "@/components/CustomersPayment/Employe/Orders";
+import Profile from "@/components/CustomersPayment/Employe/Profile";
+import Salery from "@/components/CustomersPayment/Employe/Salery";
+import SaleTarget from "@/components/CustomersPayment/Employe/SaleTarget";
+import StockPurchase from "@/components/Supplier/StockPurchase";
+import EmployePaymentList from "@/components/CustomersPayment/Employe/EmployePaymentList";
 
 const route = createBrowserRouter([
   {
@@ -115,6 +122,10 @@ const route = createBrowserRouter([
       {
         path: "/supplier-moneylist/:supplier_id",
         element: <ViewAddMoneyList />,
+      },
+      {
+        path: "/stock_manage/supplier_stock/:supplier_id",
+        element: <StockPurchase />,
       },
       // ------Staff And Role----
       {
@@ -262,6 +273,31 @@ const route = createBrowserRouter([
       {
         path: "/leisure",
         element: <LeisurePage />,
+      },
+      //Employe.......
+      {
+        path: "/empolye-customers",
+        element: <Customers />,
+      },
+      {
+        path: "/empolye-orders",
+        element: <Orders />,
+      },
+      {
+        path: "/empolye-profile",
+        element: <Profile />,
+      },
+      {
+        path: "/empolye-salery",
+        element: <Salery />,
+      },
+      {
+        path: "/empolye-sale-Target",
+        element: <SaleTarget />,
+      },
+      {
+        path: "/employe-payment",
+        element: <EmployePaymentList />,
       },
     ],
   },

@@ -35,18 +35,14 @@ const ProfitTable = ({
                   <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
                     <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
-                      <td className="whitespace-nowrap p-4 ">Profit Amount</td>
-
-                      <td className="whitespace-nowrap p-4 ">
-                        Discount Amount
-                      </td>
+                      <td className="whitespace-nowrap p-4 ">Invoice No</td>
+                      <td className="whitespace-nowrap p-4 ">Total Amount</td>
                       <td className="whitespace-nowrap p-4 ">
                         Received Amount
                       </td>
-                      <td className="whitespace-nowrap p-4 ">
-                        Sub-Total Amount
-                      </td>
-                      <td className="whitespace-nowrap p-4 ">Invoice No</td>
+                      <td className="whitespace-nowrap p-4 ">Due Amount</td>
+                      <td className="whitespace-nowrap p-4 ">Profit Amount</td>
+
                       <td className="whitespace-nowrap p-4 ">Create Date</td>
                     </tr>
                   </thead>
@@ -63,20 +59,21 @@ const ProfitTable = ({
                           {serialNumber + i + 1}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {profit?.profit_amount}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {profit?.discount_percent_amount}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {profit?.received_amount}
+                          {profit?.order_id}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {profit?.sub_total_amount}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {profit?.order_id}
+                          {profit?.received_amount}
                         </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {profit?.due_amount}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {profit?.profit_amount}
+                        </td>
+
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {" "}
                           {DateTimeFormat(profit?.createdAt)}
