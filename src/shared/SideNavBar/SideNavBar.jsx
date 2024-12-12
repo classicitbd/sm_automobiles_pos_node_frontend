@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { GiPayMoney, GiReceiveMoney, GiTargetShot } from "react-icons/gi";
 import { BiTask } from "react-icons/bi";
 import { GoHome } from "react-icons/go";
-import {  BsShieldPlus } from "react-icons/bs";
+import { BsShieldPlus } from "react-icons/bs";
 import { PiUsersThree } from "react-icons/pi";
 import { TbCategoryPlus, TbHttpPost } from "react-icons/tb";
 import { SiVirustotal } from "react-icons/si";
@@ -304,6 +304,12 @@ const SideNavBar = () => {
               icon={FaShoppingCart}
               label="Warehouse Order"
               isActive={isActive("/warehouse-order")}
+            />
+            <ChildMenuItem
+              to="/out-of-warehouse"
+              icon={FaShoppingCart}
+              label="Out Of Warehouse"
+              isActive={isActive("/out-of-warehouse")}
             />
           </DropdownMenu>
 

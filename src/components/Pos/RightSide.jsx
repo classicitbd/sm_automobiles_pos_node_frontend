@@ -182,7 +182,7 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
       };
       if (payment_type !== "due-payment") {
         sendData.payment_method = payment_method;
-        sendData.pay_amount = parseFloat(pay_amount.toFixed(2));
+        sendData.pay_amount = pay_amount
         if (payment_method === "check") {
           sendData.bank_id = bank_id;
           sendData.check_number = data?.check_number;
