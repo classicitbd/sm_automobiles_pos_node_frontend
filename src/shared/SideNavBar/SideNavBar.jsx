@@ -26,15 +26,11 @@ import {
 import { MdAccountBalanceWallet, MdSettingsSuggest } from "react-icons/md";
 import { RiFolderReceivedFill } from "react-icons/ri";
 
-
-
 const SideNavBar = () => {
   const { pathname } = useLocation();
   const [activeDropdown, setActiveDropdown] = useState(null); // Centralized state to track open dropdown
   const [activeChildDropdown, setActiveChildDropdown] = useState(null); // Centralized state to track open dropdown
 
-  console.log('hello navbar');
-  
   useEffect(() => {
     // Retrieve active dropdown from localStorage when the component mounts
     const saveDropDown = localStorage.getItem("activeDropdown");
@@ -66,14 +62,13 @@ const SideNavBar = () => {
   // Collapse all dropdowns when a menu item is clicked
   const closeAllDropdowns = () => {
     setActiveDropdown(null);
-  
+
     localStorage.removeItem("activeDropdown");
   };
- 
- 
+
   const closeAllChildDropdowns = () => {
     setActiveChildDropdown(null);
-   localStorage.removeItem("activeChildDropdown");
+    localStorage.removeItem("activeChildDropdown");
   };
   const isActive = (route) =>
     pathname === route
@@ -226,10 +221,10 @@ const SideNavBar = () => {
               isActive={isActive("/empolye-sale-Target")}
             />
             <ChildMenuItem
-              to="/payment"
+              to="/employe-payment"
               icon={TbCategoryPlus}
-              label="Payment List"
-              isActive={isActive("/payment")}
+              label="Employ Payment List"
+              isActive={isActive("/employe-payment")}
             />
 
             <ChildMenuItem

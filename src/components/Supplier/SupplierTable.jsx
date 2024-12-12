@@ -179,6 +179,14 @@ const SupplierTable = ({
                               <FaEye size={18} /> View Add Money List
                             </button>
                           </Link>
+                          <Link
+                            to={`/stock_manage/supplier_stock/${supplier?._id}`}
+                          >
+                            {" "}
+                            <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium">
+                              <FaEye size={18} /> View Stock Purchase
+                            </button>
+                          </Link>
                         </div>
                       )}
                     </td>
