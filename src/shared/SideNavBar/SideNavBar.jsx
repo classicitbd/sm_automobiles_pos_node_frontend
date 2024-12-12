@@ -308,6 +308,12 @@ const SideNavBar = () => {
               label="Warehouse Order"
               isActive={isActive("/warehouse-order")}
             />
+            <ChildMenuItem
+              to="/out-of-warehouse"
+              icon={FaShoppingCart}
+              label="Out Of Warehouse"
+              isActive={isActive("/out-of-warehouse")}
+            />
           </DropdownMenu>
 
           <DropdownMenu

@@ -48,6 +48,7 @@ import OrderHistory from "@/components/Products/OrderHistory";
 import IncomePage from "@/pages/income/IncomePage";
 import ProfitPage from "@/pages/ProfitPage/ProfitPage";
 import LeisurePage from "@/pages/LeisurePage/LeisurePage";
+import OutOfWarehouse from "@/pages/order/OutOfWarehouse";
 import Customers from "@/components/CustomersPayment/Employe/Customers";
 import Orders from "@/components/CustomersPayment/Employe/Orders";
 import Profile from "@/components/CustomersPayment/Employe/Profile";
@@ -242,6 +243,10 @@ const route = createBrowserRouter([
       {
         path: "/warehouse-order",
         element: <WarehouseOrder />,
+      },
+      {
+        path: "/out-of-warehouse",
+        element: <OutOfWarehouse />,
       },
       {
         path: "/order-details/:_id",
