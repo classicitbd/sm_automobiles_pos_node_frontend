@@ -46,6 +46,8 @@ import PriceHistory from "@/components/Products/PriceHistory";
 import PurchageHistory from "@/components/Products/PurchageHistory";
 import OrderHistory from "@/components/Products/OrderHistory";
 import IncomePage from "@/pages/income/IncomePage";
+import ProfitPage from "@/pages/ProfitPage/ProfitPage";
+import LeisurePage from "@/pages/LeisurePage/LeisurePage";
 
 const route = createBrowserRouter([
   {
@@ -246,6 +248,15 @@ const route = createBrowserRouter([
       {
         path: "/voucher-pdf",
         element: <PaymentVoucher />,
+      },
+      // Accounts Start......
+      {
+        path: "/profit",
+        element: <ProfitPage />,
+      },
+      {
+        path: "/leisure",
+        element: <LeisurePage />,
       },
     ],
   },
