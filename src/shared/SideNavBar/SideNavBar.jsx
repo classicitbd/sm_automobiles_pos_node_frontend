@@ -1,26 +1,45 @@
 import { useEffect, useState } from "react";
 import { logo } from "../../utils/imageImport";
 import { Link, useLocation } from "react-router-dom";
-import { GiTargetShot } from "react-icons/gi";
+import { GiPayMoney, GiReceiveMoney, GiTargetShot } from "react-icons/gi";
 import { BiTask } from "react-icons/bi";
 import { GoHome } from "react-icons/go";
-import { BsExplicit, BsShieldPlus } from "react-icons/bs";
+import {  BsShieldPlus } from "react-icons/bs";
 import { PiUsersThree } from "react-icons/pi";
 import { TbCategoryPlus, TbHttpPost } from "react-icons/tb";
+import { SiVirustotal } from "react-icons/si";
 
-import { ChildMenuItem, DropdownMenu, MenuItem } from "./DropdownAndMenuItem";
+import {
+  ChildDropdownMenu,
+  ChildMenuItem,
+  DropdownMenu,
+  MenuItem,
+  SubChildMenuItem,
+} from "./DropdownAndMenuItem";
 import { FiUsers } from "react-icons/fi";
-import { FaShoppingCart, FaUsers } from "react-icons/fa";
-import { MdSettingsSuggest } from "react-icons/md";
+import {
+  FaCcAmazonPay,
+  FaProductHunt,
+  FaShoppingCart,
+  FaUsers,
+} from "react-icons/fa";
+import { MdAccountBalanceWallet, MdSettingsSuggest } from "react-icons/md";
+import { RiFolderReceivedFill } from "react-icons/ri";
 
 const SideNavBar = () => {
   const { pathname } = useLocation();
   const [activeDropdown, setActiveDropdown] = useState(null); // Centralized state to track open dropdown
+  const [activeChildDropdown, setActiveChildDropdown] = useState(null); // Centralized state to track open dropdown
+
   useEffect(() => {
     // Retrieve active dropdown from localStorage when the component mounts
     const saveDropDown = localStorage.getItem("activeDropdown");
     if (saveDropDown) {
       setActiveDropdown(saveDropDown);
+    }
+    const saveChildDropDown = localStorage.getItem("activeChildDropdown");
+    if (saveChildDropDown) {
+      setActiveDropdown(saveChildDropDown);
     }
   }, []);
 
@@ -31,12 +50,24 @@ const SideNavBar = () => {
 
     localStorage.setItem("activeDropdown", newActiveDropdown);
   };
+  // Toggle dropdowns, collapse others when one is opened
+  const toggleChildDropdown = (dropdown) => {
+    const newActiveChildDropdown =
+      activeChildDropdown === dropdown ? null : dropdown;
+    setActiveChildDropdown(newActiveChildDropdown);
+
+    localStorage.setItem("activeChildDropdown", newActiveChildDropdown);
+  };
 
   // Collapse all dropdowns when a menu item is clicked
   const closeAllDropdowns = () => {
     setActiveDropdown(null);
     localStorage.removeItem("activeDropdown");
   };
+  // const closeAllChildDropdowns = () => {
+  //   setActiveChildDropdown(null);
+  //   localStorage.removeItem("activeChildDropdown");
+  // };
   const isActive = (route) =>
     pathname === route
       ? "bg-primaryVariant-600 text-white font-semibold border-primaryVariant-100 "
@@ -299,6 +330,70 @@ const SideNavBar = () => {
               icon={TbCategoryPlus}
               label="Payment Voucher"
               isActive={isActive("/voucher-pdf")}
+            />
+          </DropdownMenu>
+          <DropdownMenu
+            label="Accounts"
+            icon={MdAccountBalanceWallet}
+            isOpen={activeDropdown === "accounts"}
+            onClick={() => toggleDropdown("accounts")}
+          >
+            <ChildMenuItem
+              to="/profit"
+              icon={FaProductHunt}
+              label="Profit"
+              isActive={isActive("/profit")}
+            />
+
+            <ChildDropdownMenu
+              label="Account Receivable"
+              icon={RiFolderReceivedFill}
+              isOpen={activeChildDropdown === "ar"}
+              onClick={() => toggleChildDropdown("ar")}
+            >
+              <SubChildMenuItem
+                to="/payment"
+                icon={GiReceiveMoney}
+                label="Payment List"
+                isActive={isActive("/payment")}
+              />
+              <SubChildMenuItem
+                to="/today-payment"
+                icon={GiReceiveMoney}
+                label="Today Payment List"
+                isActive={isActive("/today-payment")}
+              />
+              <SubChildMenuItem
+                to="/due-payment"
+                icon={GiReceiveMoney}
+                label="Due Payment List"
+                isActive={isActive("/due-payment")}
+              />
+            </ChildDropdownMenu>
+            <ChildDropdownMenu
+              label="Account Payable"
+              icon={FaCcAmazonPay}
+              isOpen={activeChildDropdown === "ap"}
+              onClick={() => toggleChildDropdown("ap")}
+            >
+              <SubChildMenuItem
+                to="/paid-payment"
+                icon={GiPayMoney}
+                label="Paid Payment List"
+                isActive={isActive("/paid-payment")}
+              />
+              <SubChildMenuItem
+                to="/unpaid-payment"
+                icon={GiPayMoney}
+                label="Un-Paid Payment List"
+                isActive={isActive("/unpaid-payment")}
+              />
+            </ChildDropdownMenu>
+            <ChildMenuItem
+              to="/leisure"
+              icon={SiVirustotal}
+              label="Leisure"
+              isActive={isActive("/leisure")}
             />
           </DropdownMenu>
         </ul>

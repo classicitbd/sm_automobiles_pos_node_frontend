@@ -50,7 +50,7 @@ const DashBoardNavbar = ({
   if (loading) return null;
   return (
     <nav className="border-b">
-      <div className="  py-1 px-4 sm:px-10 md:pl-3 md:pr-16">
+      <div className="py-1 px-4 sm:px-10 md:pl-3 md:pr-16">
         <div className="flex h-16 items-center gap-1 justify-between">
           <div className="flex items-center">
             <button
