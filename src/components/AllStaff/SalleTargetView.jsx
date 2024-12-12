@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
-import { DateTimeFormat } from "@/utils/dateTimeFormet";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import Pagination from "../common/pagination/Pagination";
 import { SettingContext } from "@/context/SettingProvider";
@@ -32,7 +31,7 @@ const SalleTargetView = () => {
     setPage(1);
   };
 
-  //Fetch Bank Data
+  //Fetch SaleTarget Data
   const {
     data: saleTargetData = [],
     isLoading,
