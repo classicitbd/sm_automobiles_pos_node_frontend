@@ -24,7 +24,7 @@ const DashboardLayout = () => {
       {isSidebarOpen && (
         <div
           className={`hidden lg:block max-h-screen overflow-hidden overflow-y-auto scrollbar-thin transition-width duration-500 ease-in-out  ${
-            isSidebarOpen ? "w-60" : "w-0"
+            isSidebarOpen ? "w-64" : "w-0"
           }`}
         >
           <SideNavBar />
