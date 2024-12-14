@@ -288,9 +288,9 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                     <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
                       Phone
                     </th>
-                    <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
+                    {/* <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
                       Account Balance
-                    </th>
+                    </th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -301,7 +301,7 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                     <td className="whitespace-nowrap py-3 px-2 font-medium text-gray-700 text-center border">
                       {customerInfo?.customer_phone}
                     </td>
-                    <td className="whitespace-nowrap py-3 px-2 font-medium text-gray-700 text-center border">
+                    {/* <td className="whitespace-nowrap py-3 px-2 font-medium text-gray-700 text-center border">
                       {customerInfo?.customer_wallet > 0 ? (
                         <span className="text-green-500">
                           {customerInfo?.customer_wallet}
@@ -311,7 +311,7 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                           {customerInfo?.customer_wallet}
                         </span>
                       )}
-                    </td>
+                    </td> */}
                   </tr>
                 </tbody>
               </table>

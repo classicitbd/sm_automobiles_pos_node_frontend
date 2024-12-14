@@ -98,7 +98,7 @@ const CustomerPaymentList = () => {
               </div>
               <div className="text-[26px] font-bold text-gray-800">
                 <p>Customer Address: {customerPayments?.data?.customerDetails?.customer_address}</p>
-                <p>Wallet Amount: {customerPayments?.data?.customerDetails?.customer_wallet}</p>
+                {/* <p>Wallet Amount: {customerPayments?.data?.customerDetails?.customer_wallet}</p> */}
               </div>
             </div>
           </div>

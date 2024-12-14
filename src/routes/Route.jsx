@@ -56,6 +56,10 @@ import Salery from "@/components/CustomersPayment/Employe/Salery";
 import SaleTarget from "@/components/CustomersPayment/Employe/SaleTarget";
 import StockPurchase from "@/components/Supplier/StockPurchase";
 import EmployePaymentList from "@/components/CustomersPayment/Employe/EmployePaymentList";
+import CheckInPayment from "@/pages/CheckAndCashInOut/CheckInPayment";
+import CashInPayment from "@/pages/CheckAndCashInOut/CashInPayment";
+import CheckOutPayment from "@/pages/CheckAndCashInOut/CheckOutPayment";
+import CashOutPayment from "@/pages/CheckAndCashInOut/CashOutPayment";
 import PurchaseListPage from "@/pages/PurchaseListPage/PurchaseListPage";
 
 const route = createBrowserRouter([
@@ -162,6 +166,23 @@ const route = createBrowserRouter([
       {
         path: "/bank-out/:id",
         element: <BankOutPage />,
+      },
+      // check and cash in out
+      {
+        path: "/check-in",
+        element: <CheckInPayment />,
+      },
+      {
+        path: "/cash-in",
+        element: <CashInPayment />,
+      },
+      {
+        path: "/check-out",
+        element: <CheckOutPayment />,
+      },
+      {
+        path: "/cash-out",
+        element: <CashOutPayment />,
       },
 
       // ------Customers----
