@@ -300,6 +300,13 @@ const SideNavBar = () => {
             onClick={closeAllDropdowns} // Close all dropdowns when clicked
           />
           <MenuItem
+            to="/purchase-list"
+            icon={BiTask}
+            label="Purchase List"
+            isActive={isActive("/purchase-list")}
+            onClick={closeAllDropdowns} // Close all dropdowns when clicked
+          />
+          <MenuItem
             to="/income"
             icon={BiTask}
             label="Incomes"

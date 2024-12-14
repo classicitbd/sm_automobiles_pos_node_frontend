@@ -60,6 +60,7 @@ import CheckInPayment from "@/pages/CheckAndCashInOut/CheckInPayment";
 import CashInPayment from "@/pages/CheckAndCashInOut/CashInPayment";
 import CheckOutPayment from "@/pages/CheckAndCashInOut/CheckOutPayment";
 import CashOutPayment from "@/pages/CheckAndCashInOut/CashOutPayment";
+import PurchaseListPage from "@/pages/PurchaseListPage/PurchaseListPage";
 
 const route = createBrowserRouter([
   {
@@ -319,6 +320,10 @@ const route = createBrowserRouter([
       {
         path: "/employe-payment",
         element: <EmployePaymentList />,
+      },
+      {
+        path: "/purchase-list",
+        element: <PurchaseListPage />,
       },
     ],
   },
