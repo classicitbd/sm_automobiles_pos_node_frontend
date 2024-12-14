@@ -56,6 +56,7 @@ import Salery from "@/components/CustomersPayment/Employe/Salery";
 import SaleTarget from "@/components/CustomersPayment/Employe/SaleTarget";
 import StockPurchase from "@/components/Supplier/StockPurchase";
 import EmployePaymentList from "@/components/CustomersPayment/Employe/EmployePaymentList";
+import PurchaseListPage from "@/pages/PurchaseListPage/PurchaseListPage";
 
 const route = createBrowserRouter([
   {
@@ -298,6 +299,10 @@ const route = createBrowserRouter([
       {
         path: "/employe-payment",
         element: <EmployePaymentList />,
+      },
+      {
+        path: "/purchase-list",
+        element: <PurchaseListPage />,
       },
     ],
   },
