@@ -260,37 +260,6 @@ const SideNavBar = () => {
               isActive={isActive("/stock_manage")}
             />
           </DropdownMenu>
-          <DropdownMenu
-            label="Transaction History"
-            icon={BiTask}
-            isOpen={activeDropdown === "transaction-history"}
-            onClick={() => toggleDropdown("transaction-history")}
-          >
-            <ChildMenuItem
-              to="/check-in"
-              icon={TbCategoryPlus}
-              label="Check In"
-              isActive={isActive("/check-in")}
-            />
-            <ChildMenuItem
-              to="/check-out"
-              icon={TbCategoryPlus}
-              label="Check Out"
-              isActive={isActive("/check-out")}
-            />
-            <ChildMenuItem
-              to="/cash-in"
-              icon={TbCategoryPlus}
-              label="Cash In"
-              isActive={isActive("/cash-in")}
-            />
-            <ChildMenuItem
-              to="/cash-out"
-              icon={TbCategoryPlus}
-              label="Cash Out"
-              isActive={isActive("/cash-out")}
-            />
-          </DropdownMenu>
 
           <MenuItem
             to="/expense"
@@ -444,6 +413,37 @@ const SideNavBar = () => {
               isActive={isActive("/leisure")}
               onClick={closeAllChildDropdowns}
             />
+            <ChildDropdownMenu
+              label="Transaction History"
+              icon={BiTask}
+              isOpen={activeChildDropdown === "transaction-history"}
+              onClick={() => toggleChildDropdown("transaction-history")}
+            >
+              <SubChildMenuItem
+                to="/check-in"
+                icon={TbCategoryPlus}
+                label="Check In"
+                isActive={isActive("/check-in")}
+              />
+              <SubChildMenuItem
+                to="/check-out"
+                icon={TbCategoryPlus}
+                label="Check Out"
+                isActive={isActive("/check-out")}
+              />
+              <SubChildMenuItem
+                to="/cash-in"
+                icon={TbCategoryPlus}
+                label="Cash In"
+                isActive={isActive("/cash-in")}
+              />
+              <SubChildMenuItem
+                to="/cash-out"
+                icon={TbCategoryPlus}
+                label="Cash Out"
+                isActive={isActive("/cash-out")}
+              />
+            </ChildDropdownMenu>
           </DropdownMenu>
         </ul>
       </div>

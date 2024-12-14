@@ -7,6 +7,9 @@ import { BASE_URL } from "@/utils/baseURL";
 import { DateTimeFormat } from "@/utils/dateTimeFormet";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
+import { CiMenuKebab } from "react-icons/ci";
+import { FaEye } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const SaleTarget = () => {
   const [serialNumber, setSerialNumber] = useState();
@@ -52,7 +55,12 @@ const SaleTarget = () => {
     },
   });
 
-  console.log(targetedSales);
+  const [supplierDocumentModal, setSupplierDocumentModal] = useState(null);
+
+  const handleShowDocumentModal = (id) => {
+    setSupplierDocumentModal((prevId) => (prevId === id ? null : id));
+  };
+
   return (
     <>
       <div className="mt-6">
@@ -115,6 +123,7 @@ const SaleTarget = () => {
                           {" "}
                           Sale Target Filup
                         </td>
+                        <td className="whitespace-nowrap p-4 "> Action</td>
                       </tr>
                     </thead>
 
@@ -146,6 +155,32 @@ const SaleTarget = () => {
                             </td>
                             <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                               {saleTarget?.sale_target_filup}
+                            </td>
+                            <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
+                              <button
+                                className="ml-[8px]"
+                                onClick={() =>
+                                  handleShowDocumentModal(saleTarget?._id)
+                                }
+                              >
+                                <CiMenuKebab
+                                  size={30}
+                                  className="cursor-pointer text-gray-500 hover:text-gray-300 font-bold"
+                                />
+                              </button>
+                              {supplierDocumentModal == saleTarget?._id && (
+                                <div className=" bg-bgray-200 shadow-xl w-[150px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
+
+                                  <Link
+                                    to={`/sale-target-view/${saleTarget?._id}`}
+                                  >
+                                    {" "}
+                                    <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium">
+                                      <FaEye size={16} /> View
+                                    </button>
+                                  </Link>
+                                </div>
+                              )}
                             </td>
                           </tr>
                         )

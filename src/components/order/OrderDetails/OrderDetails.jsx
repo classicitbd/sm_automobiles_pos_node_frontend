@@ -209,16 +209,6 @@ const OrderDetails = () => {
                             textAlign: "center",
                           }}
                         >
-                          Category
-                        </th>
-                        <th
-                          style={{
-                            width: "10%",
-                            padding: "5px",
-                            color: "rgb(0 0 1 / 70%)",
-                            textAlign: "center",
-                          }}
-                        >
                           Unit Price
                         </th>
                         <th
@@ -239,7 +229,27 @@ const OrderDetails = () => {
                             textAlign: "center",
                           }}
                         >
-                          Amount
+                          Sub Total
+                        </th>
+                        <th
+                          style={{
+                            width: "10%",
+                            padding: "5px",
+                            color: "rgb(0 0 1 / 70%)",
+                            textAlign: "center",
+                          }}
+                        >
+                          Discount(%)
+                        </th>
+                        <th
+                          style={{
+                            width: "10%",
+                            padding: "5px",
+                            color: "rgb(0 0 1 / 70%)",
+                            textAlign: "center",
+                          }}
+                        >
+                          Total Amount
                         </th>
                       </tr>
                     </thead>
@@ -259,16 +269,19 @@ const OrderDetails = () => {
                           </td>
                           <td>{product?.product_id?.product_name}</td>
                           <td style={{ textAlign: "center" }}>
-                            {product?.product_id?.category_id?.category_name}
-                          </td>
-                          <td style={{ textAlign: "center" }}>
                             {product?.product_price}
                           </td>
                           <td style={{ textAlign: "center" }}>
-                            {product?.product_quantity}
+                            {product?.product_quantity}{" "}{product?.product_id?.product_unit_id?.product_unit_name}
                           </td>
                           <td style={{ textAlign: "center" }}>
-                            {product?.product_total_price}
+                            {product?.total_amount}
+                          </td>
+                          <td style={{ textAlign: "center" }}>
+                            {product?.discount_percent}{" "}%
+                          </td>
+                          <td style={{ textAlign: "center" }}>
+                            {product?.grand_total}
                           </td>
                         </tr>
                       ))}
@@ -292,7 +305,7 @@ const OrderDetails = () => {
                     {orderDetail?.order_note}
                   </p>
 
-                  <div
+                  {/* <div
                     className="customer__info"
                     style={{ paddingTop: "10px" }}
                   >
@@ -335,7 +348,7 @@ const OrderDetails = () => {
                         </p>
                       </li>
                     </ul>
-                  </div>
+                  </div> */}
                 </div>
                 <div
                   className="table__space subtotal__amount"

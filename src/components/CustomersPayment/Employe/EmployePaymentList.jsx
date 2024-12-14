@@ -1,6 +1,7 @@
 import TableLoadingSkeleton from "@/components/common/loadingSkeleton/TableLoadingSkeleton";
 import Pagination from "@/components/common/pagination/Pagination";
 import { AuthContext } from "@/context/AuthProvider";
+import { SettingContext } from "@/context/SettingProvider";
 import useDebounced from "@/hooks/useDebounced";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import { BASE_URL } from "@/utils/baseURL";
@@ -14,6 +15,7 @@ const EmployePaymentList = () => {
   const [searchValue, setSearchValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const { user } = useContext(AuthContext);
+  const { settingData } = useContext(SettingContext);
 
   // handle item search function....
   const handleSearchValue = (value) => {
@@ -106,11 +108,20 @@ const EmployePaymentList = () => {
                           Customer Phone
                         </td>
                         <td className="whitespace-nowrap p-4 ">Invice No</td>
-                        <td className="whitespace-nowrap p-4 ">Paid Amount</td>
+                        <td className="whitespace-nowrap p-4 ">Total Amount</td>
+                        <td className="whitespace-nowrap p-4 ">Pay Amount</td>
+                        <td className="whitespace-nowrap p-4 ">
+                          Total Messurement
+                        </td>
                         <td className="whitespace-nowrap p-4 ">
                           Payment Method
                         </td>
-                        <td className="whitespace-nowrap p-4 ">Payment Note</td>
+                        <td className="whitespace-nowrap p-4 ">Bank Name</td>
+                        <td className="whitespace-nowrap p-4 ">Check No</td>
+                        <td className="whitespace-nowrap p-4 ">
+                          withdraw Date
+                        </td>
+                        <td className="whitespace-nowrap p-4 ">Status</td>
                       </tr>
                     </thead>
 
@@ -135,13 +146,29 @@ const EmployePaymentList = () => {
                             {employe?.invoice_number}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                            {employe?.order_id?.grand_total_amount}
+                          </td>
+                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                             {employe?.pay_amount}
+                          </td>
+                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                            {employe?.order_id?.total_messurement_count}{" "}
+                            {settingData?.unit_name}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                             {employe?.payment_method}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {employe?.payment_note}
+                            {employe?.bank_id?.bank_name}
+                          </td>
+                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                            {employe?.check_number}
+                          </td>
+                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                            {employe?.check_withdraw_date}
+                          </td>
+                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 capitalize">
+                            {employe?.check_status}
                           </td>
                         </tr>
                       ))}

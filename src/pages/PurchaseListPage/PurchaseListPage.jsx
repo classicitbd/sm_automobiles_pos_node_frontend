@@ -58,8 +58,6 @@ const PurchaseListPage = () => {
         }
       },
     });
-
-    console.log(purchaseLists);
     
   return (
     <div className="bg-white rounded py-6 px-4 shadow">
