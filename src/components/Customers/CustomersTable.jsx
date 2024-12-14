@@ -71,7 +71,7 @@ const CustomersTable = ({
                         Customer Address
                       </td>
                       <td className="whitespace-nowrap p-4 ">Customer Phone</td>
-                      <td className="whitespace-nowrap p-4 ">Wallet Balance</td>
+                      {/* <td className="whitespace-nowrap p-4 ">Wallet Balance</td> */}
                       <td className="whitespace-nowrap p-4 ">
                         Customer Status
                       </td>
@@ -102,7 +102,7 @@ const CustomersTable = ({
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {customer?.customer_phone}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        {/* <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {customer?.customer_wallet > 0 ? (
                             <span className="text-green-500">
                               {customer?.customer_wallet}
@@ -112,7 +112,7 @@ const CustomersTable = ({
                               {customer?.customer_wallet}
                             </span>
                           )}
-                        </td>
+                        </td> */}
                         <td className="whitespace-nowrap py-1.5 ">
                           {customer?.customer_status === "active" ? (
                             <p className="bg-bgBtnActive text-btnActiveColor px-[10px] py-[4px] rounded-[8px]">

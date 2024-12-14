@@ -21,22 +21,22 @@ const AddCustomer = ({ setCustomerAddModal, user, refetch }) => {
   const handleDataPost = async (data) => {
     setLoading(true);
     try {
-      if (!amountType) {
-        toast.error("Please select amount type", {
-          autoClose: 1000,
-        });
-        setLoading(false);
-        return;
-      }
-      if (amountType === "toReceive") {
-        data.customer_wallet = parseFloat(data?.customer_wallet * -1);
-      }
+      // if (!amountType) {
+      //   toast.error("Please select amount type", {
+      //     autoClose: 1000,
+      //   });
+      //   setLoading(false);
+      //   return;
+      // }
+      // if (amountType === "toReceive") {
+      //   data.customer_wallet = parseFloat(data?.customer_wallet * -1);
+      // }
       const sendData = {
         customer_publisher_id: user?._id,
         customer_name: data?.customer_name,
         customer_phone: data?.customer_phone,
         customer_address: data?.customer_address,
-        customer_wallet: parseFloat(data?.customer_wallet),
+        // customer_wallet: parseFloat(data?.customer_wallet),
         customer_status: data?.customer_status,
       };
 
@@ -156,7 +156,7 @@ const AddCustomer = ({ setCustomerAddModal, user, refetch }) => {
                 <p className="text-red-600">{errors.customer_phone?.message}</p>
               )}
             </div>
-            <div className="mt-4">
+            {/* <div className="mt-4">
               <p>Opening Balance Type :</p>
               <div className="flex items-center gap-1 mt-2">
                 <div
@@ -227,7 +227,7 @@ const AddCustomer = ({ setCustomerAddModal, user, refetch }) => {
                   {errors.customer_wallet?.message}
                 </p>
               )}
-            </div>
+            </div> */}
 
             <div className="mt-4">
               <label className="block text-xs font-medium text-gray-700">
