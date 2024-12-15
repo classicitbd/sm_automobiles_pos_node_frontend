@@ -10,7 +10,7 @@ const ViewSaleTargetPage = () => {
   const { user } = useContext(AuthContext);
   const { settingData } = useContext(SettingContext);
 
-  //Fetch Bank Data
+  //Fetch sale target report Data
   const {
     data: saleTargetData = [],
     isLoading,
@@ -52,6 +52,7 @@ const ViewSaleTargetPage = () => {
           isLoading={isLoading}
           refetch={refetch}
           settingData={settingData}
+          id={id}
         />
       </div>
     </div>

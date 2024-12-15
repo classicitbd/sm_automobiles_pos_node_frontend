@@ -2,6 +2,7 @@ import TableLoadingSkeleton from "@/components/common/loadingSkeleton/TableLoadi
 import Pagination from "@/components/common/pagination/Pagination";
 import { AuthContext } from "@/context/AuthProvider";
 import useDebounced from "@/hooks/useDebounced";
+import useGetAUserDetails from "@/hooks/useGetAUserDetails";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import { BASE_URL } from "@/utils/baseURL";
 import { DateTimeFormat } from "@/utils/dateTimeFormet";
@@ -55,6 +56,10 @@ const SaleTarget = () => {
     },
   });
 
+  //get user data
+  const { data: userData = {}, isLoading: userLoading } =
+    useGetAUserDetails(user?._id);
+
   const [supplierDocumentModal, setSupplierDocumentModal] = useState(null);
 
   const handleShowDocumentModal = (id) => {
@@ -74,36 +79,36 @@ const SaleTarget = () => {
           <div className="flex  justify-between my-5 mx-28">
             <div className="text-[26px] font-bold text-gray-800">
               <p>
-                Employe Name : {targetedSales?.data?.userdetails?.user_name}
+                Employe Name : {userData?.data?.user_name}
               </p>
               <p>
-                Employe Phone : {targetedSales?.data?.userdetails?.user_phone}
+                Employe Phone : {userData?.data?.user_phone}
               </p>
               <p>
-                Employe Salery : {targetedSales?.data?.userdetails?.user_salary}
+                Employe Salery : {userData?.data?.user_salary}
               </p>
             </div>
             <div className="text-[26px] font-bold text-gray-800">
               <p>
                 {" "}
-                Employe Email : {targetedSales?.data?.userdetails?.user_email}
+                Employe Email : {userData?.data?.user_email}
               </p>
               <p>
                 {" "}
                 Employe Address :{" "}
-                {targetedSales?.data?.userdetails?.user_address}
+                {userData?.data?.user_address}
               </p>
             </div>
           </div>
         )}
       </div>
       <>
-        {isLoading === true ? (
+        {isLoading === true || userLoading ? (
           <TableLoadingSkeleton />
         ) : (
           <div>
             <div className="rounded-lg border border-gray-200 mt-6">
-              {targetedSales?.data?.findSaleTarget?.length > 0 ? (
+              {targetedSales?.data?.length > 0 ? (
                 <div className="overflow-x-auto rounded-t-lg">
                   <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                     <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
@@ -128,7 +133,7 @@ const SaleTarget = () => {
                     </thead>
 
                     <tbody className="divide-y divide-gray-200 text-center">
-                      {targetedSales?.data?.findSaleTarget.map(
+                      {targetedSales?.data?.map(
                         (saleTarget, i) => (
                           <tr
                             key={saleTarget?._id}
