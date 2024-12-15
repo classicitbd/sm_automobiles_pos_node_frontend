@@ -37,25 +37,34 @@ const PurchaseListTable = ({
                       Product Name
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
-                      Product Quantity
+                      Product Id
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
-                      Product Buying Price
+                      Invoice Id
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
-                      Product Selling Price
+                      Purchase Quantity
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
-                      Total Sale
+                      Purchase Amount
+                    </th>
+                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                      Total Amount
+                    </th>
+                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                      Paid Amount
+                    </th>
+                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                      Due Amount
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
                       Supplier Name
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
-                      Supplier oppening Blance
+                      Supplier Phone
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
-                      Supplier Walet Amount
+                      Created By
                     </th>
                   </tr>
                 </thead>
@@ -74,25 +83,34 @@ const PurchaseListTable = ({
                         {purchaselist?.product_id?.product_name}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        {purchaselist?.product_id?.product_id}
+                      </td>
+                      <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        {purchaselist?.invoice_id}
+                      </td>
+                      <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                         {purchaselist?.product_quantity}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                         {purchaselist?.product_buying_price}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {purchaselist?.product_selling_price}
+                        {purchaselist?.total_amount}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {purchaselist?.product_id?.total_sale}
+                        {purchaselist?.paid_amount}
+                      </td>
+                      <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        {purchaselist?.due_amount}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                         {purchaselist?.supplier_id?.supplier_name}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {purchaselist?.supplier_id?.oppening_balance}
+                        {purchaselist?.supplier_id?.supplier_phone}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {purchaselist?.supplier_id?.supplier_wallet_amount}
+                        {purchaselist?.stock_publisher_id?.user_name}
                       </td>
                     </tr>
                   ))}

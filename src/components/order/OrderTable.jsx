@@ -3,17 +3,11 @@ import Pagination from "../common/pagination/Pagination";
 import { useEffect, useState } from "react";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import { CiMenuKebab } from "react-icons/ci";
-import { BASE_URL } from "@/utils/baseURL";
-import { toast } from "react-toastify";
-import {
-  FaEye,
-  FaFileDownload,
-} from "react-icons/fa";
+import { FaEye, FaPrint } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import OrderUpDateModal from "./OrderUpDateModal";
-import { CSVLink } from "react-csv";
-import { DateTimeFormat } from "@/utils/dateTimeFormet";
+import ChallanPDF from "@/pages/AllPdfPrintPage/ChallanPDF";
 
 const OrderTable = ({
   setPage,
@@ -63,77 +57,103 @@ const OrderTable = ({
   };
 
   //   handle order status
-  const handleOrderStatus = async (
-    order_status,
-    _id,
-    orders,
-    customer_id,
-    grand_total_amount
-  ) => {
-    try {
-      const sendData = {
-        _id: _id,
-        order_status: order_status,
-        order_updated_by: user?._id,
-        order_status_update: true,
-        customer_id: customer_id,
-        grand_total_amount: grand_total_amount,
-        order_orders: orders?.map((item) => ({
-          order_id: item?.order_id?._id,
-          order_quantity: item?.order_quantity,
-          product_price: item?.product_price,
-          product_buying_price: item?.product_buying_price,
-          product_total_price: item?.product_total_price,
-        })),
-      };
+  // const handleOrderStatus = async (
+  //   order_status,
+  //   _id,
+  //   orders,
+  //   customer_id,
+  //   grand_total_amount
+  // ) => {
+  //   try {
+  //     const sendData = {
+  //       _id: _id,
+  //       order_status: order_status,
+  //       order_updated_by: user?._id,
+  //       order_status_update: true,
+  //       customer_id: customer_id,
+  //       grand_total_amount: grand_total_amount,
+  //       order_orders: orders?.map((item) => ({
+  //         order_id: item?.order_id?._id,
+  //         order_quantity: item?.order_quantity,
+  //         product_price: item?.product_price,
+  //         product_buying_price: item?.product_buying_price,
+  //         product_total_price: item?.product_total_price,
+  //       })),
+  //     };
 
-      const response = await fetch(`${BASE_URL}/order?role_type=order_update`, {
-        method: "PATCH",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(sendData),
-      });
-      const result = await response.json();
-      if (result?.statusCode === 200 && result?.success === true) {
-        toast.success(
-          result?.message ? result?.message : "Status Update successfully",
-          {
-            autoClose: 1000,
-          }
-        );
-        refetch();
-      } else {
-        toast.error(result?.message || "Something went wrong", {
-          autoClose: 1000,
-        });
-        refetch();
-      }
-    } catch (error) {
-      toast.error(error?.message, {
-        autoClose: 1000,
-      });
-      refetch();
-    } finally {
-      refetch();
-    }
-  };
+  //     const response = await fetch(`${BASE_URL}/order?role_type=order_update`, {
+  //       method: "PATCH",
+  //       credentials: "include",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(sendData),
+  //     });
+  //     const result = await response.json();
+  //     if (result?.statusCode === 200 && result?.success === true) {
+  //       toast.success(
+  //         result?.message ? result?.message : "Status Update successfully",
+  //         {
+  //           autoClose: 1000,
+  //         }
+  //       );
+  //       refetch();
+  //     } else {
+  //       toast.error(result?.message || "Something went wrong", {
+  //         autoClose: 1000,
+  //       });
+  //       refetch();
+  //     }
+  //   } catch (error) {
+  //     toast.error(error?.message, {
+  //       autoClose: 1000,
+  //     });
+  //     refetch();
+  //   } finally {
+  //     refetch();
+  //   }
+  // };
 
   // Handle CSV Download data
-  const csvData =
-    orders?.data?.map((order) => ({
-      Date: DateTimeFormat(order?.createdAt),
-      Customer_Name: order?.customer_id?.customer_name,
-      Customer_Phone: order?.customer_id?.customer_phone,
-      Customer_Address: order?.customer_id?.customer_address,
-      Order_ID: order?.order_id,
-      Order_Status: order?.order_status,
-      Sub_Total: order?.sub_total_amount,
-      Discount_Percent: order?.discount_percent_amount,
-      Grand_Total: order?.grand_total_amount,
-      Order_Note: order?.order_note,
-    })) || [];
+  // const csvData =
+  //   orders?.data?.map((order) => ({
+  //     Date: DateTimeFormat(order?.createdAt),
+  //     Customer_Name: order?.customer_id?.customer_name,
+  //     Customer_Phone: order?.customer_id?.customer_phone,
+  //     Customer_Address: order?.customer_id?.customer_address,
+  //     Order_ID: order?.order_id,
+  //     Order_Status: order?.order_status,
+  //     Sub_Total: order?.sub_total_amount,
+  //     Discount_Percent: order?.discount_percent_amount,
+  //     Grand_Total: order?.grand_total_amount,
+  //     Order_Note: order?.order_note,
+  //   })) || [];
+
+  const [challanOpen, setChallanOpen] = useState(false);
+  const [challanOpenData, setChallanOpenData] = useState(false);
+
+  // handle challan print
+  const handleChallanPrint = (order) => {
+    setChallanOpenData(order);
+    setChallanOpen(true);
+    // Reload the page after printing
+    setTimeout(() => {
+      const printContent = document.getElementById("invoicePrintArea");
+      const originalBody = document.body.innerHTML;
+
+      document.body.innerHTML = printContent.innerHTML;
+
+      window.print();
+
+      // Restore the original content after printing
+      document.body.innerHTML = originalBody;
+
+      // Reload the page after printing
+      setTimeout(() => {
+        location.reload();
+      }, 10);
+    }, 100);
+  };
 
   return (
     <>
@@ -164,12 +184,14 @@ const OrderTable = ({
                       <td className="whitespace-nowrap p-4 ">Sub Total</td>
                       <td className="whitespace-nowrap p-4 ">Discount(%)</td>
                       <td className="whitespace-nowrap p-4 ">Grand Total</td>
-                      <td className="whitespace-nowrap p-4 ">Received Amount</td>
+                      <td className="whitespace-nowrap p-4 ">
+                        Received Amount
+                      </td>
                       <td className="whitespace-nowrap p-4 ">Due Amount</td>
                       <td className="whitespace-nowrap p-4 ">Order Status</td>
                       <td className="whitespace-nowrap p-4 ">Created By</td>
                       <td className="whitespace-nowrap p-4 ">Updated By</td>
-                      {/* <td className="whitespace-nowrap p-4 ">Action</td> */}
+                      <td className="whitespace-nowrap p-4 ">Action</td>
                     </tr>
                   </thead>
 
@@ -177,8 +199,9 @@ const OrderTable = ({
                     {orders?.data?.map((order, i) => (
                       <tr
                         key={order?._id}
-                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                          }`}
+                        className={`divide-x divide-gray-200 ${
+                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                        }`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
@@ -216,8 +239,8 @@ const OrderTable = ({
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {order?.order_updated_by?.user_name}
                         </td>
-                        {/* <td className="whitespace-nowrap py-1.5 px-2 text-gray-700 flex items-center justify-between">
-                          <select
+                        <td className="whitespace-nowrap py-1.5 px-2 text-gray-700 flex items-center justify-between">
+                          {/* <select
                             onChange={(e) =>
                               handleOrderStatus(
                                 e.target.value,
@@ -254,7 +277,7 @@ const OrderTable = ({
                             {order?.order_status == "confirmed" && (
                               <option value="returned">Returned</option>
                             )}
-                          </select>
+                          </select> */}
                           <div>
                             <div>
                               <button
@@ -284,11 +307,18 @@ const OrderTable = ({
                                     <FiEdit size={18} />
                                     Edit
                                   </button>
+                                  <button
+                                    className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
+                                    onClick={() => handleChallanPrint(order)}
+                                  >
+                                    <FaPrint size={18} />
+                                    Challan
+                                  </button>
                                 </div>
                               )}
                             </div>
                           </div>
-                        </td> */}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -298,6 +328,13 @@ const OrderTable = ({
               <NoDataFound />
             )}
           </div>
+
+          {/* Challan */}
+          {challanOpen && (
+            <ChallanPDF
+              challanOpenData={challanOpenData}
+            />
+          )}
 
           {totalData > 10 && (
             <Pagination

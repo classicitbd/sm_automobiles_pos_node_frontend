@@ -41,9 +41,14 @@ const StockManageForm = () => {
         product_quantity: data?.product_quantity,
         product_id: product_id,
         supplier_id: supplier_id,
-        total_price: parseInt(
+        total_amount: parseInt(
           data?.product_buying_price * data?.product_quantity
         ),
+        due_amount: parseInt(
+          data?.product_buying_price * data?.product_quantity
+        ),
+        paid_amount: 0,
+        payment_status: "unpaid",
       };
       const response = await fetch(
         `${BASE_URL}/stock_manage?role_type=stock_manage_create`,

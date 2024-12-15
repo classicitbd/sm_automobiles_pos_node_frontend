@@ -61,6 +61,7 @@ import CashInPayment from "@/pages/CheckAndCashInOut/CashInPayment";
 import CheckOutPayment from "@/pages/CheckAndCashInOut/CheckOutPayment";
 import CashOutPayment from "@/pages/CheckAndCashInOut/CashOutPayment";
 import PurchaseListPage from "@/pages/PurchaseListPage/PurchaseListPage";
+import ARPaymentPage from "@/pages/CustomersPage/CustomerPaymentPage/ARPaymentPage";
 
 const route = createBrowserRouter([
   {
@@ -197,6 +198,10 @@ const route = createBrowserRouter([
       {
         path: "/customer-paymentList/:customer_id",
         element: <CustomerPaymentList />,
+      },
+      {
+        path: "/ar-list",
+        element: <ARPaymentPage />,
       },
       {
         path: "/payment",

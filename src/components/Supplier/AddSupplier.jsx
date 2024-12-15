@@ -9,7 +9,6 @@ import { BASE_URL } from "@/utils/baseURL";
 
 const AddSupplier = ({ setOpenAddModal, refetch, user }) => {
   const [loading, setLoading] = useState(false);
-  const [amountType, setAmountType] = useState("");
 
   const {
     register,
@@ -20,22 +19,11 @@ const AddSupplier = ({ setOpenAddModal, refetch, user }) => {
   const handleDataPost = async (data) => {
     setLoading(true);
     try {
-      if(!amountType){
-        toast.error("Please select amount type", {
-          autoClose: 1000,
-        })
-        setLoading(false);
-        return;
-      }
-      if(amountType === "toReceive"){
-        data.supplier_wallet_amount = parseFloat(data?.supplier_wallet_amount * -1)
-      }
       const sendData = {
         supplier_publisher_id: user?._id,
         supplier_name: data?.supplier_name,
         supplier_phone: data?.supplier_phone,
         supplier_address: data?.supplier_address,
-        supplier_wallet_amount: parseFloat(data?.supplier_wallet_amount),
       };
 
       const response = await fetch(
@@ -172,79 +160,6 @@ const AddSupplier = ({ setOpenAddModal, refetch, user }) => {
               {errors.supplier_address && (
                 <p className="text-red-600 text-sm">
                   {errors.supplier_address?.message}
-                </p>
-              )}
-            </div>
-
-            <div className="mt-4">
-              <p>Opening Balance Type :</p>
-              <div className="flex items-center gap-1 mt-2">
-                <div
-                  onClick={() => setAmountType("toPay")}
-                  className="relative"
-                >
-                  <input
-                    className="absolute top-[11px] left-5 peer"
-                    id="toPay"
-                    type="radio"
-                    tabIndex="-1"
-                    name="payment"
-                  />
-                  <label
-                    htmlFor="toPay"
-                    className="w-full rounded-lg border border-gray-200 p-2 text-gray-600 hover:border-black peer-checked:border-yellowColor peer-checked:bg-logoColor flex justify-between items-center"
-                    tabIndex="0"
-                  >
-                    <span className="lg:text-sm text-[10px] pl-10">
-                      To Pay{" "}
-                    </span>
-                  </label>
-                </div>
-
-                <div
-                  onClick={() => setAmountType("toReceive")}
-                  className="relative"
-                >
-                  <input
-                    className="absolute top-[11px] left-5 peer"
-                    id="toReceive"
-                    type="radio"
-                    tabIndex="-1"
-                    name="payment"
-                  />
-                  <label
-                    htmlFor="toReceive"
-                    className="w-full rounded-lg border border-gray-200 p-2 text-gray-600 hover:border-black peer-checked:border-yellowColor peer-checked:bg-logoColor flex justify-between items-center"
-                    tabIndex="0"
-                  >
-                    <span className="lg:text-sm text-[10px] pl-10">
-                      To Receive
-                    </span>
-                  </label>
-                </div>
-              </div>
-
-              <label
-                htmlFor="supplier_wallet_amount"
-                className="block text-xs font-medium text-gray-700 mt-4"
-              >
-                Supplier Wallet Amount
-              </label>
-
-              <input
-                {...register("supplier_wallet_amount", {
-                  required: "Supplier Wallet Amount is required",
-                })}
-                type="number"
-                min={0}
-                id="supplier_wallet_amount"
-                defaultValue={0}
-                placeholder="Enter Supplier Wallet Amount"
-                className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
-              />
-              {errors.supplier_wallet_amount && (
-                <p className="text-red-600 text-sm">
-                  {errors.supplier_wallet_amount?.message}
                 </p>
               )}
             </div>
