@@ -62,6 +62,8 @@ import CheckOutPayment from "@/pages/CheckAndCashInOut/CheckOutPayment";
 import CashOutPayment from "@/pages/CheckAndCashInOut/CashOutPayment";
 import PurchaseListPage from "@/pages/PurchaseListPage/PurchaseListPage";
 import ARPaymentPage from "@/pages/CustomersPage/CustomerPaymentPage/ARPaymentPage";
+import APListTable from "@/components/AP/APListTable";
+import APListPage from "@/pages/AP/APListPage";
 
 const route = createBrowserRouter([
   {
@@ -329,6 +331,10 @@ const route = createBrowserRouter([
       {
         path: "/purchase-list",
         element: <PurchaseListPage />,
+      },
+      {
+        path: "/ap-list",
+        element: <APListPage />,
       },
     ],
   },
