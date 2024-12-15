@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { LoaderOverlay } from "../common/loader/LoderOverley";
 import useGetSelfOrder from "@/hooks/useGetAllSelfOrder";
+import useGetAUserDetails from "@/hooks/useGetAUserDetails";
 
 const StaffPerfomance = () => {
   const { user_id } = useParams();
@@ -43,7 +44,11 @@ const StaffPerfomance = () => {
   const { data: orderData = [], isLoading: orderLoading } =
     useGetSelfOrder(user_id);
 
-  if (isLoading || orderLoading) return <LoaderOverlay />;
+  //get user data
+  const { data: userData = {}, isLoading: userLoading } =
+    useGetAUserDetails(user_id);
+
+  if (isLoading || orderLoading || userLoading) return <LoaderOverlay />;
 
   return (
     <div>
@@ -58,19 +63,19 @@ const StaffPerfomance = () => {
         <>
           <div className="flex items-center justify-between my-5 mx-28">
             <div className="text-[26px] font-bold text-gray-800">
-              <p>User Name: {saleTargetData?.data?.userdetails?.user_name}</p>
+              <p>User Name: {userData?.data?.user_name}</p>
               <p>
                 User Phone:
-                {saleTargetData?.data?.userdetails?.user_phone}
+                {userData?.data?.user_phone}
               </p>
             </div>
             <div className="text-[26px] font-bold text-gray-800">
               <p>
-                User Address: {saleTargetData?.data?.userdetails?.user_address}
+                User Address: {userData?.data?.user_address}
               </p>
               <p>
                 User Status:{" "}
-                {saleTargetData?.data?.userdetails?.user_status == "active"
+                {userData?.data?.user_status == "active"
                   ? "Active"
                   : "In-Active"}
               </p>
@@ -85,7 +90,7 @@ const StaffPerfomance = () => {
                   Order List
                 </p>
               </div>
-              {saleTargetData?.data?.findSaleTarget?.length > 0 ? (
+              {orderData?.data?.length > 0 ? (
                 <div className="overflow-x-auto rounded-t-lg border">
                   <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                     <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
@@ -150,7 +155,7 @@ const StaffPerfomance = () => {
                   Sale Target
                 </p>
               </div>
-              {saleTargetData?.data?.findSaleTarget?.length > 0 ? (
+              {saleTargetData?.data?.length > 0 ? (
                 <div className="overflow-x-auto rounded-t-lg border">
                   <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                     <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
@@ -168,7 +173,7 @@ const StaffPerfomance = () => {
                     </thead>
 
                     <tbody className="divide-y divide-gray-200 text-center">
-                      {saleTargetData?.data?.findSaleTarget?.map(
+                      {saleTargetData?.data?.map(
                         (sale_target, i) => (
                           <tr
                             key={sale_target?._id}

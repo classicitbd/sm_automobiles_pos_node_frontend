@@ -14,8 +14,9 @@ const BankOut = ({
   user,
   isLoading,
   bankOutData,
+  bankLoading,
+  bankData,
 }) => {
-
   const [serialNumber, setSerialNumber] = useState();
   useEffect(() => {
     const newSerialNumber = (page - 1) * limit;
@@ -24,7 +25,7 @@ const BankOut = ({
 
   return (
     <>
-      {isLoading === true ? (
+      {isLoading === true || bankLoading ? (
         <TableLoadingSkeleton />
       ) : (
         <>
@@ -34,19 +35,17 @@ const BankOut = ({
             </h3>
             <div className="flex items-center justify-between my-5 mx-28">
               <div className="text-[26px] font-bold text-gray-800">
-                <p>Bank Name: {bankOutData?.data?.bankDetails?.bank_name}</p>
-                <p>Bank Balance: {bankOutData?.data?.bankDetails?.bank_balance}</p>
+                <p>Bank Name: {bankData?.data?.bank_name}</p>
+                <p>Bank Balance: {bankData?.data?.bank_balance}</p>
               </div>
               <div className="text-[26px] font-bold text-gray-800">
-                <p>Accout Name: {bankOutData?.data?.bankDetails?.
-                  account_name}</p>
-                <p>Accout Number: {bankOutData?.data?.bankDetails?.
-                  account_no}</p>
+                <p>Accout Name: {bankData?.data?.account_name}</p>
+                <p>Accout Number: {bankData?.data?.account_no}</p>
               </div>
             </div>
           </div>
           <div className="rounded-lg border border-gray-200 mt-6">
-            {bankOutData?.data?.bankOutData?.length > 0 ? (
+            {bankOutData?.data?.length > 0 ? (
               <div className="overflow-x-auto rounded-t-lg">
                 <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                   <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
@@ -63,37 +62,33 @@ const BankOut = ({
                   </thead>
 
                   <tbody className="divide-y divide-gray-200 text-center">
-                    {bankOutData?.data?.bankOutData?.map(
-                      (payment, i) => (
-                        <tr
-                          key={payment?._id}
-                          className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                            }`}
-                        >
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {serialNumber + i + 1}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {DateTimeFormat(payment?.createdAt)}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {payment?.
-                              bank_out_title}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {payment?.
-                              bank_out_ref_no}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {payment?.bank_out_amount}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {payment?.
-                              bank_out_publisher_id?.user_name}
-                          </td>
-                        </tr>
-                      )
-                    )}
+                    {bankOutData?.data?.map((payment, i) => (
+                      <tr
+                        key={payment?._id}
+                        className={`divide-x divide-gray-200 ${
+                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                        }`}
+                      >
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {serialNumber + i + 1}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {DateTimeFormat(payment?.createdAt)}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {payment?.bank_out_title}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {payment?.bank_out_ref_no}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {payment?.bank_out_amount}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {payment?.bank_out_publisher_id?.user_name}
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

@@ -1,6 +1,7 @@
 import BankOut from "@/components/Bank/BankOut";
 import { AuthContext } from "@/context/AuthProvider";
 import useDebounced from "@/hooks/useDebounced";
+import useGetBankDetails from "@/hooks/useGetABankDetails";
 import { BASE_URL } from "@/utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
@@ -59,6 +60,10 @@ const BankOutPage = () => {
       }
     },
   })
+//get bank data
+const { data: bankData = {}, isLoading: bankLoading } = useGetBankDetails(id);
+
+
   return (
     <div className="bg-white rounded-lg py-6 px-4 shadow">
       {/* search Bank Account... */}
@@ -79,7 +84,11 @@ const BankOutPage = () => {
         totalData={bankOutData?.totalData}
         refetch={refetch}
         user={user}
-        isLoading={isLoading} />
+        isLoading={isLoading}
+        
+        bankData={bankData}
+        bankLoading={bankLoading}
+        />
     </div>
   );
 };
