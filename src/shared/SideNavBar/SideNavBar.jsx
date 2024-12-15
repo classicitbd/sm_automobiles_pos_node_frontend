@@ -269,13 +269,6 @@ const SideNavBar = () => {
             onClick={closeAllDropdowns} // Close all dropdowns when clicked
           />
           <MenuItem
-            to="/purchase-list"
-            icon={BiTask}
-            label="Purchase List"
-            isActive={isActive("/purchase-list")}
-            onClick={closeAllDropdowns} // Close all dropdowns when clicked
-          />
-          <MenuItem
             to="/income"
             icon={BiTask}
             label="Incomes"
@@ -369,6 +362,12 @@ const SideNavBar = () => {
               onClick={() => toggleChildDropdown("ar")}
             >
               <SubChildMenuItem
+                to="/ar-list"
+                icon={GiReceiveMoney}
+                label="A/R List"
+                isActive={isActive("/ar-list")}
+              />
+              <SubChildMenuItem
                 to="/payment"
                 icon={GiReceiveMoney}
                 label="Payment List"
@@ -393,6 +392,12 @@ const SideNavBar = () => {
               isOpen={activeChildDropdown === "ap"}
               onClick={() => toggleChildDropdown("ap")}
             >
+              <SubChildMenuItem
+                to="/purchase-list"
+                icon={GiPayMoney}
+                label="A/P List"
+                isActive={isActive("/purchase-list")}
+              />
               <SubChildMenuItem
                 to="/paid-payment"
                 icon={GiPayMoney}

@@ -88,9 +88,6 @@ const SupplierTable = ({
                     Supplier Phone
                   </th>
                   <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
-                    Account Balance
-                  </th>
-                  <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
                     Address
                   </th>
                   <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
@@ -118,17 +115,6 @@ const SupplierTable = ({
                     </td>
                     <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                       {supplier?.supplier_phone}
-                    </td>
-                    <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                      {supplier?.supplier_wallet_amount > 0 ? (
-                        <span className="text-green-500">
-                          {supplier?.supplier_wallet_amount}
-                        </span>
-                      ) : (
-                        <span className="text-red-500">
-                          {supplier?.supplier_wallet_amount}
-                        </span>
-                      )}
                     </td>
                     <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                       {supplier?.supplier_address}

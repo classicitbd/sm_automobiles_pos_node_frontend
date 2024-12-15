@@ -9,6 +9,7 @@ import { BASE_URL } from "@/utils/baseURL";
 import useGetBank from "@/hooks/useGetbank";
 import { LoaderOverlay } from "../common/loader/LoderOverley";
 import Select from "react-select";
+import useGetSupplierStockInvoice from "@/hooks/useGetSupplierStockInvoice";
 
 const CreateAPaymentModal = ({
   setUpdatePaymentCreateModal,
@@ -16,7 +17,6 @@ const CreateAPaymentModal = ({
   refetch,
   user,
 }) => {
-
   const paymentOption = [
     { id: 1, value: "cash", label: "Cash" },
     { id: 2, value: "check", label: "Check" },
@@ -25,6 +25,8 @@ const CreateAPaymentModal = ({
   const [loading, setLoading] = useState(false);
   const [payment_bank_id, setPayment_bank_id] = useState(null);
   const [supplier_payment_method, setPaymentBy] = useState("");
+  const [invoice_id, setInvoiceId] = useState("");
+  const [invoiceValue, setInvoiceValue] = useState("");
 
   const {
     register,
@@ -34,6 +36,10 @@ const CreateAPaymentModal = ({
 
   //get bank data
   const { data: bankTypes, isLoading: bankLoading } = useGetBank();
+
+  //get supplierStockInvoice data
+  const { data: supplierStockInvoiceTypes, isLoading: supplierInvoiceLoading } =
+    useGetSupplierStockInvoice(updatePaymentCreateModalValue?._id);
 
   //   create a payment
   const handleDataPost = async (data) => {
@@ -46,10 +52,11 @@ const CreateAPaymentModal = ({
         supplier_payment_title: data?.supplier_payment_title,
         supplier_payment_date: data?.supplier_payment_date,
         supplier_payment_amount: data?.supplier_payment_amount,
+        invoice_id: invoice_id
       };
       if (supplier_payment_method == "check") {
         (sendData.payment_bank_id = payment_bank_id),
-          (sendData.reference_id = data?.reference_id)
+          (sendData.reference_id = data?.reference_id);
       }
       const response = await fetch(
         `${BASE_URL}/supplier_payment?role_type=supplier_payment_create`,
@@ -91,13 +98,13 @@ const CreateAPaymentModal = ({
     }
   };
 
-  if (bankLoading) {
+  if (bankLoading || supplierInvoiceLoading) {
     return <LoaderOverlay />;
   }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="relative overflow-hidden text-left bg-white rounded-lg shadow-xl w-[550px] p-6 max-h-[100vh] overflow-y-auto">
+      <div className="relative overflow-hidden text-left bg-white rounded-lg shadow-xl w-[850px] p-6 max-h-[100vh] overflow-y-auto">
         <div className="flex items-center justify-between">
           <h3
             className="text-[26px] font-bold text-gray-800 capitalize"
@@ -118,7 +125,64 @@ const CreateAPaymentModal = ({
         <hr className="mt-2 mb-4" />
 
         <form onSubmit={handleSubmit(handleDataPost)} className="">
-          <div>
+          {invoiceValue && (
+            <>
+              <div className="mt-5 overflow-x-auto rounded">
+                <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border rounded">
+                  <thead className=" bg-[#fff9ee] ">
+                    <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
+                      <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                        Total Amount
+                      </th>
+                      <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                        Paid Amount
+                      </th>
+                      <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                        Due Amount
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200 text-center ">
+                    <tr
+                      className={`divide-x divide-gray-200 bg-white
+                        `}
+                    >
+                      <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        {invoiceValue?.total_amount}
+                      </td>
+                      <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        {invoiceValue?.paid_amount}
+                      </td>
+                      <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        {invoiceValue?.due_amount}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
+          <div className="mt-3">
+            <label className="block text-xs font-medium text-gray-700 mb-1 mt-2">
+              Invoice ID
+            </label>
+
+            <Select
+              id="invoice_id"
+              name="invoice_id"
+              aria-label="Invoice ID"
+              required
+              isClearable
+              options={supplierStockInvoiceTypes?.data}
+              getOptionLabel={(x) => x?.invoice_id}
+              getOptionValue={(x) => x?.invoice_id}
+              onChange={(selectedOption) => {
+                setInvoiceId(selectedOption?._id);
+                setInvoiceValue(selectedOption);
+              }}
+            />
+          </div>
+          <div className="mt-2">
             <label
               htmlFor=""
               className="block text-xs font-medium text-gray-700"
@@ -198,6 +262,8 @@ const CreateAPaymentModal = ({
                   }
                 },
               })}
+              max={invoiceValue?.due_amount}
+              min={0}
               type="number"
               placeholder="Enter Payment amount"
               className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"

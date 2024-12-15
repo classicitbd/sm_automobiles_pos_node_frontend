@@ -45,6 +45,7 @@ const UnpaidPaymentTable = ({
           supplier_id: paymentInfo?.supplier_id?._id,
           payment_bank_id: paymentInfo?.payment_bank_id?._id,
           supplier_payment_updated_by: user?._id,
+          invoice_id: paymentInfo?.invoice_id?._id
         };
         try {
           const response = await fetch(
@@ -97,6 +98,10 @@ const UnpaidPaymentTable = ({
                     <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
                       <td className="whitespace-nowrap p-4 ">Payment Date</td>
+                      <td className="whitespace-nowrap p-4 ">Invoice Id</td>
+                      <td className="whitespace-nowrap p-4 ">Total Amount</td>
+                      <td className="whitespace-nowrap p-4 ">Paid Amount</td>
+                      <td className="whitespace-nowrap p-4 ">Due Amount</td>
                       <td className="whitespace-nowrap p-4 ">Payment Amount</td>
                       <td className="whitespace-nowrap p-4 ">Payment Method</td>
                       <td className="whitespace-nowrap p-4 ">Supplier name</td>
@@ -125,6 +130,18 @@ const UnpaidPaymentTable = ({
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {paymentInfo?.supplier_payment_date}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {paymentInfo?.invoice_id?.invoice_id}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {paymentInfo?.invoice_id?.total_amount}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {paymentInfo?.invoice_id?.paid_amount}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {paymentInfo?.invoice_id?.due_amount}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {paymentInfo?.supplier_payment_amount}

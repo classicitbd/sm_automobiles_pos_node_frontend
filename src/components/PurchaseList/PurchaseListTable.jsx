@@ -40,16 +40,22 @@ const PurchaseListTable = ({
                       Product Id
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                      Invoice Id
+                    </th>
+                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
                       Purchase Quantity
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
-                      Purchase Price
+                      Purchase Amount
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
-                      Set Selling Price
+                      Total Amount
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
-                      Note
+                      Paid Amount
+                    </th>
+                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                      Due Amount
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
                       Supplier Name
@@ -80,16 +86,22 @@ const PurchaseListTable = ({
                         {purchaselist?.product_id?.product_id}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        {purchaselist?.invoice_id}
+                      </td>
+                      <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                         {purchaselist?.product_quantity}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                         {purchaselist?.product_buying_price}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {purchaselist?.product_selling_price}
+                        {purchaselist?.total_amount}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {purchaselist?.product_note}
+                        {purchaselist?.paid_amount}
+                      </td>
+                      <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        {purchaselist?.due_amount}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                         {purchaselist?.supplier_id?.supplier_name}
