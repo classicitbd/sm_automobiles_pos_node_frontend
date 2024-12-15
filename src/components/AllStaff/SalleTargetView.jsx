@@ -8,6 +8,7 @@ import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import Pagination from "../common/pagination/Pagination";
 import { SettingContext } from "@/context/SettingProvider";
+import useGetAUserDetails from "@/hooks/useGetAUserDetails";
 
 const SalleTargetView = () => {
   const { user_id } = useParams();
@@ -65,6 +66,10 @@ const SalleTargetView = () => {
     },
   });
 
+  //get user data
+  const { data: userData = {}, isLoading: userLoading } =
+    useGetAUserDetails(user_id);
+
   const [serialNumber, setSerialNumber] = useState();
   useEffect(() => {
     const newSerialNumber = (page - 1) * limit;
@@ -83,7 +88,7 @@ const SalleTargetView = () => {
           className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
         />
       </div>
-      {isLoading === true ? (
+      {isLoading === true || userLoading ? (
         <TableLoadingSkeleton />
       ) : (
         <>
@@ -93,20 +98,20 @@ const SalleTargetView = () => {
             </h3>
             <div className="flex items-center justify-between my-5 mx-28">
               <div className="text-[26px] font-bold text-gray-800">
-                <p>User Name: {saleTargetData?.data?.userdetails?.user_name}</p>
+                <p>User Name: {userData?.data?.user_name}</p>
                 <p>
                   User Phone:
-                  {saleTargetData?.data?.userdetails?.user_phone}
+                  {userData?.data?.user_phone}
                 </p>
               </div>
               <div className="text-[26px] font-bold text-gray-800">
                 <p>
                   User Address:{" "}
-                  {saleTargetData?.data?.userdetails?.user_address}
+                  {userData?.data?.user_address}
                 </p>
                 <p>
                   User Status:{" "}
-                  {saleTargetData?.data?.userdetails?.user_status == "active"
+                  {userData?.data?.user_status == "active"
                     ? "Active"
                     : "In-Active"}
                 </p>
@@ -114,7 +119,7 @@ const SalleTargetView = () => {
             </div>
           </div>
           <div className="rounded-lg border border-gray-200 mt-6">
-            {saleTargetData?.data?.findSaleTarget?.length > 0 ? (
+            {saleTargetData?.data?.length > 0 ? (
               <div className="overflow-x-auto rounded-t-lg">
                 <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                   <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
@@ -132,7 +137,7 @@ const SalleTargetView = () => {
                   </thead>
 
                   <tbody className="divide-y divide-gray-200 text-center">
-                    {saleTargetData?.data?.findSaleTarget?.map((sale_target, i) => (
+                    {saleTargetData?.data?.map((sale_target, i) => (
                       <tr
                         key={sale_target?._id}
                         className={`divide-x divide-gray-200 ${

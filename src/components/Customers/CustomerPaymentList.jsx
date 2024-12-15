@@ -9,6 +9,7 @@ import Pagination from "../common/pagination/Pagination";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import { DateTimeFormat } from "@/utils/dateTimeFormet";
+import useGetACustomerDetails from "@/hooks/useGetACustomerDetails";
 
 const CustomerPaymentList = () => {
   const { customer_id } = useParams();
@@ -65,6 +66,9 @@ const CustomerPaymentList = () => {
     },
   });
 
+  //get customer data
+  const { data: customerData = {}, isLoading: customerLoading } = useGetACustomerDetails(customer_id);
+
   const [serialNumber, setSerialNumber] = useState();
   useEffect(() => {
     const newSerialNumber = (page - 1) * limit;
@@ -83,7 +87,7 @@ const CustomerPaymentList = () => {
           className='w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200'
         />
       </div>
-      {isLoading === true ? (
+      {isLoading === true || customerLoading ? (
         <TableLoadingSkeleton />
       ) : (
         <>
@@ -93,17 +97,17 @@ const CustomerPaymentList = () => {
             </h3>
             <div className="flex items-center justify-between my-5 mx-28">
               <div className="text-[26px] font-bold text-gray-800">
-                <p>Customer Name: {customerPayments?.data?.customerDetails?.customer_name}</p>
-                <p>Customer Phone: {customerPayments?.data?.customerDetails?.customer_phone}</p>
+                <p>Customer Name: {customerData?.data?.customer_name}</p>
+                <p>Customer Phone: {customerData?.data?.customer_phone}</p>
               </div>
               <div className="text-[26px] font-bold text-gray-800">
-                <p>Customer Address: {customerPayments?.data?.customerDetails?.customer_address}</p>
-                {/* <p>Wallet Amount: {customerPayments?.data?.customerDetails?.customer_wallet}</p> */}
+                <p>Customer Address: {customerData?.data?.customer_address}</p>
+                {/* <p>Wallet Amount: {customerData?.data?.customer_wallet}</p> */}
               </div>
             </div>
           </div>
           <div className="rounded-lg border border-gray-200 mt-6">
-            {customerPayments?.data?.checkDetails?.length > 0 ? (
+            {customerPayments?.data?.length > 0 ? (
               <div className="overflow-x-auto rounded-t-lg">
                 <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                   <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
@@ -122,7 +126,7 @@ const CustomerPaymentList = () => {
                   </thead>
 
                   <tbody className="divide-y divide-gray-200 text-center">
-                    {customerPayments?.data?.checkDetails?.map(
+                    {customerPayments?.data?.map(
                       (payment, i) => (
                         <tr
                           key={payment?._id}

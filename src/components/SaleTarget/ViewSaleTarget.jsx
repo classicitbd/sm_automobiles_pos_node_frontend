@@ -1,12 +1,48 @@
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "@/utils/baseURL";
 
 const ViewSaleTarget = ({
   saleTargetData,
   isLoading,
   refetch,
   settingData,
+  id
 }) => {
+
+  //Fetch saleTargetDetails Data
+  const {
+    data: saleTargetDetails = []
+  } = useQuery({
+    queryKey: [
+      `/api/v1/sale_target/a_sale_target_details/${id}?role_type=a_sale_target_details_show`,
+    ],
+    queryFn: async () => {
+      try {
+        const res = await fetch(
+          `${BASE_URL}/sale_target/a_sale_target_details/${id}?role_type=a_sale_target_details_show`,
+          {
+            credentials: "include",
+          }
+        );
+
+        if (!res.ok) {
+          const errorData = await res.text();
+          throw new Error(
+            `Error: ${res.status} ${res.statusText} - ${errorData}`
+          );
+        }
+
+        const data = await res.json();
+        return data;
+      } catch (error) {
+        console.error("Fetch error:", error);
+        throw error;
+      }
+    },
+  });
+
   return (
     <>
       {isLoading === true ? (
@@ -19,18 +55,18 @@ const ViewSaleTarget = ({
             </h3>
             <div className="flex items-center justify-between my-5 mx-28">
               <div className="text-[26px] font-bold text-gray-800">
-                <p>User Name: {saleTargetData?.data?.saleTargetDetails?.user_id?.user_name}</p>
+                <p>User Name: {saleTargetDetails?.data?.user_id?.user_name}</p>
                 <p>
                   User Phone:
-                  {saleTargetData?.data?.saleTargetDetails?.user_id?.user_phone}
+                  {saleTargetDetails?.data?.user_id?.user_phone}
                 </p>
                 <p>
                   User Address:{" "}
-                  {saleTargetData?.data?.saleTargetDetails?.user_id?.user_address}
+                  {saleTargetDetails?.data?.user_id?.user_address}
                 </p>
                 <p>
                   User Status:{" "}
-                  {saleTargetData?.data?.saleTargetDetails?.user_id?.user_status == "active"
+                  {saleTargetDetails?.data?.user_id?.user_status == "active"
                     ? "Active"
                     : "In-Active"}
                 </p>
@@ -38,33 +74,33 @@ const ViewSaleTarget = ({
               <div className="text-[26px] font-bold text-gray-800">
                 <p>
                   Start Date:{" "}
-                  {saleTargetData?.data?.saleTargetDetails?.sale_target_start_date}
+                  {saleTargetDetails?.data?.sale_target_start_date}
                 </p>
                 <p>
                   End Date:{" "}
-                  {saleTargetData?.data?.saleTargetDetails?.sale_target_end_date}
+                  {saleTargetDetails?.data?.sale_target_end_date}
                 </p>
                 <p>
                   Total Target:{" "}
-                  {saleTargetData?.data?.saleTargetDetails?.sale_target}{" "}{settingData?.unit_name}
+                  {saleTargetDetails?.data?.sale_target}{" "}{settingData?.unit_name}
                 </p>
                 <p>
                   Get Amount:{" "}
-                  {saleTargetData?.data?.saleTargetDetails?.sale_target_amount}
+                  {saleTargetDetails?.data?.sale_target_amount}
                 </p>
                 <p>
                   Fill Up:{" "}
-                  {saleTargetData?.data?.saleTargetDetails?.sale_target_filup}{" "}{settingData?.unit_name}
+                  {saleTargetDetails?.data?.sale_target_filup}{" "}{settingData?.unit_name}
                 </p>
                 <p>
                   Target Status:{" "}
-                  {saleTargetData?.data?.saleTargetDetails?.sale_target_success == true ? "Success" : "Pending"}
+                  {saleTargetDetails?.data?.sale_target_success == true ? "Success" : "Pending"}
                 </p>
               </div>
             </div>
           </div>
           <div className="rounded-lg border border-gray-200 mt-6">
-            {saleTargetData?.data?.findOrderDetails?.length > 0 ? (
+            {saleTargetData?.data?.length > 0 ? (
               <div className="overflow-x-auto rounded-t-lg">
                 <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                   <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
@@ -81,7 +117,7 @@ const ViewSaleTarget = ({
                   </thead>
 
                   <tbody className="divide-y divide-gray-200 text-center">
-                    {saleTargetData?.data?.findOrderDetails?.map(
+                    {saleTargetData?.data?.map(
                       (sale_target, i) => (
                         <tr
                           key={sale_target?._id}
