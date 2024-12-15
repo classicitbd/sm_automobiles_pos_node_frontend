@@ -393,9 +393,15 @@ const SideNavBar = () => {
               onClick={() => toggleChildDropdown("ap")}
             >
               <SubChildMenuItem
-                to="/purchase-list"
+                to="/ap-list"
                 icon={GiPayMoney}
                 label="A/P List"
+                isActive={isActive("/ap-list")}
+              />
+              <SubChildMenuItem
+                to="/purchase-list"
+                icon={GiPayMoney}
+                label="All Payment List"
                 isActive={isActive("/purchase-list")}
               />
               <SubChildMenuItem
