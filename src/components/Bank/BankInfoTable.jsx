@@ -90,7 +90,7 @@ const BankInfoTable = ({
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-1.5 font-medium text-blue-600">
                           {bank?.bank_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
@@ -114,7 +114,7 @@ const BankInfoTable = ({
                           {bank?.bank_publisher_id?.user_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {bank?.bank_updated_by?.user_name}
+                          {bank?.bank_updated_by?.user_name ? bank?.bank_updated_by?.user_name:'--'}
                         </td>
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                           <button

@@ -70,7 +70,7 @@ const CategoryTable = ({
                           {category?.category_publisher_id?.user_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {category?.category_updated_by?.user_name}
+                          {category?.category_updated_by?.user_name ? category?.category_updated_by?.user_name:'--'}
                         </td>
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                           <button

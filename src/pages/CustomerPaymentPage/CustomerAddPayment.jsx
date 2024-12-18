@@ -2,12 +2,12 @@ import AddCustomersPayment from "@/components/CustomersPayment/AddCustomersPayme
 
 const CustomerAddPayment = () => {
   return (
-    <div className="bg-white rounded-lg py-6 px-4 shadow mx-auto">
-      <div className="flex justify-between mt-6">
+    <div className="">
+   
         <div>
-          <h1 className="text-2xl">Add Customers Payment</h1>
+          <h1 className="text-2xl text-center">Add Customers Payment</h1>
         </div>
-      </div>
+     
 
       {/*Customers Payment Create  modal */}
       <AddCustomersPayment />

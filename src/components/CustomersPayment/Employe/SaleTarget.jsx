@@ -69,37 +69,33 @@ const SaleTarget = () => {
   return (
     <>
       <div className="mt-6">
-        <div>
-          <h1 className="text-2xl">Sale Target</h1>
+        <div className="mt-4">
+          <h3 className="sm:text-[26px] sm:font-medium text-gray-800 uppercase">
+           Sale Target
+          </h3>
         </div>
 
         {isLoading === true ? (
           <p>Loading.....</p>
         ) : (
-          <div className="flex  justify-between my-5 mx-28">
-            <div className="text-[26px] font-bold text-gray-800">
-              <p>
-                Employe Name : {userData?.data?.user_name}
-              </p>
-              <p>
-                Employe Phone : {userData?.data?.user_phone}
-              </p>
-              <p>
-                Employe Salery : {userData?.data?.user_salary}
-              </p>
+            <div className="flex items-center justify-between p-5  bg-gray-50 shadow-md mt-4 flex-wrap">
+              <div className="font-bold">
+                <p className="sm:text-[20px] text-bgray-700">User Name : {userData?.data?.user_name}</p>
+                <p className="sm:text-[20px] text-bgray-700">
+                  User Phone : {userData?.data?.user_phone}
+                </p>
+              </div>
+              <div className="font-bold text-bgray-700">
+                <p className="sm:text-[20px] text-bgray-700">
+                  User Address : {userData?.data?.user_address}
+                </p>
+                <p className="sm:text-[20px] text-bgray-700">
+                  User Status : {userData?.data?.user_status == "active"
+                    ? <span className="text-green-600 sm:text-[20px] font-bold"> Active </span>
+                    : <span className="text-red-600 sm:text-[20px] font-bold"> In-Active </span>}
+                </p>
+              </div>
             </div>
-            <div className="text-[26px] font-bold text-gray-800">
-              <p>
-                {" "}
-                Employe Email : {userData?.data?.user_email}
-              </p>
-              <p>
-                {" "}
-                Employe Address :{" "}
-                {userData?.data?.user_address}
-              </p>
-            </div>
-          </div>
         )}
       </div>
       <>
@@ -144,10 +140,10 @@ const SaleTarget = () => {
                             <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                               {serialNumber + i + 1}
                             </td>
-                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                            <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                               {saleTarget?.sale_target}
                             </td>
-                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                            <td className="whitespace-nowrap py-1.5 font-medium text-purple">
                               {saleTarget?.sale_target_amount}
                             </td>
                             <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
@@ -159,7 +155,7 @@ const SaleTarget = () => {
                               {DateTimeFormat(saleTarget?.sale_target_end_date)}
                             </td>
                             <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                              {saleTarget?.sale_target_filup}
+                              {saleTarget?.sale_target_filup === saleTarget?.sale_target ? <span className="text-green-600">{saleTarget?.sale_target_filup}</span> : <span className="text-red-600">{saleTarget?.sale_target_filup}</span>}
                             </td>
                             <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                               <button

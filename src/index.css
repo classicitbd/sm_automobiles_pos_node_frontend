@@ -28,6 +28,7 @@
   p {
     @apply text-gray-800;
   }
+ 
 
   :root {
     --background: 0 0% 100%;

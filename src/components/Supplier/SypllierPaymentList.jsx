@@ -8,6 +8,7 @@ import Pagination from "../common/pagination/Pagination";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import { DateTimeFormat } from "@/utils/dateTimeFormet";
+import SupplierPaymentListChart from "./SupplierPaymentListChart";
 
 const SypllierPaymentList = () => {
   const { supplier_id } = useParams();
@@ -34,7 +35,7 @@ const SypllierPaymentList = () => {
   const {
     data: supplierPayments = [],
     isLoading,
-    refetch,
+
   } = useQuery({
     queryKey: [
       `/api/v1/supplier_payment?supplier_id=${supplier_id}&page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=supplier_payment_history_show`,
@@ -71,37 +72,51 @@ const SypllierPaymentList = () => {
   }, [page, limit]);
 
   return (
-    <>
-      {/* search Supplier Payment History... */}
-      <div className='mt-3'>
-        <input
-          type='text'
-          defaultValue={searchTerm}
-          onChange={(e) => handleSearchValue(e.target.value)}
-          placeholder='Search Ref Id...'
-          className='w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200'
-        />
+  <>
+      <div className="mt-4">
+        <h3 className="sm:text-[26px] sm:font-medium text-gray-800 uppercase">
+          Supplier Payment List
+        </h3>
       </div>
-      {isLoading === true ? (
-        <TableLoadingSkeleton />
-      ) : (
-        <>
-          <div className=" mt-4">
-            <h3 className="text-[26px] font-bold text-gray-800 capitalize">
-              Supplier Payment List
-            </h3>
-            <div className="flex items-center justify-between my-5 mx-28">
-              <div className="text-[26px] font-bold text-gray-800">
-                <p>Supplier Name: {supplierPayments?.data?.supplierDetails?.supplier_name}</p>
-                <p>Supplier Phone: {supplierPayments?.data?.supplierDetails?.supplier_phone}</p>
-              </div>
-              <div className="text-[26px] font-bold text-gray-800">
-                <p>Supplier Address: {supplierPayments?.data?.supplierDetails?.supplier_address}</p>
-                <p>Supplier Wallet Ammount: {supplierPayments?.data?.supplierDetails?.supplier_wallet_amount}</p>
-              </div>
-            </div>
-          </div>
-          <div className="rounded-lg border border-gray-200 mt-6">
+      <div className="flex items-center justify-between p-5  bg-gray-50 shadow-md mt-4 flex-wrap">
+        <div className="font-bold">
+          <p className="sm:text-[20px] text-bgray-700"> Supplier Name : {supplierPayments?.data?.supplierDetails?.supplier_name}</p>
+          <p className="sm:text-[20px] text-bgray-700">
+            Supplier Phone : {supplierPayments?.data?.supplierDetails?.supplier_phone}
+          </p>
+        </div>
+        <div className="font-bold text-bgray-700">
+          <p className="sm:text-[20px] text-bgray-700">
+            Supplier Address : {supplierPayments?.data?.supplierDetails?.supplier_address}
+          </p>
+          <p className="sm:text-[20px] text-bgray-700">
+            Supplier Wallet Ammount : {supplierPayments?.data?.supplierDetails?.supplier_wallet_amount ? <span className="sm:text-[20px] text-green-600">{supplierPayments?.data?.supplierDetails?.supplier_wallet_amount}</span> : <span className="sm:text-[20px] text-red-600">0</span>}
+          </p>
+        </div>
+      </div>
+
+
+      <div className="bg-gray-50  p-5 shadow-md mt-8">
+
+        <SupplierPaymentListChart />
+      </div>
+
+      <div className="bg-white rounded py-6 px-4 shadow mt-8">
+        <div className='mt-3 flex justify-end'>
+          <input
+            type='text'
+            defaultValue={searchTerm}
+            onChange={(e) => handleSearchValue(e.target.value)}
+            placeholder='Search Ref Id...'
+            className='w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200'
+          />
+        </div>
+
+
+        {
+          isLoading === true ? (
+            <TableLoadingSkeleton />
+          ) : <div className="rounded-lg border border-gray-200 mt-6">
             {supplierPayments?.data?.paymentHistory?.length > 0 ? (
               <div className="overflow-x-auto rounded-t-lg">
                 <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
@@ -137,17 +152,17 @@ const SypllierPaymentList = () => {
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                             {DateTimeFormat(payment?.createdAt)}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                             {payment?.supplier_payment_amount}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {payment?.payment_bank_id?.bank_name}
+                          <td className="whitespace-nowrap py-1.5 font-medium text-blue-600">
+                            {payment?.payment_bank_id?.bank_name ? payment?.payment_bank_id?.bank_name :'--'}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {payment?.reference_id}
+                            {payment?.reference_id ? payment?.reference_id:'--'}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {payment?.supplier_payment_status}
+                            {payment?.supplier_payment_status === 'paid' ? <span className="text-green-600">{payment?.supplier_payment_status}</span> : <span className="text-yellow-600">{payment?.supplier_payment_status}</span>}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                             {payment?.supplier_payment_publisher_id?.user_name}
@@ -161,18 +176,23 @@ const SypllierPaymentList = () => {
             ) : (
               <NoDataFound />
             )}
-            <Pagination
-              setPage={setPage}
-              setLimit={setLimit}
-              totalData={supplierPayments?.totalData}
-              page={page}
-              limit={limit}
-            />
+
           </div>
-        </>
-      )}
+        }
+
+
+        <Pagination
+          setPage={setPage}
+          setLimit={setLimit}
+          totalData={supplierPayments?.totalData}
+          page={page}
+          limit={limit}
+        />
+      </div>
+
+
     </>
-  );
+ );
 };
 
 export default SypllierPaymentList;

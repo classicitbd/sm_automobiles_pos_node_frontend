@@ -72,7 +72,7 @@ const ProductUnitTable = ({
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {product_unit?.product_unit_name}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 ">
+                        <td className="whitespace-nowrap py-1.5 text-green-600">
                           {"1"} {product_unit?.product_unit_name}
                           {" = "}
                           {product_unit?.product_unit_value}{" "}
@@ -82,7 +82,7 @@ const ProductUnitTable = ({
                           {product_unit?.product_unit_publisher_id?.user_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {product_unit?.product_unit_updated_by?.user_name}
+                          {product_unit?.product_unit_updated_by?.user_name ? product_unit?.product_unit_updated_by?.user_name:'--'}
                         </td>
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                           <button

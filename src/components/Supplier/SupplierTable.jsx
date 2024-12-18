@@ -28,7 +28,7 @@ const SupplierTable = ({
     useState(false); //create payment modal
   const [updatePaymentCreateModalValue, setUpdatePaymentCreateModalValue] =
     useState({}); //create payment modal data
-    // handle document modal open for edit view
+  // handle document modal open for edit view
   const [supplierDocumentModal, setSupplierDocumentModal] = useState(null);
 
   const handleShowDocumentModal = (id) => {
@@ -103,9 +103,8 @@ const SupplierTable = ({
                 {allSupplier?.data?.map((supplier, i) => (
                   <tr
                     key={supplier?._id}
-                    className={`divide-x divide-gray-200 ${
-                      i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                    }`}
+                    className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                      }`}
                   >
                     <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                       {serialNumber + i + 1}
@@ -123,7 +122,7 @@ const SupplierTable = ({
                       {supplier?.supplier_publisher_id?.user_name}
                     </td>
                     <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                      {supplier?.supplier_updated_by?.user_name}
+                      {supplier?.supplier_updated_by?.user_name ? supplier?.supplier_updated_by?.user_name:'--'}
                     </td>
                     <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                       <button
@@ -159,12 +158,7 @@ const SupplierTable = ({
                               <FaEye size={18} /> View Payment List
                             </button>
                           </Link>
-                          <Link to={`/supplier-moneylist/${supplier?._id}`}>
-                            {" "}
-                            <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium">
-                              <FaEye size={18} /> View Add Money List
-                            </button>
-                          </Link>
+
                           <Link
                             to={`/stock_manage/supplier_stock/${supplier?._id}`}
                           >

@@ -10,6 +10,7 @@ import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import { DateTimeFormat } from "@/utils/dateTimeFormet";
 import useGetACustomerDetails from "@/hooks/useGetACustomerDetails";
+import CustomerPaymentlistChart from "./CustomerPaymentlistChart";
 
 const CustomerPaymentList = () => {
   const { customer_id } = useParams();
@@ -77,95 +78,110 @@ const CustomerPaymentList = () => {
 
   return (
     <>
-      {/* search Supplier Payment History... */}
-      <div className='mt-3'>
-        <input
-          type='text'
-          defaultValue={searchTerm}
-          onChange={(e) => handleSearchValue(e.target.value)}
-          placeholder='Search Ref Id...'
-          className='w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200'
-        />
+    <div className="mt-4">
+        <h3 className="sm:text-[26px] sm:font-medium text-gray-800 uppercase">
+          Customer Payment List
+        </h3>
       </div>
-      {isLoading === true || customerLoading ? (
-        <TableLoadingSkeleton />
-      ) : (
-        <>
-          <div className=" mt-4">
-            <h3 className="text-[26px] font-bold text-gray-800 capitalize">
-              Customer Payment List
-            </h3>
-            <div className="flex items-center justify-between my-5 mx-28">
-              <div className="text-[26px] font-bold text-gray-800">
-                <p>Customer Name: {customerData?.data?.customer_name}</p>
-                <p>Customer Phone: {customerData?.data?.customer_phone}</p>
-              </div>
-              <div className="text-[26px] font-bold text-gray-800">
-                <p>Customer Address: {customerData?.data?.customer_address}</p>
-                {/* <p>Wallet Amount: {customerData?.data?.customer_wallet}</p> */}
-              </div>
-            </div>
-          </div>
-          <div className="rounded-lg border border-gray-200 mt-6">
-            {customerPayments?.data?.length > 0 ? (
-              <div className="overflow-x-auto rounded-t-lg">
-                <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                  <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                    <tr className="divide-x  divide-gray-300  font-semibold text-center text-gray-900">
-                      <td className="whitespace-nowrap p-4 ">SL No</td>
-                      <td className="whitespace-nowrap p-4 ">Invoice No</td>
-                      <td className="whitespace-nowrap p-4 ">Payment Date</td>
-                      <td className="whitespace-nowrap p-4 ">Payment Amount</td>
-                      <td className="whitespace-nowrap p-4 ">Bank Name</td>
-                      <td className="whitespace-nowrap p-4 ">
-                        Payment Reference ID
-                      </td>
-                      <td className="whitespace-nowrap p-4 ">Payment Status</td>
-                      <td className="whitespace-nowrap p-4 ">Created By</td>
-                    </tr>
-                  </thead>
+      <div className="flex justify-between p-5  bg-gray-50 shadow-md mt-4 flex-wrap">
+        <div className="font-bold">
+          <p className="sm:text-[20px] text-bgray-700">  Customer Name : {customerData?.data?.customer_name}</p>
+          <p className="sm:text-[20px] text-bgray-700">
+            Customer Phone : {customerData?.data?.customer_phone}
+          </p>
+        </div>
+        <div className="font-bold text-bgray-700">
+          <p className="sm:text-[20px] text-bgray-700">
+            Customer Address : {customerData?.data?.customer_address}
+          </p>
+          {/* <p className="sm:text-[20px] text-bgray-700">
+            Wallet Amount: {customerData?.data?.customer_wallet}
+          </p> */}
+        </div>
+      </div>
 
-                  <tbody className="divide-y divide-gray-200 text-center">
-                    {customerPayments?.data?.map(
-                      (payment, i) => (
-                        <tr
-                          key={payment?._id}
-                          className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                            }`}
-                        >
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {serialNumber + i + 1}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {payment?.invoice_number}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {DateTimeFormat(payment?.createdAt)}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {payment?.pay_amount}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {payment?.bank_id?.bank_name}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {payment?.check_number}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {payment?.check_status}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {payment?.check_publisher_id?.user_name}
-                          </td>
-                        </tr>
-                      )
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <NoDataFound />
-            )}
+      <div className="bg-gray-50  p-5 shadow-md mt-8">
+
+        <CustomerPaymentlistChart />
+      </div>
+
+      <div className="bg-white rounded-lg py-3 px-4 shadow mt-8">
+        <div className='mt-3 flex justify-end'>
+          <input
+            type='text'
+            defaultValue={searchTerm}
+            onChange={(e) => handleSearchValue(e.target.value)}
+            placeholder='Search Ref Id...'
+            className='w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200'
+          />
+        </div>
+        {isLoading === true || customerLoading ? (
+          <TableLoadingSkeleton />
+        ) : (
+          <>
+
+            <div className="rounded-lg border border-gray-200 mt-3">
+              {customerPayments?.data?.length > 0 ? (
+                <div className="overflow-x-auto rounded-t-lg">
+                  <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+                    <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
+                      <tr className="divide-x  divide-gray-300  font-semibold text-center text-gray-900">
+                        <td className="whitespace-nowrap p-4 ">SL No</td>
+                        <td className="whitespace-nowrap p-4 ">Invoice No</td>
+                        <td className="whitespace-nowrap p-4 ">Payment Date</td>
+                        <td className="whitespace-nowrap p-4 ">Payment Amount</td>
+                        <td className="whitespace-nowrap p-4 ">Bank Name</td>
+                        <td className="whitespace-nowrap p-4 ">
+                          Payment Reference ID
+                        </td>
+                        <td className="whitespace-nowrap p-4 ">Payment Status</td>
+                        <td className="whitespace-nowrap p-4 ">Created By</td>
+                      </tr>
+                    </thead>
+
+                    <tbody className="divide-y divide-gray-200 text-center">
+                      {customerPayments?.data?.map(
+                        (payment, i) => (
+                          <tr
+                            key={payment?._id}
+                            className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                              }`}
+                          >
+                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                              {serialNumber + i + 1}
+                            </td>
+                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                              {payment?.invoice_number}
+                            </td>
+                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                              {DateTimeFormat(payment?.createdAt)}
+                            </td>
+                            <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                              {payment?.pay_amount}
+                            </td>
+                            <td className="whitespace-nowrap py-1.5 font-medium text-blue-600">
+                              {payment?.bank_id?.bank_name ? payment?.bank_id?.bank_name:'--'}
+                            </td>
+                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                              {payment?.check_number ? payment?.check_number:'--'}
+                            </td>
+                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                              {payment?.check_status === 'approved' ? <span className="text-green-600">{payment?.check_status}</span> : <span className="text-red-600">{payment?.check_status}</span>}
+                            </td>
+                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                              {payment?.check_publisher_id?.user_name}
+                            </td>
+                          </tr>
+                        )
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <NoDataFound />
+              )}
+
+            </div>
             <Pagination
               setPage={setPage}
               setLimit={setLimit}
@@ -173,9 +189,10 @@ const CustomerPaymentList = () => {
               page={page}
               limit={limit}
             />
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
+
     </>
   );
 };

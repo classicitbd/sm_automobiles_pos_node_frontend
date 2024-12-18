@@ -148,10 +148,10 @@ const Customers = () => {
                             {customer?.customer_address}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {customer?.customer_wallet}
+                            {customer?.customer_wallet > 0 ? <span className="text-green-600">{customer?.customer_wallet}</span> : <span className="text-red-600">{customer?.customer_wallet}</span>}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {customer?.customer_status}
+                            {customer?.customer_status === 'active' ? <span className="text-green-600">{customer?.customer_status}</span> : <span className="text-red-600">{customer?.customer_status}</span>}
                           </td>
                           <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                             <button

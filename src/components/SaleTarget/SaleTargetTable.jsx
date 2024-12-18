@@ -26,7 +26,7 @@ const SaleTargetTable = ({
 
   //handle Update Function..
 
-  const handlesaleTargetUpdateModal = (saleTarget) => {
+  const handleSaleTargetUpdateModal = (saleTarget) => {
     setSaleTargetUpdateData(saleTarget);
     setSaleTargetUpdateModal(true);
   };
@@ -110,25 +110,29 @@ const SaleTargetTable = ({
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {sale_target?.sale_target_end_date}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                           {sale_target?.sale_target} {settingData?.unit_name}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {sale_target?.sale_target_filup}
+                        <td className="whitespace-nowrap py-1.5 font-medium ">
+                          {
+                            sale_target?.sale_target_filup >= sale_target?.sale_target ? <span className="text-green-600"> {sale_target?.sale_target_filup}{" "}
+                              {settingData?.unit_name}</span> : <span className="text-red-600"> {sale_target?.sale_target_filup}{" "}
+                              {settingData?.unit_name}</span>
+                          }
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                           {sale_target?.sale_target_amount}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {sale_target?.sale_target_success == true
-                            ? "Success"
-                            : "Pending"}
+                            ? <span className="text-green-600">Success</span>
+                            : <span className="text-blue-600">Pending</span>}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {sale_target?.sale_target_publisher_id?.user_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {sale_target?.sale_target_updated_by?.user_name}
+                          {sale_target?.sale_target_updated_by?.user_name ? sale_target?.sale_target_updated_by?.user_name :'--'}
                         </td>
                         {/* <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                          
@@ -152,7 +156,7 @@ const SaleTargetTable = ({
                               <button
                                 className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
                                 onClick={() =>
-                                  handlesaleTargetUpdateModal(sale_target)
+                                  handleSaleTargetUpdateModal(sale_target)
                                 }
                               >
                                 <FiEdit size={18} />

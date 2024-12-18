@@ -70,7 +70,7 @@ const BrandTable = ({
                       {brand?.brand_publisher_id?.user_name}
                     </td>
                     <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                    {brand?.brand_updated_by?.user_name}
+                        {brand?.brand_updated_by?.user_name ? brand?.brand_updated_by?.user_name:'--'}
                     </td>
                         <td className='whitespace-nowrap py-1.5 px-2 text-gray-700'>
 

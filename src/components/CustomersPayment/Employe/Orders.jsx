@@ -110,7 +110,7 @@ const Orders = () => {
                         <td className="whitespace-nowrap p-4 ">
                           Received Amount
                         </td>
-                        <td className="whitespace-nowrap p-4 ">Due Amount</td>
+                        <td className="whitespace-nowrap p-4 text-red-600">Due Amount</td>
                         <td className="whitespace-nowrap p-4 ">Order Status</td>
 
                         {/* <td className="whitespace-nowrap p-4 ">Action</td> */}
@@ -137,23 +137,33 @@ const Orders = () => {
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                             {order?.order_id}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                             {order?.sub_total_amount}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {order?.discount_percent_amount}%
+                          <td className="whitespace-nowrap py-1.5 font-medium text-purple">
+                            {order?.discount_percent_amount} %
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                             {order?.grand_total_amount}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {order?.received_amount}
+                          
+
+                            {
+                              order?.received_amount === order?.sub_total_amount ? (
+                                <span className="text-green-600">{order?.received_amount}</span>
+                              ) : order?.received_amount > order?.sub_total_amount ? (
+                                <span className="text-blue-600">{order?.received_amount}</span>
+                              ) : (
+                                <span className="text-yellow-600">{order?.received_amount}</span>
+                              )
+                            }
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          <td className="whitespace-nowrap py-1.5 font-medium text-red-600">
                             {order?.due_amount}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 uppercase">
-                            {order?.order_status}
+                            {order?.order_status === 'management' ? <span className="text-red-600">{order?.order_status}</span> : <span className="text-green-600">{order?.order_status}</span>}
                           </td>
                         </tr>
                       ))}

@@ -119,7 +119,7 @@ const EmployePaymentList = () => {
                         <td className="whitespace-nowrap p-4 ">Bank Name</td>
                         <td className="whitespace-nowrap p-4 ">Check No</td>
                         <td className="whitespace-nowrap p-4 ">
-                          withdraw Date
+                          Withdraw Date
                         </td>
                         <td className="whitespace-nowrap p-4 ">Status</td>
                       </tr>
@@ -145,30 +145,40 @@ const EmployePaymentList = () => {
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                             {employe?.invoice_number}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                             {employe?.order_id?.grand_total_amount}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {employe?.pay_amount}
+                       
+
+                            {
+                              employe?.pay_amount === employe?.order_id?.grand_total_amount ? (
+                                <span className="text-green-600">{employe?.pay_amount}</span>
+                              ) : employe?.pay_amount > employe?.order_id?.grand_total_amount ? (
+                                  <span className="text-blue-600">{employe?.pay_amount}</span>
+                              ) : (
+                                    <span className="text-yellow-600">{employe?.pay_amount}</span>
+                              )
+                            }
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                             {employe?.order_id?.total_messurement_count}{" "}
                             {settingData?.unit_name}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {employe?.payment_method}
+                            {employe?.payment_method === 'cash' ? <span className="text-secondary-default">{employe?.payment_method}</span> : <span className="text-purple">{employe?.payment_method}</span>}
+                          </td>
+                          <td className="whitespace-nowrap py-1.5 font-medium text-blue-600">
+                            {employe?.bank_id?.bank_name ? employe?.bank_id?.bank_name:'--'}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {employe?.bank_id?.bank_name}
+                            {employe?.check_number ? employe?.check_number:'--'}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {employe?.check_number}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {employe?.check_withdraw_date}
+                            {employe?.check_withdraw_date ? employe?.check_withdraw_date : '--'}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 capitalize">
-                            {employe?.check_status}
+                            {employe?.check_status === 'approved' ? <span className="text-green-600">{employe?.check_status}</span> : <span className="text-red-600">{employe?.check_status}</span>}
                           </td>
                         </tr>
                       ))}

@@ -107,7 +107,7 @@ const AllStaffTable = ({
                       <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize">
                         {user?.user_phone ? user?.user_phone : "-"}
                       </td>
-                      <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize">
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize text-green-600">
                         {user?.user_salary ? user?.user_salary : "-"}
                       </td>
                       <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize">
@@ -118,7 +118,7 @@ const AllStaffTable = ({
                           ? user?.user_role_id?.role_name
                           : "-"}
                       </td>
-                      <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize">
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize text-green-600">
                         {user?.user_status}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
