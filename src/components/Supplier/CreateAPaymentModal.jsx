@@ -130,14 +130,14 @@ const CreateAPaymentModal = ({
               <div className="mt-5 overflow-x-auto rounded">
                 <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border rounded">
                   <thead className=" bg-[#fff9ee] ">
-                    <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
-                      <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <tr className="divide-x divide-gray-300  font-semibold text-center ">
+                      <th className="whitespace-nowrap px-4 py-2.5 ">
                         Total Amount
                       </th>
-                      <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                      <th className="whitespace-nowrap px-4 py-2.5 ">
                         Paid Amount
                       </th>
-                      <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                      <th className="whitespace-nowrap px-4 py-2.5 ">
                         Due Amount
                       </th>
                     </tr>

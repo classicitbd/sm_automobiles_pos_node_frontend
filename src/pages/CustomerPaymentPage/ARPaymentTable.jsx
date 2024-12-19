@@ -93,61 +93,70 @@ const ARPaymentTable = ({
         <TableLoadingSkeleton />
       ) : (
         <div>
-          <div className="rounded-lg border border-gray-200 mt-6">
+          <div className="rounded-lg shadow-md mt-3">
             {arDatas?.data?.length > 0 ? (
-              <div className="overflow-x-auto rounded-t-lg">
-                <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                  <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                    <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
+                <div className="overflow-x-auto rounded-lg">
+                <table className="min-w-full  text-sm">
+                  <thead >
+                    <tr className=" font-semibold text-center ">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
-                      <td className="whitespace-nowrap p-4 ">Invoice No</td>
+                    
                       <td className="whitespace-nowrap p-4 ">Customer Name</td>
-                      <td className="whitespace-nowrap p-4 ">Customer Phone</td>
+                        <td className="whitespace-nowrap p-4 ">Customer Phone</td>
+                        <td className="whitespace-nowrap p-4 ">Invoice No</td>
+                        <td className="whitespace-nowrap p-4 ">Created By</td>
+                        <td className="whitespace-nowrap p-4 ">Status</td>
                       <td className="whitespace-nowrap p-4 ">Total Amount</td>
                       <td className="whitespace-nowrap p-4 ">
                         Received Amount
                       </td>
                       <td className="whitespace-nowrap p-4 ">Due Amount</td>
-                      <td className="whitespace-nowrap p-4 ">Status</td>
-                      <td className="whitespace-nowrap p-4 ">Created By</td>
+                     
+                     
                     </tr>
                   </thead>
 
-                  <tbody className="divide-y divide-gray-200 text-center">
+                  <tbody >
                     {arDatas?.data?.map((check, i) => (
                       <tr
                         key={check?._id}
-                        className={`divide-x divide-gray-200 ${
-                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                        }`}
+                        className={`text-center ${i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                          } hover:bg-blue-100`}
                       >
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                           {serialNumber + i + 1}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {check?.order_id}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                       
+                        <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                           {check?.customer_id?.customer_name}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                           {check?.customer_id?.customer_phone}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {check?.grand_total_amount}
+                        <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                          {check?.order_id}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {check?.received_amount}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 capitalize">
-                          {check?.due_amount}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 capitalize">
-                          {check?.order_status || "-"}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                       
+                        <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                           {check?.order_publisher_id?.user_name}
                         </td>
+                        <td className="whitespace-nowrap py-3 font-medium text-gray-700 ">
+                         
+                          {
+                            check?.order_status ? <> {check?.order_status == 'out-of-warehouse' ? <span className="text-green-600 uppercase">{check?.order_status}</span> : <span className="text-yellow-500 uppercase">{check?.order_status}</span>}</>:'--'
+                          }
+                        </td>
+                        <td className="whitespace-nowrap py-3 font-medium text-blue-600">
+                          {check?.grand_total_amount}
+                        </td>
+                        <td className="whitespace-nowrap py-3 font-medium text-green-600">
+                          {check?.received_amount}
+                        </td>
+                        <td className="whitespace-nowrap py-3 font-medium text-red-600 ">
+                          {check?.due_amount}
+                        </td>
+                       
+                       
                       </tr>
                     ))}
                   </tbody>

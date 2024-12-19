@@ -29,82 +29,86 @@ const IncomeTable = ({
         <TableLoadingSkeleton />
       ) : (
         <div>
-          <div className="rounded-lg border border-gray-200 mt-6">
+          <div className="rounded-lg shadow-md mt-3">
             {incomes?.data?.length > 0 ? (
-              <div className="overflow-x-auto rounded-t-lg">
-                <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                  <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                    <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
+              <div className="overflow-x-auto rounded-lg">
+                <table className="min-w-full  bg-white text-sm">
+                  <thead >
+                    <tr className="font-semibold text-center ">
+                      <th className="whitespace-nowrap p-4 font-medium ">
                         SL No
                       </th>
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
+                      <th className="whitespace-nowrap p-4 font-medium ">
                         incomes Title
                       </th>
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
-                        incomes Amount
-                      </th>
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
-                        Customer Name
-                      </th>
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
-                        Customer Phone
-                      </th>
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
-                        Bank Name
-                      </th>
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
-                        Reference No
-                      </th>
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
-                        Invoice Id
-                      </th>
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
-                        incomes Date
-                      </th>
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
+                      <th className="whitespace-nowrap p-4 font-medium ">
                         Created By
                       </th>
+
+                      <th className="whitespace-nowrap p-4 font-medium ">
+                        Customer Name
+                      </th>
+                      <th className="whitespace-nowrap p-4 font-medium ">
+                        Customer Phone
+                      </th>
+                      <th className="whitespace-nowrap p-4 font-medium ">
+                        Bank Name
+                      </th>
+                      <th className="whitespace-nowrap p-4 font-medium ">
+                        Reference No
+                      </th>
+                      <th className="whitespace-nowrap p-4 font-medium ">
+                        Invoice Id
+                      </th>
+                      <th className="whitespace-nowrap p-4 font-medium ">
+                        Incomes Date
+                      </th>
+                      <th className="whitespace-nowrap p-4 font-medium ">
+                        Incomes Amount
+                      </th>
+
                     </tr>
                   </thead>
 
-                  <tbody className="divide-y divide-gray-200 text-center">
+                  <tbody>
                     {incomes?.data?.map((income, i) => (
                       <tr
                         key={income?._id}
-                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                          }`}
+                        className={`text-center ${i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                          } hover:bg-blue-100`}
                       >
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                           {serialNumber + i + 1}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {income?.income_title || "N/A"}
+                        <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                          {income?.income_title || <span className="text-red-600">N/A</span> }
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {income?.income_amount || "N/A"}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {income?.income_customer_id?.customer_name || "N/A"}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {income?.income_customer_id?.customer_name || "N/A"}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {income?.income_bank_id?.bank_name || "N/A"}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {income?.reference_id || "N/A"}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {income?.income_invoice_number || "N/A"}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {DateTimeFormat(income?.createdAt)}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                           {(income?.income_publisher_id?.user_name)}
                         </td>
+
+                        <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                          {income?.income_customer_id?.customer_name || <span className="text-red-600">N/A</span>}
+                        </td>
+                        <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                          {income?.income_customer_id?.customer_phone || <span className="text-red-600">N/A</span>}
+                        </td>
+                        <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                          {income?.income_bank_id?.bank_name ? <span className="text-blue-600">{income?.income_bank_id?.bank_name}</span>:<span className="text-red-600">N/A</span>}
+                        </td>
+                        <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                          {income?.reference_id || <span className="text-red-600">N/A</span>}
+                        </td>
+                        <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                          {income?.income_invoice_number || <span className="text-red-600">N/A</span>}
+                        </td>
+                        <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                          {DateTimeFormat(income?.createdAt)}
+                        </td>
+                        <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                          {<span span className="text-green-600">{income?.income_amount}</span> || <span className="text-red-600">N/A</span>}
+                        </td>
+
                       </tr>
                     ))}
                   </tbody>
@@ -113,17 +117,18 @@ const IncomeTable = ({
             ) : (
               <NoDataFound />
             )}
-            {/* pagination */}
 
-            <Pagination
-              setPage={setPage}
-              setLimit={setLimit}
-              totalData={totalData}
-              page={page}
-              limit={limit}
-            />
 
           </div>
+          {/* pagination */}
+
+          <Pagination
+            setPage={setPage}
+            setLimit={setLimit}
+            totalData={totalData}
+            page={page}
+            limit={limit}
+          />
         </div>
       )}
     </>

@@ -99,7 +99,7 @@ const EmployePaymentList = () => {
                 <div className="overflow-x-auto rounded-t-lg">
                   <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                     <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                      <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
+                      <tr className="divide-x divide-gray-300  font-semibold text-center ">
                         <td className="whitespace-nowrap p-4 ">SL No</td>
                         <td className="whitespace-nowrap p-4 ">
                           Customer Name
@@ -129,9 +129,8 @@ const EmployePaymentList = () => {
                       {allEmployelist?.data?.map((employe, i) => (
                         <tr
                           key={employe?._id}
-                          className={`divide-x divide-gray-200 ${
-                            i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                          }`}
+                          className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                            }`}
                         >
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                             {serialNumber + i + 1}
@@ -149,15 +148,15 @@ const EmployePaymentList = () => {
                             {employe?.order_id?.grand_total_amount}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                       
+
 
                             {
                               employe?.pay_amount === employe?.order_id?.grand_total_amount ? (
                                 <span className="text-green-600">{employe?.pay_amount}</span>
                               ) : employe?.pay_amount > employe?.order_id?.grand_total_amount ? (
-                                  <span className="text-blue-600">{employe?.pay_amount}</span>
+                                <span className="text-blue-600">{employe?.pay_amount}</span>
                               ) : (
-                                    <span className="text-yellow-600">{employe?.pay_amount}</span>
+                                <span className="text-yellow-600">{employe?.pay_amount}</span>
                               )
                             }
                           </td>
@@ -169,10 +168,10 @@ const EmployePaymentList = () => {
                             {employe?.payment_method === 'cash' ? <span className="text-secondary-default">{employe?.payment_method}</span> : <span className="text-purple">{employe?.payment_method}</span>}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-blue-600">
-                            {employe?.bank_id?.bank_name ? employe?.bank_id?.bank_name:'--'}
+                            {employe?.bank_id?.bank_name ? employe?.bank_id?.bank_name : '--'}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {employe?.check_number ? employe?.check_number:'--'}
+                            {employe?.check_number ? employe?.check_number : '--'}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                             {employe?.check_withdraw_date ? employe?.check_withdraw_date : '--'}

@@ -60,13 +60,13 @@ const OutOfWarehouse = () => {
     });
 
     return (
-        <div className="bg-white rounded py-6 px-4 shadow">
-            <div className="flex justify-between mt-6">
+        <div className="py-6 px-4 ">
+            <div className="flex justify-between mt-4">
                 <div>
-                    <h1 className="text-2xl">All Order List </h1>
+                    <h1 className="sm:text-2xl text-xl">Out Of Warehouse Order List </h1>
                 </div>
             </div>
-            <div className="mt-3">
+            <div className="mt-3 flex justify-end">
                 <input
                     type="text"
                     defaultValue={searchTerm}

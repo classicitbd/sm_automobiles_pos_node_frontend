@@ -43,7 +43,7 @@ const BrandTable = ({
               <div className='overflow-x-auto rounded-t-lg'>
                 <table className='min-w-full divide-y-2 divide-gray-200 bg-white text-sm'>
                   <thead className='ltr:text-left rtl:text-right bg-[#fff9ee]'>
-                    <tr className='divide-x divide-gray-300  font-semibold text-center text-gray-900'>
+                    <tr className='divide-x divide-gray-300  font-semibold text-center '>
                       <td className='whitespace-nowrap p-4 '>SL No</td>
                       <td className='whitespace-nowrap p-4 '>Brand Name</td>
                       <td className='whitespace-nowrap p-4 '>Created By</td>
@@ -54,7 +54,7 @@ const BrandTable = ({
                   </thead>
 
                   <tbody className='divide-y divide-gray-200 text-center'>
-                  {brandTypes?.data?.map((brand, i) => (
+                    {brandTypes?.data?.map((brand, i) => (
                       <tr
                         key={brand?._id}
                         className={`divide-x divide-gray-200 ${i % 2 === 0 ? 'bg-white' : 'bg-tableRowBGColor'
@@ -67,11 +67,11 @@ const BrandTable = ({
                           {brand?.brand_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                      {brand?.brand_publisher_id?.user_name}
-                    </td>
-                    <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {brand?.brand_updated_by?.user_name ? brand?.brand_updated_by?.user_name:'--'}
-                    </td>
+                          {brand?.brand_publisher_id?.user_name}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {brand?.brand_updated_by?.user_name ? brand?.brand_updated_by?.user_name : '--'}
+                        </td>
                         <td className='whitespace-nowrap py-1.5 px-2 text-gray-700'>
 
                           <button
@@ -109,8 +109,8 @@ const BrandTable = ({
             <UpdateBrand
               setBrandUpdateModal={setBrandUpdateModal}
               brandUpdateData={brandUpdateData}
-               refetch={refetch}
-               user={user}
+              refetch={refetch}
+              user={user}
             />
           )}
         </div>

@@ -17,7 +17,7 @@ const DashboardLayout = () => {
   //   }, []);
   //   if (loading) return <LoaderOverlay />;
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-secondary-50">
       <Helmet>
         <title>Admin - {BASE_TITLE}</title>
       </Helmet>
@@ -54,7 +54,7 @@ const DashboardLayout = () => {
         </header>
 
         {/* Main content area */}
-        <div className="min-h-screen">
+        <div className="min-h-screen ">
           {" "}
           <div className="py-4  md:px-6 px-2.5 ">
             <Outlet />

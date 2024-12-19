@@ -171,37 +171,38 @@ const OrderTable = ({
         <TableLoadingSkeleton />
       ) : (
         <div>
-          <div className="rounded-lg border border-gray-200 mt-6">
+          <div className="rounded-lg  mt-3 shadow-md">
             {orders?.data?.length > 0 ? (
-              <div className="overflow-x-auto rounded-t-lg">
-                <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                  <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                    <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
+              <div className="overflow-x-auto rounded-lg">
+                <table className="min-w-full text-sm">
+                  <thead className="">
+                    <tr className=" font-semibold text-center ">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
                       <td className="whitespace-nowrap p-4 ">Customer Name</td>
-                      <td className="whitespace-nowrap p-4 ">Phone</td>
-                      <td className="whitespace-nowrap p-4 ">Order Id</td>
+                        <td className="whitespace-nowrap p-4 ">Phone</td>
+                        <td className="whitespace-nowrap p-4 ">Created By</td>
+                        <td className="whitespace-nowrap p-4 ">Updated By</td>
+                        <td className="whitespace-nowrap p-4 ">Order Id</td>
+                        <td className="whitespace-nowrap p-4 ">Order Status</td>
+                        <td className="whitespace-nowrap p-4 ">Discount(%)</td>
                       <td className="whitespace-nowrap p-4 ">Sub Total</td>
-                      <td className="whitespace-nowrap p-4 ">Discount(%)</td>
+                      
                       <td className="whitespace-nowrap p-4 ">Grand Total</td>
                       <td className="whitespace-nowrap p-4 ">
                         Received Amount
                       </td>
                       <td className="whitespace-nowrap p-4 ">Due Amount</td>
-                      <td className="whitespace-nowrap p-4 ">Order Status</td>
-                      <td className="whitespace-nowrap p-4 ">Created By</td>
-                      <td className="whitespace-nowrap p-4 ">Updated By</td>
+                     
                       <td className="whitespace-nowrap p-4 ">Action</td>
                     </tr>
                   </thead>
 
-                  <tbody className="divide-y divide-gray-200 text-center">
+                  <tbody>
                     {orders?.data?.map((order, i) => (
                       <tr
                         key={order?._id}
-                        className={`divide-x divide-gray-200 ${
-                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                        }`}
+                        className={`text-center ${i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                          } hover:bg-blue-100`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
@@ -213,32 +214,35 @@ const OrderTable = ({
                           {order?.customer_id?.customer_phone}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {order?.order_id}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {order?.sub_total_amount}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {order?.discount_percent_amount}%
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {order?.grand_total_amount}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {order?.received_amount}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {order?.due_amount}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 uppercase">
-                          {order?.order_status}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {order?.order_publisher_id?.user_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {order?.order_updated_by?.user_name}
+                          {order?.order_updated_by?.user_name ? order?.order_updated_by?.user_name:'--'}
                         </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {order?.order_id}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 uppercase">
+                          {order?.order_status == 'management' ? <span className="text-red-600">{order?.order_status}</span> : <span className="text-green-600">{order?.order_status}</span>}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-purple">
+                          {order?.discount_percent_amount ? <span>{order?.discount_percent_amount}  % </span>:'--'}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                          {order?.sub_total_amount}
+                        </td>
+                       
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                          {order?.grand_total_amount}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-blue-700">
+                          {order?.received_amount}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-red-600">
+                          {order?.due_amount}
+                        </td>
+                       
+                       
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700 flex items-center justify-between">
                           {/* <select
                             onChange={(e) =>
@@ -288,11 +292,11 @@ const OrderTable = ({
                               >
                                 <CiMenuKebab
                                   size={30}
-                                  className="cursor-pointer text-gray-500 hover:text-gray-300 font-bold"
+                                  className="cursor-pointer text-primaryVariant-300 hover:text-primaryVariant-700 font-bold"
                                 />
                               </button>
                               {orderDocumentModal == order?._id && (
-                                <div className=" bg-bgray-200 shadow-xl w-[150px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
+                                <div className="  bg-success-50 shadow-xl w-[200px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
                                   <Link to={`/order-details/${order?._id}`}>
                                     {" "}
                                     <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium">

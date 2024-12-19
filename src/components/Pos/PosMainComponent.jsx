@@ -184,7 +184,7 @@ const PosMainComponent = () => {
           ) : (
             <>
               {products?.data?.length > 0 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2 sm:gap-4 overflow-y-auto max-h-[600px] scrollbar-thin p-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2 sm:gap-4 overflow-y-auto max-h-[600px] scrollbar-thin p-2 ">
                   {products?.data?.map((product, index) => (
                     <>
                       {product?.product_quantity > 0 ? (
@@ -214,7 +214,7 @@ const PosMainComponent = () => {
                             ]);
                           }}
                           key={index}
-                          className="border rounded-md overflow-hidden shadow-md flex flex-col justify-between cursor-pointer hover:shadow-lg transition duration-300 ease-in-out"
+                          className="border rounded-md overflow-hidden shadow-md flex flex-col justify-between cursor-pointer hover:shadow-lg transition duration-300 ease-in-out bg-white"
                         >
                           <img
                             src={product?.product_image}
@@ -225,7 +225,7 @@ const PosMainComponent = () => {
                             <p className="font-bold">{product?.product_name}</p>
                             <p className="text-sm sm:mt-1">
                               Quantity:{" "}
-                              <span className="font-bold">
+                              <span className="font-bold text-blue-600">
                                 {product?.product_quantity}{" "}
                                 {product?.product_unit_id?.product_unit_name}
                               </span>

@@ -77,23 +77,23 @@ const SupplierTable = ({
           <div className="mt-5 overflow-x-auto rounded">
             <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border rounded">
               <thead className=" bg-[#fff9ee] ">
-                <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
-                  <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                <tr className="divide-x divide-gray-300  font-semibold text-center ">
+                  <th className="whitespace-nowrap px-4 py-2.5 ">
                     SL
                   </th>
-                  <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                  <th className="whitespace-nowrap px-4 py-2.5 ">
                     Supplier Name
                   </th>
-                  <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                  <th className="whitespace-nowrap px-4 py-2.5 ">
                     Supplier Phone
                   </th>
-                  <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                  <th className="whitespace-nowrap px-4 py-2.5 ">
                     Address
                   </th>
-                  <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                  <th className="whitespace-nowrap px-4 py-2.5 ">
                     Created By
                   </th>
-                  <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                  <th className="whitespace-nowrap px-4 py-2.5 ">
                     Updated By
                   </th>
                   <th className="px-4 py-2.5 text-center">Action</th>
@@ -122,7 +122,7 @@ const SupplierTable = ({
                       {supplier?.supplier_publisher_id?.user_name}
                     </td>
                     <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                      {supplier?.supplier_updated_by?.user_name ? supplier?.supplier_updated_by?.user_name:'--'}
+                      {supplier?.supplier_updated_by?.user_name ? supplier?.supplier_updated_by?.user_name : '--'}
                     </td>
                     <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                       <button

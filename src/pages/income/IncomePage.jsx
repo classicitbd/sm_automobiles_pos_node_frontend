@@ -60,14 +60,14 @@ const IncomePage = () => {
   });
 
   return (
-    <div className="bg-white rounded-lg py-6 px-4 shadow">
+    <div className="rounded py-6 px-4">
       <div className="flex justify-between mt-6">
         <div>
-          <h1 className="text-2xl">incomes</h1>
+          <h1 className="text-xl sm:text-2xl">Incomes</h1>
         </div>
       </div>
       {/* search incomes... */}
-      <div className="mt-3">
+      <div className="mt-3 flex justify-end">
         <input
           type="text"
           defaultValue={searchTerm}

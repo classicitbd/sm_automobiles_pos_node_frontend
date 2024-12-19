@@ -59,14 +59,14 @@ const DueCustomerPayment = () => {
   });
 
   return (
-    <div className="bg-white rounded-lg py-6 px-4 shadow mx-auto">
-      <div className="flex justify-between mt-6">
+    <div className="py-6 ">
+      <div className="">
         <div>
-          <h1 className="text-2xl">checks Information</h1>
+          <h1 className="sm:text-2xl text-xl">Due Payment</h1>
         </div>
       </div>
       {/* search checks... */}
-      <div className="mt-3">
+      <div className="mt-3 flex justify-end">
         <input
           type="text"
           defaultValue={searchTerm}

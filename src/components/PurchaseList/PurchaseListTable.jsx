@@ -29,41 +29,41 @@ const PurchaseListTable = ({
             <div className="mt-5 overflow-x-auto rounded">
               <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border rounded">
                 <thead className=" bg-[#fff9ee] ">
-                  <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                  <tr className="divide-x divide-gray-300  font-semibold text-center ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       SL
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Product Name
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Product Id
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Invoice Id
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Purchase Quantity
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Purchase Amount
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Total Amount
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Paid Amount
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Due Amount
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Supplier Name
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Supplier Phone
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Created By
                     </th>
                   </tr>
@@ -72,9 +72,8 @@ const PurchaseListTable = ({
                   {purchaseLists?.data?.map((purchaseList, i) => (
                     <tr
                       key={purchaseList?._id}
-                      className={`divide-x divide-gray-200 ${
-                        i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                      }`}
+                      className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                        }`}
                     >
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                         {serialNumber + i + 1}

@@ -60,12 +60,12 @@ const PurchaseListPage = () => {
     });
     
   return (
-    <div className="bg-white rounded py-6 px-4 shadow">
-      <div className="flex justify-between mt-6">
+    <div className="py-6 px-4 ">
+    
         <div>
-          <h1 className="text-2xl">All A/P List</h1>
+        <h1 className="sm:text-2xl text-xl">All Payment List</h1>
         </div>
-        {/* <div className="">
+        <div className="flex justify-end">
           <input
             type="text"
             defaultValue={searchTerm}
@@ -73,8 +73,8 @@ const PurchaseListPage = () => {
             placeholder="Search A/P List..."
             className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
           />
-        </div> */}
-      </div>
+        </div>
+    
 
       {/* show PurchaseTablelist Table */}
       <PurchaseListTable
