@@ -21,7 +21,7 @@ const ProductTable = ({
   isLoading,
   products,
 }) => {
-  const { settingData } = useContext(SettingContext);
+  const { settingData, loading: settingLoading } = useContext(SettingContext);
 
   const [updatePriceModal, setUpdatePriceModal] = useState(false);
   const [updatePriceModalValue, setUpdatePriceModalValue] = useState({});
@@ -54,7 +54,7 @@ const ProductTable = ({
 
   return (
     <>
-      {isLoading === true ? (
+      {isLoading === true || settingLoading ? (
         <TableLoadingSkeleton />
       ) : (
         <div>
@@ -62,7 +62,7 @@ const ProductTable = ({
             {products?.data?.length > 0 ? (
               <div className="overflow-x-auto rounded-lg">
                 <table className="min-w-full text-sm">
-                  <thead >
+                  <thead>
                     <tr className="font-bold text-center  divide-gray-950">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
                       <td className="whitespace-nowrap p-4 ">Name</td>
@@ -73,26 +73,23 @@ const ProductTable = ({
                       <td className="whitespace-nowrap p-4 ">Created by</td>
                       <td className="whitespace-nowrap p-4 ">Updated By</td>
                       <td className="whitespace-nowrap p-4 ">Product Id</td>
-                      <td className="whitespace-nowrap p-4 ">Unit Type</td>
+                      {/* <td className="whitespace-nowrap p-4 ">Unit Type</td> */}
                       <td className="whitespace-nowrap p-4 ">Price</td>
                       <td className="whitespace-nowrap p-4 ">Buying Price</td>
                       <td className="whitespace-nowrap p-4 ">Quantity</td>
                       <td className="whitespace-nowrap p-4 ">Alert Quantity</td>
 
-
-
-
-
                       <td className="whitespace-nowrap p-4 ">Action</td>
                     </tr>
                   </thead>
 
-                  <tbody >
+                  <tbody>
                     {products?.data?.map((product, i) => (
                       <tr
                         key={product?._id}
-                        className={`text-center ${i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
-                          } hover:bg-blue-100`}
+                        className={`text-center ${
+                          i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                        } hover:bg-blue-100`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
@@ -114,58 +111,53 @@ const ProductTable = ({
                           {product?.category_id?.category_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {product?.product_status === "active"
-                            ? <span className="text-green-600">Active</span>
-                            : <span className="text-red-600">In-Active</span>}
+                          {product?.product_status === "active" ? (
+                            <span className="text-green-600">Active</span>
+                          ) : (
+                            <span className="text-red-600">In-Active</span>
+                          )}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {product?.product_publisher_id?.user_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {product?.product_updated_by?.user_name ? product?.product_updated_by?.user_name : '--'}
+                          {product?.product_updated_by?.user_name
+                            ? product?.product_updated_by?.user_name
+                            : "--"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {product?.product_id}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-blue-700">
+                        {/* <td className="whitespace-nowrap py-1.5 font-medium text-blue-700">
                           <span> {"1"} {product?.product_unit_id?.product_unit_name}
                             {" = "}
                             {product?.product_unit_id?.product_unit_value}{" "}
                             {settingData?.unit_name}</span>
-                          {/* <br />
-                          <span className="underline pt-2">Total</span>
-                          <br />
-                          <span> {product?.product_quantity}{" "}
-                            {product?.product_unit_id?.product_unit_name}
-                            {" = "} {
-
-                            }
-                            {product?.product_unit_id?.product_unit_value *
-                              product?.product_quantity ? product?.product_unit_id?.product_unit_value *
-                            product?.product_quantity : 'No Quantity'} {''}
-                            {settingData?.unit_name}</span> */}
-                        </td>
+                        </td> */}
                         <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
-                          {product?.product_price ? product?.product_price : '--'}
+                          {product?.product_price
+                            ? product?.product_price
+                            : "--"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-blue-700">
-                          {product?.product_buying_price ? product?.product_buying_price : '--'}
+                          {product?.product_buying_price
+                            ? product?.product_buying_price
+                            : "--"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
-
-                          {
-                            product?.product_quantity ? <span>  {product?.product_quantity}{" "}
-                              {product?.product_unit_id?.product_unit_name}</span> : <span className="text-red-600"> No Quantity </span>
-                          }
-
+                          {product?.product_quantity ? (
+                            <span>
+                              {" "}
+                              {product?.product_quantity}{" "}
+                              {settingData?.unit_name}
+                            </span>
+                          ) : (
+                            <span className="text-red-600"> No Quantity </span>
+                          )}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-yellow-600">
                           {product?.product_stock_low_alert}
                         </td>
-
-
-
-
 
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                           <button
@@ -225,7 +217,6 @@ const ProductTable = ({
               <NoDataFound />
             )}
           </div>
-
 
           {totalData > 10 && (
             <Pagination

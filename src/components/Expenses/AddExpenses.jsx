@@ -4,15 +4,11 @@ import { useForm } from "react-hook-form";
 import { RxCross1 } from "react-icons/rx";
 import { Button } from "../ui/button";
 import { RiImageAddFill } from "react-icons/ri";
-import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "@/utils/baseURL";
-import { LoaderOverlay } from "../common/loader/LoderOverley";
-import Select from "react-select";
 import { toast } from "react-toastify";
 
-const AddExpenses = ({ setExpensesCreateModal, refetch, user }) => {
+const AddExpenses = ({ setExpenceCreateModal, refetch, user }) => {
   const [loading, setLoading] = useState(false);
-  const [expense_bank_id, setExpense_bank_id] = useState(null);
   const {
     register,
     handleSubmit,
@@ -24,30 +20,6 @@ const AddExpenses = ({ setExpensesCreateModal, refetch, user }) => {
   const fileInputRef = useRef(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
-
-  //get bank data
-  const { data: bankTypes = [], isLoading } = useQuery({
-    queryFn: async () => {
-      try {
-        const res = await fetch(`${BASE_URL}/bank`, {
-          credentials: "include",
-        });
-
-        if (!res.ok) {
-          const errorData = await res.text(); // Get more info about the error
-          throw new Error(
-            `Error: ${res.status} ${res.statusText} - ${errorData}`
-          );
-        }
-
-        const data = await res.json();
-        return data;
-      } catch (error) {
-        console.error("Fetch error:", error);
-        throw error; // Rethrow to propagate the error to react-query
-      }
-    },
-  });
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -81,10 +53,6 @@ const AddExpenses = ({ setExpensesCreateModal, refetch, user }) => {
           }
         });
 
-        if (expense_bank_id) {
-          formData.append("expense_bank_id", expense_bank_id);
-        }
-
         formData.append("expense_publisher_id", user?._id);
         const response = await fetch(
           `${BASE_URL}/expense/?role_type=expense_create`,
@@ -105,7 +73,7 @@ const AddExpenses = ({ setExpensesCreateModal, refetch, user }) => {
           );
           refetch();
           setLoading(false);
-          setExpensesCreateModal(false);
+          setExpenceCreateModal(false);
         } else {
           toast.error(result?.message || "Something went wrong", {
             autoClose: 1000,
@@ -115,14 +83,10 @@ const AddExpenses = ({ setExpensesCreateModal, refetch, user }) => {
       } else {
         const sendData = {
           expense_title: data?.expense_title,
-          expense_description: data?.expense_description,
           expense_date: data?.expense_date,
           expense_amount: data?.expense_amount,
           expense_publisher_id: user?._id,
         };
-        if (expense_bank_id) {
-          sendData.expense_bank_id = expense_bank_id;
-        }
 
         const response = await fetch(
           `${BASE_URL}/expense?role_type=expense_create`,
@@ -145,7 +109,7 @@ const AddExpenses = ({ setExpensesCreateModal, refetch, user }) => {
           );
           refetch();
           setLoading(false);
-          setExpensesCreateModal(false);
+          setExpenceCreateModal(false);
         } else {
           toast.error(result?.message || "Something went wrong", {
             autoClose: 1000,
@@ -163,10 +127,6 @@ const AddExpenses = ({ setExpensesCreateModal, refetch, user }) => {
     }
   };
 
-  if (isLoading) {
-    return <LoaderOverlay />;
-  }
-
   return (
     <div>
       <div>
@@ -182,7 +142,7 @@ const AddExpenses = ({ setExpensesCreateModal, refetch, user }) => {
               <button
                 type="button"
                 className="btn p-1 absolute right-3 rounded-full top-3 text-white bg-error-100 hover:bg-error-50"
-                onClick={() => setExpensesCreateModal(false)}
+                onClick={() => setExpenceCreateModal(false)}
               >
                 {" "}
                 <RxCross1 size={20}></RxCross1>
@@ -219,37 +179,31 @@ const AddExpenses = ({ setExpensesCreateModal, refetch, user }) => {
                   htmlFor=""
                   className="block text-xs font-medium text-gray-700"
                 >
-                  Expense Description
-                </label>
-
-                <textarea
-                  {...register("expense_description")}
-                  type="text"
-                  placeholder=" Expense Description"
-                  className="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
-                />
-              </div>
-              <div className="">
-                <label
-                  htmlFor=""
-                  className="block text-xs font-medium text-gray-700"
-                >
-                  Expense Date
+                  Expense Date <span className="text-red-500">*</span>
                 </label>
 
                 <input
-                  {...register("expense_date")}
+                  {...register("expense_date", {
+                    required: "Expense Date is required",
+                  })}
                   type="date"
+                  max={new Date().toISOString().split("T")[0]}
                   className="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
+                {errors.expense_date && (
+                  <p className="text-red-600">
+                    {errors.expense_date?.message}
+                  </p>
+                )}
               </div>
               <div className="mt-2">
                 <label className="block text-xs font-medium text-gray-700">
-                  Expense Amount
+                  Expense Amount <span className="text-red-500">*</span>
                 </label>
 
                 <input
                   {...register("expense_amount", {
+                    required: "Expense Amount is required",
                     validate: (value) => {
                       if (value < 0) {
                         return "Amount must be getter than 0";
@@ -260,22 +214,11 @@ const AddExpenses = ({ setExpensesCreateModal, refetch, user }) => {
                   placeholder="Enter Expense Amount"
                   className="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
-              </div>
-              <div className="mt-2">
-                <label className="block text-xs font-medium text-gray-700">
-                  Bank Name
-                </label>
-                <Select
-                  id="expense_bank_id"
-                  name="expense_bank_id"
-                  aria-label="Bank Type"
-                  options={bankTypes?.data}
-                  getOptionLabel={(x) => x?.bank_name}
-                  getOptionValue={(x) => x?._id}
-                  onChange={(selectedOption) =>
-                    setExpense_bank_id(selectedOption?._id)
-                  }
-                ></Select>
+                {errors.expense_amount && (
+                  <p className="text-red-600">
+                    {errors.expense_amount?.message}
+                  </p>
+                )}
               </div>
 
               {/* ------Image or Pdf------- */}
@@ -328,7 +271,7 @@ const AddExpenses = ({ setExpensesCreateModal, refetch, user }) => {
                         <div>
                           <RiImageAddFill size={25} />
                         </div>
-                        <p className="mt-2 text-[#C9CACA]">upload image</p>
+                        <p className="mt-2 text-[#C9CACA]">upload document</p>
                       </div>
                     </label>
                   </>
@@ -342,7 +285,7 @@ const AddExpenses = ({ setExpensesCreateModal, refetch, user }) => {
                   onChange={handleImageChange}
                 />
                 <p className="text-xs text-[#C9CACA]  text-end">
-                  Upload 300x300 pixel images in PNG, JPG, or WebP format (max 1
+                  Upload 300x300 pixel images in PNG, JPG, pdf or WebP format (max 1
                   MB).
                 </p>
               </div>

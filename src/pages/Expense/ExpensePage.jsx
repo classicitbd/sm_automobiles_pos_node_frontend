@@ -1,12 +1,14 @@
+import AddExpenses from "@/components/Expenses/AddExpenses";
 import ExpensesTable from "@/components/Expenses/ExpensesTable";
+import { Button } from "@/components/ui/button";
 import { AuthContext } from "@/context/AuthProvider";
 import useDebounced from "@/hooks/useDebounced";
-import MiniSpinner from "@/shared/MiniSpinner/MiniSpinner";
 import { BASE_URL } from "@/utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
 
 const ExpensePage = () => {
+  const [expenceCreateModal, setExpenceCreateModal] = useState(false)
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [searchValue, setSearchValue] = useState("");
@@ -61,13 +63,19 @@ const ExpensePage = () => {
 
   return (
     <div className="rounded py-6 px-4">
-      <div className="flex justify-between mt-6">
-        <div>
-          <h1 className="text-xl sm:text-2xl">Expenses</h1>
-        </div>
-      </div>
+      <div className='flex justify-between mt-6'>
+              <div>
+                <h1 className='text-2xl'>Expense</h1>
+              </div>
+      
+              <div>
+                <Button type='button' onClick={() => setExpenceCreateModal(true)}>
+                  Create Expense
+                </Button>
+              </div>
+            </div>
       {/* search Expenses... */}
-      <div className="mt-3 flex justify-end">
+      <div className="mt-3 flex justify-start">
         <input
           type="text"
           defaultValue={searchTerm}
@@ -88,6 +96,16 @@ const ExpensePage = () => {
         user={user}
         isLoading={isLoading}
       />
+
+      {/*Bank Account Create  modal */}
+      {expenceCreateModal && (
+        <AddExpenses
+          setExpenceCreateModal={setExpenceCreateModal}
+          refetch={refetch}
+          user={user}
+        />
+      )}
+
     </div>
   );
 };

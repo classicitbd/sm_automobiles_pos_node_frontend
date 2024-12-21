@@ -7,8 +7,10 @@ import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton
 import { DateTimeFormat } from "@/utils/dateTimeFormet";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import Pagination from "../common/pagination/Pagination";
+import { SettingContext } from "@/context/SettingProvider";
 
 const PriceHistory = () => {
+  const { settingData, loading: settingLoading } = useContext(SettingContext);
   const { product_id } = useParams();
 
   const [page, setPage] = useState(1);
@@ -55,6 +57,10 @@ const PriceHistory = () => {
     setSerialNumber(newSerialNumber);
   }, [page, limit]);
 
+  if (settingLoading) {
+    return <TableLoadingSkeleton />;
+  }
+
   return (
     <>
       {isLoading === true ? (
@@ -62,58 +68,66 @@ const PriceHistory = () => {
       ) : (
         <>
           <div className="mt-4">
-              <h3 className="text-xl sm:text-2xl">
+            <h3 className="text-xl sm:text-2xl">
               Product Price Update History List
             </h3>
 
             <div className="flex items-center justify-between p-3  bg-white shadow mt-4 flex-wrap rounded-sm">
               <div className="font-bold">
-                <p className="sm:text-[20px] text-bgray-700">   Product Name : {" "}
-                  {productPriceHistory?.data?.productDetails?.product_name}</p>
                 <p className="sm:text-[20px] text-bgray-700">
-                  Product Id : {" "}
+                  {" "}
+                  Product Name :{" "}
+                  {productPriceHistory?.data?.productDetails?.product_name}
+                </p>
+                <p className="sm:text-[20px] text-bgray-700">
+                  Product Id :{" "}
                   {productPriceHistory?.data?.productDetails?.product_id}
                 </p>
               </div>
               <div className="font-bold text-bgray-700">
                 <p className="sm:text-[20px] text-bgray-700">
-                  Product Price : {" "}
-                    <span className="text-green-600 sm:text-[20px]">{productPriceHistory?.data?.productDetails?.product_price}</span> 
+                  Product Price :{" "}
+                  <span className="text-green-600 sm:text-[20px]">
+                    {productPriceHistory?.data?.productDetails?.product_price}
+                  </span>
                 </p>
                 <p className="sm:text-[20px] text-bgray-700">
-                    Product Quantity : {" "} <span className="text-blue-600 sm:text-[20px]"> {productPriceHistory?.data?.productDetails?.product_quantity}{" "}
-                      {
-                        productPriceHistory?.data?.productDetails?.product_unit_id
-                          ?.product_unit_name
-                      }</span>
-                 
+                  Product Quantity :{" "}
+                  <span className="text-blue-600 sm:text-[20px]">
+                    {" "}
+                    {
+                      productPriceHistory?.data?.productDetails
+                        ?.product_quantity
+                    }{" "}
+                    {settingData?.unit_name}
+                  </span>
                 </p>
               </div>
             </div>
           </div>
-            <div className="rounded mt-6 shadow-md bg-gray-50">
+          <div className="rounded mt-6 shadow-md bg-gray-50">
             {productPriceHistory?.data?.findProductPriceHistory?.length > 0 ? (
-                <div className="overflow-x-auto rounded-lg">
-                  <table className="min-w-full  bg-white text-sm">
-                    <thead >
-                      <tr className="font-bold text-center  divide-gray-950">
-                        <td className="whitespace-nowrap p-3 ">SL No</td>
-                        <td className="whitespace-nowrap p-3 ">Created By</td>
+              <div className="overflow-x-auto rounded-lg">
+                <table className="min-w-full  bg-white text-sm">
+                  <thead>
+                    <tr className="font-bold text-center  divide-gray-950">
+                      <td className="whitespace-nowrap p-3 ">SL No</td>
+                      <td className="whitespace-nowrap p-3 ">Created By</td>
                       <td className="whitespace-nowrap p-3 ">Time</td>
                       <td className="whitespace-nowrap p-3 ">Previous Price</td>
                       <td className="whitespace-nowrap p-3 ">Updated Price</td>
                       <td className="whitespace-nowrap p-3 ">Quantity</td>
-                      
                     </tr>
                   </thead>
 
-                    <tbody>
+                  <tbody>
                     {productPriceHistory?.data?.findProductPriceHistory?.map(
                       (payment, i) => (
                         <tr
                           key={payment?._id}
-                          className={`text-center ${i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
-                            } hover:bg-blue-100`}
+                          className={`text-center ${
+                            i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                          } hover:bg-blue-100`}
                         >
                           <td className="whitespace-nowrap py-2 font-medium text-gray-700">
                             {serialNumber + i + 1}
@@ -131,13 +145,8 @@ const PriceHistory = () => {
                             {payment?.product_updated_price}
                           </td>
                           <td className="whitespace-nowrap py-2 font-medium text-blue-600">
-                            {payment?.product_quantity}{" "}
-                            {
-                              productPriceHistory?.data?.productDetails
-                                ?.product_unit_id?.product_unit_name
-                            }
+                            {payment?.product_quantity} {settingData?.unit_name}
                           </td>
-                         
                         </tr>
                       )
                     )}
@@ -147,15 +156,14 @@ const PriceHistory = () => {
             ) : (
               <NoDataFound />
             )}
-           
-            </div>
-            <Pagination
-              setPage={setPage}
-              setLimit={setLimit}
-              totalData={productPriceHistory?.totalData}
-              page={page}
-              limit={limit}
-            />
+          </div>
+          <Pagination
+            setPage={setPage}
+            setLimit={setLimit}
+            totalData={productPriceHistory?.totalData}
+            page={page}
+            limit={limit}
+          />
         </>
       )}
     </>
