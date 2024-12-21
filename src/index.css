@@ -28,6 +28,12 @@
   p {
     @apply text-gray-800;
   }
+  thead {
+    @apply bg-gradient-to-r from-blue-700 to-blue-500 text-white divide-y-2;
+  }
+  tbody {
+       @apply text-center divide-y-2 divide-gray-300 
+  }
 
   :root {
     --background: 0 0% 100%;

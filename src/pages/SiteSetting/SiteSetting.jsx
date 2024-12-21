@@ -95,128 +95,136 @@ const SiteSetting = () => {
     <>
       {/* Site setting navbar */}
 
-      <div className="flex items-center justify-between bg-white p-4 rounded-xl">
-        <h3 className="text-[20px] font-semibold">Site Seeting</h3>
-        <div className="flex items-center gap-2">
-          <Link to="/">
-            <p>
+
+      <div className="bg-white shadow-lg rounded-xl p-6 max-w-7xl mx-auto sm:mt-6">
+        {/* Header Section */}
+        <div className="flex items-center justify-between border-b pb-4 mb-6">
+          <h3 className="text-2xl font-bold text-gray-700">Site Setting</h3>
+          <div className="flex items-center gap-2 text-gray-600">
+            <Link to="/" className="flex items-center gap-1">
               <PiHouseBold size={25} color="#3EA2FA" />
-            </p>
-          </Link>
-          <p className="font-semibold text-xl">/</p>
-          <Link to="/seeting">
-            <p className="font-semibold">Site Seeting</p>
-          </Link>
+            </Link>
+            <span className="font-semibold text-xl">/</span>
+            <Link to="/seeting" className="text-blue-500 hover:underline">
+              Site Setting
+            </Link>
+          </div>
         </div>
+
+        {/* Form Section */}
+        <form onSubmit={handleSubmit(handleDataPost)}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Logo */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="logo">
+                Logo <span className="text-red-500">(if needed)</span>
+              </label>
+              <input
+                {...register("logo", {
+                  validate: (value) => {
+                    if (value && value.length > 0) {
+                      return (
+                        value[0].type.startsWith("image/") ||
+                        "Only image files are allowed"
+                      );
+                    }
+                  },
+                })}
+                id="logo"
+                type="file"
+                accept="image/*"
+                className="block w-full px-4 py-2 text-green-700 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 file:bg-green-600 file:text-white file:border-none file:rounded file:cursor-pointer " 
+              />
+            </div>
+
+            {/* Title */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="title">
+                Title <span className="text-red-500">(if needed)</span>
+              </label>
+              <input
+                defaultValue={initialData?.title}
+                {...register("title")}
+                id="title"
+                type="text"
+                placeholder="Enter site title"
+                className="block w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+
+            {/* Contact Number */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="emergency_contact">
+                Contact No <span className="text-red-500">(if needed)</span>
+              </label>
+              <input
+                defaultValue={initialData?.emergency_contact}
+                {...register("emergency_contact")}
+                id="emergency_contact"
+                type="number"
+                placeholder="Enter contact number"
+                className="block w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="email">
+                E-Mail <span className="text-red-500">(if needed)</span>
+              </label>
+              <input
+                defaultValue={initialData?.email}
+                {...register("email")}
+                id="email"
+                type="email"
+                placeholder="Enter email address"
+                className="block w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+
+            {/* Address */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="address">
+                Address <span className="text-red-500">(if needed)</span>
+              </label>
+              <input
+                defaultValue={initialData?.address}
+                {...register("address")}
+                id="address"
+                type="text"
+                placeholder="Enter address"
+                className="block w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+
+            {/* Global Unit Name */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="unit_name">
+                Global Unit Name <span className="text-red-500">(if needed)</span>
+              </label>
+              <input
+                defaultValue={initialData?.unit_name}
+                {...register("unit_name")}
+                id="unit_name"
+                type="text"
+                placeholder="Enter unit name"
+                className="block w-full px-4 py-2  file::bg-green-600 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+          </div>
+
+          {/* Submit Button */}
+          <div className="mt-6 flex justify-end">
+            <button
+              type="submit"
+              className="px-6 py-2 bg-blue-500 text-white font-medium rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
       </div>
 
-      <div className="md:mt-10 mt-8 bg-white">
-        <div className="p-5">
-          <h4 className="font-semibold text-[20px] mt-2">
-            Software Information
-          </h4>
-          <hr className="mt-2 mb-4" />
-          <form onSubmit={handleSubmit(handleDataPost)}>
-            <div className="grid gap-6 grid-cols-2">
-              <div>
-                <label className="font-semibold" htmlFor="logo">
-                  Logo<span className="text-red-500"> if need</span>{" "}
-                </label>
-                <input
-                  {...register("logo", {
-                    validate: (value) => {
-                      if (value && value.length > 0) {
-                        return (
-                          value[0].type.startsWith("image/") ||
-                          "Only image files are allowed"
-                        );
-                      }
-                    },
-                  })}
-                  id="logo"
-                  type="file"
-                  accept="image/*"
-                  className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
-                />
-              </div>
-              <div>
-                <label className="font-semibold" htmlFor="title">
-                  Title<span className="text-red-500"> if need</span>{" "}
-                </label>
-                <input
-                  defaultValue={initialData?.title}
-                  {...register("title")}
-                  id="title"
-                  type="text"
-                  className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
-                />
-              </div>
-              <div>
-                <label className="font-semibold" htmlFor="emergency_contact">
-                  Contact No<span className="text-red-500"> if need</span>{" "}
-                </label>
-                <input
-                  defaultValue={initialData?.emergency_contact}
-                  {...register("emergency_contact")}
-                  id="emergency_contact"
-                  type="number"
-                  className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
-                />
-              </div>
-              <div>
-                <label className="font-semibold" htmlFor="email">
-                  E-Mail
-                  <span className="text-red-500"> if need</span>{" "}
-                </label>
-                <input
-                  defaultValue={initialData?.email}
-                  {...register("email")}
-                  id="email"
-                  type="text"
-                  className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
-                />
-              </div>
-              <div>
-                <label className="font-semibold" htmlFor="address">
-                  Address
-                  <span className="text-red-500"> if need</span>{" "}
-                </label>
-                <input
-                  defaultValue={initialData?.address}
-                  {...register("address")}
-                  id="address"
-                  type="text"
-                  className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
-                />
-              </div>
-              <div>
-                <label className="font-semibold" htmlFor="unit_name">
-                  Global Unit Name
-                  <span className="text-red-500"> if need</span>{" "}
-                </label>
-                <input
-                  defaultValue={initialData?.unit_name}
-                  {...register("unit_name")}
-                  id="unit_name"
-                  type="text"
-                  className="block w-full px-2 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-xl"
-                />
-              </div>
-            </div>
-            {}
-            {/* {user?.role_id?.site_setting_update && ( */}
-            <div className="mt-2 flex items-center justify-end">
-              <button
-                type="submit"
-                className="btn bg-green-500 hover:bg-green-400 text-white border border-gray-300 rounded-md px-5 py-2"
-              >
-                Submit
-              </button>
-            </div>
-            {/* )} */}
-          </form>
-        </div>
-      </div>
     </>
   );
 };

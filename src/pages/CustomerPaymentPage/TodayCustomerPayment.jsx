@@ -1,12 +1,11 @@
-
+import TodayCustomerPaymentTable from "@/components/CustomersPayment/TodayCustomerPaymentTable";
 import { AuthContext } from "@/context/AuthProvider";
 import useDebounced from "@/hooks/useDebounced";
 import { BASE_URL } from "@/utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
-import ARPaymentTable from "./ARPaymentTable";
 
-const CustomerPayment = () => {
+const TodayCustomerPayment = () => {
 
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(10)
@@ -28,17 +27,17 @@ const CustomerPayment = () => {
 
   //Fetch check Data
   const {
-    data: arDatas = [],
+    data: checks = [],
     isLoading,
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/order/ar_order?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=ar_order_show`,
+      `/api/v1/check/today_dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_show`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/order/ar_order?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=ar_order_show`,
+          `${BASE_URL}/check/today_dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_show`,
           {
             credentials: 'include',
           }
@@ -61,31 +60,31 @@ const CustomerPayment = () => {
   })
 
   return (
-    <div className="bg-white rounded-lg py-6 px-4 shadow mx-auto">
-     <div className='flex justify-between mt-6'>
+    <div className="py-6">
+     <div className=''>
         <div>
-          <h1 className='text-2xl'>AR Information</h1>
+          <h1 className='sm:text-2xl text-xl'>Today Payment List</h1>
         </div>
       </div>
-      {/* search AR... */}
-      <div className='mt-3'>
+      {/* search checks... */}
+      <div className='mt-3 flex justify-end'>
         <input
           type='text'
           defaultValue={searchTerm}
           onChange={(e) => handleSearchValue(e.target.value)}
-          placeholder='Search AR...'
+          placeholder='Search checks...'
           className='w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200'
         />
       </div>
 
-      {/*arDatas Payment Table */}
-      <ARPaymentTable
-        arDatas={arDatas}
+      {/*checks Payment Table */}
+      <TodayCustomerPaymentTable
+        checks={checks}
         setPage={setPage}
         setLimit={setLimit}
         page={page}
         limit={limit}
-        totalData={arDatas?.totalData}
+        totalData={checks?.totalData}
         refetch={refetch}
         user={user}
         isLoading={isLoading}
@@ -95,4 +94,4 @@ const CustomerPayment = () => {
   );
 };
 
-export default CustomerPayment;
+export default TodayCustomerPayment;

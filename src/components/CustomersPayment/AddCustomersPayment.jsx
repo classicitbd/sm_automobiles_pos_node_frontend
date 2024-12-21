@@ -142,13 +142,13 @@ const AddCustomersPayment = () => {
 
   return (
     <>
-      <div className="grid grid-cols-6 gap-8">
+      <div className=" ">
         {/* payment form */}
-        <div className="col-span-2 border p-4">
+        <div className="rounded py-6 px-4 max-w-5xl mx-auto shadow bg-white mt-5">
           <div className="sticky top-10">
             <form onSubmit={handleSubmit(handleDataPost)} className="">
               <div className="mt-3">
-                <label className="block text-xs font-medium text-gray-700 mb-1 mt-2">
+                <label className="block text-xs font-medium text-gray-700 mb-2 mt-2">
                   Invoice Number or Customer Phone{" "}
                   <span className="text-red-500">*</span>
                 </label>
@@ -178,8 +178,8 @@ const AddCustomersPayment = () => {
                 />
               </div>
 
-              <div className="mt-3">
-                <label className="block text-xs font-medium text-gray-700 mb-1 mt-2">
+              <div className="mt-2">
+                <label className="block text-xs font-medium text-gray-700 mb-2 mt-2">
                   Payment By
                 </label>
 
@@ -333,18 +333,18 @@ const AddCustomersPayment = () => {
           </div>
         </div>
         {/* customer info and order info */}
-        <div className="col-span-4 border p-4">
+        <div className="max-w-6xl mx-auto">
           {/* customer info */}
           {order_Info && customer_id && (
             <>
-              <div>
+              <div className="mt-8 bg-gray-50 shadow-md py-4 px-3 pb-2">
                 <div className="overflow-x-auto rounded-t-lg">
-                  <p className="text-[20px] font-bold text-gray-800 capitalize text-center mb-6 underline">
+                  <p className="text-[20px] font-bold text-gray-800 uppercase mb-2">
                     Customer Information
                   </p>
-                  <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                    <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                      <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
+                  <table className="min-w-full divide-y divide-gray-200  text-sm">
+                    <thead className="ltr:text-left rtl:text-right">
+                      <tr className=" divide-gray-300 font-semibold text-center text-gray-900">
                         <td className="whitespace-nowrap p-4 ">
                           Customer Name
                         </td>
@@ -375,10 +375,14 @@ const AddCustomersPayment = () => {
                           {order_Info?.customer_id?.customer_address}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {order_Info?.customer_id?.customer_wallet}
+                          {
+                            order_Info?.customer_id?.customer_wallet ? <> {order_Info?.customer_id?.customer_wallet > 0 ? <span className="text-green-600">{order_Info?.customer_id?.customer_wallet}</span> : <span className="text-red-600">{order_Info?.customer_id?.customer_wallet}</span>}</> : '--'
+                          }
+
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {order_Info?.customer_id?.customer_status}
+
+                          {order_Info?.customer_id?.customer_status === 'active' ? <span className="text-green-600">{order_Info?.customer_id?.customer_status}</span> : <span className="text-red-600">{order_Info?.customer_id?.customer_status}</span>}
                         </td>
                       </tr>
                     </tbody>
@@ -390,20 +394,20 @@ const AddCustomersPayment = () => {
           {/* order info */}
           {order_Info && order_id && (
             <>
-              <div>
+              <div className="mt-8 bg-gray-50 shadow-md py-4 px-3 pb-2">
                 <div className="overflow-x-auto rounded-t-lg">
-                  <p className="text-[20px] font-bold text-gray-800 capitalize text-center mb-6 underline">
+                  <p className="text-[20px] font-bold text-gray-800 uppercase mb-2">
                     Order Information
                   </p>
-                  <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                    <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                      <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
+                  <table className="min-w-full divide-y divide-gray-200  text-sm">
+                    <thead className="ltr:text-left rtl:text-right">
+                      <tr className="divide-gray-300 font-semibold text-center text-gray-900">
                         <td className="whitespace-nowrap p-4 ">Invoice ID</td>
                         <td className="whitespace-nowrap p-4 ">Sub Total</td>
                         <td className="whitespace-nowrap p-4 ">Discount</td>
                         <td className="whitespace-nowrap p-4 ">Grand Total</td>
                         <td className="whitespace-nowrap p-4 ">Received Amount</td>
-                        <td className="whitespace-nowrap p-4 ">Due Amount</td>
+                        <td className="whitespace-nowrap p-4 text-red-600">Due Amount</td>
                       </tr>
                     </thead>
 
@@ -412,19 +416,29 @@ const AddCustomersPayment = () => {
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {order_Info?.order_id}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                           {order_Info?.sub_total_amount}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 ">
-                          {order_Info?.discount_percent_amount}%
+                        <td className="whitespace-nowrap py-1.5 font-medium text-purple">
+                          {order_Info?.discount_percent_amount} %
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                           {order_Info?.grand_total_amount}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {order_Info?.received_amount}
+
+
+                          {
+                            order_Info?.received_amount === order_Info?.grand_total_amount ? (
+                              <span className="text-green-600">{order_Info?.received_amount}</span>
+                            ) : order_Info?.received_amount > order_Info?.grand_total_amount ? (
+                              <span className="text-blue-600">{order_Info?.received_amount}</span>
+                            ) : (
+                              <span className="text-yellow-600">{order_Info?.received_amount}</span>
+                            )
+                          }
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-1.5 font-medium text-red-600">
                           {order_Info?.due_amount}
                         </td>
                       </tr>
@@ -437,14 +451,14 @@ const AddCustomersPayment = () => {
           {/* product info */}
           {order_Info && order_id && (
             <>
-              <div>
+              <div className="mt-8 bg-gray-50 shadow-md py-4 px-3 pb-2">
                 <div className="overflow-x-auto rounded-t-lg">
-                  <p className="text-[20px] font-bold text-gray-800 capitalize text-center mb-6 underline">
+                  <p className="text-[20px] font-bold text-gray-800 uppercase mb-2">
                     Product Information
                   </p>
-                  <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                    <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                      <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
+                  <table className="min-w-full divide-y divide-gray-200  text-sm">
+                    <thead className="ltr:text-left rtl:text-right">
+                      <tr className=" divide-gray-300  font-semibold text-center text-gray-900">
                         <td className="whitespace-nowrap p-4 ">Invoice ID</td>
                         <td className="whitespace-nowrap p-4 ">Price</td>
                         <td className="whitespace-nowrap p-4 ">Quantity</td>
@@ -458,14 +472,14 @@ const AddCustomersPayment = () => {
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                             {product?.product_id?.product_name}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                             {product?.product_price}
                           </td>
                           <td className="whitespace-nowrap py-1.5 ">
                             {product?.product_quantity}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {product?.product_total_price}
+                          <td className="whitespace-nowrap py-1.5 font-medium text-blue-600">
+                            {product?.product_total_price ? product?.product_total_price : '--'}
                           </td>
                         </tr>
                       ))}

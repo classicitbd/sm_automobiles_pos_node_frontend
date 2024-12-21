@@ -43,7 +43,7 @@ const ProductUnitTable = ({
               <div className="overflow-x-auto rounded-t-lg">
                 <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                   <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                    <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
+                    <tr className="divide-x divide-gray-300  font-semibold text-center ">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
                       <td className="whitespace-nowrap p-4 ">
                         Product Unit Name
@@ -62,9 +62,8 @@ const ProductUnitTable = ({
                     {product_unitNames?.data?.map((product_unit, i) => (
                       <tr
                         key={product_unit?._id}
-                        className={`divide-x divide-gray-200 ${
-                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                        }`}
+                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                          }`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
@@ -72,7 +71,7 @@ const ProductUnitTable = ({
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {product_unit?.product_unit_name}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 ">
+                        <td className="whitespace-nowrap py-1.5 text-green-600">
                           {"1"} {product_unit?.product_unit_name}
                           {" = "}
                           {product_unit?.product_unit_value}{" "}
@@ -82,7 +81,7 @@ const ProductUnitTable = ({
                           {product_unit?.product_unit_publisher_id?.user_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {product_unit?.product_unit_updated_by?.user_name}
+                          {product_unit?.product_unit_updated_by?.user_name ? product_unit?.product_unit_updated_by?.user_name : '--'}
                         </td>
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                           <button

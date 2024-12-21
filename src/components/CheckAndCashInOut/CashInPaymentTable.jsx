@@ -34,26 +34,26 @@ const CashInPaymentTable = ({
               <div className="overflow-x-auto rounded-t-lg">
                 <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                   <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                    <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
+                    <tr className="divide-x divide-gray-300  font-semibold text-center ">
+                      <th className="whitespace-nowrap p-4 font-medium">
                         SL No
                       </th>
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
+                      <th className="whitespace-nowrap p-4 font-medium">
                         Invoice Id
                       </th>
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
+                      <th className="whitespace-nowrap p-4 font-medium">
                         Date
                       </th>
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
+                      <th className="whitespace-nowrap p-4 font-medium">
                         Pay Amount
                       </th>
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
+                      <th className="whitespace-nowrap p-4 font-medium">
                         Customer Name
                       </th>
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
+                      <th className="whitespace-nowrap p-4 font-medium">
                         Customer Phone
                       </th>
-                      <th className="whitespace-nowrap p-4 font-medium text-gray-900">
+                      <th className="whitespace-nowrap p-4 font-medium">
                         Created By
                       </th>
                     </tr>
@@ -73,7 +73,7 @@ const CashInPaymentTable = ({
                           {income?.invoice_number || "N/A"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {DateTimeFormat(income?.createdAt)}
+                          {DateTimeFormat(income?.createdAt)}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {income?.pay_amount || 0}
@@ -92,7 +92,7 @@ const CashInPaymentTable = ({
                   </tbody>
                 </table>
                 {/* pagination */}
-    
+
                 <Pagination
                   setPage={setPage}
                   setLimit={setLimit}

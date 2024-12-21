@@ -1,9 +1,10 @@
-import CustomerPaymentTable from "@/components/CustomersPayment/CustomerPaymentTable";
+
 import { AuthContext } from "@/context/AuthProvider";
 import useDebounced from "@/hooks/useDebounced";
 import { BASE_URL } from "@/utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
+import ARPaymentTable from "./ARPaymentTable";
 
 const CustomerPayment = () => {
 
@@ -27,17 +28,17 @@ const CustomerPayment = () => {
 
   //Fetch check Data
   const {
-    data: checks = [],
+    data: arDatas = [],
     isLoading,
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/check/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_show`,
+      `/api/v1/order/ar_order?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=ar_order_show`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/check/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_show`,
+          `${BASE_URL}/order/ar_order?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=ar_order_show`,
           {
             credentials: 'include',
           }
@@ -60,31 +61,31 @@ const CustomerPayment = () => {
   })
 
   return (
-    <div className="bg-white rounded-lg py-6 px-4 shadow mx-auto">
-     <div className='flex justify-between mt-6'>
+    <div className="py-6 px-4">
+     <div className=' mt-6'>
         <div>
-          <h1 className='text-2xl'>checks Information</h1>
+          <h1 className='sm:text-2xl text-xl'>AR Information</h1>
         </div>
       </div>
-      {/* search checks... */}
-      <div className='mt-3'>
+      {/* search AR... */}
+      <div className='mt-3 flex justify-end'>
         <input
           type='text'
           defaultValue={searchTerm}
           onChange={(e) => handleSearchValue(e.target.value)}
-          placeholder='Search checks...'
+          placeholder='Search AR...'
           className='w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200'
         />
       </div>
 
-      {/*checks Payment Table */}
-      <CustomerPaymentTable
-        checks={checks}
+      {/*arDatas Payment Table */}
+      <ARPaymentTable
+        arDatas={arDatas}
         setPage={setPage}
         setLimit={setLimit}
         page={page}
         limit={limit}
-        totalData={checks?.totalData}
+        totalData={arDatas?.totalData}
         refetch={refetch}
         user={user}
         isLoading={isLoading}

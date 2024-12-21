@@ -57,13 +57,13 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
       prev.map((item) =>
         item?._id === product_discount_idInfo?._id
           ? {
-              ...item,
-              discount_percent: product_discount,
-              grand_total:
-                product_discount_idInfo?.total_amount -
-                (product_discount_idInfo?.total_amount * product_discount) /
-                  100,
-            }
+            ...item,
+            discount_percent: product_discount,
+            grand_total:
+              product_discount_idInfo?.total_amount -
+              (product_discount_idInfo?.total_amount * product_discount) /
+              100,
+          }
           : item
       )
     );
@@ -143,7 +143,7 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
         autoClose: 1000,
       });
     }
-    // setLoading(true);
+    setLoading(true);
     try {
       if (addProducts?.length === 0) {
         setLoading(true);
@@ -278,14 +278,14 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
 
           {/* customer information */}
           {customerInfo?.customer_name && (
-            <div className="mt-5 overflow-x-auto rounded">
-              <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border rounded">
-                <thead className=" bg-[#fff9ee] ">
-                  <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
-                    <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
+            <div className="mt-5 overflow-x-auto rounded shadow-md">
+              <table className="min-w-full  bg-white text-sm">
+                <thead >
+                  <tr className=" font-semibold text-center ">
+                    <th className="divide-x divide-gray-300  font-semibold text-center py-2 px-1">
                       Name
                     </th>
-                    <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
+                    <th className="divide-x divide-gray-300  font-semibold text-center  py-2 px-1">
                       Phone
                     </th>
                     {/* <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
@@ -294,11 +294,11 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td className="whitespace-nowrap py-3 px-2 font-medium text-gray-700 text-center border">
+                  <tr className="bg-white">
+                    <td className="whitespace-nowrap py-3 px-2 font-medium text-gray-900 text-center">
                       {customerInfo?.customer_name}
                     </td>
-                    <td className="whitespace-nowrap py-3 px-2 font-medium text-gray-700 text-center border">
+                    <td className="whitespace-nowrap py-3 px-2 font-medium text-gray-900 text-center">
                       {customerInfo?.customer_phone}
                     </td>
                     {/* <td className="whitespace-nowrap py-3 px-2 font-medium text-gray-700 text-center border">
@@ -321,38 +321,38 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
           {addProducts?.length > 0 && (
             <>
               {/* product information */}
-              <p className="font-semibold underline text-gray-700 sm:mb-1 mt-2 text-center">
-                Product Information:
+              <p className="font-semibold  text-gray-700  mt-2 text-xl">
+                Product Information :
               </p>
-              <div className="sm:mt-5 overflow-x-auto rounded">
-                <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border rounded">
-                  <thead className=" bg-[#fff9ee] ">
-                    <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
-                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-3">
+              <div className="overflow-x-auto rounded shadow-md">
+                <table className="min-w-full  rounded">
+                  <thead className="">
+                    <tr className=" font-semibold text-center ">
+                      <th className=" font-semibold text-center  py-2 px-3">
                         ID
                       </th>
-                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-3">
+                      <th className="  font-semibold text-center  py-2 px-3">
                         Name
                       </th>
-                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-3">
+                      <th className="  font-semibold text-center  py-2 px-3">
                         Price
                       </th>
-                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-3">
+                      <th className="  font-semibold text-center  py-2 px-3">
                         Quantity
                       </th>
-                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-3">
-                        Mesurement
+                      <th className="  font-semibold text-center  py-2 px-3">
+                       Unit Type
                       </th>
-                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-3">
+                      <th className="  font-semibold text-center  py-2 px-3">
                         Total
                       </th>
-                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-3">
+                      <th className="  font-semibold text-center  py-2 px-3">
                         Discount (%)
                       </th>
-                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-3">
+                      <th className="  font-semibold text-center  py-2 px-3">
                         Grand Total
                       </th>
-                      <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-3">
+                      <th className="  font-semibold text-center  py-2 px-3">
                         Action
                       </th>
                     </tr>
@@ -360,17 +360,18 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                   <tbody>
                     {addProducts?.length > 0 &&
                       addProducts?.map((product, index) => (
-                        <tr key={index}>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 text-center border px-3">
+                        <tr key={index} className={`text-center ${index % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                          } hover:bg-blue-100`}>
+                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 text-center  px-3">
                             {product?.product_id}
                           </td>
-                          <td className="whitespace-nowrap font-medium text-gray-700 text-center border px-3">
+                          <td className="whitespace-nowrap font-medium text-gray-700 text-center  px-3">
                             {product?.product_name}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 text-center border px-3">
+                          <td className="whitespace-nowrap py-1.5 font-medium text-blue-600 text-center  px-3">
                             {product?.product_price}
                           </td>
-                          <td className="text-center p-2 border px-3">
+                          <td className="text-center p-2  px-3">
                             <div className="flex items-center justify-between">
                               <button
                                 onClick={() => {
@@ -378,33 +379,33 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                                     prev.map((item) =>
                                       item._id === product._id
                                         ? {
-                                            ...item,
-                                            purchase_quantity:
-                                              item?.purchase_quantity > 1
-                                                ? item?.purchase_quantity - 1
-                                                : item?.purchase_quantity,
-                                            total_amount:
-                                              item?.purchase_quantity > 1
-                                                ? item?.total_amount -
-                                                  product?.product_price
-                                                : item?.total_amount,
-                                            grand_total:
-                                              item?.purchase_quantity > 1
-                                                ? item?.total_amount -
-                                                  product?.product_price -
-                                                  ((item?.total_amount -
-                                                    product?.product_price) *
-                                                    item?.discount_percent) /
-                                                    100
-                                                : item?.grand_total,
-                                            total_messurement:
-                                              item?.purchase_quantity > 1
-                                                ? (product?.purchase_quantity -
-                                                    1) *
-                                                  product?.product_unit_id
-                                                    ?.product_unit_value
-                                                : item?.total_messurement,
-                                          }
+                                          ...item,
+                                          purchase_quantity:
+                                            item?.purchase_quantity > 1
+                                              ? item?.purchase_quantity - 1
+                                              : item?.purchase_quantity,
+                                          total_amount:
+                                            item?.purchase_quantity > 1
+                                              ? item?.total_amount -
+                                              product?.product_price
+                                              : item?.total_amount,
+                                          grand_total:
+                                            item?.purchase_quantity > 1
+                                              ? item?.total_amount -
+                                              product?.product_price -
+                                              ((item?.total_amount -
+                                                product?.product_price) *
+                                                item?.discount_percent) /
+                                              100
+                                              : item?.grand_total,
+                                          total_messurement:
+                                            item?.purchase_quantity > 1
+                                              ? (product?.purchase_quantity -
+                                                1) *
+                                              product?.product_unit_id
+                                                ?.product_unit_value
+                                              : item?.total_messurement,
+                                        }
                                         : item
                                     )
                                   );
@@ -423,49 +424,49 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                                       prev.map((item) =>
                                         item._id === product._id
                                           ? {
-                                              ...item,
-                                              purchase_quantity:
-                                                newQuantity <
+                                            ...item,
+                                            purchase_quantity:
+                                              newQuantity <
                                                 product?.product_quantity
-                                                  ? newQuantity
-                                                  : product?.product_quantity,
-                                              total_amount:
-                                                newQuantity <
+                                                ? newQuantity
+                                                : product?.product_quantity,
+                                            total_amount:
+                                              newQuantity <
                                                 product?.product_quantity
-                                                  ? newQuantity *
-                                                    product?.product_price
-                                                  : product?.product_quantity *
-                                                    product?.product_price,
-                                              grand_total:
-                                                newQuantity <
+                                                ? newQuantity *
+                                                product?.product_price
+                                                : product?.product_quantity *
+                                                product?.product_price,
+                                            grand_total:
+                                              newQuantity <
                                                 product?.product_quantity
-                                                  ? newQuantity *
-                                                      product?.product_price -
-                                                    (newQuantity *
-                                                      product?.product_price *
-                                                      item?.discount_percent) /
-                                                      100
-                                                  : product?.product_quantity *
-                                                      product?.product_price -
-                                                    (product?.product_quantity *
-                                                      product?.product_price *
-                                                      item?.discount_percent) /
-                                                      100,
-                                              total_messurement:
-                                                newQuantity <
+                                                ? newQuantity *
+                                                product?.product_price -
+                                                (newQuantity *
+                                                  product?.product_price *
+                                                  item?.discount_percent) /
+                                                100
+                                                : product?.product_quantity *
+                                                product?.product_price -
+                                                (product?.product_quantity *
+                                                  product?.product_price *
+                                                  item?.discount_percent) /
+                                                100,
+                                            total_messurement:
+                                              newQuantity <
                                                 product?.product_quantity
-                                                  ? newQuantity *
-                                                    product?.product_unit_id
-                                                      ?.product_unit_value
-                                                  : item?.total_messurement,
-                                            }
+                                                ? newQuantity *
+                                                product?.product_unit_id
+                                                  ?.product_unit_value
+                                                : item?.total_messurement,
+                                          }
                                           : item
                                       )
                                     );
                                   }
                                 }}
                                 value={product?.purchase_quantity}
-                                className="rounded-md border-gray-200 shadow-sm sm:text-sm p-1 border-2 w-16 text-center"
+                                className="rounded-md  shadow-sm sm:text-sm p-1 w-16 text-center"
                               />
                               <button
                                 type="button"
@@ -474,37 +475,37 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                                     prev.map((item) =>
                                       item._id === product._id
                                         ? {
-                                            ...item,
-                                            purchase_quantity:
-                                              item?.purchase_quantity <
+                                          ...item,
+                                          purchase_quantity:
+                                            item?.purchase_quantity <
                                               product?.product_quantity
-                                                ? item?.purchase_quantity + 1
-                                                : item?.purchase_quantity,
-                                            total_amount:
-                                              item?.purchase_quantity <
+                                              ? item?.purchase_quantity + 1
+                                              : item?.purchase_quantity,
+                                          total_amount:
+                                            item?.purchase_quantity <
                                               product?.product_quantity
-                                                ? item?.total_amount +
-                                                  product?.product_price
-                                                : item?.total_amount,
-                                            grand_total:
-                                              item?.purchase_quantity <
+                                              ? item?.total_amount +
+                                              product?.product_price
+                                              : item?.total_amount,
+                                          grand_total:
+                                            item?.purchase_quantity <
                                               product?.product_quantity
-                                                ? item?.total_amount +
-                                                  product?.product_price -
-                                                  ((item?.total_amount +
-                                                    product?.product_price) *
-                                                    item?.discount_percent) /
-                                                    100
-                                                : item?.grand_total,
-                                            total_messurement:
-                                              item?.purchase_quantity <
+                                              ? item?.total_amount +
+                                              product?.product_price -
+                                              ((item?.total_amount +
+                                                product?.product_price) *
+                                                item?.discount_percent) /
+                                              100
+                                              : item?.grand_total,
+                                          total_messurement:
+                                            item?.purchase_quantity <
                                               product?.product_quantity
-                                                ? (product?.purchase_quantity +
-                                                    1) *
-                                                  product?.product_unit_id
-                                                    ?.product_unit_value
-                                                : item?.total_messurement,
-                                          }
+                                              ? (product?.purchase_quantity +
+                                                1) *
+                                              product?.product_unit_id
+                                                ?.product_unit_value
+                                              : item?.total_messurement,
+                                        }
                                         : item
                                     )
                                   );
@@ -515,17 +516,17 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                               </button>
                             </div>
                           </td>
-                          <td className="whitespace-nowrap font-medium text-gray-700 text-center border px-3">
+                          <td className="whitespace-nowrap font-medium text-gray-700 text-center  px-3">
                             {product?.purchase_quantity}{" "}
                             {product?.product_unit_id?.product_unit_name}
                             {" = "}
                             {product?.total_messurement}{" "}
                             {settingData?.unit_name}
                           </td>
-                          <td className="whitespace-nowrap font-medium text-gray-700 text-center border px-3">
+                          <td className="whitespace-nowrap font-medium text-green-600 text-center  px-3">
                             {product?.total_amount}
                           </td>
-                          <td className="whitespace-nowrap font-medium text-gray-700 text-center border px-3">
+                          <td className="whitespace-nowrap font-medium text-purple text-center  px-3">
                             <input
                               value={product?.discount_percent} // Bind input to state
                               onChange={(e) => {
@@ -554,13 +555,13 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                               }}
                               type="number"
                               placeholder="Discount On SubTotal"
-                              className="rounded-md border-gray-200 shadow-sm sm:text-sm p-1 border-2 w-16 text-center px-3"
+                              className="rounded-md -gray-200 shadow-sm sm:text-sm p-1 -2 w-16 text-center px-3"
                             />
                           </td>
-                          <td className="whitespace-nowrap font-medium text-gray-700 text-center border px-3">
+                          <td className="whitespace-nowrap font-medium text-green-600 text-center  px-3">
                             {product?.grand_total.toFixed(2)}
                           </td>
-                          <td className="border p-4">
+                          <td className=" p-4">
                             <div className="flex items-center justify-center">
                               <MdDeleteForever
                                 onClick={() => {
@@ -587,16 +588,16 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
           {addProducts?.length && (
             <>
               <div className="grid grid-cols-2 gap-y-4 gap-x-1 sm:gap-x-2">
-                <h5>Sub Total</h5>
+                <h5>Sub Total  </h5>
                 <p className="font-bold">
-                  <span className="">: </span>
-                  {sub_total.toFixed(2)}
+                  <span> :  <span className=" text-green-600">{sub_total.toFixed(2)}</span> </span>
+                
                 </p>
                 <h5 className="">
-                  Discount percent <small>(max 99)</small>
+                  Discount percent <small className="text-purple">(max 99)</small>
                 </h5>
                 <p className="">
-                 
+
                   <input
                     value={discount_amount} // Bind input to state
                     onChange={(e) => {
@@ -620,13 +621,13 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                     step="0.01" // Ensure step supports decimal precision
                     type="number"
                     placeholder="Discount On SubTotal"
-                    className="border rounded-md p-1"
+                    className=" rounded-md p-1 text-purple"
                   />
                 </p>
                 <h5 className="">Grand Total</h5>
                 <p className=" font-bold">
-                  <span className="mr-2">: </span>
-                  {grand_total.toFixed(2)}
+                  <span > : <span className="mr-2 text-green-600">{grand_total.toFixed(2)}</span> </span>
+                 
                 </p>
                 <h5 className="">Select Payment Option</h5>
                 <div className="">
@@ -662,27 +663,27 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                 </div>
                 {(payment_type == "full-payment" ||
                   payment_type == "partial-payment") && (
-                  <h5 className="">Payment Method</h5>
-                )}
+                    <h5 className="">Payment Method</h5>
+                  )}
                 {/* {payment_type !== "due-payment" select paymrnt method */}
                 {(payment_type == "full-payment" ||
                   payment_type == "partial-payment") && (
-                  <div className="">
-                    <Select
-                      id="payment_method"
-                      name="payment_method"
-                      aria-label="Payment By"
-                      required
-                      isClearable
-                      options={partialPaymentOption}
-                      getOptionLabel={(x) => x?.label}
-                      getOptionValue={(x) => x?.value}
-                      onChange={(selectedOption) => {
-                        setPaymentBy(selectedOption?.value);
-                      }}
-                    />
-                  </div>
-                )}
+                    <div className="">
+                      <Select
+                        id="payment_method"
+                        name="payment_method"
+                        aria-label="Payment By"
+                        required
+                        isClearable
+                        options={partialPaymentOption}
+                        getOptionLabel={(x) => x?.label}
+                        getOptionValue={(x) => x?.value}
+                        onChange={(selectedOption) => {
+                          setPaymentBy(selectedOption?.value);
+                        }}
+                      />
+                    </div>
+                  )}
                 {payment_type == "partial-payment" && (
                   <h5 className="">Pay Amount</h5>
                 )}
@@ -720,7 +721,7 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                       min={0.01} // Allow decimal values with minimum 0.01
                       step="0.01" // Ensure step supports decimal precision
                       placeholder="Pay Amount"
-                      className=" w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                      className=" w-full rounded-md -gray-200 shadow-sm sm:text-sm p-2 -2"
                     />
                     {errors?.pay_amount && (
                       <p className="text-red-500 text-xs mt-1">
@@ -805,12 +806,12 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                 <h5 className="">Received Amount</h5>
                 <p className="font-bold">
                   <span className="">: </span>
-                  {received_amount.toFixed(2)}
+                  <span className="text-blue-600">{received_amount.toFixed(2)}</span>
                 </p>
                 <h5 className="">Due Amount</h5>
                 <p className="font-bold">
                   <span className="">: </span>
-                  {due_amount.toFixed(2)}
+                  <span className="text-red-600">{due_amount.toFixed(2)}</span>  
                 </p>
               </div>
             </>

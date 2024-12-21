@@ -29,88 +29,87 @@ const PurchaseListTable = ({
             <div className="mt-5 overflow-x-auto rounded">
               <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border rounded">
                 <thead className=" bg-[#fff9ee] ">
-                  <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                  <tr className="divide-x divide-gray-300  font-semibold text-center ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       SL
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Product Name
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Product Id
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Invoice Id
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Purchase Quantity
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Purchase Amount
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Total Amount
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Paid Amount
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Due Amount
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Supplier Name
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Supplier Phone
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Created By
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 text-center ">
-                  {purchaseLists?.data?.map((purchaselist, i) => (
+                  {purchaseLists?.data?.map((purchaseList, i) => (
                     <tr
-                      key={purchaselist?._id}
-                      className={`divide-x divide-gray-200 ${
-                        i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                      }`}
+                      key={purchaseList?._id}
+                      className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                        }`}
                     >
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                         {serialNumber + i + 1}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {purchaselist?.product_id?.product_name}
+                        {purchaseList?.product_id?.product_name}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {purchaselist?.product_id?.product_id}
+                        {purchaseList?.product_id?.product_id}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {purchaselist?.invoice_id}
+                        {purchaseList?.invoice_id}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {purchaselist?.product_quantity}
+                        {purchaseList?.product_quantity}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {purchaselist?.product_buying_price}
+                        {purchaseList?.product_buying_price}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {purchaselist?.total_amount}
+                        {purchaseList?.total_amount}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {purchaselist?.paid_amount}
+                        {purchaseList?.paid_amount}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {purchaselist?.due_amount}
+                        {purchaseList?.due_amount}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {purchaselist?.supplier_id?.supplier_name}
+                        {purchaseList?.supplier_id?.supplier_name}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {purchaselist?.supplier_id?.supplier_phone}
+                        {purchaseList?.supplier_id?.supplier_phone}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {purchaselist?.stock_publisher_id?.user_name}
+                        {purchaseList?.stock_publisher_id?.user_name}
                       </td>
                     </tr>
                   ))}

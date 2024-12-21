@@ -28,56 +28,60 @@ const ProfitTable = ({
         <TableLoadingSkeleton />
       ) : (
         <div>
-          <div className="rounded-lg border border-gray-200 mt-6">
+            <div className="shadow-md mt-6 rounded-lg">
             {profits?.data?.length > 0 ? (
-              <div className="overflow-x-auto rounded-t-lg">
-                <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                  <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                    <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
+              <div className="overflow-x-auto ">
+                <table className="min-w-full  text-sm">
+                  <thead >
+                    <tr className=" font-semibold text-center ">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
-                      <td className="whitespace-nowrap p-4 ">Invoice No</td>
+                        <td className="whitespace-nowrap p-4 ">Invoice No</td>
+                        <td className="whitespace-nowrap p-4 ">Create Date</td>
                       <td className="whitespace-nowrap p-4 ">Total Amount</td>
                       <td className="whitespace-nowrap p-4 ">
                         Received Amount
-                      </td>
+                        </td>
+                        <td className="whitespace-nowrap p-4 ">Profit Amount</td>
                       <td className="whitespace-nowrap p-4 ">Due Amount</td>
-                      <td className="whitespace-nowrap p-4 ">Profit Amount</td>
+                     
 
-                      <td className="whitespace-nowrap p-4 ">Create Date</td>
+                     
                     </tr>
                   </thead>
 
-                  <tbody className="divide-y divide-gray-200 text-center">
+                  <tbody >
                     {profits?.data?.map((profit, i) => (
                       <tr
                         key={profit?._id}
-                        className={`divide-x divide-gray-200 ${
-                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                        }`}
+                        className={`text-center ${i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                          } hover:bg-blue-100`}
                       >
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                           {serialNumber + i + 1}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                           {profit?.order_id}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {profit?.sub_total_amount}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {profit?.received_amount}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {profit?.due_amount}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {profit?.profit_amount}
-                        </td>
-
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                           {" "}
                           {DateTimeFormat(profit?.createdAt)}
                         </td>
+                        <td className="whitespace-nowrap py-3 font-medium text-green-600">
+                          {profit?.sub_total_amount}
+                        </td>
+
+                        <td className="whitespace-nowrap py-3 font-medium text-blue-600">
+                          {profit?.received_amount}
+                        </td>
+                        <td className="whitespace-nowrap py-3 font-medium text-green-600">
+                          {profit?.profit_amount}
+                        </td>
+                        <td className="whitespace-nowrap py-3 font-medium text-red-600">
+                          {profit?.due_amount}
+                        </td>
+                       
+
+                      
                       </tr>
                     ))}
                   </tbody>

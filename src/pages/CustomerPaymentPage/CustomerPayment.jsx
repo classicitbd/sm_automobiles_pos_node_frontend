@@ -1,11 +1,11 @@
-import TodayCustomerPaymentTable from "@/components/CustomersPayment/TodayCustomerPaymentTable";
+import CustomerPaymentTable from "@/components/CustomersPayment/CustomerPaymentTable";
 import { AuthContext } from "@/context/AuthProvider";
 import useDebounced from "@/hooks/useDebounced";
 import { BASE_URL } from "@/utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
 
-const TodayCustomerPayment = () => {
+const CustomerPayment = () => {
 
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(10)
@@ -32,12 +32,12 @@ const TodayCustomerPayment = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/check/today_dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_show`,
+      `/api/v1/check/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_show`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/check/today_dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_show`,
+          `${BASE_URL}/check/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_show`,
           {
             credentials: 'include',
           }
@@ -60,14 +60,14 @@ const TodayCustomerPayment = () => {
   })
 
   return (
-    <div className="bg-white rounded-lg py-6 px-4 shadow mx-auto">
-     <div className='flex justify-between mt-6'>
-        <div>
-          <h1 className='text-2xl'>checks Information</h1>
+    <div className="py-6">
+   
+        <div className="mt-6">
+          <h1 className='sm:text-2xl text-xl'>Payment List Information</h1>
         </div>
-      </div>
+    
       {/* search checks... */}
-      <div className='mt-3'>
+      <div className='mt-3 flex justify-end'>
         <input
           type='text'
           defaultValue={searchTerm}
@@ -78,7 +78,7 @@ const TodayCustomerPayment = () => {
       </div>
 
       {/*checks Payment Table */}
-      <TodayCustomerPaymentTable
+      <CustomerPaymentTable
         checks={checks}
         setPage={setPage}
         setLimit={setLimit}
@@ -94,4 +94,4 @@ const TodayCustomerPayment = () => {
   );
 };
 
-export default TodayCustomerPayment;
+export default CustomerPayment;

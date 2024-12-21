@@ -65,29 +65,29 @@ const AllStaffTable = ({
               <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border rounded">
                 {" "}
                 <thead className=" bg-[#fff9ee] ">
-                  <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                  <tr className="divide-x divide-gray-300  font-semibold text-center ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Staff Name
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Staff Phone
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Staff Salary
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Staff Address
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Staff Role
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Status
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Created By
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5   text-gray-800 ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Updated By
                     </th>
                     <th className="px-4 py-2.5 text-center">Action</th>
@@ -97,9 +97,8 @@ const AllStaffTable = ({
                   {staffData?.map((user, i) => (
                     <tr
                       key={user?._id}
-                      className={`divide-x divide-gray-200 ${
-                        i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                      }`}
+                      className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                        }`}
                     >
                       <td className="whitespace-nowrap px-4 py-2 font-semibold">
                         {user?.user_name}
@@ -107,7 +106,7 @@ const AllStaffTable = ({
                       <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize">
                         {user?.user_phone ? user?.user_phone : "-"}
                       </td>
-                      <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize">
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize text-green-600">
                         {user?.user_salary ? user?.user_salary : "-"}
                       </td>
                       <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize">
@@ -118,7 +117,7 @@ const AllStaffTable = ({
                           ? user?.user_role_id?.role_name
                           : "-"}
                       </td>
-                      <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize">
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize text-green-600">
                         {user?.user_status}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">

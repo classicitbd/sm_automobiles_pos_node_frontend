@@ -250,7 +250,7 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
           <div className="mt-5 overflow-x-auto rounded">
             <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border rounded">
               <thead className=" bg-[#fff9ee] ">
-                <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
+                <tr className="divide-x divide-gray-300  font-semibold text-center ">
                   <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
                     Name
                   </th>
@@ -306,7 +306,7 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
             <div className="mt-5 overflow-x-auto rounded">
               <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border rounded">
                 <thead className=" bg-[#fff9ee] ">
-                  <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
+                  <tr className="divide-x divide-gray-300  font-semibold text-center ">
                     <th className="divide-x divide-gray-300  font-semibold text-center text-gray-900 py-2 px-1">
                       Image
                     </th>
@@ -354,17 +354,17 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                                   prev.map((item) =>
                                     item._id === product._id
                                       ? {
-                                          ...item,
-                                          purchase_quantity:
-                                            item.purchase_quantity > 1
-                                              ? item.purchase_quantity - 1
-                                              : item.purchase_quantity,
-                                          total_amount:
-                                            item.purchase_quantity > 1
-                                              ? item.total_amount -
-                                                product?.product_price
-                                              : item.total_amount,
-                                        }
+                                        ...item,
+                                        purchase_quantity:
+                                          item.purchase_quantity > 1
+                                            ? item.purchase_quantity - 1
+                                            : item.purchase_quantity,
+                                        total_amount:
+                                          item.purchase_quantity > 1
+                                            ? item.total_amount -
+                                            product?.product_price
+                                            : item.total_amount,
+                                      }
                                       : item
                                   )
                                 );
@@ -383,20 +383,20 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                                     prev.map((item) =>
                                       item._id === product._id
                                         ? {
-                                            ...item,
-                                            purchase_quantity:
-                                              newQuantity <
+                                          ...item,
+                                          purchase_quantity:
+                                            newQuantity <
                                               product?.product_quantity
-                                                ? newQuantity
-                                                : product?.product_quantity,
-                                            total_amount:
-                                              newQuantity <
+                                              ? newQuantity
+                                              : product?.product_quantity,
+                                          total_amount:
+                                            newQuantity <
                                               product?.product_quantity
-                                                ? newQuantity *
-                                                  product?.product_price
-                                                : product?.product_quantity *
-                                                  product?.product_price,
-                                          }
+                                              ? newQuantity *
+                                              product?.product_price
+                                              : product?.product_quantity *
+                                              product?.product_price,
+                                        }
                                         : item
                                     )
                                   );
@@ -412,19 +412,19 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
                                   prev.map((item) =>
                                     item._id === product._id
                                       ? {
-                                          ...item,
-                                          purchase_quantity:
-                                            item.purchase_quantity <
+                                        ...item,
+                                        purchase_quantity:
+                                          item.purchase_quantity <
                                             product?.product_quantity
-                                              ? item.purchase_quantity + 1
-                                              : item.purchase_quantity,
-                                          total_amount:
-                                            item.purchase_quantity <
+                                            ? item.purchase_quantity + 1
+                                            : item.purchase_quantity,
+                                        total_amount:
+                                          item.purchase_quantity <
                                             product?.product_quantity
-                                              ? item.total_amount +
-                                                product?.product_price
-                                              : item.total_amount,
-                                        }
+                                            ? item.total_amount +
+                                            product?.product_price
+                                            : item.total_amount,
+                                      }
                                       : item
                                   )
                                 );

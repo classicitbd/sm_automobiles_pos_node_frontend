@@ -86,6 +86,7 @@ const CustomerPaymentTable = ({
       }
     });
   };
+  console.log(checks);
 
   return (
     <>
@@ -93,90 +94,98 @@ const CustomerPaymentTable = ({
         <TableLoadingSkeleton />
       ) : (
         <div>
-          <div className="rounded-lg border border-gray-200 mt-6">
+          <div className="rounded-lg shadow-md mt-3">
             {checks?.data?.length > 0 ? (
-              <div className="overflow-x-auto rounded-t-lg">
-                <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                  <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                    <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
-                      <td className="whitespace-nowrap p-4 ">SL No</td>
-                      <td className="whitespace-nowrap p-4 ">Invoice No</td>
-                      <td className="whitespace-nowrap p-4 ">Customer Name</td>
-                      <td className="whitespace-nowrap p-4 ">Customer Phone</td>
-                      <td className="whitespace-nowrap p-4 ">Order Amount</td>
-                      <td className="whitespace-nowrap p-4 ">Pay Amount</td>
-                      <td className="whitespace-nowrap p-4 ">Payment Method</td>
-                      <td className="whitespace-nowrap p-4 ">Bank Name</td>
-                      <td className="whitespace-nowrap p-4 ">Check Number</td>
-                      <td className="whitespace-nowrap p-4 ">
-                        Check Withdraw Date
-                      </td>
-                      <td className="whitespace-nowrap p-4 ">Status</td>
-                      <td className="whitespace-nowrap p-4 ">Created By</td>
-                      <td className="whitespace-nowrap p-4 ">Updated By</td>
+              <div className="overflow-x-auto rounded-lg">
+                <table className="min-w-full  text-sm">
+                  <thead >
+                    <tr className=" font-semibold text-center ">
+                      <td className="whitespace-nowrap py-4 px-2 ">SL No</td>
+                      <td className="whitespace-nowrap py-4 px-2 ">Invoice No</td>
+                      <td className="whitespace-nowrap py-4 px-2 ">Customer Name</td>
+                        <td className="whitespace-nowrap py-4 px-2 ">Customer Phone</td>
+                        <td className="whitespace-nowrap py-4 px-2 ">Created By</td>
+                        <td className="whitespace-nowrap py-4 px-2 ">Updated By</td>
+                        <td className="whitespace-nowrap py-4 px-2 ">
+                          Check Withdraw Date
+                        </td>
 
-                      <td className="whitespace-nowrap p-4 ">Action</td>
+                        <td className="whitespace-nowrap py-4 px-2 ">Check Number</td>
+                        <td className="whitespace-nowrap py-4 px-2 ">Payment Method</td>
+                        <td className="whitespace-nowrap py-4 px-2 ">Bank Name</td>
+
+
+                        <td className="whitespace-nowrap py-4 px-2 ">Status</td>
+                      <td className="whitespace-nowrap py-4 px-2 ">Order Amount</td>
+                      <td className="whitespace-nowrap py-4 px-2 ">Pay Amount</td>
+                     
+                     
+
+                      <td className="whitespace-nowrap py-4 px-2 ">Action</td>
                     </tr>
                   </thead>
 
-                  <tbody className="divide-y divide-gray-200 text-center">
+                  <tbody >
                     {checks?.data?.map((check, i) => (
                       <tr
                         key={check?._id}
-                        className={`divide-x divide-gray-200 ${
-                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                        }`}
+                        className={`text-center ${i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                          } hover:bg-blue-100`}
                       >
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700">
                           {serialNumber + i + 1}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700">
                           {check?.invoice_number}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700">
                           {check?.customer_id?.customer_name}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700">
                           {check?.customer_id?.customer_phone}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {check?.order_id?.grand_total_amount}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {check?.pay_amount}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 capitalize">
-                          {check?.payment_method}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 capitalize">
-                          {check?.bank_id?.bank_name || "-"}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 capitalize">
-                          {check?.check_number || "-"}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 capitalize">
-                          {check?.check_withdraw_date || "-"}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 capitalize">
-                          {check?.check_status || "-"}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700">
                           {check?.check_publisher_id?.user_name}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {check?.check_updated_by?.user_name || "-"}
+                        <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700">
+                          {check?.check_updated_by?.user_name || '--'}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 px-2 text-gray-700 flex items-center">
+                        <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700 capitalize">
+                          {check?.check_withdraw_date || "--"}
+                        </td>
+                        <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700 capitalize">
+                          {check?.check_number || "--"}
+                        </td>
+                        <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700 capitalize">
+                          {check?.payment_method == 'cash' ? <span className="text-secondary-700">{check?.payment_method}</span> : <span className="text-purple">{check?.payment_method}</span>}
+                        </td>
+                        <td className="whitespace-nowrap py-3 px-1 font-medium text-blue-600 capitalize">
+                          {check?.bank_id?.bank_name || "--"}
+                        </td>
+
+
+                        <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700 capitalize">
+                          {check?.check_status == "pending" ? <span className="text-yellow-500">{check?.check_status}</span> : <span className="text-green-600">{check?.check_status}</span>}
+                        </td>
+
+                        <td className="whitespace-nowrap py-3 px-1 font-medium text-blue-600">
+                          {check?.order_id?.grand_total_amount}
+                        </td>
+                        <td className="whitespace-nowrap py-3 px-1 font-medium text-green-600">
+                          {check?.pay_amount}
+                        </td>
+                       
+                        <td className="whitespace-nowrap py-3 px-1  text-gray-700 flex items-center">
                           {check?.check_status == "pending" && (
                             <select
                               onChange={(e) =>
                                 handleOrderStatus(e.target.value, check)
                               }
                               id=""
-                              className="block w-full px-1 py-1 text-gray-700 bg-white border border-gray-200 rounded-xl cursor-pointer"
+                              className="w-full block py-1 text-gray-700 bg-white border border-gray-200 rounded-xl cursor-pointer"
                             >
                               <option selected disabled>
-                                Select A Status
+                                Select Status
                               </option>
                               <option value="approved">Approved</option>
                               <option value="rejected">Rejected</option>

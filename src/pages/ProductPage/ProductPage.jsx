@@ -62,10 +62,10 @@ const ProductPage = () => {
   });
 
   return (
-    <div className="bg-white rounded py-6 px-4 shadow">
-      <div className="flex justify-between mt-6">
+    <div className="rounded py-6 px-4">
+      <div className="flex justify-between items-center mt-6">
         <div>
-          <h1 className="text-2xl">All Product List </h1>
+          <h1 className="text-xl sm:text-2xl ">All Product List </h1>
         </div>
         <div>
           <Link to="/add-product">
@@ -73,7 +73,7 @@ const ProductPage = () => {
           </Link>
         </div>
       </div>
-      <div className="mt-3">
+      <div className="mt-8 flex justify-end">
         <input
           type="text"
           defaultValue={searchTerm}

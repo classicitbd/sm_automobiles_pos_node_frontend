@@ -10,7 +10,7 @@ import AddStaffRolePage from "@/pages/StaffAndRolePage/AddStaffRolePage/AddStaff
 import BankPage from "@/pages/BankPage/BankPage";
 import CustomersPage from "@/pages/CustomersPage/CustomersPage";
 import BrandPage from "@/pages/BrandPage/BrandPage";
-import CustomerPayment from "@/pages/CustomersPage/CustomerPaymentPage/CustomerPayment";
+import CustomerPayment from "@/pages/CustomerPaymentPage/CustomerPayment";
 import ProductPage from "@/pages/ProductPage/ProductPage";
 import AddProductPage from "@/pages/ProductPage/AddProductPage/AddProductPage";
 import UpDateProduct from "@/components/Products/UpDateProduct";
@@ -23,16 +23,16 @@ import SypllierPaymentList from "@/components/Supplier/SypllierPaymentList";
 import ProductUnitPage from "@/pages/ProductUnitPage/ProductUnitPage";
 import SiteSetting from "@/pages/SiteSetting/SiteSetting";
 import SaleTargetPage from "@/pages/SaleTarget/SaleTargetPage";
-import CustomerAddPayment from "@/pages/CustomersPage/CustomerPaymentPage/CustomerAddPayment";
-import TodayCustomerPayment from "@/pages/CustomersPage/CustomerPaymentPage/TodayCustomerPayment";
-import DueCustomerPayment from "@/pages/CustomersPage/CustomerPaymentPage/DueCustomerPayment";
+import CustomerAddPayment from "@/pages/CustomerPaymentPage/CustomerAddPayment";
+import TodayCustomerPayment from "@/pages/CustomerPaymentPage/TodayCustomerPayment";
+import DueCustomerPayment from "@/pages/CustomerPaymentPage/DueCustomerPayment";
 import PaidSupplierPaymentList from "@/pages/Supplier/PaidSupplierPaymentList";
 import UnpaidSupplierPaymentList from "@/pages/Supplier/UnpaidSupplierPaymentList";
 import ViewSaleTargetPage from "@/pages/SaleTarget/ViewSaleTargetPage/ViewSaleTargetPage";
 import BankInPage from "@/pages/BankPage/BankInPage";
 import BankOutPage from "@/pages/BankPage/BankOutPage";
 import ExpensePage from "@/pages/Expense/ExpensePage";
-import ViewAddMoneyList from "@/components/Supplier/ViewAddMoneyList";
+
 import CustomerPaymentList from "@/components/Customers/CustomerPaymentList";
 import CustomerOrderList from "@/components/Customers/CustomerOrderList";
 import PdfPrintPage from "@/pages/AllPdfPrintPage/PdfPrintPage";
@@ -61,8 +61,8 @@ import CashInPayment from "@/pages/CheckAndCashInOut/CashInPayment";
 import CheckOutPayment from "@/pages/CheckAndCashInOut/CheckOutPayment";
 import CashOutPayment from "@/pages/CheckAndCashInOut/CashOutPayment";
 import PurchaseListPage from "@/pages/PurchaseListPage/PurchaseListPage";
-import ARPaymentPage from "@/pages/CustomersPage/CustomerPaymentPage/ARPaymentPage";
-import APListTable from "@/components/AP/APListTable";
+import ARPaymentPage from "@/pages/CustomerPaymentPage/ARPaymentPage";
+import DashBoardPage from "@/pages/DashboardPage/DashBoardPage";
 import APListPage from "@/pages/AP/APListPage";
 
 const route = createBrowserRouter([
@@ -77,7 +77,7 @@ const route = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <div>Home</div>,
+        element: <DashBoardPage />,
       },
       // ------Pos Start------
       {
@@ -127,10 +127,7 @@ const route = createBrowserRouter([
         path: "/supplier-paymentlist/:supplier_id",
         element: <SypllierPaymentList />,
       },
-      {
-        path: "/supplier-moneylist/:supplier_id",
-        element: <ViewAddMoneyList />,
-      },
+
       {
         path: "/stock_manage/supplier_stock/:supplier_id",
         element: <StockPurchase />,

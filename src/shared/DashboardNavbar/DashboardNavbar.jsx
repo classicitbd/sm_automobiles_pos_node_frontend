@@ -49,7 +49,7 @@ const DashBoardNavbar = ({
 
   if (loading) return null;
   return (
-    <nav className="border-b">
+    <nav className="border-b sm:p-3 bg-white shadow-sm">
       <div className="py-1 px-4 sm:px-10 md:pl-3 md:pr-16">
         <div className="flex h-16 items-center gap-1 justify-between">
           <div className="flex items-center">
@@ -65,7 +65,10 @@ const DashBoardNavbar = ({
             </button>
           </div>
 
-          <div className="-mr-2 flex">
+          <div className="-mr-2 flex justify-between">
+            <Link className="" to='/pos'>
+              <button className="mr-3 border-2 border-primaryVariant-500 px-8 py-2 hover:bg-primary font-bold text-primary hover:text-white text-lg rounded shadow-xl transition-all duration-300">POS</button>
+            </Link>
             <div className="shrink-0">
               <div className="flex items-center gap-3">
                 <div className="group hidden lg:block">
@@ -117,9 +120,8 @@ const DashBoardNavbar = ({
                   </div>
 
                   <div
-                    className={`absolute  ${
-                      isDropdownOpen ? "right-0" : "hidden"
-                    } z-10 mt-4 w-52 origin-top-right rounded bg-white shadow-2xl focus:outline-none`}
+                    className={`absolute  ${isDropdownOpen ? "right-0" : "hidden"
+                      } z-10 mt-4 w-52 origin-top-right rounded bg-white shadow-2xl focus:outline-none`}
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"

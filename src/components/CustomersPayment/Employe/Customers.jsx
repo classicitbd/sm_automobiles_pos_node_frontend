@@ -106,7 +106,7 @@ const Customers = () => {
                 <div className="overflow-x-auto rounded-t-lg">
                   <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                     <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                      <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
+                      <tr className="divide-x divide-gray-300  font-semibold text-center ">
                         <td className="whitespace-nowrap p-4 ">SL No</td>
                         <td className="whitespace-nowrap p-4 ">
                           Customer Name
@@ -131,9 +131,8 @@ const Customers = () => {
                       {allCustomers?.data?.map((customer, i) => (
                         <tr
                           key={customer?._id}
-                          className={`divide-x divide-gray-200 ${
-                            i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                          }`}
+                          className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                            }`}
                         >
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                             {serialNumber + i + 1}
@@ -148,10 +147,10 @@ const Customers = () => {
                             {customer?.customer_address}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {customer?.customer_wallet}
+                            {customer?.customer_wallet > 0 ? <span className="text-green-600">{customer?.customer_wallet}</span> : <span className="text-red-600">{customer?.customer_wallet}</span>}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {customer?.customer_status}
+                            {customer?.customer_status === 'active' ? <span className="text-green-600">{customer?.customer_status}</span> : <span className="text-red-600">{customer?.customer_status}</span>}
                           </td>
                           <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                             <button

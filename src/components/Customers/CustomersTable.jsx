@@ -64,7 +64,7 @@ const CustomersTable = ({
               <div className="overflow-x-auto rounded-t-lg">
                 <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                   <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                    <tr className="divide-x divide-gray-300  font-semibold text-center text-gray-900">
+                    <tr className="divide-x divide-gray-300  font-semibold text-center ">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
                       <td className="whitespace-nowrap p-4 ">Customers Name</td>
                       <td className="whitespace-nowrap p-4 ">
@@ -86,9 +86,8 @@ const CustomersTable = ({
                     {customers?.data?.map((customer, i) => (
                       <tr
                         key={customer?._id}
-                        className={`divide-x divide-gray-200 ${
-                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                        }`}
+                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                          }`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
@@ -115,11 +114,11 @@ const CustomersTable = ({
                         </td> */}
                         <td className="whitespace-nowrap py-1.5 ">
                           {customer?.customer_status === "active" ? (
-                            <p className="bg-bgBtnActive text-btnActiveColor px-[10px] py-[4px] rounded-[8px]">
+                            <p className="text-green-600">
                               <span>Active</span>
                             </p>
                           ) : (
-                            <p className="bg-bgBtnInactive text-btnInactiveColor px-[10px] py-[4px] rounded-[8px]">
+                            <p className="text-red-600">
                               <span>In-Active</span>
                             </p>
                           )}
@@ -128,7 +127,7 @@ const CustomersTable = ({
                           {customer?.customer_publisher_id?.user_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {customer?.customer_updated_by?.user_name}
+                          {customer?.customer_updated_by?.user_name ? customer?.customer_updated_by?.user_name : '--'}
                         </td>
 
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">

@@ -9,6 +9,7 @@ import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import Pagination from "../common/pagination/Pagination";
 import { SettingContext } from "@/context/SettingProvider";
 import useGetAUserDetails from "@/hooks/useGetAUserDetails";
+import SaleTargetChart from "./SaleTargetChart";
 
 const SalleTargetView = () => {
   const { user_id } = useParams();
@@ -18,7 +19,7 @@ const SalleTargetView = () => {
   const [searchValue, setSearchValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const { user } = useContext(AuthContext);
-  const {settingData} = useContext(SettingContext);
+  const { settingData } = useContext(SettingContext);
 
   const searchText = useDebounced({ searchQuery: searchValue, delay: 500 });
   useEffect(() => {
@@ -79,46 +80,52 @@ const SalleTargetView = () => {
   return (
     <>
       {/* search Bank Account... */}
-      <div className="mt-3">
-        <input
-          type="text"
-          defaultValue={searchTerm}
-          onChange={(e) => handleSearchValue(e.target.value)}
-          placeholder="Search ref no..."
-          className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-        />
-      </div>
+
       {isLoading === true || userLoading ? (
         <TableLoadingSkeleton />
       ) : (
         <>
-          <div className=" mt-4">
-            <h3 className="text-[26px] font-bold text-gray-800 capitalize">
+          <div className="mt-4">
+            <h3 className="sm:text-[26px] sm:font-medium text-gray-800 uppercase">
               User Sale Target List
             </h3>
-            <div className="flex items-center justify-between my-5 mx-28">
-              <div className="text-[26px] font-bold text-gray-800">
-                <p>User Name: {userData?.data?.user_name}</p>
-                <p>
-                  User Phone:
-                  {userData?.data?.user_phone}
-                </p>
-              </div>
-              <div className="text-[26px] font-bold text-gray-800">
-                <p>
-                  User Address:{" "}
-                  {userData?.data?.user_address}
-                </p>
-                <p>
-                  User Status:{" "}
-                  {userData?.data?.user_status == "active"
-                    ? "Active"
-                    : "In-Active"}
-                </p>
-              </div>
+          </div>
+
+
+          <div className="flex items-center justify-between p-5  bg-gray-50 shadow-md mt-4 flex-wrap">
+            <div className="font-bold">
+              <p className="sm:text-[20px] text-bgray-700">User Name : {userData?.data?.user_name}</p>
+              <p className="sm:text-[20px] text-bgray-700">
+                User Phone : {userData?.data?.user_phone}
+              </p>
+            </div>
+            <div className="font-bold text-bgray-700">
+              <p className="sm:text-[20px] text-bgray-700">
+                User Address : {userData?.data?.user_address}
+              </p>
+              <p className="sm:text-[20px] text-bgray-700">
+                User Status : {userData?.data?.user_status == "active"
+                  ? <span className="text-green-600 sm:text-[20px] font-bold"> Active </span>
+                  : <span className="text-red-600 sm:text-[20px] font-bold"> In-Active </span>}
+              </p>
             </div>
           </div>
-          <div className="rounded-lg border border-gray-200 mt-6">
+
+          <div className="bg-gray-50  p-5 shadow-md mt-8">
+
+            <SaleTargetChart />
+          </div>
+
+          <div className="flex justify-end mt-10">
+            <input
+              type="text"
+              defaultValue={searchTerm}
+              onChange={(e) => handleSearchValue(e.target.value)}
+              placeholder="Search ref no..."
+              className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+            />
+          </div>
+          <div className="rounded-lg border border-gray-200 mt-3">
             {saleTargetData?.data?.length > 0 ? (
               <div className="overflow-x-auto rounded-t-lg">
                 <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
@@ -140,30 +147,35 @@ const SalleTargetView = () => {
                     {saleTargetData?.data?.map((sale_target, i) => (
                       <tr
                         key={sale_target?._id}
-                        className={`divide-x divide-gray-200 ${
-                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                        }`}
+                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                          }`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {sale_target?.sale_target_start_date}
+                          {sale_target?.sale_target_start_date}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {sale_target?.sale_target_end_date}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                           {sale_target?.sale_target}{" "}{settingData?.unit_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {sale_target?.sale_target_filup}{" "}{settingData?.unit_name}
+                          {
+                            sale_target?.sale_target_filup >= sale_target?.sale_target ? <span className="text-green-600"> {sale_target?.sale_target_filup}{" "}
+                              {settingData?.unit_name}</span> : <span className="text-red-600"> {sale_target?.sale_target_filup}{" "}
+                              {settingData?.unit_name}</span>
+                          }
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                           {sale_target?.sale_target_amount}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {sale_target?.sale_target_success == true ? "Success" : "Pending"}
+                          {sale_target?.sale_target_success == true
+                            ? <span className="text-green-600">Success</span>
+                            : <span className="text-blue-600">Pending</span>}
                         </td>
                       </tr>
                     ))}
@@ -173,14 +185,15 @@ const SalleTargetView = () => {
             ) : (
               <NoDataFound />
             )}
-            <Pagination
-              setPage={setPage}
-              setLimit={setLimit}
-              totalData={saleTargetData?.totalData}
-              page={page}
-              limit={limit}
-            />
+
           </div>
+          <Pagination
+            setPage={setPage}
+            setLimit={setLimit}
+            totalData={saleTargetData?.totalData}
+            page={page}
+            limit={limit}
+          />
         </>
       )}
     </>
