@@ -6,14 +6,13 @@ import { Button } from "../ui/button";
 import { BASE_URL } from "@/utils/baseURL";
 import { toast } from "react-toastify";
 
-const UpdateBankInfo = ({
-  setBankAccountUpdateModal,
-  bankAccountUpdateData,
+const UpdateCashModal = ({
+  setCashUpdateModal,
+  cashUpdateModalValue,
   refetch,
   user,
 }) => {
   const [loading, setLoading] = useState(false);
-  const [balanceUpdateValue, setBalanceUpdateValue] = useState();
 
   const { register, handleSubmit } = useForm();
 
@@ -22,32 +21,22 @@ const UpdateBankInfo = ({
     setLoading(true);
     try {
       const sendData = {
-        _id: bankAccountUpdateData?._id,
-        bank_updated_by: user?._id,
-        account_name: data?.account_name
-          ? data?.account_name
-          : bankAccountUpdateData?.account_name,
+        _id: cashUpdateModalValue?._id,
+        cash_updated_by: user?._id,
+        cash_balance: data?.cash_balance
+          ? data?.cash_balance
+          : cashUpdateModalValue?.cash_balance,
+        previous_balance: cashUpdateModalValue?.cash_balance,
       };
 
-      if (balanceUpdateValue) {
-        sendData.bank_balance = parseFloat(balanceUpdateValue);
-        sendData.previous_balance = parseFloat(
-          bankAccountUpdateData?.bank_balance
-        );
-      }
-
-      if (
-        sendData?.bank_balance &&
-        sendData?.previous_balance &&
-        sendData?.bank_balance == sendData?.previous_balance
-      ) {
-        toast.error("Please update the bank balance", {
+      if (sendData?.cash_balance == sendData?.previous_balance) {
+        toast.error("Please update the cash balance", {
           autoClose: 1000,
         });
         return;
       }
 
-      const response = await fetch(`${BASE_URL}/bank?role_type=bank_update`, {
+      const response = await fetch(`${BASE_URL}/cash?role_type=cash_update`, {
         method: "PATCH",
         credentials: "include",
         headers: {
@@ -65,7 +54,7 @@ const UpdateBankInfo = ({
         );
         refetch();
         setLoading(false);
-        setBankAccountUpdateModal(false);
+        setCashUpdateModal(false);
       } else {
         toast.error(result?.message || "Something went wrong", {
           autoClose: 1000,
@@ -91,12 +80,12 @@ const UpdateBankInfo = ({
                 className="text-[26px] font-bold text-gray-800 capitalize"
                 id="modal-title "
               >
-                Update Bank Info
+                Update Cash Balance
               </h3>
               <button
                 type="button"
                 className="btn p-1 absolute right-3 rounded-full top-3 text-white bg-error-100 hover:bg-error-50"
-                onClick={() => setBankAccountUpdateModal(false)}
+                onClick={() => setCashUpdateModal(false)}
               >
                 {" "}
                 <RxCross1 size={20}></RxCross1>
@@ -111,33 +100,15 @@ const UpdateBankInfo = ({
                   htmlFor=""
                   className="block text-xs font-medium text-gray-700"
                 >
-                  Account Name
+                  Cash Amount
                 </label>
 
                 <input
-                  {...register("account_name")}
+                  {...register("cash_balance")}
+                  defaultValue={cashUpdateModalValue?.cash_balance}
                   required
-                  defaultValue={bankAccountUpdateData?.account_name}
                   type="text"
-                  placeholder="Account Name"
-                  className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
-                />
-              </div>
-              <div className="mt-2 mb-8">
-                <label
-                  htmlFor=""
-                  className="block text-xs font-medium text-gray-700"
-                >
-                  Account Balance
-                </label>
-
-                <input
-                  {...register("bank_balance")}
-                  defaultValue={bankAccountUpdateData?.bank_balance}
-                  onChange={(e) => setBalanceUpdateValue(e.target.value)}
-                  required
-                  type="number"
-                  placeholder="Account Balance"
+                  placeholder="Cash Amount"
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
               </div>
@@ -159,4 +130,4 @@ const UpdateBankInfo = ({
   );
 };
 
-export default UpdateBankInfo;
+export default UpdateCashModal;

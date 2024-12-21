@@ -17,7 +17,7 @@ import { SettingContext } from "@/context/SettingProvider";
 
 const PosMainComponent = () => {
   const { setSidebarOpen, user, loading } = useContext(AuthContext);
-  const { settingData, loading: settingLoading } = useContext(SettingContext)
+  const { settingData, loading: settingLoading } = useContext(SettingContext);
 
   //   product data state
   const [addProducts, setAddProducts] = useState([]);
@@ -207,9 +207,6 @@ const PosMainComponent = () => {
                                 total_amount: product?.product_price,
                                 discount_percent: 0,
                                 grand_total: product?.product_price,
-                                total_messurement:
-                                  1 *
-                                  product?.product_unit_id?.product_unit_value,
                               },
                             ]);
                           }}
@@ -227,26 +224,8 @@ const PosMainComponent = () => {
                               Quantity:{" "}
                               <span className="font-bold text-blue-600">
                                 {product?.product_quantity}{" "}
-                                {product?.product_unit_id?.product_unit_name}
+                                {settingData?.unit_name}
                               </span>
-                            </p>
-                            <p className="font-semibold">
-                              {"1"}{" "}
-                              {product?.product_unit_id?.product_unit_name}
-                              {" = "}
-                              {
-                                product?.product_unit_id?.product_unit_value
-                              }{" "}
-                              {settingData?.unit_name}
-                            </p>
-                            <p className="font-semibold">
-                              {product?.product_quantity}{" "}
-                              {product?.product_unit_id?.product_unit_name}
-                              {" = "}
-                              {product?.product_quantity *
-                                product?.product_unit_id
-                                  ?.product_unit_value}{" "}
-                              {settingData?.unit_name.slice(0, 1)}
                             </p>
                             <p className="text-sm sm:mt-1">
                               Category : {product?.category_id?.category_name}

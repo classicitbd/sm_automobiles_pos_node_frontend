@@ -62,7 +62,7 @@ const DashBoard = () => {
               <p className="text-white text-xl mt-1.5">Customers</p>
             </div>
             <div>
-              <FaUserCheck size={50} className="" />
+              <FaUserCheck size={50} className="text-white" />
             </div>
           </div>
         ))}

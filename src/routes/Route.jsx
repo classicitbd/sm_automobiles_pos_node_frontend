@@ -64,6 +64,9 @@ import PurchaseListPage from "@/pages/PurchaseListPage/PurchaseListPage";
 import ARPaymentPage from "@/pages/CustomerPaymentPage/ARPaymentPage";
 import DashBoardPage from "@/pages/DashboardPage/DashBoardPage";
 import APListPage from "@/pages/AP/APListPage";
+import AccountOrder from "@/pages/order/AccountOrder";
+import CashBalanceHistory from "@/pages/BankPage/CashBalanceHistory";
+import BankBalanceUpdateHistory from "@/pages/BankPage/BankBalanceUpdateHistory";
 
 const route = createBrowserRouter([
   {
@@ -155,6 +158,14 @@ const route = createBrowserRouter([
       },
 
       // ------Bank Account----
+      {
+        path: "/cash-balance-history",
+        element: <CashBalanceHistory />,
+      },
+      {
+        path: "/bank-balance-history/:bank_id",
+        element: <BankBalanceUpdateHistory />,
+      },
       {
         path: "/bank-account",
         element: <BankPage />,
@@ -265,6 +276,10 @@ const route = createBrowserRouter([
       {
         path: "/management-order",
         element: <ManagementOrder />,
+      },
+      {
+        path: "/account-order",
+        element: <AccountOrder />,
       },
       {
         path: "/warehouse-order",

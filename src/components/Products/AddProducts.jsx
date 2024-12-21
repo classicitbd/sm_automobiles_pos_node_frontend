@@ -18,7 +18,6 @@ const AddProducts = () => {
   const [loading, setLoading] = useState(false);
   const [category_id, setCategory_id] = useState("");
   const [brand_id, setBrand_id] = useState("");
-  const [product_unit_id, setProduct_unit_id] = useState("");
 
   const {
     register,
@@ -80,7 +79,6 @@ const AddProducts = () => {
 
     formData.append("product_publisher_id", user?._id);
     formData.append("category_id", category_id);
-    formData.append("product_unit_id", product_unit_id);
     const response = await fetch(
       `${BASE_URL}/product/?role_type=product_create`,
       {
@@ -135,26 +133,6 @@ const AddProducts = () => {
               {errors.product_name && (
                 <p className="text-red-600">{errors.product_name?.message}</p>
               )}
-            </div>
-
-            <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">
-                Unit Name <span className="text-red-500">*</span>
-              </label>
-
-              <Select
-                id="product_unit_id"
-                name="product_unit_id"
-                aria-label="Unit Name"
-                isClearable
-                required
-                options={unitTypes?.data}
-                getOptionLabel={(x) => x?.product_unit_name}
-                getOptionValue={(x) => x?._id}
-                onChange={(selectedOption) => {
-                  setProduct_unit_id(selectedOption?._id);
-                }}
-              />
             </div>
 
             <div className="mt-2">

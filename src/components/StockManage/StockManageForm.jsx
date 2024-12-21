@@ -9,9 +9,11 @@ import { BASE_URL } from "@/utils/baseURL";
 import { AuthContext } from "@/context/AuthProvider";
 import useGetActiveProduct from "@/hooks/useGetActiveProduct";
 import useGetSupplier from "@/hooks/useGetSupplier";
+import { SettingContext } from "@/context/SettingProvider";
 
 const StockManageForm = () => {
   const { user } = useContext(AuthContext);
+  const {settingData, loading: settingLoading} = useContext(SettingContext)
 
   const [loading, setLoading] = useState(false);
   const [product_id, setProduct_id] = useState(null);
@@ -89,7 +91,7 @@ const StockManageForm = () => {
     }
   };
 
-  if (productLoading || supplierLoading) {
+  if (productLoading || supplierLoading || settingLoading) {
     return <LoaderOverlay />;
   }
 
@@ -119,7 +121,7 @@ const StockManageForm = () => {
 
               <div className="mt-2">
                 <label className="block text-xs font-medium text-gray-700">
-                  Selling Price <span className="text-red-500">*</span>
+                  Selling Price(per qty) <span className="text-red-500">*</span>
                 </label>
 
                 <input
@@ -143,7 +145,7 @@ const StockManageForm = () => {
               </div>
               <div className="mt-2">
                 <label className="block text-xs font-medium text-gray-700">
-                  Buying Price <span className="text-red-500">*</span>
+                  Buying Price(per qty) <span className="text-red-500">*</span>
                 </label>
 
                 <input
@@ -170,6 +172,7 @@ const StockManageForm = () => {
                   Product Quantity <span className="text-red-500">*</span>
                 </label>
 
+                <div className="flex items-center justify-between gap-2">
                 <input
                   {...register("product_quantity", {
                     required: "Product Quantity is required",
@@ -183,6 +186,8 @@ const StockManageForm = () => {
                   placeholder="Enter Product Quantity"
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
+                <p className="font-bold">{settingData?.unit_name}</p>
+                </div>
                 {errors.product_quantity && (
                   <p className="text-red-600">
                     {errors.product_quantity.message}

@@ -1,14 +1,15 @@
 import { DateTimeFormat } from "@/utils/dateTimeFormet";
-import { toWords } from 'number-to-words';
+import { toWords } from "number-to-words";
 
-const ChallanPDF = ({challanOpenData}) => {
-
-    const formatAmountToWords = (amount) => {
-        const [wholePart, decimalPart] = amount.toFixed(2).split('.');
-        const words = toWords(parseInt(wholePart));
-        const fractionalWords = decimalPart ? `${toWords(parseInt(decimalPart))} cents` : '';
-        return fractionalWords ? `${words} and ${fractionalWords}` : words;
-      };
+const ChallanPDF = ({ challanOpenData }) => {
+  const formatAmountToWords = (amount) => {
+    const [wholePart, decimalPart] = amount.toFixed(2).split(".");
+    const words = toWords(parseInt(wholePart));
+    const fractionalWords = decimalPart
+      ? `${toWords(parseInt(decimalPart))} cents`
+      : "";
+    return fractionalWords ? `${words} and ${fractionalWords}` : words;
+  };
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -65,28 +66,38 @@ const ChallanPDF = ({challanOpenData}) => {
             }}
           >
             <p>
-              Bill No : <span style={{ fontWeight: "bold" }}>{challanOpenData?.order_id} </span>
+              Bill No :{" "}
+              <span style={{ fontWeight: "bold" }}>
+                {challanOpenData?.order_id}{" "}
+              </span>
             </p>
             <p>
-              Served By : <span style={{ fontWeight: "normal" }}>Input Field </span>
+              Served By :{" "}
+              <span style={{ fontWeight: "normal" }}>Input Field </span>
             </p>
             <p>
               Billing Date :{" "}
-              <span style={{ fontWeight: "normal" }}>{DateTimeFormat(Date.now())}</span>
+              <span style={{ fontWeight: "normal" }}>
+                {DateTimeFormat(Date.now())}
+              </span>
             </p>
             <p>
               Officer :{" "}
-              <span style={{ fontWeight: "normal" }}>{challanOpenData?.order_publisher_id?.user_name}</span>
+              <span style={{ fontWeight: "normal" }}>
+                {challanOpenData?.order_publisher_id?.user_name}
+              </span>
             </p>
             <p>
               Party Name :{" "}
               <span style={{ fontWeight: "" }}>
-              {challanOpenData?.customer_id?.customer_name}
+                {challanOpenData?.customer_id?.customer_name}
               </span>
             </p>
             <p>
               Off. Mobile :{" "}
-              <span style={{ fontWeight: "normal" }}>{challanOpenData?.order_publisher_id?.user_phone}</span>
+              <span style={{ fontWeight: "normal" }}>
+                {challanOpenData?.order_publisher_id?.user_phone}
+              </span>
             </p>
             <p>
               Party Address :{" "}
@@ -97,10 +108,15 @@ const ChallanPDF = ({challanOpenData}) => {
             </p>
             <p>
               Entry Time :{" "}
-              <span style={{ fontWeight: "normal" }}>{DateTimeFormat(challanOpenData?.createdAt)}</span>
+              <span style={{ fontWeight: "normal" }}>
+                {DateTimeFormat(challanOpenData?.createdAt)}
+              </span>
             </p>
             <p>
-              Mobile : <span style={{ fontWeight: "" }}>{challanOpenData?.customer_id?.customer_phone}</span>
+              Mobile :{" "}
+              <span style={{ fontWeight: "" }}>
+                {challanOpenData?.customer_id?.customer_phone}
+              </span>
             </p>
           </div>
         </div>
@@ -147,7 +163,9 @@ const ChallanPDF = ({challanOpenData}) => {
                 >
                   {i + 1}
                 </td>
-                <td style={{ padding: "4px" }}>{item?.product_id?.product_id}</td>
+                <td style={{ padding: "4px" }}>
+                  {item?.product_id?.product_id}
+                </td>
                 <td>{item?.product_id?.brand_id?.brand_name || "-"}</td>
                 <td>{item?.product_id?.product_name}</td>
                 <td
@@ -164,7 +182,7 @@ const ChallanPDF = ({challanOpenData}) => {
                     borderRight: "1px solid",
                   }}
                 >
-                  {item?.product_price}
+                  {item?.product_quantity}{" "}{item?.product_unit_name}
                 </td>
                 <td
                   style={{
@@ -172,7 +190,7 @@ const ChallanPDF = ({challanOpenData}) => {
                     borderRight: "1px solid",
                   }}
                 >
-                  {item?.product_quantity}
+                  {item?.product_price}
                 </td>
                 <td
                   style={{
@@ -248,7 +266,9 @@ const ChallanPDF = ({challanOpenData}) => {
           }}
         >
           <div>
-              <p style={{ fontWeight: "bold", textAlign: "center" }}>{challanOpenData?.customer_id?.customer_name}</p>
+            <p style={{ fontWeight: "bold", textAlign: "center" }}>
+              {challanOpenData?.customer_id?.customer_name}
+            </p>
             <div
               style={{
                 width: "100%",
@@ -263,6 +283,9 @@ const ChallanPDF = ({challanOpenData}) => {
             </p>
           </div>
           <div>
+            <p style={{ fontWeight: "bold", textAlign: "center" }}>
+              {challanOpenData?.warehouse_user_id?.user_name}
+            </p>
             <div
               style={{
                 width: "100%",
@@ -277,7 +300,9 @@ const ChallanPDF = ({challanOpenData}) => {
             </p>
           </div>
           <div>
-              <p style={{ fontWeight: "bold", textAlign: "center" }}>{challanOpenData?.order_publisher_id?.user_name}</p>
+            <p style={{ fontWeight: "bold", textAlign: "center" }}>
+              {challanOpenData?.account_user_id?.user_name}
+            </p>
             <div
               style={{
                 width: "100%",
@@ -292,6 +317,9 @@ const ChallanPDF = ({challanOpenData}) => {
             </p>
           </div>
           <div>
+            <p style={{ fontWeight: "bold", textAlign: "center" }}>
+              {challanOpenData?.management_user_id?.user_name}
+            </p>
             <div
               style={{
                 width: "100%",
@@ -307,7 +335,6 @@ const ChallanPDF = ({challanOpenData}) => {
           </div>
         </div>
       </section>
-
     </div>
   );
 };

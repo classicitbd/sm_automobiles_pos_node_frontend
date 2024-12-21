@@ -95,14 +95,14 @@ const AllProfit = () => {
               <div className="overflow-x-auto rounded-t-lg scrollbar-thin">
                 <table className="min-w-full divide-y divide-gray-200 text-sm">
                   <thead className="ltr:text-left rtl:text-right ">
-                    <tr className=" divide-gray-300  font-semibold text-center text-gray-900">
+                    <tr className=" divide-gray-300  font-semibold text-center text-white">
                       <td className="whitespace-nowrap p-4 uppercase">SL No</td>
                       <td className="whitespace-nowrap p-4 uppercase">Invoice No</td>
                       <td className="whitespace-nowrap p-4 uppercase">Total Amount</td>
                       <td className="whitespace-nowrap p-4 uppercase">
                         Received Amount
                       </td>
-                      <td className="whitespace-nowrap p-4 uppercase text-red-600">Due Amount</td>
+                      <td className="whitespace-nowrap p-4 uppercase">Due Amount</td>
                       <td className="whitespace-nowrap p-4 uppercase">Profit Amount</td>
 
                       <td className="whitespace-nowrap p-4 uppercase">Create Date</td>

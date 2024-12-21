@@ -303,6 +303,12 @@ const SideNavBar = () => {
               isActive={isActive("/management-order")}
             />
             <ChildMenuItem
+              to="/account-order"
+              icon={FaShoppingCart}
+              label="Account Order"
+              isActive={isActive("/account-order")}
+            />
+            <ChildMenuItem
               to="/warehouse-order"
               icon={FaShoppingCart}
               label="Warehouse Order"

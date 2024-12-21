@@ -13,7 +13,7 @@ import { CSVLink } from "react-csv";
 import { DateTimeFormat } from "@/utils/dateTimeFormet";
 import Swal from "sweetalert2-optimized";
 
-const WarehouseOrderTable = ({
+const AccountOrderTable = ({
   setPage,
   setLimit,
   page,
@@ -61,29 +61,27 @@ const WarehouseOrderTable = ({
   };
 
   //   handle order status
-  const handleOutToWarehouse = async (_id, order) => {
+  const handleSendWarehouse = async (order) => {
     Swal.fire({
       title: "Are you sure?",
-      text: `You out this order to warehouse! `,
+      text: `You send this order to warehouse! `,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, out it!",
+      confirmButtonText: "Yes, send it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
         const sendData = {
-          _id: _id,
-          order_status: "out-of-warehouse",
-          user_id: order?.order_publisher_id?._id,
+          income_amount: order?.grand_total_amount,
+          income_customer_id: order?.customer_id?._id,
+          customer_phone: order?.customer_id?.customer_phone,
+          income_order_id: order?._id,
+          income_invoice_number: order?.order_id,
+          _id: order?._id,
+          order_status: "warehouse",
           order_updated_by: user?._id,
-          warehouse_user_id: user?._id,
-          total_measurement_count: order?.total_measurement_count,
-          order_products: order?.order_products?.map((item) => ({
-            product_id: item?.product_id?._id,
-            product_quantity: item?.product_quantity,
-            total_measurement: item?.total_measurement,
-          })),
+          account_user_id: user?._id,
         };
         try {
           const response = await fetch(
@@ -152,39 +150,39 @@ const WarehouseOrderTable = ({
         <TableLoadingSkeleton />
       ) : (
         <div>
-          <div className="rounded-lg shadow-md mt-3">
+          <div className="rounded-lg shadow-md  mt-3">
             {orders?.data?.length > 0 ? (
               <div className="overflow-x-auto rounded-lg">
-                <table className="min-w-full  text-sm">
-                  <thead >
-                    <tr className="font-semibold text-center">
-                        <td className="whitespace-nowrap p-4 ">SL No</td>
-                        <td className="whitespace-nowrap p-4 ">Customer Name</td>
-                        <td className="whitespace-nowrap p-4 ">Phone</td>
-                        <td className="whitespace-nowrap p-4 ">Created By</td>
-                        <td className="whitespace-nowrap p-4 ">Updated By</td>
-                        <td className="whitespace-nowrap p-4 ">Order Id</td>
-                        <td className="whitespace-nowrap p-4 ">Order Status</td>
-                        <td className="whitespace-nowrap p-4 ">Discount(%)</td>
-                        <td className="whitespace-nowrap p-4 ">Sub Total</td>
+                <table className="min-w-full text-sm">
+                  <thead>
+                    <tr className="font-semibold text-center ">
+                      <td className="whitespace-nowrap p-4 ">SL No</td>
+                      <td className="whitespace-nowrap p-4 ">Customer Name</td>
+                      <td className="whitespace-nowrap p-4 ">Phone</td>
+                      <td className="whitespace-nowrap p-4 ">Created By</td>
+                      <td className="whitespace-nowrap p-4 ">Updated By</td>
+                      <td className="whitespace-nowrap p-4 ">Order Id</td>
+                      <td className="whitespace-nowrap p-4 ">Order Status</td>
+                      <td className="whitespace-nowrap p-4 ">Discount(%)</td>
+                      <td className="whitespace-nowrap p-4 ">Sub Total</td>
 
-                        <td className="whitespace-nowrap p-4 ">Grand Total</td>
-                        <td className="whitespace-nowrap p-4 ">
-                          Received Amount
-                        </td>
-                        <td className="whitespace-nowrap p-4 ">Due Amount</td>
+                      <td className="whitespace-nowrap p-4 ">Grand Total</td>
+                      <td className="whitespace-nowrap p-4 ">
+                        Received Amount
+                      </td>
+                      <td className="whitespace-nowrap p-4 ">Due Amount</td>
 
-
-                        <td className="whitespace-nowrap p-4 ">Action</td>
+                      <td className="whitespace-nowrap p-4 ">Action</td>
                     </tr>
                   </thead>
 
-                  <tbody >
+                  <tbody>
                     {orders?.data?.map((order, i) => (
                       <tr
                         key={order?._id}
-                        className={`text-center ${i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
-                          } hover:bg-blue-100`}
+                        className={`text-center ${
+                          i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                        } hover:bg-blue-100`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
@@ -199,16 +197,30 @@ const WarehouseOrderTable = ({
                           {order?.order_publisher_id?.user_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {order?.order_updated_by?.user_name ? order?.order_updated_by?.user_name : "--"}
+                          {order?.order_updated_by?.user_name
+                            ? order?.order_updated_by?.user_name
+                            : "--"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {order?.order_id}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 uppercase">
-                          {order?.order_status == 'management' ? <span className="text-yellow-500">{order?.order_status}</span> : <span className="text-green-600">{order?.order_status}</span>}
+                          {order?.order_status == "management" ? (
+                            <span className="text-yellow-500">
+                              {order?.order_status}
+                            </span>
+                          ) : (
+                            <span className="text-green-600">
+                              {order?.order_status}
+                            </span>
+                          )}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-purple">
-                          {order?.discount_percent_amount ? <span>{order?.discount_percent_amount}  % </span> : '--'}
+                          {order?.discount_percent_amount ? (
+                            <span>{order?.discount_percent_amount} % </span>
+                          ) : (
+                            "--"
+                          )}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                           {order?.sub_total_amount}
@@ -223,6 +235,7 @@ const WarehouseOrderTable = ({
                         <td className="whitespace-nowrap py-1.5 font-medium text-red-600">
                           {order?.due_amount}
                         </td>
+
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700 flex items-center justify-between">
                           {/* <select
                                                         onChange={(e) =>
@@ -297,12 +310,10 @@ const WarehouseOrderTable = ({
                                                     </div> */}
                           <button
                             type="button"
-                            className="w-full px-3 py-2 hover:bg-primary  hover:text-white flex justify-center items-center gap-2 font-medium btn text-white bg-sky-400 rounded-md"
-                            onClick={() =>
-                              handleOutToWarehouse(order?._id, order)
-                            }
+                            className="w-full px-3 py-2 hover:bg-primary hover:text-white flex justify-center items-center gap-2 font-medium btn bg-sky-400 text-white rounded-md"
+                            onClick={() => handleSendWarehouse(order)}
                           >
-                            Out to Warehouse
+                            Send Warehouse
                           </button>
                         </td>
                       </tr>
@@ -339,4 +350,4 @@ const WarehouseOrderTable = ({
   );
 };
 
-export default WarehouseOrderTable;
+export default AccountOrderTable;

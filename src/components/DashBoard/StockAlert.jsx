@@ -11,7 +11,7 @@ const StockAlert = () => {
           <div className='rounded-t-lg scrollbar-thin'>
             <table className='min-w-full  divide-y divide-gray-200 text-sm'>
               <thead className='ltr:text-left rtl:text-right '>
-                <tr className='divide-gray-300  font-semibold text-center text-gray-900'>
+                <tr className='divide-gray-300  font-semibold text-center text-white'>
                   <td className='whitespace-nowrap p-4 '>SL</td>
                   <td className='whitespace-nowrap p-4 '>Code</td>
                   <td className='whitespace-nowrap p-4 '>PRODUCT</td>
