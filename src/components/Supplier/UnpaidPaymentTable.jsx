@@ -6,6 +6,7 @@ import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton
 import Swal from "sweetalert2-optimized";
 import { BASE_URL } from "@/utils/baseURL";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const UnpaidPaymentTable = ({
   setPage,
@@ -45,7 +46,7 @@ const UnpaidPaymentTable = ({
           supplier_id: paymentInfo?.supplier_id?._id,
           payment_bank_id: paymentInfo?.payment_bank_id?._id,
           supplier_payment_updated_by: user?._id,
-          invoice_id: paymentInfo?.invoice_id?._id
+          invoice_id: paymentInfo?.invoice_id?._id,
         };
         try {
           const response = await fetch(
@@ -90,95 +91,51 @@ const UnpaidPaymentTable = ({
         <TableLoadingSkeleton />
       ) : (
         <div>
-          <div className="rounded-lg border border-gray-200 mt-6">
+          <div className="rounded-lg shadow-md mt-3">
             {unpaidPaymentLists?.data?.length > 0 ? (
-              <div className="overflow-x-auto rounded-t-lg">
-                <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                  <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                    <tr className="divide-x divide-gray-300  font-semibold text-center ">
+              <div className="overflow-x-auto rounded-lg">
+                <table className="min-w-full  text-sm">
+                  <thead>
+                    <tr className="font-semibold text-center ">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
-                      <td className="whitespace-nowrap p-4 ">Payment Date</td>
-                      <td className="whitespace-nowrap p-4 ">Invoice Id</td>
-                      <td className="whitespace-nowrap p-4 ">Total Amount</td>
-                      <td className="whitespace-nowrap p-4 ">Paid Amount</td>
-                      <td className="whitespace-nowrap p-4 ">Due Amount</td>
-                      <td className="whitespace-nowrap p-4 ">Payment Amount</td>
-                      <td className="whitespace-nowrap p-4 ">Payment Method</td>
                       <td className="whitespace-nowrap p-4 ">Supplier name</td>
                       <td className="whitespace-nowrap p-4 ">Supplier Phone</td>
-                      <td className="whitespace-nowrap p-4 ">Bank Name</td>
-                      <td className="whitespace-nowrap p-4 ">Reference ID</td>
-                      <td className="whitespace-nowrap p-4 ">Payment Status</td>
-                      <td className="whitespace-nowrap p-4 ">Paid Status</td>
-                      <td className="whitespace-nowrap p-4 ">Payment Note</td>
                       <td className="whitespace-nowrap p-4 ">Created By</td>
                       <td className="whitespace-nowrap p-4 ">Updated By</td>
+                      <td className="whitespace-nowrap p-4 ">Payment Date</td>
+                      <td className="whitespace-nowrap p-4 ">Payment Note</td>
+                      <td className="whitespace-nowrap p-4 ">Bank Name</td>
+                      <td className="whitespace-nowrap p-4 ">Payment Method</td>
+                      <td className="whitespace-nowrap p-4 ">Payment Status</td>
+                      <td className="whitespace-nowrap p-4 ">Invoice Id</td>
+                      <td className="whitespace-nowrap p-4 ">Reference ID</td>
+                      <td className="whitespace-nowrap p-4 ">Total Amount</td>
+                      <td className="whitespace-nowrap p-4 ">Paid Amount</td>
+
+                      <td className="whitespace-nowrap p-4 ">Payment Amount</td>
+                      <td className="whitespace-nowrap p-4 ">Due Amount</td>
+                      <td className="whitespace-nowrap p-4 ">Paid Status</td>
+
                       <td className="whitespace-nowrap p-4 ">Action</td>
                     </tr>
                   </thead>
 
-                  <tbody className="divide-y divide-gray-200 text-center">
+                  <tbody>
                     {unpaidPaymentLists?.data?.map((paymentInfo, i) => (
                       <tr
                         key={paymentInfo?._id}
-                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                          }`}
+                        className={`text-center ${
+                          i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                        } hover:bg-blue-100`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {paymentInfo?.supplier_payment_date}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {paymentInfo?.invoice_id?.invoice_id}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {paymentInfo?.invoice_id?.total_amount}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {paymentInfo?.invoice_id?.paid_amount}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {paymentInfo?.invoice_id?.due_amount}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {paymentInfo?.supplier_payment_amount}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {paymentInfo?.supplier_payment_method == "cash"
-                            ? "Cash"
-                            : "Bank"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {paymentInfo?.supplier_id?.supplier_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {paymentInfo?.supplier_id?.supplier_phone}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 capitalize">
-                          {paymentInfo?.payment_bank_id?.bank_name || "-"}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 capitalize">
-                          {paymentInfo?.reference_id || "-"}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 capitalize">
-                          {paymentInfo?.supplier_payment_status == "paid"
-                            ? "Paid"
-                            : "Un Paid"}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 capitalize">
-                          {" "}
-                          <button
-                            className="bg-success-400 text-white px-[14px] py-[4px] rounded-[8px]"
-                            onClick={() => handlePaymentPaidStatus(paymentInfo)}
-                          >
-                            <span>Paid</span>
-                          </button>
-                        </td>
-
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 capitalize">
-                          {paymentInfo?.supplier_payment_title || "-"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {
@@ -190,10 +147,77 @@ const UnpaidPaymentTable = ({
                           {paymentInfo?.supplier_payment_updated_by
                             ?.user_name || "-"}
                         </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {paymentInfo?.supplier_payment_date}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 ">
+                          {paymentInfo?.supplier_payment_title || "-"}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-blue-600 uppercase">
+                          {paymentInfo?.payment_bank_id?.bank_name || "-"}
+                        </td>
+                        <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
+                          {paymentInfo?.supplier_payment_method == "cash" ? (
+                            <span className="text-secondary-600">Cash</span>
+                          ) : (
+                            <span className="text-success-300">Bank</span>
+                          )}
+                        </td>
+                        <td className="whitespace-nowrap py-2.5 font-medium text-gray-700 capitalize">
+                          {paymentInfo?.supplier_payment_status == "paid" ? (
+                            <span className="text-green-600">Paid</span>
+                          ) : (
+                            <span className="text-red-600">Un Paid</span>
+                          )}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          <Link to="">
+                            {paymentInfo?.invoice_id?.invoice_id ? (
+                              <span className="text-blue-600 underline ">
+                                {paymentInfo?.invoice_id?.invoice_id}
+                              </span>
+                            ) : (
+                              <span className="text-gray-900">--</span>
+                            )}
+                          </Link>
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 capitalize">
+                          <Link to="">
+                            {paymentInfo?.reference_id ? (
+                              <span className="text-blue-600 underline ">
+                                {paymentInfo?.reference_id}
+                              </span>
+                            ) : (
+                              <span className="text-gray-900">--</span>
+                            )}
+                          </Link>
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                          {paymentInfo?.invoice_id?.total_amount}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                          {paymentInfo?.invoice_id?.paid_amount}
+                        </td>
+
+                        <td className="whitespace-nowrap py-1.5 font-medium text-yellow-400">
+                          {paymentInfo?.supplier_payment_amount}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-red-600">
+                          {paymentInfo?.invoice_id?.due_amount}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 ">
+                          <button
+                            className="bg-success-400 text-white px-[14px] py-[4px] rounded-[8px]"
+                            onClick={() => handlePaymentPaidStatus(paymentInfo)}
+                          >
+                            <span>Paid</span>
+                          </button>
+                        </td>
+
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700 flex items-center">
                           <button className="ml-3">
                             <FaEye
-                              className="cursor-pointer text-gray-500 hover:text-gray-300"
+                              className="cursor-pointer text-gray-900 hover:text-gray-500"
                               size={25}
                             />
                           </button>

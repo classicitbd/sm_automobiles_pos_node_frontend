@@ -60,35 +60,35 @@ const CheckOutPayment = () => {
   });
 
   return (
-    <div className="bg-white rounded-lg py-6 px-4 shadow">
-        {/* supplier payment list */}
-          <div className="flex justify-between mt-6">
-            <div>
-              <h1 className="text-2xl">All Supplier Check Out Payment</h1>
-            </div>
-          </div>
-          {/* search CheckOutPaymentData... */}
-          <div className="mt-3">
-            <input
-              type="text"
-              defaultValue={searchTerm}
-              onChange={(e) => handleSearchValue(e.target.value)}
-              placeholder="Search income..."
-              className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-            />
-          </div>
-          {/*check in Data Show and update and delete operation file */}
-          <CheckOutPaymentTable
-            CheckOutPaymentData={CheckOutPaymentData}
-            setPage={setPage}
-            setLimit={setLimit}
-            page={page}
-            limit={limit}
-            totalData={CheckOutPaymentData?.totalData}
-            refetch={refetch}
-            user={user}
-            isLoading={isLoading}
-          />
+    <div className=" py-6 px-4 ">
+      {/* supplier payment list */}
+      <div className=" mt-6">
+        <div>
+          <h1 className="text-2xl">All Supplier Check Out Payment</h1>
+        </div>
+      </div>
+      {/* search CheckOutPaymentData... */}
+      <div className="mt-3 flex justify-end">
+        <input
+          type="text"
+          defaultValue={searchTerm}
+          onChange={(e) => handleSearchValue(e.target.value)}
+          placeholder="Search income..."
+          className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+        />
+      </div>
+      {/*check in Data Show and update and delete operation file */}
+      <CheckOutPaymentTable
+        CheckOutPaymentData={CheckOutPaymentData}
+        setPage={setPage}
+        setLimit={setLimit}
+        page={page}
+        limit={limit}
+        totalData={CheckOutPaymentData?.totalData}
+        refetch={refetch}
+        user={user}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

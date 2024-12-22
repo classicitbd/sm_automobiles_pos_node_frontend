@@ -59,15 +59,15 @@ const CheckInPayment = () => {
   });
 
   return (
-    <div className="bg-white rounded-lg py-6 px-4 shadow">
+    <div className="py-6 px-4">
         {/* customer payment list */}
-          <div className="flex justify-between mt-6">
+          <div >
             <div>
               <h1 className="text-2xl">All Customer Check In Payment</h1>
             </div>
           </div>
           {/* search checkInPaymentData... */}
-          <div className="mt-3">
+          <div className="mt-3 flex justify-end">
             <input
               type="text"
               defaultValue={searchTerm}

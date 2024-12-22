@@ -3,6 +3,7 @@ import Pagination from "../common/pagination/Pagination";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import { useEffect, useState } from "react";
 import { DateTimeFormat } from "@/utils/dateTimeFormet";
+import { Link } from "react-router-dom";
 
 const ProfitTable = ({
   setPage,
@@ -28,39 +29,41 @@ const ProfitTable = ({
         <TableLoadingSkeleton />
       ) : (
         <div>
-            <div className="shadow-md mt-6 rounded-lg">
+          <div className="shadow-md mt-3 rounded-lg">
             {profits?.data?.length > 0 ? (
               <div className="overflow-x-auto ">
                 <table className="min-w-full  text-sm">
-                  <thead >
+                  <thead>
                     <tr className=" font-semibold text-center ">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
-                        <td className="whitespace-nowrap p-4 ">Invoice No</td>
-                        <td className="whitespace-nowrap p-4 ">Create Date</td>
+                      <td className="whitespace-nowrap p-4 ">Invoice No</td>
+                      <td className="whitespace-nowrap p-4 ">Create Date</td>
                       <td className="whitespace-nowrap p-4 ">Total Amount</td>
                       <td className="whitespace-nowrap p-4 ">
                         Received Amount
-                        </td>
-                        <td className="whitespace-nowrap p-4 ">Profit Amount</td>
+                      </td>
+                      <td className="whitespace-nowrap p-4 ">Profit Amount</td>
                       <td className="whitespace-nowrap p-4 ">Due Amount</td>
-                     
-
-                     
                     </tr>
                   </thead>
 
-                  <tbody >
+                  <tbody>
                     {profits?.data?.map((profit, i) => (
                       <tr
                         key={profit?._id}
-                        className={`text-center ${i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
-                          } hover:bg-blue-100`}
+                        className={`text-center ${
+                          i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                        } hover:bg-blue-100`}
                       >
                         <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                           {serialNumber + i + 1}
                         </td>
                         <td className="whitespace-nowrap py-3 font-medium text-gray-700">
-                          {profit?.order_id}
+                          <Link to="">
+                            <span className="text-blue-600 underline ">
+                              {profit?.order_id}
+                            </span>
+                          </Link>
                         </td>
                         <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                           {" "}
@@ -79,9 +82,6 @@ const ProfitTable = ({
                         <td className="whitespace-nowrap py-3 font-medium text-red-600">
                           {profit?.due_amount}
                         </td>
-                       
-
-                      
                       </tr>
                     ))}
                   </tbody>

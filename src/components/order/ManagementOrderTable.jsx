@@ -202,7 +202,11 @@ const ManagementOrderTable = ({
                             : "--"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {order?.order_id}
+                          <Link to="">
+                            <span className="text-blue-600 underline">
+                              {order?.order_id}
+                            </span>
+                          </Link>
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 uppercase">
                           {order?.order_status == "management" ? (

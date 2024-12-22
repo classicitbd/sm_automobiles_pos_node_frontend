@@ -5,6 +5,7 @@ import { BASE_URL } from "@/utils/baseURL";
 import Swal from "sweetalert2-optimized";
 import Pagination from "@/components/common/pagination/Pagination";
 import TableLoadingSkeleton from "@/components/common/loadingSkeleton/TableLoadingSkeleton";
+import { Link } from "react-router-dom";
 
 const ARPaymentTable = ({
   setPage,
@@ -95,38 +96,37 @@ const ARPaymentTable = ({
         <div>
           <div className="rounded-lg shadow-md mt-3">
             {arDatas?.data?.length > 0 ? (
-                <div className="overflow-x-auto rounded-lg">
+              <div className="overflow-x-auto rounded-lg">
                 <table className="min-w-full  text-sm">
-                  <thead >
+                  <thead>
                     <tr className=" font-semibold text-center ">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
-                    
+
                       <td className="whitespace-nowrap p-4 ">Customer Name</td>
-                        <td className="whitespace-nowrap p-4 ">Customer Phone</td>
-                        <td className="whitespace-nowrap p-4 ">Invoice No</td>
-                        <td className="whitespace-nowrap p-4 ">Created By</td>
-                        <td className="whitespace-nowrap p-4 ">Status</td>
+                      <td className="whitespace-nowrap p-4 ">Customer Phone</td>
+                      <td className="whitespace-nowrap p-4 ">Invoice No</td>
+                      <td className="whitespace-nowrap p-4 ">Created By</td>
+                      <td className="whitespace-nowrap p-4 ">Status</td>
                       <td className="whitespace-nowrap p-4 ">Total Amount</td>
                       <td className="whitespace-nowrap p-4 ">
                         Received Amount
                       </td>
                       <td className="whitespace-nowrap p-4 ">Due Amount</td>
-                     
-                     
                     </tr>
                   </thead>
 
-                  <tbody >
+                  <tbody>
                     {arDatas?.data?.map((check, i) => (
                       <tr
                         key={check?._id}
-                        className={`text-center ${i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
-                          } hover:bg-blue-100`}
+                        className={`text-center ${
+                          i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                        } hover:bg-blue-100`}
                       >
                         <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                           {serialNumber + i + 1}
                         </td>
-                       
+
                         <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                           {check?.customer_id?.customer_name}
                         </td>
@@ -134,17 +134,33 @@ const ARPaymentTable = ({
                           {check?.customer_id?.customer_phone}
                         </td>
                         <td className="whitespace-nowrap py-3 font-medium text-gray-700">
-                          {check?.order_id}
+                          <Link to="">
+                            <span className="text-blue-600 underline ">
+                              {check?.order_id}
+                            </span>
+                          </Link>
                         </td>
-                       
+
                         <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                           {check?.order_publisher_id?.user_name}
                         </td>
                         <td className="whitespace-nowrap py-3 font-medium text-gray-700 ">
-                         
-                          {
-                            check?.order_status ? <> {check?.order_status == 'out-of-warehouse' ? <span className="text-green-600 uppercase">{check?.order_status}</span> : <span className="text-yellow-500 uppercase">{check?.order_status}</span>}</>:'--'
-                          }
+                          {check?.order_status ? (
+                            <>
+                              {" "}
+                              {check?.order_status == "out-of-warehouse" ? (
+                                <span className="text-green-600 uppercase">
+                                  {check?.order_status}
+                                </span>
+                              ) : (
+                                <span className="text-yellow-500 uppercase">
+                                  {check?.order_status}
+                                </span>
+                              )}
+                            </>
+                          ) : (
+                            "--"
+                          )}
                         </td>
                         <td className="whitespace-nowrap py-3 font-medium text-blue-600">
                           {check?.grand_total_amount}
@@ -155,8 +171,6 @@ const ARPaymentTable = ({
                         <td className="whitespace-nowrap py-3 font-medium text-red-600 ">
                           {check?.due_amount}
                         </td>
-                       
-                       
                       </tr>
                     ))}
                   </tbody>

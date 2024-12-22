@@ -5,6 +5,7 @@ import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton
 import { toast } from "react-toastify";
 import { BASE_URL } from "@/utils/baseURL";
 import Swal from "sweetalert2-optimized";
+import { Link } from "react-router-dom";
 
 const CustomerPaymentTable = ({
   setPage,
@@ -98,45 +99,67 @@ const CustomerPaymentTable = ({
             {checks?.data?.length > 0 ? (
               <div className="overflow-x-auto rounded-lg">
                 <table className="min-w-full  text-sm">
-                  <thead >
+                  <thead>
                     <tr className=" font-semibold text-center ">
                       <td className="whitespace-nowrap py-4 px-2 ">SL No</td>
-                      <td className="whitespace-nowrap py-4 px-2 ">Invoice No</td>
-                      <td className="whitespace-nowrap py-4 px-2 ">Customer Name</td>
-                        <td className="whitespace-nowrap py-4 px-2 ">Customer Phone</td>
-                        <td className="whitespace-nowrap py-4 px-2 ">Created By</td>
-                        <td className="whitespace-nowrap py-4 px-2 ">Updated By</td>
-                        <td className="whitespace-nowrap py-4 px-2 ">
-                          Check Withdraw Date
-                        </td>
+                      <td className="whitespace-nowrap py-4 px-2 ">
+                        Invoice No
+                      </td>
+                      <td className="whitespace-nowrap py-4 px-2 ">
+                        Customer Name
+                      </td>
+                      <td className="whitespace-nowrap py-4 px-2 ">
+                        Customer Phone
+                      </td>
+                      <td className="whitespace-nowrap py-4 px-2 ">
+                        Created By
+                      </td>
+                      <td className="whitespace-nowrap py-4 px-2 ">
+                        Updated By
+                      </td>
+                      <td className="whitespace-nowrap py-4 px-2 ">
+                        Check Withdraw Date
+                      </td>
 
-                        <td className="whitespace-nowrap py-4 px-2 ">Check Number</td>
-                        <td className="whitespace-nowrap py-4 px-2 ">Payment Method</td>
-                        <td className="whitespace-nowrap py-4 px-2 ">Bank Name</td>
+                      <td className="whitespace-nowrap py-4 px-2 ">
+                        Check Number
+                      </td>
+                      <td className="whitespace-nowrap py-4 px-2 ">
+                        Payment Method
+                      </td>
+                      <td className="whitespace-nowrap py-4 px-2 ">
+                        Bank Name
+                      </td>
 
-
-                        <td className="whitespace-nowrap py-4 px-2 ">Status</td>
-                      <td className="whitespace-nowrap py-4 px-2 ">Order Amount</td>
-                      <td className="whitespace-nowrap py-4 px-2 ">Pay Amount</td>
-                     
-                     
+                      <td className="whitespace-nowrap py-4 px-2 ">Status</td>
+                      <td className="whitespace-nowrap py-4 px-2 ">
+                        Order Amount
+                      </td>
+                      <td className="whitespace-nowrap py-4 px-2 ">
+                        Pay Amount
+                      </td>
 
                       <td className="whitespace-nowrap py-4 px-2 ">Action</td>
                     </tr>
                   </thead>
 
-                  <tbody >
+                  <tbody>
                     {checks?.data?.map((check, i) => (
                       <tr
                         key={check?._id}
-                        className={`text-center ${i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
-                          } hover:bg-blue-100`}
+                        className={`text-center ${
+                          i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                        } hover:bg-blue-100`}
                       >
                         <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700">
                           {serialNumber + i + 1}
                         </td>
                         <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700">
-                          {check?.invoice_number}
+                          <Link to="">
+                            <span className="text-blue-600 underline ">
+                              {check?.invoice_number}
+                            </span>
+                          </Link>
                         </td>
                         <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700">
                           {check?.customer_id?.customer_name}
@@ -148,7 +171,7 @@ const CustomerPaymentTable = ({
                           {check?.check_publisher_id?.user_name}
                         </td>
                         <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700">
-                          {check?.check_updated_by?.user_name || '--'}
+                          {check?.check_updated_by?.user_name || "--"}
                         </td>
                         <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700 capitalize">
                           {check?.check_withdraw_date || "--"}
@@ -157,15 +180,30 @@ const CustomerPaymentTable = ({
                           {check?.check_number || "--"}
                         </td>
                         <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700 capitalize">
-                          {check?.payment_method == 'cash' ? <span className="text-secondary-700">{check?.payment_method}</span> : <span className="text-purple">{check?.payment_method}</span>}
+                          {check?.payment_method == "cash" ? (
+                            <span className="text-secondary-700">
+                              {check?.payment_method}
+                            </span>
+                          ) : (
+                            <span className="text-purple">
+                              {check?.payment_method}
+                            </span>
+                          )}
                         </td>
                         <td className="whitespace-nowrap py-3 px-1 font-medium text-blue-600 capitalize">
                           {check?.bank_id?.bank_name || "--"}
                         </td>
 
-
                         <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700 capitalize">
-                          {check?.check_status == "pending" ? <span className="text-yellow-500">{check?.check_status}</span> : <span className="text-green-600">{check?.check_status}</span>}
+                          {check?.check_status == "pending" ? (
+                            <span className="text-yellow-500">
+                              {check?.check_status}
+                            </span>
+                          ) : (
+                            <span className="text-green-600">
+                              {check?.check_status}
+                            </span>
+                          )}
                         </td>
 
                         <td className="whitespace-nowrap py-3 px-1 font-medium text-blue-600">
@@ -174,7 +212,7 @@ const CustomerPaymentTable = ({
                         <td className="whitespace-nowrap py-3 px-1 font-medium text-green-600">
                           {check?.pay_amount}
                         </td>
-                       
+
                         <td className="whitespace-nowrap py-3 px-1  text-gray-700 flex items-center">
                           {check?.check_status == "pending" && (
                             <select
