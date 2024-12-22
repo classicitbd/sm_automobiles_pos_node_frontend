@@ -80,7 +80,7 @@ const CreateStaffRole = () => {
   }
 
   return (
-    <div className='bg-gray-50'>
+    <div className=''>
       <div className='max-w-7xl mx-auto bg-white p-4 rounded-xl shadow-lg'>
         <div className='flex items-center justify-between'>
           <h3

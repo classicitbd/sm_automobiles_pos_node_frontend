@@ -60,10 +60,10 @@ const PurchaseListPage = () => {
     });
     
   return (
-    <div className="py-6 px-4 ">
+    <div className="py-6 px-4">
     
         <div>
-        <h1 className="sm:text-2xl text-xl">All Payment List</h1>
+        <h1 className="sm:text-2xl text-xl">All Paid Payment List</h1>
         </div>
         <div className="flex justify-end">
           <input

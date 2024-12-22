@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Pagination from "../common/pagination/Pagination";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
+import { Link } from "react-router-dom";
 
 const APListTable = ({
   purchaseLists,
@@ -25,31 +26,29 @@ const APListTable = ({
       {isLoading === true ? (
         <TableLoadingSkeleton />
       ) : (
-          <div className="rounded-lg shadow-md mt-3">
+        <div className="rounded-lg shadow-md mt-3">
           {purchaseLists?.data?.length > 0 ? (
             <div className="overflow-x-auto rounded-lg">
-                <table className="min-w-full text-sm">
+              <table className="min-w-full text-sm">
                 <thead>
                   <tr className="font-semibold text-center">
+                    <th className="whitespace-nowrap px-4 py-2.5    ">SL</th>
                     <th className="whitespace-nowrap px-4 py-2.5    ">
-                      SL
-                      </th>
-                      <th className="whitespace-nowrap px-4 py-2.5    ">
-                        Supplier Name
-                      </th>
-                      <th className="whitespace-nowrap px-4 py-2.5    ">
-                        Supplier Phone
-                      </th>
-                      <th className="whitespace-nowrap px-4 py-2.5    ">
-                        Created By
-                      </th>
+                      Supplier Name
+                    </th>
+                    <th className="whitespace-nowrap px-4 py-2.5    ">
+                      Supplier Phone
+                    </th>
+                    <th className="whitespace-nowrap px-4 py-2.5    ">
+                      Created By
+                    </th>
                     <th className="whitespace-nowrap px-4 py-2.5    ">
                       Product Name
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5    ">
                       Product Id
-                      </th>
-                     
+                    </th>
+
                     <th className="whitespace-nowrap px-4 py-2.5    ">
                       Invoice Id
                     </th>
@@ -68,15 +67,15 @@ const APListTable = ({
                     <th className="whitespace-nowrap px-4 py-2.5    ">
                       Due Amount
                     </th>
-                   
                   </tr>
                 </thead>
                 <tbody>
                   {purchaseLists?.data?.map((purchaselist, i) => (
                     <tr
                       key={purchaselist?._id}
-                      className={`text-center ${i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
-                        } hover:bg-blue-100`}
+                      className={`text-center ${
+                        i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                      } hover:bg-blue-100`}
                     >
                       <td className="whitespace-nowrap py-3 px-1.5 font-medium text-gray-700">
                         {serialNumber + i + 1}
@@ -96,9 +95,13 @@ const APListTable = ({
                       <td className="whitespace-nowrap py-3 px-1.5 font-medium text-gray-700">
                         {purchaselist?.product_id?.product_id}
                       </td>
-                     
+
                       <td className="whitespace-nowrap py-3 px-1.5 font-medium text-gray-700">
-                        {purchaselist?.invoice_id}
+                        <Link to="">
+                          <span className="text-blue-600 underline ">
+                            {purchaselist?.invoice_id}
+                          </span>
+                        </Link>
                       </td>
                       <td className="whitespace-nowrap py-3 px-1.5 font-medium text-purple">
                         {purchaselist?.product_quantity}
@@ -115,7 +118,6 @@ const APListTable = ({
                       <td className="whitespace-nowrap py-3 px-1.5 font-medium text-red-600">
                         {purchaselist?.due_amount}
                       </td>
-                     
                     </tr>
                   ))}
                 </tbody>

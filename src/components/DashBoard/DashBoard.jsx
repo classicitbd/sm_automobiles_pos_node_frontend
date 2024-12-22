@@ -74,19 +74,19 @@ const DashBoard = () => {
       {/* First  Chart Section Start */}
       <section className="mt-10">
         <div className="grid grid-cols-1 sm:grid-cols-5 gap-6">
-          <div className="sm:col-span-2 bg-gray-50 p-5 shadow-md">
+          <div className="sm:col-span-2 bg-white p-5 shadow-md">
             <PieChart />
           </div>
-          <div className="sm:col-span-3 bg-bgray-50 p-5 shadow-md">
+          <div className="sm:col-span-3 bg-white p-5 shadow-md">
             <BarChart />
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-5 gap-6 mt-8">
-          <div className="bg-gray-50  p-5 shadow-md sm:col-span-3">
+          <div className="bg-white  p-5 shadow-md sm:col-span-3">
             <LineChart />
           </div>
-          <div className="bg-gray-50  p-5 shadow-md sm:col-span-2">
+          <div className="bg-white  p-5 shadow-md sm:col-span-2">
             <MultipleBars />
           </div>
         </div>
@@ -99,19 +99,19 @@ const DashBoard = () => {
       {/* Table Start  */}
       <section className="mt-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div className="bg-gray-50 shadow-md p-5">
+          <div className="bg-white shadow-md p-5">
             <StockAlert />
           </div>
-          <div className="bg-gray-50 shadow-md p-5">
+          <div className="bg-white shadow-md p-5">
             <RecentInVoice />
           </div>
 
         </div>
-        <div className="mt-8 bg-gray-50 shadow-md p-5">
+        <div className="mt-8 bg-white shadow-md p-5">
           <RecentSales />
         </div>
 
-        <div className="mt-8 bg-gray-50 shadow-md p-5">
+        <div className="mt-8 bg-white shadow-md p-5">
           <AllProfit />
         </div>
       </section>

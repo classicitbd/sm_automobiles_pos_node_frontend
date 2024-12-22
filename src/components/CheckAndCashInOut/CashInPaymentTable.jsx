@@ -1,9 +1,9 @@
-
 import { useEffect, useState } from "react";
 import Pagination from "../common/pagination/Pagination";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import { DateTimeFormat } from "@/utils/dateTimeFormet";
+import { Link } from "react-router-dom";
 
 const CashInPaymentTable = ({
   setPage,
@@ -16,7 +16,6 @@ const CashInPaymentTable = ({
   isLoading,
   CashInPaymentData,
 }) => {
-
   const [serialNumber, setSerialNumber] = useState();
   useEffect(() => {
     const newSerialNumber = (page - 1) * limit;
@@ -29,23 +28,14 @@ const CashInPaymentTable = ({
         <TableLoadingSkeleton />
       ) : (
         <div>
-          <div className="rounded-lg border border-gray-200 mt-6">
+          <div className="rounded-lg shadow-md mt-3">
             {CashInPaymentData?.data?.length > 0 ? (
-              <div className="overflow-x-auto rounded-t-lg">
-                <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                  <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                    <tr className="divide-x divide-gray-300  font-semibold text-center ">
+              <div className="overflow-x-auto rounded-lg">
+                <table className="min-w-full  text-sm">
+                  <thead>
+                    <tr className="  font-semibold text-center ">
                       <th className="whitespace-nowrap p-4 font-medium">
                         SL No
-                      </th>
-                      <th className="whitespace-nowrap p-4 font-medium">
-                        Invoice Id
-                      </th>
-                      <th className="whitespace-nowrap p-4 font-medium">
-                        Date
-                      </th>
-                      <th className="whitespace-nowrap p-4 font-medium">
-                        Pay Amount
                       </th>
                       <th className="whitespace-nowrap p-4 font-medium">
                         Customer Name
@@ -56,56 +46,75 @@ const CashInPaymentTable = ({
                       <th className="whitespace-nowrap p-4 font-medium">
                         Created By
                       </th>
+                      <th className="whitespace-nowrap p-4 font-medium">
+                        Date
+                      </th>
+                      <th className="whitespace-nowrap p-4 font-medium">
+                        Invoice Id
+                      </th>
+
+                      <th className="whitespace-nowrap p-4 font-medium">
+                        Pay Amount
+                      </th>
                     </tr>
                   </thead>
 
-                  <tbody className="divide-y divide-gray-200 text-center">
+                  <tbody>
                     {CashInPaymentData?.data?.map((income, i) => (
                       <tr
                         key={income?._id}
-                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                          }`}
+                        className={`text-center ${
+                          i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                        } hover:bg-blue-100`}
                       >
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {income?.invoice_number || "N/A"}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {DateTimeFormat(income?.createdAt)}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {income?.pay_amount || 0}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                           {income?.customer_id?.customer_name || "N/A"}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                           {income?.customer_id?.customer_phone || "N/A"}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {(income?.check_publisher_id?.user_name)}
+                        <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
+                          {income?.check_publisher_id?.user_name}
+                        </td>
+                        <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
+                          {DateTimeFormat(income?.createdAt)}
+                        </td>
+                        <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
+                          {income?.invoice_number ? (
+                            <Link to="">
+                              <span className="text-blue-600 underline">
+                                {income?.invoice_number}
+                              </span>
+                            </Link>
+                          ) : (
+                            <span>--</span>
+                          )}
+                        </td>
+
+                        <td className="whitespace-nowrap py-2.5 font-medium text-green-600">
+                          {income?.pay_amount || 0}
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
-                {/* pagination */}
-
-                <Pagination
-                  setPage={setPage}
-                  setLimit={setLimit}
-                  totalData={totalData}
-                  page={page}
-                  limit={limit}
-                />
               </div>
             ) : (
               <NoDataFound />
             )}
-
           </div>
+          {/* pagination */}
+
+          <Pagination
+            setPage={setPage}
+            setLimit={setLimit}
+            totalData={totalData}
+            page={page}
+            limit={limit}
+          />
         </div>
       )}
     </>

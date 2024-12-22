@@ -3,6 +3,7 @@ import Pagination from "../common/pagination/Pagination";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import { DateTimeFormat } from "@/utils/dateTimeFormet";
+import { Link } from "react-router-dom";
 
 const IncomeTable = ({
   setPage,
@@ -92,9 +93,15 @@ const IncomeTable = ({
                           )}
                         </td>
                         <td className="whitespace-nowrap py-3 font-medium text-gray-700">
-                          {income?.income_invoice_number || (
-                            <span className="text-red-600">N/A</span>
-                          )}
+                          <Link to="">
+                            {income?.income_invoice_number ? (
+                              <span className="text-blue-600 underline">
+                                {income?.income_invoice_number}
+                              </span>
+                            ) : (
+                              <span className="text-red-600">N/A</span>
+                            )}
+                          </Link>
                         </td>
                         <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                           {DateTimeFormat(income?.createdAt)}
