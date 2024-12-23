@@ -58,12 +58,12 @@ const ProductTable = ({
         <TableLoadingSkeleton />
       ) : (
         <div>
-          <div className="rounded shadow-md mt-3 bg-gray-50">
+          <div className="rounded shadow-md mt-3">
             {products?.data?.length > 0 ? (
               <div className="overflow-x-auto rounded-lg">
                 <table className="min-w-full text-sm">
                   <thead>
-                    <tr className="font-bold text-center  divide-gray-950">
+                    <tr className="font-bold text-center">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
                       <td className="whitespace-nowrap p-4 ">Name</td>
                       <td className="whitespace-nowrap p-4 ">Image</td>

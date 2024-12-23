@@ -105,170 +105,210 @@ const StockManageForm = () => {
 
   return (
     <div>
-      <div>
-        <div className="">
-          <div className="">
-            <hr className="mt-2 mb-6" />
+      <div className="bg-white shadow-md py-6 px-4 rounded-lg mt-6">
+        <form onSubmit={handleSubmit(handleDataPost)} className="">
+          <div className="mt-2">
+            <label htmlFor="" className="block font-medium text-gray-700">
+              Note
+            </label>
 
-            <form onSubmit={handleSubmit(handleDataPost)} className="">
-              <div className="mt-2">
-                <label htmlFor="" className="block font-medium text-gray-700">
-                  Note
-                </label>
-
-                <textarea
-                  {...register("product_note")}
-                  type="text"
-                  placeholder="Note"
-                  className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
-                />
-              </div>
-              <div className="mt-3">
-                <label className="block font-medium text-gray-700 mb-1 mt-2">
-                  Product Name <span className="text-red-500">*</span>
-                </label>
-
-                <Select
-                  id="product_id"
-                  name="product_id"
-                  aria-label="Product Name"
-                  required
-                  options={productTypes?.data}
-                  getOptionLabel={(x) => x?.product_name}
-                  getOptionValue={(x) => x?._id}
-                  onChange={(selectedOption) => {
-                    setProduct_id(selectedOption);
-                  }}
-                />
-              </div>
-              <div className="mt-2">
-                <label className="block font-medium text-gray-700">
-                  Product Purchase Quantity{" "}
-                  <span className="text-red-500">*</span>
-                </label>
-
-                <div className="flex items-center justify-between gap-2">
-                  <input
-                    {...register("product_quantity", {
-                      required: "Product Quantity is required",
-                      validate: (value) => {
-                        if (value < 0) {
-                          return "Amount must be getter than 0";
-                        }
-                      },
-                    })}
-                    onChange={(e) =>
-                      setProductQuantity(Number(e.target.value) || 0)
-                    }
-                    type="number"
-                    placeholder="Enter Product Quantity"
-                    className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
-                  />
-                  <p className="font-bold">{settingData?.unit_name}</p>
-                </div>
-                {errors.product_quantity && (
-                  <p className="text-red-600">
-                    {errors.product_quantity.message}
-                  </p>
-                )}
-              </div>
-
-              <div className="mt-2">
-                <label className="block font-medium text-gray-700">
-                  Buying Price(per qty) <span className="text-red-500">*</span>
-                </label>
-
-                <input
-                  {...register("product_buying_price", {
-                    required: "Buying Price is required",
-                    validate: (value) => {
-                      if (value < 0) {
-                        return "Amount must be getter than 0";
-                      }
-                    },
-                  })}
-                  onChange={(e) => setBuyingPrice(Number(e.target.value) || 0)}
-                  type="number"
-                  placeholder="Enter Buying Price"
-                  className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
-                />
-                {errors.product_buying_price && (
-                  <p className="text-red-600">
-                    {errors.product_buying_price.message}
-                  </p>
-                )}
-              </div>
-
-              <div className="mt-2">
-                <label className="block font-medium text-gray-700">
-                  Total Price
-                </label>
-
-                <input
-                  value={totalPrice.toFixed(2)}
-                  type="number"
-                  placeholder="Total Price"
-                  disabled
-                  className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
-                />
-              </div>
-              <div className="mt-2">
-                <label className="block font-medium text-gray-700">
-                  Selling Price(per qty) <span className="text-red-500">*</span>
-                </label>
-
-                <input
-                  {...register("product_selling_price", {
-                    required: "Selling Price is required",
-                    validate: (value) => {
-                      if (value < 0) {
-                        return "Amount must be getter than 0";
-                      }
-                    },
-                  })}
-                  type="number"
-                  placeholder="Enter Selling Price"
-                  className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
-                />
-                {errors.product_selling_price && (
-                  <p className="text-red-600">
-                    {errors.product_selling_price.message}
-                  </p>
-                )}
-              </div>
-
-              <div className="mt-3">
-                <label className="block font-medium text-gray-700 mb-1">
-                  Supplier Name <span className="text-red-500">*</span>
-                </label>
-
-                <Select
-                  id="supplier_id"
-                  name="supplier_id"
-                  aria-label="Supplier Name"
-                  isClearable
-                  required
-                  options={supplierTypes?.data}
-                  getOptionLabel={(x) => x?.supplier_name}
-                  getOptionValue={(x) => x?._id}
-                  onChange={(selectedOption) => {
-                    setSupplier_id(selectedOption?._id);
-                  }}
-                />
-              </div>
-
-              <div className="flex justify-end mt-3">
-                {loading == true ? (
-                  <div className="px-10 py-2 flex items-center justify-center  bg-primary text-white rounded">
-                    <MiniSpinner />
-                  </div>
-                ) : (
-                  <Button type="submit">Create</Button>
-                )}
-              </div>
-            </form>
+            <textarea
+              {...register("product_note")}
+              type="text"
+              placeholder="Note"
+              className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+            />
           </div>
-        </div>
+          <div className="mt-3">
+            <label className="block font-medium text-gray-700 mb-1 mt-2">
+              Product Name <span className="text-red-500">*</span>
+            </label>
+
+            <Select
+              id="product_id"
+              name="product_id"
+              aria-label="Product Name"
+              required
+              options={productTypes?.data}
+              getOptionLabel={(x) => x?.product_name}
+              getOptionValue={(x) => x?._id}
+              onChange={(selectedOption) => {
+                setProduct_id(selectedOption);
+              }}
+            />
+          </div>
+          <div className="mt-2">
+            <label className="block font-medium text-gray-700">
+              Product Purchase Quantity <span className="text-red-500">*</span>
+            </label>
+
+            <div className="flex items-center justify-between gap-2">
+              <input
+                {...register("product_quantity", {
+                  required: "Product Quantity is required",
+                  validate: (value) => {
+                    if (value < 0) {
+                      return "Amount must be getter than 0";
+                    }
+                  },
+                })}
+                onChange={(e) =>
+                  setProductQuantity(Number(e.target.value) || 0)
+                }
+                type="number"
+                placeholder="Enter Product Quantity"
+                className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+              />
+              <p className="font-bold">{settingData?.unit_name}</p>
+            </div>
+            {errors.product_quantity && (
+              <p className="text-red-600">{errors.product_quantity.message}</p>
+            )}
+          </div>
+
+          <div className="mt-2">
+            <label className="block font-medium text-gray-700">
+              Buying Price(per qty) <span className="text-red-500">*</span>
+            </label>
+
+            <input
+              {...register("product_buying_price", {
+                required: "Buying Price is required",
+                validate: (value) => {
+                  if (value < 0) {
+                    return "Amount must be getter than 0";
+                  }
+                },
+              })}
+              onChange={(e) => setBuyingPrice(Number(e.target.value) || 0)}
+              type="number"
+              placeholder="Enter Buying Price"
+              className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+            />
+            {errors.product_buying_price && (
+              <p className="text-red-600">
+                {errors.product_buying_price.message}
+              </p>
+            )}
+          </div>
+
+          <div className="mt-2">
+            <label className="block font-medium text-gray-700">
+              Total Price
+            </label>
+
+            <input
+              value={totalPrice.toFixed(2)}
+              type="number"
+              placeholder="Total Price"
+              disabled
+              className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+            />
+          </div>
+          <div className="mt-2">
+            <label className="block font-medium text-gray-700">
+              Selling Price(per qty) <span className="text-red-500">*</span>
+            </label>
+
+            <input
+              {...register("product_selling_price", {
+                required: "Selling Price is required",
+                validate: (value) => {
+                  if (value < 0) {
+                    return "Amount must be getter than 0";
+                  }
+                },
+              })}
+              type="number"
+              placeholder="Enter Selling Price"
+              className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+            />
+            {errors.product_selling_price && (
+              <p className="text-red-600">
+                {errors.product_selling_price.message}
+              </p>
+            )}
+          </div>
+
+          <div className="mt-3">
+            <label className="block font-medium text-gray-700 mb-1">
+              Supplier Name <span className="text-red-500">*</span>
+            </label>
+
+            <Select
+              id="supplier_id"
+              name="supplier_id"
+              aria-label="Supplier Name"
+              isClearable
+              required
+              options={supplierTypes?.data}
+              getOptionLabel={(x) => x?.supplier_name}
+              getOptionValue={(x) => x?._id}
+              onChange={(selectedOption) => {
+                setSupplier_id(selectedOption?._id);
+              }}
+            />
+          </div>
+
+          <div className="flex justify-end mt-5">
+            {loading == true ? (
+              <div className="px-10 py-2 flex items-center justify-center  bg-primary text-white rounded">
+                <MiniSpinner />
+              </div>
+            ) : (
+              <Button type="submit">Create</Button>
+            )}
+          </div>
+        </form>
+      </div>
+
+      <div>
+        {product_id && (
+          <div className="rounded shadow-md mt-3 bg-gray-50 ">
+            <div className="overflow-x-auto rounded-lg">
+              <table className="min-w-full text-sm">
+                <thead>
+                  <tr className="font-bold text-center ">
+                    <td className="whitespace-nowrap p-4 ">SL No</td>
+                    <td className="whitespace-nowrap p-4 ">Product Name</td>
+
+                    <td className="whitespace-nowrap p-4 ">Product Id</td>
+
+                    <td className="whitespace-nowrap p-4 ">Buying Price</td>
+                    <td className="whitespace-nowrap p-4 ">Quantity</td>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr
+                    className="text-center 
+                        bg-secondary-100
+                      hover:bg-blue-100"
+                  >
+                    <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                      1
+                    </td>
+                    <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                      {product_id?.product_name}
+                    </td>
+
+                    <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                      {product_id?.product_id}
+                    </td>
+                    <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                      {" "}
+                      {product_id?.product_buying_price}
+                    </td>
+                    <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                      {" "}
+                      {product_id?.product_quantity}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
