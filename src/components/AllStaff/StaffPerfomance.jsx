@@ -233,68 +233,77 @@ const StaffPerfomance = () => {
                   </p>
                 </div>
                 {saleTargetData?.data?.length > 0 ? (
-                  <div className="overflow-x-auto rounded-lg shadow-md">
-                    <table className="min-w-full text-sm">
+                  <div className="overflow-x-auto rounded-lg">
+                    <table className="min-w-full  text-sm">
                       <thead>
                         <tr className="font-semibold text-center">
                           <td className="whitespace-nowrap p-4 ">SL No</td>
                           <td className="whitespace-nowrap p-4 ">Start Date</td>
                           <td className="whitespace-nowrap p-4 ">End Date</td>
                           <td className="whitespace-nowrap p-4 ">
-                            Sale Target
+                            Brand Sale Target
+                          </td>
+                          <td className="whitespace-nowrap p-4 ">Fill Up</td>
+                          <td className="whitespace-nowrap p-4 ">
+                            Others Sale Target
+                          </td>
+                          <td className="whitespace-nowrap p-4 ">Fill Up</td>
+                          <td className="whitespace-nowrap p-4 ">
+                            Get Amount(1-50)%
                           </td>
                           <td className="whitespace-nowrap p-4 ">
-                            Sale Target Fill Up
-                          </td>
-                          <td className="whitespace-nowrap p-4 text-green-600">
-                            Get Amount
+                            Get Amount(51-100)%
                           </td>
                           <td className="whitespace-nowrap p-4 ">Status</td>
                         </tr>
                       </thead>
 
-                      <tbody className="divide-y divide-gray-200 text-center">
+                      <tbody>
                         {saleTargetData?.data?.map((sale_target, i) => (
                           <tr
                             key={sale_target?._id}
-                            className={`divide-x divide-gray-200 ${
-                              i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                            }`}
+                            className={`text-center ${
+                              i % 2 === 0
+                                ? "bg-secondary-50"
+                                : "bg-secondary-100"
+                            } hover:bg-blue-100`}
                           >
-                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                            <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                               {i + 1}
                             </td>
-                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                            <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                               {sale_target?.sale_target_start_date}
                             </td>
-                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                            <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                               {sale_target?.sale_target_end_date}
+                            </td>
+                            <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                              {sale_target?.brand_sale_target}{" "}
+                              {settingData?.unit_name}
+                            </td>
+                            <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                              {sale_target?.brand_sale_target_fillup}{" "}
+                              {settingData?.unit_name}
                             </td>
                             <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                               {sale_target?.sale_target}{" "}
                               {settingData?.unit_name}
                             </td>
-                            <td className="whitespace-nowrap py-1.5 font-medium ">
-                              {sale_target?.sale_target_filup >=
-                              sale_target?.sale_target ? (
-                                <span className="text-green-600">
-                                  {" "}
-                                  {sale_target?.sale_target_filup}{" "}
-                                  {settingData?.unit_name}
-                                </span>
-                              ) : (
-                                <span className="text-red-600">
-                                  {" "}
-                                  {sale_target?.sale_target_filup}{" "}
-                                  {settingData?.unit_name}
-                                </span>
-                              )}
+                            <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                              {sale_target?.sale_target_fillup}{" "}
+                              {settingData?.unit_name}
                             </td>
                             <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
-                              {sale_target?.sale_target_amount}
+                              {sale_target?.first_half_amount_per_unit}{" "}
+                              <small>(per {settingData?.unit_name})</small>
+                            </td>
+                            <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                              {sale_target?.second_half_amount_per_unit}{" "}
+                              <small>(per {settingData?.unit_name})</small>
                             </td>
                             <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                              {sale_target?.sale_target_success == true ? (
+                              {sale_target?.brand_sale_target_success == true &&
+                              sale_target?.sale_target_success == true ? (
                                 <span className="text-green-600">Success</span>
                               ) : (
                                 <span className="text-blue-600">Pending</span>

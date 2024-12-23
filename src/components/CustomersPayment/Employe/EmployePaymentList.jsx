@@ -131,15 +131,9 @@ const EmployePaymentList = () => {
                       {allEmployelist?.data?.map((employe, i) => (
                         <tr
                           key={employe?._id}
-<<<<<<< HEAD
-                          className={`divide-x divide-gray-200 ${
-                            i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                          }`}
-=======
                           className={`text-center ${
                             i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
                           } hover:bg-blue-100`}
->>>>>>> 1190d186e8443bc5d4df7acc93bc150ee0b7e99c
                         >
                           <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                             {serialNumber + i + 1}
@@ -212,11 +206,7 @@ const EmployePaymentList = () => {
                           <td className="whitespace-nowrap py-3 font-medium text-green-600">
                             {employe?.order_id?.grand_total_amount}
                           </td>
-<<<<<<< HEAD
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-=======
                           <td className="whitespace-nowrap py-3 font-medium text-gray-700">
->>>>>>> 1190d186e8443bc5d4df7acc93bc150ee0b7e99c
                             {employe?.pay_amount ===
                             employe?.order_id?.grand_total_amount ? (
                               <span className="text-green-600">
@@ -232,50 +222,6 @@ const EmployePaymentList = () => {
                                 {employe?.pay_amount}
                               </span>
                             )}
-<<<<<<< HEAD
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
-                            {employe?.order_id?.total_measurement_count}{" "}
-                            {settingData?.unit_name}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {employe?.payment_method === "cash" ? (
-                              <span className="text-secondary-default">
-                                {employe?.payment_method}
-                              </span>
-                            ) : (
-                              <span className="text-purple">
-                                {employe?.payment_method}
-                              </span>
-                            )}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-blue-600">
-                            {employe?.bank_id?.bank_name
-                              ? employe?.bank_id?.bank_name
-                              : "--"}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {employe?.check_number
-                              ? employe?.check_number
-                              : "--"}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {employe?.check_withdraw_date
-                              ? employe?.check_withdraw_date
-                              : "--"}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 capitalize">
-                            {employe?.check_status === "approved" ? (
-                              <span className="text-green-600">
-                                {employe?.check_status}
-                              </span>
-                            ) : (
-                              <span className="text-red-600">
-                                {employe?.check_status}
-                              </span>
-                            )}
-=======
->>>>>>> 1190d186e8443bc5d4df7acc93bc150ee0b7e99c
                           </td>
                         </tr>
                       ))}
