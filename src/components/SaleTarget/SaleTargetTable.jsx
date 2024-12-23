@@ -20,6 +20,9 @@ const SaleTargetTable = ({
   isLoading,
   settingData,
   userTypes,
+  userLoading,
+  settingLoading,
+  brandLoading,
 }) => {
   const [saleTargetUpdateModal, setSaleTargetUpdateModal] = useState(false);
   const [saleTargetUpdateData, setSaleTargetUpdateData] = useState({});
@@ -62,7 +65,10 @@ const SaleTargetTable = ({
   }, [page, limit]);
   return (
     <>
-      {isLoading === true ? (
+      {isLoading === true ||
+      userLoading === true ||
+      settingLoading ||
+      brandLoading ? (
         <TableLoadingSkeleton />
       ) : (
         <div>
@@ -77,10 +83,17 @@ const SaleTargetTable = ({
                       <td className="whitespace-nowrap p-4 ">User Phone</td>
                       <td className="whitespace-nowrap p-4 ">Start Date</td>
                       <td className="whitespace-nowrap p-4 ">End Date</td>
-                      <td className="whitespace-nowrap p-4 ">Total Target</td>
+                      <td className="whitespace-nowrap p-4 ">Brand Name</td>
+                      <td className="whitespace-nowrap p-4 ">Brand Target</td>
                       <td className="whitespace-nowrap p-4 ">Fill Up</td>
-                      <td className="whitespace-nowrap p-4 ">Get Amount</td>
-                      <td className="whitespace-nowrap p-4 ">Status</td>
+                      <td className="whitespace-nowrap p-4 ">Others Target</td>
+                      <td className="whitespace-nowrap p-4 ">Others Fill Up</td>
+                      <td className="whitespace-nowrap p-4 ">
+                        Get Amount(1-50)%
+                      </td>
+                      <td className="whitespace-nowrap p-4 ">
+                        Get Amount(51-100)%
+                      </td>
                       <td className="whitespace-nowrap p-4 ">Create By</td>
                       <td className="whitespace-nowrap p-4 ">Updated By</td>
                       <td className="whitespace-nowrap p-4 ">Action</td>
@@ -91,8 +104,9 @@ const SaleTargetTable = ({
                     {saleTargetData?.data?.map((sale_target, i) => (
                       <tr
                         key={sale_target?._id}
-                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                          }`}
+                        className={`divide-x divide-gray-200 ${
+                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                        }`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
@@ -109,29 +123,62 @@ const SaleTargetTable = ({
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {sale_target?.sale_target_end_date}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
-                          {sale_target?.sale_target} {settingData?.unit_name}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium ">
-                          {
-                            sale_target?.sale_target_filup >= sale_target?.sale_target ? <span className="text-green-600"> {sale_target?.sale_target_filup}{" "}
-                              {settingData?.unit_name}</span> : <span className="text-red-600"> {sale_target?.sale_target_filup}{" "}
-                              {settingData?.unit_name}</span>
-                          }
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
-                          {sale_target?.sale_target_amount}
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {sale_target?.brand_id?.brand_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {sale_target?.sale_target_success == true
-                            ? <span className="text-green-600">Success</span>
-                            : <span className="text-blue-600">Pending</span>}
+                          {sale_target?.brand_sale_target}{" "}
+                          {settingData?.unit_name}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                          {sale_target?.brand_sale_target_fillup >=
+                          sale_target?.brand_sale_target ? (
+                            <span className="text-green-600">
+                              {" "}
+                              {sale_target?.brand_sale_target_fillup}{" "}
+                              {settingData?.unit_name}
+                            </span>
+                          ) : (
+                            <span className="text-red-600">
+                              {" "}
+                              {sale_target?.brand_sale_target_fillup}{" "}
+                              {settingData?.unit_name}
+                            </span>
+                          )}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {sale_target?.sale_target} {settingData?.unit_name}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                          {sale_target?.sale_target_fillup >=
+                          sale_target?.sale_target ? (
+                            <span className="text-green-600">
+                              {" "}
+                              {sale_target?.sale_target_fillup}{" "}
+                              {settingData?.unit_name}
+                            </span>
+                          ) : (
+                            <span className="text-red-600">
+                              {" "}
+                              {sale_target?.sale_target_fillup}{" "}
+                              {settingData?.unit_name}
+                            </span>
+                          )}
+                        </td>
+
+                        <td className="whitespace-nowrap py-1.5 font-medium">
+                          {sale_target?.first_half_amount_per_unit} <small>(per {settingData?.unit_name})</small>
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium">
+                          {sale_target?.second_half_amount_per_unit} <small>(per {settingData?.unit_name})</small>
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {sale_target?.sale_target_publisher_id?.user_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {sale_target?.sale_target_updated_by?.user_name ? sale_target?.sale_target_updated_by?.user_name : '--'}
+                          {sale_target?.sale_target_updated_by?.user_name
+                            ? sale_target?.sale_target_updated_by?.user_name
+                            : "--"}
                         </td>
                         {/* <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                          
@@ -161,7 +208,9 @@ const SaleTargetTable = ({
                                 <FiEdit size={18} />
                                 Edit
                               </button>
-                              <Link to={`/sale-target-view/${sale_target?._id}`}>
+                              <Link
+                                to={`/sale-target-view/${sale_target?._id}`}
+                              >
                                 {" "}
                                 <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium">
                                   <FaEye size={16} /> View

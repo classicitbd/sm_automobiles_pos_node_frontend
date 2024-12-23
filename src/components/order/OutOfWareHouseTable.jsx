@@ -77,7 +77,7 @@ const OutOfWareHouseTable = ({
           order_status: "out-of-warehouse",
           user_id: order?.order_publisher_id?._id,
           order_updated_by: user?._id,
-          total_messurement_count: order?.total_messurement_count,
+          total_measurement_count: order?.total_measurement_count,
           order_products: order?.order_products?.map((item) => ({
             product_id: item?.product_id?._id,
             product_quantity: item?.product_quantity,

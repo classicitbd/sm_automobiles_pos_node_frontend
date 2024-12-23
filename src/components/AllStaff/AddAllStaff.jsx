@@ -44,6 +44,7 @@ const AddAllStaff = ({
 
     const sendData = {
       user_name: data?.user_name,
+      joining_date: data?.joining_date,
       user_salary: data?.user_salary,
       user_status: data?.user_status,
       user_phone: data?.user_phone,
@@ -205,6 +206,30 @@ const AddAllStaff = ({
               {errors.user_salary && (
                 <p className="text-red-600 text-sm">
                   {errors.user_salary?.message}
+                </p>
+              )}
+            </div>
+            <div className="mt-4">
+              <label
+                htmlFor="joining_date"
+                className="block text-xs font-medium text-gray-700 mt-2"
+              >
+                Joining Date
+              </label>
+
+              <input
+                {...register("joining_date", {
+                  required: "Joining Date is required",
+                })}
+                type="date"
+                id="joining_date"
+                placeholder="Enter Joining Date"
+                max={new Date().toISOString().split("T")[0]}
+                className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+              />
+              {errors.joining_date && (
+                <p className="text-red-600 text-sm">
+                  {errors.joining_date?.message}
                 </p>
               )}
             </div>

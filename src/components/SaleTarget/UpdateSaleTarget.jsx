@@ -25,11 +25,40 @@ const UpdateSaleTarget = ({
   const handleDataPost = async (data) => {
     setLoading(true);
     try {
+      const todayDate = new Date().toISOString().split("T")[0];
+
+      if (
+        saleTargetUpdateData?.sale_target_start_date < todayDate &&
+        saleTargetUpdateData?.sale_target_end_date < todayDate
+      ) {
+        toast.error("Sale target is already expired", {
+          autoClose: 1000,
+        });
+        setLoading(false);
+        return;
+      }
+
       const sendData = {
         _id: saleTargetUpdateData?._id,
         sale_target_updated_by: user?._id,
-        sale_target: data?.sale_target,
-        sale_target_amount: data?.sale_target_amount,
+
+        brand_sale_target: parseFloat(data?.brand_sale_target),
+        brand_sale_target_success:
+          data?.brand_sale_target <=
+          saleTargetUpdateData?.brand_sale_target_fillup
+            ? true
+            : false,
+        sale_target: parseFloat(data?.sale_target),
+        sale_target_success:
+          data?.sale_target <= saleTargetUpdateData?.sale_target_fillup
+            ? true
+            : false,
+        first_half_amount_per_unit: parseFloat(
+          data?.first_half_amount_per_unit
+        ),
+        second_half_amount_per_unit: parseFloat(
+          data?.second_half_amount_per_unit
+        ),
       };
 
       const response = await fetch(
@@ -161,18 +190,64 @@ const UpdateSaleTarget = ({
 
               <div className="mt-4">
                 <label className="block text-xs font-medium text-gray-700">
-                  Sale Target <span className="text-red-500">*</span>
+                  Brand Name <span className="text-red-500">*</span>
+                </label>
+
+                <input
+                  type="text"
+                  value={saleTargetUpdateData?.brand_id?.brand_name}
+                  disabled
+                  readOnly={true}
+                  className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                />
+                {errors.brand_id?.brand_name && (
+                  <p className="text-red-600">
+                    {errors.brand_id?.brand_name?.message}
+                  </p>
+                )}
+              </div>
+
+              <div className="mt-4">
+                <label className="block text-xs font-medium text-gray-700">
+                  Brand Sale Target <span className="text-red-500">*</span>
+                </label>
+
+                <div className="flex items-center gap-4">
+                  <input
+                    {...register("brand_sale_target", {
+                      required: "Brand Sale Target is required",
+                    })}
+                    defaultValue={saleTargetUpdateData?.brand_sale_target}
+                    type="number"
+                    min={1}
+                    placeholder="Brand Sale Target"
+                    className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                  />
+                  <p className="font-semibold text-[18px]">
+                    {settingData?.unit_name}
+                  </p>
+                </div>
+                {errors.brand_sale_target && (
+                  <p className="text-red-600">
+                    {errors.brand_sale_target?.message}
+                  </p>
+                )}
+              </div>
+
+              <div className="mt-4">
+                <label className="block text-xs font-medium text-gray-700">
+                  Other Sale Target <span className="text-red-500">*</span>
                 </label>
 
                 <div className="flex items-center gap-4">
                   <input
                     {...register("sale_target", {
-                      required: "Sale Target is required",
+                      required: "Other Sale Target is required",
                     })}
+                    defaultValue={saleTargetUpdateData?.sale_target}
                     type="number"
                     min={1}
-                    defaultValue={saleTargetUpdateData?.sale_target}
-                    placeholder="Sale Target"
+                    placeholder="Other Sale Target"
                     className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                   />
                   <p className="font-semibold text-[18px]">
@@ -183,24 +258,53 @@ const UpdateSaleTarget = ({
                   <p className="text-red-600">{errors.sale_target?.message}</p>
                 )}
               </div>
+
+              {/* first and secons half amount */}
               <div className="mt-4">
                 <label className="block text-xs font-medium text-gray-700">
-                  Get Amount <span className="text-red-500">*</span>
+                  First Half Get Amount{" "}
+                  <span className="text-red-500">(* per liter)</span>
                 </label>
 
                 <input
-                  {...register("sale_target_amount", {
-                    required: "Get Amount is required",
+                  {...register("first_half_amount_per_unit", {
+                    required: "First Half Get Amount Per Liter is required",
+                  })}
+                  type="number"
+                  defaultValue={
+                    saleTargetUpdateData?.first_half_amount_per_unit
+                  }
+                  min={1}
+                  placeholder="First Half Get Amount Per Liter"
+                  className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                />
+                {errors.first_half_amount_per_unit && (
+                  <p className="text-red-600">
+                    {errors.first_half_amount_per_unit?.message}
+                  </p>
+                )}
+              </div>
+              <div className="mt-4">
+                <label className="block text-xs font-medium text-gray-700">
+                  Second Half Get Amount{" "}
+                  <span className="text-red-500">(* per liter)</span>
+                </label>
+
+                <input
+                  {...register("second_half_amount_per_unit", {
+                    required: "Second Half Get Amount Per Liter is required",
                   })}
                   type="number"
                   min={1}
-                  defaultValue={saleTargetUpdateData?.sale_target_amount}
-                  placeholder="Get Amount"
+                  defaultValue={
+                    saleTargetUpdateData?.second_half_amount_per_unit
+                  }
+                  placeholder="Second Half Get Amount Per Liter"
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
-                {errors.sale_target_amount && (
+                {errors.second_half_amount_per_unit && (
                   <p className="text-red-600">
-                    {errors.sale_target_amount?.message}
+                    {errors.second_half_amount_per_unit?.message}
                   </p>
                 )}
               </div>
@@ -211,7 +315,7 @@ const UpdateSaleTarget = ({
                     <MiniSpinner />
                   </div>
                 ) : (
-                  <Button type="submit">Create</Button>
+                  <Button type="submit">Update</Button>
                 )}
               </div>
             </form>

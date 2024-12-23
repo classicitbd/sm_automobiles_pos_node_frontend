@@ -67,6 +67,9 @@ const AllStaffTable = ({
                 <thead className=" bg-[#fff9ee] ">
                   <tr className="divide-x divide-gray-300  font-semibold text-center ">
                     <th className="whitespace-nowrap px-4 py-2.5 ">
+                      Joining Date
+                    </th>
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Staff Name
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5 ">
@@ -100,6 +103,9 @@ const AllStaffTable = ({
                       className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
                         }`}
                     >
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                        {user?.joining_date}
+                      </td>
                       <td className="whitespace-nowrap px-4 py-2 font-semibold">
                         {user?.user_name}
                       </td>

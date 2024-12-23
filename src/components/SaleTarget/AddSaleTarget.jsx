@@ -13,9 +13,11 @@ const AddSaleTarget = ({
   user,
   settingData,
   userTypes,
+  brandTypes,
 }) => {
   const [loading, setLoading] = useState(false);
   const [user_id, setUser_id] = useState("");
+  const [brand_id, setBrand_id] = useState("");
 
   const {
     register,
@@ -36,8 +38,19 @@ const AddSaleTarget = ({
         user_id,
         sale_target_start_date: data?.sale_target_start_date,
         sale_target_end_date: data?.sale_target_end_date,
-        sale_target: data?.sale_target,
-        sale_target_amount: data?.sale_target_amount,
+        brand_id: brand_id,
+        brand_sale_target: parseFloat(data?.brand_sale_target),
+        brand_sale_target_fillup: 0,
+        brand_sale_target_success: false,
+        sale_target: parseFloat(data?.sale_target),
+        sale_target_fillup: 0,
+        sale_target_success: false,
+        first_half_amount_per_unit: parseFloat(
+          data?.first_half_amount_per_unit
+        ),
+        second_half_amount_per_unit: parseFloat(
+          data?.second_half_amount_per_unit
+        ),
       };
 
       const response = await fetch(
@@ -116,6 +129,7 @@ const AddSaleTarget = ({
             <hr className="mt-2 mb-6" />
 
             <form onSubmit={handleSubmit(handleDataPost)} className="">
+              {/* user details */}
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1">
                   User Name <span className="text-red-500">*</span>
@@ -139,6 +153,7 @@ const AddSaleTarget = ({
                 />
               </div>
 
+              {/* time */}
               <div className="grid grid-cols-2 gap-4 mt-4">
                 <div>
                   <label className="block text-xs font-medium text-gray-700">
@@ -211,19 +226,68 @@ const AddSaleTarget = ({
                 </div>
               </div>
 
+              {/* brand */}
+              <div className="mt-4">
+                <label className="block text-xs font-medium text-gray-700 mb-1">
+                  Brand Name <span className="text-red-500">*</span>
+                </label>
+
+                <Select
+                  id="brand_id"
+                  name="brand_id"
+                  aria-label="Brand Name"
+                  isClearable
+                  required
+                  options={brandTypes?.data}
+                  getOptionLabel={(x) => x.brand_name}
+                  getOptionValue={(x) => x._id}
+                  onChange={(selectedOption) => {
+                    setBrand_id(selectedOption?._id);
+                  }}
+                  placeholder="Search by name"
+                />
+              </div>
+
               <div className="mt-4">
                 <label className="block text-xs font-medium text-gray-700">
-                  Sale Target <span className="text-red-500">*</span>
+                  Brand Sale Target <span className="text-red-500">*</span>
+                </label>
+
+                <div className="flex items-center gap-4">
+                  <input
+                    {...register("brand_sale_target", {
+                      required: "Brand Sale Target is required",
+                    })}
+                    type="number"
+                    min={1}
+                    placeholder="Brand Sale Target"
+                    className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                  />
+                  <p className="font-semibold text-[18px]">
+                    {settingData?.unit_name}
+                  </p>
+                </div>
+                {errors.brand_sale_target && (
+                  <p className="text-red-600">
+                    {errors.brand_sale_target?.message}
+                  </p>
+                )}
+              </div>
+
+              {/* other sale target */}
+              <div className="mt-4">
+                <label className="block text-xs font-medium text-gray-700">
+                  Other Sale Target <span className="text-red-500">*</span>
                 </label>
 
                 <div className="flex items-center gap-4">
                   <input
                     {...register("sale_target", {
-                      required: "Sale Target is required",
+                      required: "Other Sale Target is required",
                     })}
                     type="number"
                     min={1}
-                    placeholder="Sale Target"
+                    placeholder="Other Sale Target"
                     className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                   />
                   <p className="font-semibold text-[18px]">
@@ -234,23 +298,47 @@ const AddSaleTarget = ({
                   <p className="text-red-600">{errors.sale_target?.message}</p>
                 )}
               </div>
+
+              {/* first and secons half amount */}
               <div className="mt-4">
                 <label className="block text-xs font-medium text-gray-700">
-                  Get Amount <span className="text-red-500">*</span>
+                  First Half Get Amount{" "}
+                  <span className="text-red-500">(* per liter)</span>
                 </label>
 
                 <input
-                  {...register("sale_target_amount", {
-                    required: "Get Amount is required",
+                  {...register("first_half_amount_per_unit", {
+                    required: "First Half Get Amount Per Liter is required",
                   })}
                   type="number"
                   min={1}
-                  placeholder="Get Amount"
+                  placeholder="First Half Get Amount Per Liter"
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
-                {errors.sale_target_amount && (
+                {errors.first_half_amount_per_unit && (
                   <p className="text-red-600">
-                    {errors.sale_target_amount?.message}
+                    {errors.first_half_amount_per_unit?.message}
+                  </p>
+                )}
+              </div>
+              <div className="mt-4">
+                <label className="block text-xs font-medium text-gray-700">
+                  Second Half Get Amount{" "}
+                  <span className="text-red-500">(* per liter)</span>
+                </label>
+
+                <input
+                  {...register("second_half_amount_per_unit", {
+                    required: "Second Half Get Amount Per Liter is required",
+                  })}
+                  type="number"
+                  min={1}
+                  placeholder="Second Half Get Amount Per Liter"
+                  className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                />
+                {errors.second_half_amount_per_unit && (
+                  <p className="text-red-600">
+                    {errors.second_half_amount_per_unit?.message}
                   </p>
                 )}
               </div>

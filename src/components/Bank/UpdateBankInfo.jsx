@@ -39,9 +39,9 @@ const UpdateBankInfo = ({
       if (
         sendData?.bank_balance &&
         sendData?.previous_balance &&
-        sendData?.bank_balance == sendData?.previous_balance
+        sendData?.bank_balance <= sendData?.previous_balance
       ) {
-        toast.error("Please update the bank balance", {
+        toast.error("Bank Balance should be greater than previous balance", {
           autoClose: 1000,
         });
         return;

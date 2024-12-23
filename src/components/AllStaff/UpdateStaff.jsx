@@ -33,6 +33,7 @@ const UpdateStaff = ({
     const sendData = {
       _id: updateModalValue?._id,
       user_role_id: data?.user_role_id,
+      joining_date: data?.joining_date,
       user_name: data?.user_name,
       user_salary: data?.user_salary,
       user_address: data?.user_address,
@@ -196,6 +197,31 @@ const UpdateStaff = ({
             {errors.user_salary && (
               <p className="text-red-600 text-sm">
                 {errors.user_salary?.message}
+              </p>
+            )}
+          </div>
+          <div className="mt-4">
+            <label
+              htmlFor="joining_date"
+              className="block text-xs font-medium text-gray-700 mt-2"
+            >
+              User Joining Date
+            </label>
+
+            <input
+              {...register("joining_date", {
+                required: "User Joining Date is required",
+              })}
+              type="date"
+              id="joining_date"
+              defaultValue={updateModalValue?.joining_date}
+              max={new Date().toISOString().split("T")[0]}
+              placeholder="Enter user Joining Date"
+              className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+            />
+            {errors.joining_date && (
+              <p className="text-red-600 text-sm">
+                {errors.joining_date?.message}
               </p>
             )}
           </div>
