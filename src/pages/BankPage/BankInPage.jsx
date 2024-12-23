@@ -65,7 +65,7 @@ const BankInPage = () => {
   const { data: bankData = {}, isLoading: bankLoading } = useGetBankDetails(id);
 
   return (
-    <div className="bg-white rounded-lg py-6 px-4 shadow">
+    <div className="py-6 px-4">
      
       <BankIn
         bankInData={bankInData}

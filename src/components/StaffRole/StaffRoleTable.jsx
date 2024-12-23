@@ -38,20 +38,20 @@ const StaffRoleTable = () => {
     return <LoaderOverlay />;
   }
   return (
-    <div className="bg-white  rounded ">
+    <div className="rounded-lg shadow-md">
       {/* Table for showing data */}
       {roleData?.length > 0 ? (
-        <div className="mt-5 overflow-x-auto rounded">
-          <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border rounded">
-            <thead className=" bg-[#fff9ee]">
-              <tr className="divide-x divide-gray-300  font-semibold text-center ">
-                <th className="whitespace-nowrap p-4  text-gray-900 text-center">
+        <div className="mt-8 overflow-x-auto rounded-lg">
+          <table className="min-w-full  text-sm ">
+            <thead>
+              <tr className="font-semibold text-center ">
+                <th className="whitespace-nowrap p-4   text-center">
                   Role Name
                 </th>
-                <th className="whitespace-nowrap p-4  text-gray-900 text-center">
+                <th className="whitespace-nowrap p-4  text-center">
                   Created By
                 </th>
-                <th className="whitespace-nowrap p-4  text-gray-900 text-center">
+                <th className="whitespace-nowrap p-4   text-center">
                   Updated By
                 </th>
 
@@ -63,8 +63,9 @@ const StaffRoleTable = () => {
               {roleData?.map((role, i) => (
                 <tr
                   key={role?._id}
-                  className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                    }`}
+                  className={`text-center ${
+                    i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                  } hover:bg-blue-100`}
                 >
                   <td className="whitespace-nowrap px-4 py-2 font-semibold">
                     {role?.role_name}

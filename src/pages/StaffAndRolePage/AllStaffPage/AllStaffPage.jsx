@@ -56,7 +56,7 @@ const AllStaffPage = () => {
   };
 
   return (
-    <div className="bg-white rounded py-6 px-4 shadow">
+    <div className="py-6 px-4 ">
       <div className="flex justify-between mt-6">
         <div>
           <h1 className="text-2xl">All Staff List </h1>

@@ -64,46 +64,56 @@ const BankBalanceUpdateHistoryTable = ({
       {isLoading === true || bankLoading ? (
         <TableLoadingSkeleton />
       ) : (
-        <div className="rounded-lg border border-gray-200 mt-2">
+        <div className="rounded-lg shadow-md  mt-8">
           {bankUpdateBalanceHistoryData?.data?.length > 0 ? (
-            <div className="overflow-x-auto rounded-t-lg">
-              <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                  <tr className="divide-x  divide-gray-300  font-semibold text-center text-white">
+            <div className="overflow-x-auto rounded-lg">
+              <table className="min-w-full  text-sm">
+                <thead >
+                  <tr className="  font-semibold text-center ">
                     <td className="whitespace-nowrap p-4 ">SL No</td>
-                    <td className="whitespace-nowrap p-4 ">Time</td>
+                    <td className="whitespace-nowrap p-4 ">Date</td>
+                    <td className="whitespace-nowrap p-4 ">Created By</td>
                     <td className="whitespace-nowrap p-4 ">Previous Balance</td>
                     <td className="whitespace-nowrap p-4 ">New Balance</td>
                     <td className="whitespace-nowrap p-4 ">Total Add</td>
-                    <td className="whitespace-nowrap p-4 ">Created By</td>
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-gray-200 text-center">
+                <tbody >
                   {bankUpdateBalanceHistoryData?.data?.map((payment, i) => (
                     <tr
                       key={payment?._id}
-                      className={`divide-x divide-gray-200 ${
-                        i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                      }`}
+                      className={`text-center ${
+                        i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                      } hover:bg-blue-100`}
                     >
-                      <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                      <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                         {serialNumber + i + 1}
                       </td>
-                      <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                      <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                         {DateTimeFormat(payment?.createdAt)}
                       </td>
-                      <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                      <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
+                        {payment?.publisher_id?.user_name}
+                      </td>
+                      <td className="whitespace-nowrap py-2.5 font-medium text-yellow-500">
                         {payment?.previous_balance}
                       </td>
-                      <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                      <td className="whitespace-nowrap py-2.5 font-medium text-green-600">
                         {payment?.new_balance}
                       </td>
-                      <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {payment?.new_balance - payment?.previous_balance}
-                      </td>
-                      <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                        {payment?.publisher_id?.user_name}
+                      <td className="whitespace-nowrap py-2.5 font-medium text-blue-600">
+                        {payment?.previous_balance > payment?.new_balance ? (
+                          <span className="text-red-600">
+                            {" "}
+                            {payment?.new_balance - payment?.previous_balance}
+                          </span>
+                        ) : (
+                          <span>
+                            {" "}
+                            {payment?.new_balance - payment?.previous_balance}
+                          </span>
+                        )}
                       </td>
                     </tr>
                   ))}

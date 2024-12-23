@@ -12,8 +12,11 @@ import useGetSupplier from "@/hooks/useGetSupplier";
 import { SettingContext } from "@/context/SettingProvider";
 
 const StockManageForm = () => {
+  const [buyingPrice, setBuyingPrice] = useState(0);
+  const [productQuantity, setProductQuantity] = useState(0);
+
   const { user } = useContext(AuthContext);
-  const {settingData, loading: settingLoading} = useContext(SettingContext)
+  const { settingData, loading: settingLoading } = useContext(SettingContext);
 
   const [loading, setLoading] = useState(false);
   const [product_id, setProduct_id] = useState(null);
@@ -41,7 +44,7 @@ const StockManageForm = () => {
         product_selling_price: data?.product_selling_price,
         product_buying_price: data?.product_buying_price,
         product_quantity: data?.product_quantity,
-        product_id: product_id,
+        product_id: product_id?._id,
         supplier_id: supplier_id,
         total_amount: parseInt(
           data?.product_buying_price * data?.product_quantity
@@ -91,9 +94,14 @@ const StockManageForm = () => {
     }
   };
 
+  //Total Price...
+  const totalPrice = productQuantity * buyingPrice || 0;
+
   if (productLoading || supplierLoading || settingLoading) {
     return <LoaderOverlay />;
   }
+
+  console.log(product_id);
 
   return (
     <div>
@@ -104,10 +112,7 @@ const StockManageForm = () => {
 
             <form onSubmit={handleSubmit(handleDataPost)} className="">
               <div className="mt-2">
-                <label
-                  htmlFor=""
-                  className="block text-xs font-medium text-gray-700"
-                >
+                <label htmlFor="" className="block font-medium text-gray-700">
                   Note
                 </label>
 
@@ -118,9 +123,97 @@ const StockManageForm = () => {
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
               </div>
+              <div className="mt-3">
+                <label className="block font-medium text-gray-700 mb-1 mt-2">
+                  Product Name <span className="text-red-500">*</span>
+                </label>
+
+                <Select
+                  id="product_id"
+                  name="product_id"
+                  aria-label="Product Name"
+                  required
+                  options={productTypes?.data}
+                  getOptionLabel={(x) => x?.product_name}
+                  getOptionValue={(x) => x?._id}
+                  onChange={(selectedOption) => {
+                    setProduct_id(selectedOption);
+                  }}
+                />
+              </div>
+              <div className="mt-2">
+                <label className="block font-medium text-gray-700">
+                  Product Purchase Quantity{" "}
+                  <span className="text-red-500">*</span>
+                </label>
+
+                <div className="flex items-center justify-between gap-2">
+                  <input
+                    {...register("product_quantity", {
+                      required: "Product Quantity is required",
+                      validate: (value) => {
+                        if (value < 0) {
+                          return "Amount must be getter than 0";
+                        }
+                      },
+                    })}
+                    onChange={(e) =>
+                      setProductQuantity(Number(e.target.value) || 0)
+                    }
+                    type="number"
+                    placeholder="Enter Product Quantity"
+                    className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                  />
+                  <p className="font-bold">{settingData?.unit_name}</p>
+                </div>
+                {errors.product_quantity && (
+                  <p className="text-red-600">
+                    {errors.product_quantity.message}
+                  </p>
+                )}
+              </div>
 
               <div className="mt-2">
-                <label className="block text-xs font-medium text-gray-700">
+                <label className="block font-medium text-gray-700">
+                  Buying Price(per qty) <span className="text-red-500">*</span>
+                </label>
+
+                <input
+                  {...register("product_buying_price", {
+                    required: "Buying Price is required",
+                    validate: (value) => {
+                      if (value < 0) {
+                        return "Amount must be getter than 0";
+                      }
+                    },
+                  })}
+                  onChange={(e) => setBuyingPrice(Number(e.target.value) || 0)}
+                  type="number"
+                  placeholder="Enter Buying Price"
+                  className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                />
+                {errors.product_buying_price && (
+                  <p className="text-red-600">
+                    {errors.product_buying_price.message}
+                  </p>
+                )}
+              </div>
+
+              <div className="mt-2">
+                <label className="block font-medium text-gray-700">
+                  Total Price
+                </label>
+
+                <input
+                  value={totalPrice.toFixed(2)}
+                  type="number"
+                  placeholder="Total Price"
+                  disabled
+                  className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                />
+              </div>
+              <div className="mt-2">
+                <label className="block font-medium text-gray-700">
                   Selling Price(per qty) <span className="text-red-500">*</span>
                 </label>
 
@@ -143,77 +236,9 @@ const StockManageForm = () => {
                   </p>
                 )}
               </div>
-              <div className="mt-2">
-                <label className="block text-xs font-medium text-gray-700">
-                  Buying Price(per qty) <span className="text-red-500">*</span>
-                </label>
 
-                <input
-                  {...register("product_buying_price", {
-                    required: "Buying Price is required",
-                    validate: (value) => {
-                      if (value < 0) {
-                        return "Amount must be getter than 0";
-                      }
-                    },
-                  })}
-                  type="number"
-                  placeholder="Enter Buying Price"
-                  className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
-                />
-                {errors.product_buying_price && (
-                  <p className="text-red-600">
-                    {errors.product_buying_price.message}
-                  </p>
-                )}
-              </div>
-              <div className="mt-2">
-                <label className="block text-xs font-medium text-gray-700">
-                  Product Quantity <span className="text-red-500">*</span>
-                </label>
-
-                <div className="flex items-center justify-between gap-2">
-                <input
-                  {...register("product_quantity", {
-                    required: "Product Quantity is required",
-                    validate: (value) => {
-                      if (value < 0) {
-                        return "Amount must be getter than 0";
-                      }
-                    },
-                  })}
-                  type="number"
-                  placeholder="Enter Product Quantity"
-                  className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
-                />
-                <p className="font-bold">{settingData?.unit_name}</p>
-                </div>
-                {errors.product_quantity && (
-                  <p className="text-red-600">
-                    {errors.product_quantity.message}
-                  </p>
-                )}
-              </div>
               <div className="mt-3">
-                <label className="block text-xs font-medium text-gray-700 mb-1 mt-2">
-                  Product Name <span className="text-red-500">*</span>
-                </label>
-
-                <Select
-                  id="product_id"
-                  name="product_id"
-                  aria-label="Product Name"
-                  required
-                  options={productTypes?.data}
-                  getOptionLabel={(x) => x?.product_name}
-                  getOptionValue={(x) => x?._id}
-                  onChange={(selectedOption) => {
-                    setProduct_id(selectedOption?._id);
-                  }}
-                />
-              </div>
-              <div className="mt-3">
-                <label className="block text-xs font-medium text-gray-700 mb-1">
+                <label className="block font-medium text-gray-700 mb-1">
                   Supplier Name <span className="text-red-500">*</span>
                 </label>
 
