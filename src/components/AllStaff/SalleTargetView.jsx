@@ -134,12 +134,12 @@ const SalleTargetView = () => {
               className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
             />
           </div>
-          <div className="rounded-lg border border-gray-200 mt-3">
+          <div className="rounded-lg shadow-md mt-3">
             {saleTargetData?.data?.length > 0 ? (
-              <div className="overflow-x-auto rounded-t-lg">
-                <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                  <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                    <tr className="divide-x  divide-gray-300  font-semibold text-center text-gray-900">
+              <div className="overflow-x-auto rounded-lg">
+                <table className="min-w-full  text-sm">
+                  <thead>
+                    <tr className="font-semibold text-center">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
                       <td className="whitespace-nowrap p-4 ">Start Date</td>
                       <td className="whitespace-nowrap p-4 ">End Date</td>
@@ -161,21 +161,21 @@ const SalleTargetView = () => {
                     </tr>
                   </thead>
 
-                  <tbody className="divide-y divide-gray-200 text-center">
+                  <tbody >
                     {saleTargetData?.data?.map((sale_target, i) => (
                       <tr
                         key={sale_target?._id}
-                        className={`divide-x divide-gray-200 ${
-                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                        }`}
+                        className={`text-center ${
+                          i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                        } hover:bg-blue-100`}
                       >
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {serialNumber + i + 1}
+                        <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
+                          {i + 1}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                           {sale_target?.sale_target_start_date}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                        <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                           {sale_target?.sale_target_end_date}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-green-600">

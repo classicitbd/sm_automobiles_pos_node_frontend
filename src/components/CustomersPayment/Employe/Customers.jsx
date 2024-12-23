@@ -101,12 +101,12 @@ const Customers = () => {
           <TableLoadingSkeleton />
         ) : (
           <div>
-            <div className="rounded-lg border border-gray-200 mt-6">
+            <div className="rounded-lg shadow-md mt-6">
               {allCustomers?.data?.length > 0 ? (
-                <div className="overflow-x-auto rounded-t-lg">
-                  <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                    <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                      <tr className="divide-x divide-gray-300  font-semibold text-center ">
+                <div className="overflow-x-auto rounded-lg">
+                  <table className="min-w-full  text-sm">
+                    <thead>
+                      <tr className=" font-semibold text-center ">
                         <td className="whitespace-nowrap p-4 ">SL No</td>
                         <td className="whitespace-nowrap p-4 ">
                           Customer Name
@@ -117,11 +117,12 @@ const Customers = () => {
                         <td className="whitespace-nowrap p-4 ">
                           Customer Address
                         </td>
-                        <td className="whitespace-nowrap p-4 ">
-                          Customer Wallet
-                        </td>
+
                         <td className="whitespace-nowrap p-4 ">
                           Customer Status
+                        </td>
+                        <td className="whitespace-nowrap p-4 ">
+                          Customer Wallet
                         </td>
                         <td className="whitespace-nowrap p-4 ">Action</td>
                       </tr>
@@ -131,8 +132,9 @@ const Customers = () => {
                       {allCustomers?.data?.map((customer, i) => (
                         <tr
                           key={customer?._id}
-                          className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                            }`}
+                          className={`text-center ${
+                            i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                          } hover:bg-blue-100`}
                         >
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                             {serialNumber + i + 1}
@@ -146,11 +148,28 @@ const Customers = () => {
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                             {customer?.customer_address}
                           </td>
+
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {customer?.customer_wallet > 0 ? <span className="text-green-600">{customer?.customer_wallet}</span> : <span className="text-red-600">{customer?.customer_wallet}</span>}
+                            {customer?.customer_status === "active" ? (
+                              <span className="text-green-600">
+                                {customer?.customer_status}
+                              </span>
+                            ) : (
+                              <span className="text-red-600">
+                                {customer?.customer_status}
+                              </span>
+                            )}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {customer?.customer_status === 'active' ? <span className="text-green-600">{customer?.customer_status}</span> : <span className="text-red-600">{customer?.customer_status}</span>}
+                            {customer?.customer_wallet > 0 ? (
+                              <span className="text-green-600">
+                                {customer?.customer_wallet}
+                              </span>
+                            ) : (
+                              <span className="text-red-600">
+                                {customer?.customer_wallet}
+                              </span>
+                            )}
                           </td>
                           <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                             <button
@@ -161,11 +180,11 @@ const Customers = () => {
                             >
                               <CiMenuKebab
                                 size={30}
-                                className="cursor-pointer text-gray-500 hover:text-gray-300 font-bold"
+                                className="cursor-pointer text-primaryVariant-300 hover:text-primaryVariant-700 font-bold"
                               />
                             </button>
                             {supplierDocumentModal == customer?._id && (
-                              <div className=" bg-bgray-200 shadow-xl w-[200px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
+                              <div className=" bg-success-50 shadow-xl w-[200px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
                                 <Link
                                   to={`/customer-viewOrder/${customer?._id}`}
                                 >

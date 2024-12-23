@@ -37,12 +37,12 @@ const CategoryTable = ({
         <TableLoadingSkeleton />
       ) : (
         <div>
-          <div className="rounded-lg border border-gray-200 mt-6">
+          <div className="rounded-lg mt-6 shadow-md">
             {categoryTypes?.data?.length > 0 ? (
-              <div className="overflow-x-auto rounded-t-lg">
-                <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                  <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                    <tr className="divide-x divide-gray-300  font-semibold text-center ">
+              <div className="overflow-x-auto rounded-lg">
+                <table className="min-w-full text-sm">
+                  <thead>
+                    <tr className="font-semibold text-center ">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
                       <td className="whitespace-nowrap p-4 ">Category Name</td>
                       <td className="whitespace-nowrap p-4 ">Created By</td>
@@ -52,12 +52,13 @@ const CategoryTable = ({
                     </tr>
                   </thead>
 
-                  <tbody className="divide-y divide-gray-200 text-center">
+                  <tbody>
                     {categoryTypes?.data?.map((category, i) => (
                       <tr
                         key={category?._id}
-                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                          }`}
+                        className={`text-center ${
+                          i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                        } hover:bg-blue-100`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
@@ -69,7 +70,9 @@ const CategoryTable = ({
                           {category?.category_publisher_id?.user_name}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {category?.category_updated_by?.user_name ? category?.category_updated_by?.user_name : '--'}
+                          {category?.category_updated_by?.user_name
+                            ? category?.category_updated_by?.user_name
+                            : "--"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                           <button

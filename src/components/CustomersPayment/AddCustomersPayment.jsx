@@ -10,6 +10,7 @@ import { LoaderOverlay } from "../common/loader/LoderOverley";
 import { AuthContext } from "@/context/AuthProvider";
 import { toast } from "react-toastify";
 import useGetSelfOrder from "@/hooks/useGetAllSelfOrder";
+import { Link } from "react-router-dom";
 
 const AddCustomersPayment = () => {
   const paymentOption = [
@@ -337,14 +338,14 @@ const AddCustomersPayment = () => {
           {/* customer info */}
           {order_Info && customer_id && (
             <>
-              <div className="mt-8 bg-gray-50 shadow-md py-4 px-3 pb-2">
-                <div className="overflow-x-auto rounded-t-lg">
+              <div className="mt-8 shadow-md py-4 px-3 pb-2">
+                <div className="overflow-x-auto rounded-lg">
                   <p className="text-[20px] font-bold text-gray-800 uppercase mb-2">
                     Customer Information
                   </p>
-                  <table className="min-w-full divide-y divide-gray-200  text-sm">
-                    <thead className="ltr:text-left rtl:text-right">
-                      <tr className=" divide-gray-300 font-semibold text-center text-gray-900">
+                  <table className="min-w-full   text-sm">
+                    <thead>
+                      <tr className="font-semibold text-center">
                         <td className="whitespace-nowrap p-4 ">
                           Customer Name
                         </td>
@@ -363,8 +364,11 @@ const AddCustomersPayment = () => {
                       </tr>
                     </thead>
 
-                    <tbody className="divide-y divide-gray-200 text-center">
-                      <tr>
+                    <tbody>
+                      <tr
+                        className=" bg-secondary-100
+                               hover:bg-blue-100"
+                      >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {order_Info?.customer_id?.customer_name}
                         </td>
@@ -375,14 +379,34 @@ const AddCustomersPayment = () => {
                           {order_Info?.customer_id?.customer_address}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {
-                            order_Info?.customer_id?.customer_wallet ? <> {order_Info?.customer_id?.customer_wallet > 0 ? <span className="text-green-600">{order_Info?.customer_id?.customer_wallet}</span> : <span className="text-red-600">{order_Info?.customer_id?.customer_wallet}</span>}</> : '--'
-                          }
-
+                          {order_Info?.customer_id?.customer_wallet ? (
+                            <>
+                              {" "}
+                              {order_Info?.customer_id?.customer_wallet > 0 ? (
+                                <span className="text-green-600">
+                                  {order_Info?.customer_id?.customer_wallet}
+                                </span>
+                              ) : (
+                                <span className="text-red-600">
+                                  {order_Info?.customer_id?.customer_wallet}
+                                </span>
+                              )}
+                            </>
+                          ) : (
+                            "--"
+                          )}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-
-                          {order_Info?.customer_id?.customer_status === 'active' ? <span className="text-green-600">{order_Info?.customer_id?.customer_status}</span> : <span className="text-red-600">{order_Info?.customer_id?.customer_status}</span>}
+                          {order_Info?.customer_id?.customer_status ===
+                          "active" ? (
+                            <span className="text-green-600">
+                              {order_Info?.customer_id?.customer_status}
+                            </span>
+                          ) : (
+                            <span className="text-red-600">
+                              {order_Info?.customer_id?.customer_status}
+                            </span>
+                          )}
                         </td>
                       </tr>
                     </tbody>
@@ -394,27 +418,37 @@ const AddCustomersPayment = () => {
           {/* order info */}
           {order_Info && order_id && (
             <>
-              <div className="mt-8 bg-gray-50 shadow-md py-4 px-3 pb-2">
-                <div className="overflow-x-auto rounded-t-lg">
+              <div className="mt-8 shadow-md py-4 px-3 pb-2">
+                <div className="overflow-x-auto rounded-lg">
                   <p className="text-[20px] font-bold text-gray-800 uppercase mb-2">
                     Order Information
                   </p>
-                  <table className="min-w-full divide-y divide-gray-200  text-sm">
-                    <thead className="ltr:text-left rtl:text-right">
-                      <tr className="divide-gray-300 font-semibold text-center text-gray-900">
+                  <table className="min-w-full  text-sm">
+                    <thead>
+                      <tr className=" font-semibold text-center ">
                         <td className="whitespace-nowrap p-4 ">Invoice ID</td>
                         <td className="whitespace-nowrap p-4 ">Sub Total</td>
                         <td className="whitespace-nowrap p-4 ">Discount</td>
                         <td className="whitespace-nowrap p-4 ">Grand Total</td>
-                        <td className="whitespace-nowrap p-4 ">Received Amount</td>
-                        <td className="whitespace-nowrap p-4 text-red-600">Due Amount</td>
+                        <td className="whitespace-nowrap p-4 ">
+                          Received Amount
+                        </td>
+                        <td className="whitespace-nowrap p-4 ">Due Amount</td>
                       </tr>
                     </thead>
 
-                    <tbody className="divide-y divide-gray-200 text-center">
-                      <tr>
+                    <tbody>
+                      <tr
+                        className=" bg-secondary-100
+                               hover:bg-blue-100"
+                      >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {order_Info?.order_id}
+                          <Link>
+                            <span className="text-blue-500 underline">
+                              {" "}
+                              {order_Info?.order_id}
+                            </span>
+                          </Link>
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                           {order_Info?.sub_total_amount}
@@ -426,17 +460,21 @@ const AddCustomersPayment = () => {
                           {order_Info?.grand_total_amount}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-
-
-                          {
-                            order_Info?.received_amount === order_Info?.grand_total_amount ? (
-                              <span className="text-green-600">{order_Info?.received_amount}</span>
-                            ) : order_Info?.received_amount > order_Info?.grand_total_amount ? (
-                              <span className="text-blue-600">{order_Info?.received_amount}</span>
-                            ) : (
-                              <span className="text-yellow-600">{order_Info?.received_amount}</span>
-                            )
-                          }
+                          {order_Info?.received_amount ===
+                          order_Info?.grand_total_amount ? (
+                            <span className="text-green-600">
+                              {order_Info?.received_amount}
+                            </span>
+                          ) : order_Info?.received_amount >
+                            order_Info?.grand_total_amount ? (
+                            <span className="text-blue-600">
+                              {order_Info?.received_amount}
+                            </span>
+                          ) : (
+                            <span className="text-yellow-600">
+                              {order_Info?.received_amount}
+                            </span>
+                          )}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-red-600">
                           {order_Info?.due_amount}
@@ -451,24 +489,28 @@ const AddCustomersPayment = () => {
           {/* product info */}
           {order_Info && order_id && (
             <>
-              <div className="mt-8 bg-gray-50 shadow-md py-4 px-3 pb-2">
-                <div className="overflow-x-auto rounded-t-lg">
+              <div className="mt-8  shadow-md py-4 px-3 pb-2">
+                <div className="overflow-x-auto rounded-lg">
                   <p className="text-[20px] font-bold text-gray-800 uppercase mb-2">
                     Product Information
                   </p>
-                  <table className="min-w-full divide-y divide-gray-200  text-sm">
-                    <thead className="ltr:text-left rtl:text-right">
-                      <tr className=" divide-gray-300  font-semibold text-center text-gray-900">
-                        <td className="whitespace-nowrap p-4 ">Invoice ID</td>
+                  <table className="min-w-full   text-sm">
+                    <thead>
+                      <tr className="  font-semibold text-center ">
+                        <td className="whitespace-nowrap p-4 ">Product Name</td>
                         <td className="whitespace-nowrap p-4 ">Price</td>
                         <td className="whitespace-nowrap p-4 ">Quantity</td>
                         <td className="whitespace-nowrap p-4 ">Total Price</td>
                       </tr>
                     </thead>
 
-                    <tbody className="divide-y divide-gray-200 text-center">
+                    <tbody>
                       {order_Info?.order_products?.map((product, i) => (
-                        <tr key={i}>
+                        <tr
+                          key={i}
+                          className=" bg-secondary-100
+                               hover:bg-blue-100"
+                        >
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                             {product?.product_id?.product_name}
                           </td>
@@ -479,7 +521,9 @@ const AddCustomersPayment = () => {
                             {product?.product_quantity}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-blue-600">
-                            {product?.product_total_price ? product?.product_total_price : '--'}
+                            {product?.product_total_price
+                              ? product?.product_total_price
+                              : "--"}
                           </td>
                         </tr>
                       ))}

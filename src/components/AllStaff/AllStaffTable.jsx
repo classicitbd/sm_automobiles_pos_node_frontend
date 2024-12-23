@@ -58,14 +58,14 @@ const AllStaffTable = ({
       {isLoadingStaff ? (
         <TableLoadingSkeleton />
       ) : (
-        <div>
+        <div className="rounded-lg shadow-md mt-5">
           {/* Table for showing data */}
           {staffData?.length > 0 ? (
-            <div className="mt-5 overflow-x-auto rounded">
-              <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border rounded">
+            <div className=" overflow-x-auto rounded">
+              <table className="min-w-full  text-sm">
                 {" "}
-                <thead className=" bg-[#fff9ee] ">
-                  <tr className="divide-x divide-gray-300  font-semibold text-center ">
+                <thead>
+                  <tr className="font-semibold text-center ">
                     <th className="whitespace-nowrap px-4 py-2.5 ">
                       Joining Date
                     </th>
@@ -75,33 +75,34 @@ const AllStaffTable = ({
                     <th className="whitespace-nowrap px-4 py-2.5 ">
                       Staff Phone
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5 ">
-                      Staff Salary
-                    </th>
+
                     <th className="whitespace-nowrap px-4 py-2.5 ">
                       Staff Address
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5 ">
                       Staff Role
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2.5 ">
-                      Status
-                    </th>
+
                     <th className="whitespace-nowrap px-4 py-2.5 ">
                       Created By
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5 ">
                       Updated By
                     </th>
+                    <th className="whitespace-nowrap px-4 py-2.5 ">Status</th>
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
+                      Staff Salary
+                    </th>
                     <th className="px-4 py-2.5 text-center">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200 text-center ">
+                <tbody>
                   {staffData?.map((user, i) => (
                     <tr
                       key={user?._id}
-                      className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                        }`}
+                      className={`text-center ${
+                        i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                      } hover:bg-blue-100`}
                     >
                       <td className="whitespace-nowrap px-4 py-2 font-semibold">
                         {user?.joining_date}
@@ -112,9 +113,7 @@ const AllStaffTable = ({
                       <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize">
                         {user?.user_phone ? user?.user_phone : "-"}
                       </td>
-                      <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize text-green-600">
-                        {user?.user_salary ? user?.user_salary : "-"}
-                      </td>
+
                       <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize">
                         {user?.user_phone ? user?.user_address : "-"}
                       </td>
@@ -123,14 +122,18 @@ const AllStaffTable = ({
                           ? user?.user_role_id?.role_name
                           : "-"}
                       </td>
-                      <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize text-green-600">
-                        {user?.user_status}
-                      </td>
+
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                         {user?.user_publisher_id?.user_name}
                       </td>
                       <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                         {user?.user_updated_by?.user_name}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize text-green-600">
+                        {user?.user_status}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold capitalize text-green-600">
+                        {user?.user_salary ? user?.user_salary : "-"}
                       </td>
 
                       <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
@@ -140,11 +143,11 @@ const AllStaffTable = ({
                         >
                           <CiMenuKebab
                             size={30}
-                            className="cursor-pointer text-gray-500 hover:text-gray-300 font-bold"
+                            className="cursor-pointer text-primaryVariant-300 hover:text-primaryVariant-700 font-bold"
                           />
                         </button>
                         {bankDocumentModal == user?._id && (
-                          <div className=" bg-bgray-200 shadow-xl w-[150px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
+                          <div className="  bg-success-50 shadow-xl w-[200px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
                             <button
                               className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
                               onClick={() => updateStaffModal(user)}

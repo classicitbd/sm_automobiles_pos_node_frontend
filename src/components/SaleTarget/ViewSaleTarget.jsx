@@ -3,6 +3,7 @@ import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "@/utils/baseURL";
 import ViewSaleTargetChart from "./ViewSaleTargetChart";
+import { Link } from "react-router-dom";
 
 const ViewSaleTarget = ({
   saleTargetData,
@@ -88,7 +89,10 @@ const ViewSaleTarget = ({
                 <p className="sm:text-[18px] text-bgray-700">
                   Total Target :{" "}
                   <span className="text-blue-600 sm:text-[18px]">
-                    {parseFloat(saleTargetDetails?.data?.sale_target) + parseFloat(saleTargetDetails?.data?.brand_sale_target)}{" "}
+                    {parseFloat(saleTargetDetails?.data?.sale_target) +
+                      parseFloat(
+                        saleTargetDetails?.data?.brand_sale_target
+                      )}{" "}
                     {settingData?.unit_name}
                   </span>
                 </p>
@@ -99,12 +103,12 @@ const ViewSaleTarget = ({
           <div className="bg-gray-50  p-5 shadow-md mt-8">
             <ViewSaleTargetChart />
           </div>
-          <div className="rounded-lg border border-gray-200 mt-6">
+          <div className="rounded-lg shadow-md mt-6">
             {saleTargetData?.data?.length > 0 ? (
-              <div className="overflow-x-auto rounded-t-lg">
-                <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                  <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                    <tr className="divide-x  divide-gray-300  font-semibold text-center text-gray-900">
+              <div className="overflow-x-auto rounded-lg">
+                <table className="min-w-full  text-sm">
+                  <thead>
+                    <tr className="font-semibold text-center">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
                       <td className="whitespace-nowrap p-4 ">Invoice Id</td>
                       <td className="whitespace-nowrap p-4 ">Total Amount</td>

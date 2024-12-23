@@ -72,15 +72,17 @@ const SaleTargetTable = ({
         <TableLoadingSkeleton />
       ) : (
         <div>
-          <div className="rounded-lg border border-gray-200 mt-6">
+          <div className="rounded-lg shadow-md mt-6">
             {saleTargetData?.data?.length > 0 ? (
-              <div className="overflow-x-auto rounded-t-lg">
-                <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                  <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                    <tr className="divide-x divide-gray-300  font-semibold text-center ">
+              <div className="overflow-x-auto rounded-lg">
+                <table className="min-w-full  text-sm">
+                  <thead>
+                    <tr className="  font-semibold text-center ">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
                       <td className="whitespace-nowrap p-4 ">User Name</td>
                       <td className="whitespace-nowrap p-4 ">User Phone</td>
+                      <td className="whitespace-nowrap p-4 ">Create By</td>
+                      <td className="whitespace-nowrap p-4 ">Updated By</td>
                       <td className="whitespace-nowrap p-4 ">Start Date</td>
                       <td className="whitespace-nowrap p-4 ">End Date</td>
                       <td className="whitespace-nowrap p-4 ">Brand Name</td>
@@ -100,13 +102,13 @@ const SaleTargetTable = ({
                     </tr>
                   </thead>
 
-                  <tbody className="divide-y divide-gray-200 text-center">
+                  <tbody>
                     {saleTargetData?.data?.map((sale_target, i) => (
                       <tr
                         key={sale_target?._id}
-                        className={`divide-x divide-gray-200 ${
-                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                        }`}
+                        className={`text-center ${
+                          i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                        } hover:bg-blue-100`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
@@ -116,6 +118,14 @@ const SaleTargetTable = ({
                         </td>
                         <td className="whitespace-nowrap py-1.5 ">
                           {sale_target?.user_id?.user_phone}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {sale_target?.sale_target_publisher_id?.user_name}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {sale_target?.sale_target_updated_by?.user_name
+                            ? sale_target?.sale_target_updated_by?.user_name
+                            : "--"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {sale_target?.sale_target_start_date}
@@ -194,11 +204,11 @@ const SaleTargetTable = ({
                           >
                             <CiMenuKebab
                               size={30}
-                              className="cursor-pointer text-gray-500 hover:text-gray-300 font-bold"
+                              className="cursor-pointer text-primaryVariant-300 hover:text-primaryVariant-700 font-bold"
                             />
                           </button>
                           {bankDocumentModal == sale_target?._id && (
-                            <div className=" bg-bgray-200 shadow-xl w-[150px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
+                            <div className="  bg-success-50 shadow-xl w-[200px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
                               <button
                                 className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
                                 onClick={() =>

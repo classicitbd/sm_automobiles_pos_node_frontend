@@ -3,7 +3,7 @@ import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import { BASE_URL } from "@/utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { LoaderOverlay } from "../common/loader/LoderOverley";
 import useGetSelfOrder from "@/hooks/useGetAllSelfOrder";
 import useGetAUserDetails from "@/hooks/useGetAUserDetails";
@@ -147,10 +147,10 @@ const StaffPerfomance = () => {
                   </p>
                 </div>
                 {orderData?.data?.length > 0 ? (
-                  <div className="overflow-x-auto rounded-t-lg border">
-                    <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                      <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                        <tr className="divide-x  divide-gray-300  font-semibold text-center text-gray-900">
+                  <div className="overflow-x-auto shadow-md rounded-lg">
+                    <table className="min-w-full  text-sm">
+                      <thead>
+                        <tr className="font-semibold text-center">
                           <td className="whitespace-nowrap p-4 ">SL No</td>
                           <td className="whitespace-nowrap p-4 ">Invoice Id</td>
                           <td className="whitespace-nowrap p-4 ">
@@ -233,10 +233,10 @@ const StaffPerfomance = () => {
                   </p>
                 </div>
                 {saleTargetData?.data?.length > 0 ? (
-                  <div className="overflow-x-auto rounded-t-lg border">
-                    <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                      <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                        <tr className="divide-x  divide-gray-300  font-semibold text-center text-gray-900">
+                  <div className="overflow-x-auto rounded-lg shadow-md">
+                    <table className="min-w-full text-sm">
+                      <thead>
+                        <tr className="font-semibold text-center">
                           <td className="whitespace-nowrap p-4 ">SL No</td>
                           <td className="whitespace-nowrap p-4 ">Start Date</td>
                           <td className="whitespace-nowrap p-4 ">End Date</td>

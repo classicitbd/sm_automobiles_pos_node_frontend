@@ -74,37 +74,30 @@ const SupplierTable = ({
         <div>
           {/* Table for showing data */}
 
-          <div className="mt-5 overflow-x-auto rounded">
-            <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm border rounded">
-              <thead className=" bg-[#fff9ee] ">
-                <tr className="divide-x divide-gray-300  font-semibold text-center ">
-                  <th className="whitespace-nowrap px-4 py-2.5 ">
-                    SL
-                  </th>
-                  <th className="whitespace-nowrap px-4 py-2.5 ">
+          <div className="mt-5 overflow-x-auto rounded-lg shadow-md">
+            <table className="min-w-full text-sm">
+              <thead >
+                <tr className="font-semibold text-center ">
+                  <th className="whitespace-nowrap px-4 py-4 ">SL</th>
+                  <th className="whitespace-nowrap px-4 py-4 ">
                     Supplier Name
                   </th>
-                  <th className="whitespace-nowrap px-4 py-2.5 ">
+                  <th className="whitespace-nowrap px-4 py-4 ">
                     Supplier Phone
                   </th>
-                  <th className="whitespace-nowrap px-4 py-2.5 ">
-                    Address
-                  </th>
-                  <th className="whitespace-nowrap px-4 py-2.5 ">
-                    Created By
-                  </th>
-                  <th className="whitespace-nowrap px-4 py-2.5 ">
-                    Updated By
-                  </th>
+                  <th className="whitespace-nowrap px-4 py-4 ">Address</th>
+                  <th className="whitespace-nowrap px-4 py-4 ">Created By</th>
+                  <th className="whitespace-nowrap px-4 py-4 ">Updated By</th>
                   <th className="px-4 py-2.5 text-center">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 text-center ">
+              <tbody>
                 {allSupplier?.data?.map((supplier, i) => (
                   <tr
                     key={supplier?._id}
-                    className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                      }`}
+                    className={`text-center ${
+                      i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                    } hover:bg-blue-100`}
                   >
                     <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                       {serialNumber + i + 1}
@@ -122,7 +115,9 @@ const SupplierTable = ({
                       {supplier?.supplier_publisher_id?.user_name}
                     </td>
                     <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                      {supplier?.supplier_updated_by?.user_name ? supplier?.supplier_updated_by?.user_name : '--'}
+                      {supplier?.supplier_updated_by?.user_name
+                        ? supplier?.supplier_updated_by?.user_name
+                        : "--"}
                     </td>
                     <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                       <button
@@ -131,11 +126,11 @@ const SupplierTable = ({
                       >
                         <CiMenuKebab
                           size={30}
-                          className="cursor-pointer text-gray-500 hover:text-gray-300 font-bold"
+                          className="cursor-pointer text-primaryVariant-300 hover:text-primaryVariant-700 font-bold"
                         />
                       </button>
                       {supplierDocumentModal == supplier?._id && (
-                        <div className=" bg-bgray-200 shadow-xl w-[200px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
+                        <div className="  bg-success-50 shadow-xl w-[200px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
                           <button
                             className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
                             onClick={() => handleSupplierUpdateModal(supplier)}

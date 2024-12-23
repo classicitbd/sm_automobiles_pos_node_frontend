@@ -6,7 +6,7 @@ const StaffRoleTablePage = () => {
   //Add Staff Role Modal State
 
   return (
-    <div className='bg-white rounded py-6 px-4 max-w-7xl mx-auto shadow'>
+    <div className=' py-6 px-4 max-w-7xl mx-auto'>
       <div className='flex justify-between mt-6'>
         <div>
           <h1 className='text-2xl'>Staff Role</h1>

@@ -7,6 +7,7 @@ import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import { BASE_URL } from "@/utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const EmployePaymentList = () => {
   const [serialNumber, setSerialNumber] = useState();
@@ -76,7 +77,7 @@ const EmployePaymentList = () => {
     <>
       <div className="flex justify-between mt-6">
         <div>
-          <h1 className="text-2xl">Employe List</h1>
+          <h1 className="text-2xl">Employe Payment List</h1>
         </div>
 
         <div className="mt-3">
@@ -94,61 +95,128 @@ const EmployePaymentList = () => {
           <TableLoadingSkeleton />
         ) : (
           <div>
-            <div className="rounded-lg border border-gray-200 mt-6">
+            <div className="rounded-lg shadow-md mt-6">
               {allEmployelist?.data?.length > 0 ? (
-                <div className="overflow-x-auto rounded-t-lg">
-                  <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                    <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                      <tr className="divide-x divide-gray-300  font-semibold text-center ">
+                <div className="overflow-x-auto rounded-lg">
+                  <table className="min-w-full text-sm">
+                    <thead>
+                      <tr className="font-semibold text-center">
                         <td className="whitespace-nowrap p-4 ">SL No</td>
+                        <td className="whitespace-nowrap p-4 ">Invice No</td>
                         <td className="whitespace-nowrap p-4 ">
                           Customer Name
                         </td>
                         <td className="whitespace-nowrap p-4 ">
                           Customer Phone
                         </td>
-                        <td className="whitespace-nowrap p-4 ">Invice No</td>
-                        <td className="whitespace-nowrap p-4 ">Total Amount</td>
-                        <td className="whitespace-nowrap p-4 ">Pay Amount</td>
-                        <td className="whitespace-nowrap p-4 ">
-                          Total Messurement
-                        </td>
+                        <td className="whitespace-nowrap p-4 ">Bank Name</td>
                         <td className="whitespace-nowrap p-4 ">
                           Payment Method
                         </td>
-                        <td className="whitespace-nowrap p-4 ">Bank Name</td>
                         <td className="whitespace-nowrap p-4 ">Check No</td>
                         <td className="whitespace-nowrap p-4 ">
                           Withdraw Date
                         </td>
                         <td className="whitespace-nowrap p-4 ">Status</td>
+                        <td className="whitespace-nowrap p-4 ">
+                          Total Messurement
+                        </td>
+
+                        <td className="whitespace-nowrap p-4 ">Total Amount</td>
+                        <td className="whitespace-nowrap p-4 ">Pay Amount</td>
                       </tr>
                     </thead>
 
-                    <tbody className="divide-y divide-gray-200 text-center">
+                    <tbody>
                       {allEmployelist?.data?.map((employe, i) => (
                         <tr
                           key={employe?._id}
+<<<<<<< HEAD
                           className={`divide-x divide-gray-200 ${
                             i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
                           }`}
+=======
+                          className={`text-center ${
+                            i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                          } hover:bg-blue-100`}
+>>>>>>> 1190d186e8443bc5d4df7acc93bc150ee0b7e99c
                         >
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                             {serialNumber + i + 1}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                            <Link>
+                              <span className="text-blue-600 underline">
+                                {" "}
+                                {employe?.invoice_number}
+                              </span>
+                            </Link>
+                          </td>
+                          <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                             {employe?.customer_id?.customer_name}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                             {employe?.customer_phone}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {employe?.invoice_number}
+                          <td className="whitespace-nowrap py-3 font-medium text-blue-600">
+                            {employe?.bank_id?.bank_name
+                              ? employe?.bank_id?.bank_name
+                              : "--"}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                          <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                            {employe?.payment_method === "cash" ? (
+                              <span className="text-secondary-default">
+                                {employe?.payment_method}
+                              </span>
+                            ) : (
+                              <span className="text-purple">
+                                {employe?.payment_method}
+                              </span>
+                            )}
+                          </td>
+                          <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                            {employe?.check_number
+                              ? employe?.check_number
+                              : "--"}
+                          </td>
+                          <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                            {employe?.check_withdraw_date
+                              ? employe?.check_withdraw_date
+                              : "--"}
+                          </td>
+                          <td className="whitespace-nowrap py-3 font-medium text-gray-700 capitalize">
+                            {employe?.check_status === "approved" ? (
+                              <span className="text-green-600">
+                                {employe?.check_status}
+                              </span>
+                            ) : (
+                              <span className="text-red-600">
+                                {employe?.check_status}
+                              </span>
+                            )}
+                          </td>
+                          <td className="whitespace-nowrap py-3 font-medium text-green-600">
+                            {employe?.order_id?.total_messurement_count ? (
+                              <>
+                                {" "}
+                                {
+                                  employe?.order_id?.total_messurement_count
+                                }{" "}
+                                {settingData?.unit_name}
+                              </>
+                            ) : (
+                              "--"
+                            )}
+                          </td>
+
+                          <td className="whitespace-nowrap py-3 font-medium text-green-600">
                             {employe?.order_id?.grand_total_amount}
                           </td>
+<<<<<<< HEAD
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+=======
+                          <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+>>>>>>> 1190d186e8443bc5d4df7acc93bc150ee0b7e99c
                             {employe?.pay_amount ===
                             employe?.order_id?.grand_total_amount ? (
                               <span className="text-green-600">
@@ -164,6 +232,7 @@ const EmployePaymentList = () => {
                                 {employe?.pay_amount}
                               </span>
                             )}
+<<<<<<< HEAD
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                             {employe?.order_id?.total_measurement_count}{" "}
@@ -205,6 +274,8 @@ const EmployePaymentList = () => {
                                 {employe?.check_status}
                               </span>
                             )}
+=======
+>>>>>>> 1190d186e8443bc5d4df7acc93bc150ee0b7e99c
                           </td>
                         </tr>
                       ))}

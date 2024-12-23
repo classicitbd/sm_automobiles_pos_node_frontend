@@ -57,11 +57,20 @@ const permissionsData = [
     Name: "Account Receive",
     Type: ["account_receive_list_show", "account_receive_list_get"],
   },
+
+  {
+    Name: "Account Payable",
+    Type: ["account_payable_list_show", "account_payable_list_get"],
+  },
+  {
+    Name: "All Paid Payment List",
+    Type: ["all_paid_payment_list_show", "all_paid_payment_list_get"],
+  },
+
   {
     Name: "Expense",
     Type: ["expense_show", "expense_create", "expense_get"],
   },
-
   {
     Name: "Management Order List",
     Type: [
@@ -107,14 +116,6 @@ const permissionsData = [
       "today_payment_list_get",
       "today_payment_list_update",
     ],
-  },
-  {
-    Name: "Account Payable",
-    Type: ["account_payable_list_show", "account_payable_list_get"],
-  },
-  {
-    Name: "All Paid Payment List",
-    Type: ["all_paid_payment_list_show", "all_paid_payment_list_get"],
   },
 
   {

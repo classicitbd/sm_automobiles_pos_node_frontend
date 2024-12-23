@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
 import useDebounced from "@/hooks/useDebounced";
 import { AuthContext } from "@/context/AuthProvider";
+import { Link } from "react-router-dom";
 
 
 const AllProfit = () => {
@@ -97,60 +98,80 @@ const AllProfit = () => {
                   <thead className="ltr:text-left rtl:text-right ">
                     <tr className=" divide-gray-300  font-semibold text-center text-white">
                       <td className="whitespace-nowrap p-4 uppercase">SL No</td>
-                      <td className="whitespace-nowrap p-4 uppercase">Invoice No</td>
-                      <td className="whitespace-nowrap p-4 uppercase">Total Amount</td>
+                      <td className="whitespace-nowrap p-4 uppercase">
+                        Invoice No
+                      </td>
+                      <td className="whitespace-nowrap p-4 uppercase">
+                        Create Date
+                      </td>
+                      <td className="whitespace-nowrap p-4 uppercase">
+                        Total Amount
+                      </td>
                       <td className="whitespace-nowrap p-4 uppercase">
                         Received Amount
                       </td>
-                      <td className="whitespace-nowrap p-4 uppercase">Due Amount</td>
-                      <td className="whitespace-nowrap p-4 uppercase">Profit Amount</td>
-
-                      <td className="whitespace-nowrap p-4 uppercase">Create Date</td>
+                      <td className="whitespace-nowrap p-4 uppercase">
+                        Due Amount
+                      </td>
+                      <td className="whitespace-nowrap p-4 uppercase">
+                        Profit Amount
+                      </td>
                     </tr>
                   </thead>
 
                   <tbody className="divide-y divide-gray-200 text-center">
                     {profits?.data?.map((profit, i) => (
-                      <tr
-                        key={profit?._id}
-                        className=' divide-gray-200'
-
-                      >
+                      <tr key={profit?._id} className=" divide-gray-200">
                         <td className="whitespace-nowrap py-2.5 font-medium text-gray-400">
                           {serialNumber + i + 1}
                         </td>
                         <td className="whitespace-nowrap py-2.5 font-medium text-gray-400">
-                          {profit?.order_id}
+                          <Link to="">
+                            <span className="text-blue-600 underline font-bold">
+                              {" "}
+                              {profit?.order_id}
+                            </span>
+                          </Link>
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-400">
+                          {" "}
+                          {DateTimeFormat(profit?.createdAt)}
                         </td>
                         <td className="whitespace-nowrap py-2.5 font-medium text-green-600">
                           {profit?.sub_total_amount}
                         </td>
                         <td className="whitespace-nowrap py-2.5 font-medium text-green-600">
-
-
-                          {
-                            profit?.received_amount === profit?.sub_total_amount ? (
-                              <span className="text-green-600">{profit?.received_amount}</span>
-                            ) : profit?.received_amount > profit?.sub_total_amount ? (
-                              <span className="text-blue-600">{profit?.received_amount}</span>
-                            ) : (
-                              <span className="text-yellow-600">{profit?.received_amount}</span>
-                            )
-                          }
+                          {profit?.received_amount ===
+                          profit?.sub_total_amount ? (
+                            <span className="text-green-600">
+                              {profit?.received_amount}
+                            </span>
+                          ) : profit?.received_amount >
+                            profit?.sub_total_amount ? (
+                            <span className="text-blue-600">
+                              {profit?.received_amount}
+                            </span>
+                          ) : (
+                            <span className="text-yellow-600">
+                              {profit?.received_amount}
+                            </span>
+                          )}
                         </td>
                         <td className="whitespace-nowrap py-2.5 font-medium text-red-600">
                           {profit?.due_amount}
                         </td>
                         <td className="whitespace-nowrap py-2.5 font-medium text-gray-400">
-                          {
-                            profit?.profit_amount > 0 ? <span className="text-green-600"> {profit?.profit_amount}</span> : <span className="text-red-600"> {profit?.profit_amount}</span>
-                          }
-
-                        </td>
-
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-400">
-                          {" "}
-                          {DateTimeFormat(profit?.createdAt)}
+                          {profit?.profit_amount > 0 ? (
+                            <span className="text-green-600">
+                              {" "}
+                              {profit?.profit_amount}
+                            </span>
+                          ) : (
+                            <span className="text-red-600">
+                              {" "}
+                              {profit?.profit_amount}
+                            </span>
+                          )}
                         </td>
                       </tr>
                     ))}
@@ -174,7 +195,7 @@ const AllProfit = () => {
         </div>
       )}
     </>
-  )
+  );
 }
 
 export default AllProfit

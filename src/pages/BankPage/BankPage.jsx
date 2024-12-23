@@ -97,11 +97,23 @@ const BankPage = () => {
   if (cashLoading) return <LoaderOverlay />;
 
   return (
-    <div className="bg-white rounded-lg py-6 px-4 shadow">
-      {/* cash in hand and out hand */}
-      <div>
+    <div className="py-6 px-4">
+      <div className="flex justify-between mt-6">
         <div>
-          <h1 className="text-2xl text-center mb-2">Cash Account</h1>
+          <h1 className="text-2xl">Bank Account</h1>
+        </div>
+
+        <div>
+          <Button type="button" onClick={() => setBankAccountCreateModal(true)}>
+            Create Bank Account
+          </Button>
+        </div>
+      </div>
+
+      {/* cash in hand and out hand */}
+      <div className="mt-10">
+        <div>
+          <h1 className="text-2xl text-center mb-2">Cash Account Table</h1>
           {!cashTypes?.data ? (
             <div className="flex items-center justify-center">
               <Button
@@ -113,10 +125,10 @@ const BankPage = () => {
               </Button>
             </div>
           ) : (
-            <div className="overflow-x-auto rounded-t-lg">
-              <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                  <tr className="divide-x divide-gray-300  font-semibold text-center ">
+            <div className="overflow-x-auto rounded-lg shadow-md">
+              <table className="min-w-full text-sm">
+                <thead>
+                  <tr className=" font-semibold text-center ">
                     <td className="whitespace-nowrap p-4 ">SL No</td>
                     <td className="whitespace-nowrap p-4 ">Cash Balance</td>
                     <td className="whitespace-nowrap p-4 ">Created By</td>
@@ -125,10 +137,11 @@ const BankPage = () => {
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-gray-200 text-center">
+                <tbody>
                   <tr
-                    className={`divide-x divide-gray-200 bg-tableRowBGColor border
-                      `}
+                    className="text-center 
+                     bg-secondary-100
+                   hover:bg-blue-100"
                   >
                     <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                       {1}
@@ -159,11 +172,11 @@ const BankPage = () => {
                       >
                         <CiMenuKebab
                           size={30}
-                          className="cursor-pointer text-gray-500 hover:text-gray-300 font-bold"
+                          className="cursor-pointer text-primaryVariant-300 hover:text-primaryVariant-700 font-bold"
                         />
                       </button>
                       {cashDropdownModal && (
-                        <div className=" bg-bgray-200 shadow-xl w-[150px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
+                        <div className=" bg-success-50 shadow-xl w-[150px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
                           <button
                             className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
                             onClick={() => {
@@ -205,21 +218,10 @@ const BankPage = () => {
         </div>
       </div>
 
-      <hr className="mt-8" />
+      <hr className="my-12" />
 
-      <div className="flex justify-between mt-6">
-        <div>
-          <h1 className="text-2xl">Bank Account</h1>
-        </div>
-
-        <div>
-          <Button type="button" onClick={() => setBankAccountCreateModal(true)}>
-            Create Bank Account
-          </Button>
-        </div>
-      </div>
       {/* search Bank Account... */}
-      <div className="mt-3">
+      <div className="mt-3 flex justify-end">
         <input
           type="text"
           defaultValue={searchTerm}
