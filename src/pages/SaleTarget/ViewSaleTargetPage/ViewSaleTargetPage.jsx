@@ -46,7 +46,7 @@ const ViewSaleTargetPage = () => {
 
   return (
     <div>
-      <div className="bg-white rounded-lg py-6 px-4 shadow">
+      <div className="py-6 px-4 ">
         <ViewSaleTarget
           saleTargetData={saleTargetData}
           isLoading={isLoading}

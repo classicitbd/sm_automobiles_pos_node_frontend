@@ -6,6 +6,7 @@ import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import { BASE_URL } from "@/utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Orders = () => {
   const [serialNumber, setSerialNumber] = useState();
@@ -69,7 +70,6 @@ const Orders = () => {
     },
   });
 
-
   return (
     <>
       <div className="flex justify-between mt-6">
@@ -92,77 +92,96 @@ const Orders = () => {
           <TableLoadingSkeleton />
         ) : (
           <div>
-            <div className="rounded-lg border border-gray-200 mt-6">
+            <div className="rounded-lg shadow-md mt-6">
               {allOrders?.data?.length > 0 ? (
-                <div className="overflow-x-auto rounded-t-lg">
-                  <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                    <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                      <tr className="divide-x divide-gray-300  font-semibold text-center ">
+                <div className="overflow-x-auto rounded-lg">
+                  <table className="min-w-full  text-sm">
+                    <thead>
+                      <tr className=" font-semibold text-center ">
                         <td className="whitespace-nowrap p-4 ">SL No</td>
                         <td className="whitespace-nowrap p-4 ">
                           Customer Name
                         </td>
                         <td className="whitespace-nowrap p-4 ">Phone</td>
                         <td className="whitespace-nowrap p-4 ">Order Id</td>
+                        <td className="whitespace-nowrap p-4 ">Order Status</td>
                         <td className="whitespace-nowrap p-4 ">Sub Total</td>
                         <td className="whitespace-nowrap p-4 ">Discount(%)</td>
                         <td className="whitespace-nowrap p-4 ">Grand Total</td>
                         <td className="whitespace-nowrap p-4 ">
                           Received Amount
                         </td>
-                        <td className="whitespace-nowrap p-4 text-red-600">Due Amount</td>
-                        <td className="whitespace-nowrap p-4 ">Order Status</td>
+                        <td className="whitespace-nowrap p-4 ">Due Amount</td>
 
                         {/* <td className="whitespace-nowrap p-4 ">Action</td> */}
                       </tr>
                     </thead>
 
-                    <tbody className="divide-y divide-gray-200 text-center">
+                    <tbody>
                       {allOrders?.data?.map((order, i) => (
                         <tr
                           key={order?._id}
-                          className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                            }`}
+                          className={`text-center ${
+                            i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                          } hover:bg-blue-100`}
                         >
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                             {serialNumber + i + 1}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                             {order?.customer_id?.customer_name}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+
+                          <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                             {order?.customer_id?.customer_phone}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {order?.order_id}
+                          <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                            <Link to="">
+                              <span className="text-blue-600 underline">
+                                {" "}
+                                {order?.order_id}
+                              </span>{" "}
+                            </Link>
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                          <td className="whitespace-nowrap py-3 font-medium text-gray-700 uppercase">
+                            {order?.order_status === "management" ? (
+                              <span className="text-red-600">
+                                {order?.order_status}
+                              </span>
+                            ) : (
+                              <span className="text-green-600">
+                                {order?.order_status}
+                              </span>
+                            )}
+                          </td>
+                          <td className="whitespace-nowrap py-3 font-medium text-green-600">
                             {order?.sub_total_amount}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-purple">
+                          <td className="whitespace-nowrap py-3 font-medium text-purple">
                             {order?.discount_percent_amount} %
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                          <td className="whitespace-nowrap py-3 font-medium text-green-600">
                             {order?.grand_total_amount}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-
-
-                            {
-                              order?.received_amount === order?.sub_total_amount ? (
-                                <span className="text-green-600">{order?.received_amount}</span>
-                              ) : order?.received_amount > order?.sub_total_amount ? (
-                                <span className="text-blue-600">{order?.received_amount}</span>
-                              ) : (
-                                <span className="text-yellow-600">{order?.received_amount}</span>
-                              )
-                            }
+                          <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                            {order?.received_amount ===
+                            order?.sub_total_amount ? (
+                              <span className="text-green-600">
+                                {order?.received_amount}
+                              </span>
+                            ) : order?.received_amount >
+                              order?.sub_total_amount ? (
+                              <span className="text-blue-600">
+                                {order?.received_amount}
+                              </span>
+                            ) : (
+                              <span className="text-yellow-600">
+                                {order?.received_amount}
+                              </span>
+                            )}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-red-600">
+                          <td className="whitespace-nowrap py-3 font-medium text-red-600">
                             {order?.due_amount}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 uppercase">
-                            {order?.order_status === 'management' ? <span className="text-red-600">{order?.order_status}</span> : <span className="text-green-600">{order?.order_status}</span>}
                           </td>
                         </tr>
                       ))}

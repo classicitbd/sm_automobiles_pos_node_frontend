@@ -80,7 +80,9 @@ const SaleTarget = () => {
         ) : (
           <div className="flex items-center justify-between p-5  bg-gray-50 shadow-md mt-4 flex-wrap">
             <div className="font-bold">
-              <p className="sm:text-[20px] text-bgray-700">User Name : {userData?.data?.user_name}</p>
+              <p className="sm:text-[20px] text-bgray-700">
+                User Name : {userData?.data?.user_name}
+              </p>
               <p className="sm:text-[20px] text-bgray-700">
                 User Phone : {userData?.data?.user_phone}
               </p>
@@ -90,9 +92,18 @@ const SaleTarget = () => {
                 User Address : {userData?.data?.user_address}
               </p>
               <p className="sm:text-[20px] text-bgray-700">
-                User Status : {userData?.data?.user_status == "active"
-                  ? <span className="text-green-600 sm:text-[20px] font-bold"> Active </span>
-                  : <span className="text-red-600 sm:text-[20px] font-bold"> In-Active </span>}
+                User Status :{" "}
+                {userData?.data?.user_status == "active" ? (
+                  <span className="text-green-600 sm:text-[20px] font-bold">
+                    {" "}
+                    Active{" "}
+                  </span>
+                ) : (
+                  <span className="text-red-600 sm:text-[20px] font-bold">
+                    {" "}
+                    In-Active{" "}
+                  </span>
+                )}
               </p>
             </div>
           </div>
@@ -103,23 +114,24 @@ const SaleTarget = () => {
           <TableLoadingSkeleton />
         ) : (
           <div>
-            <div className="rounded-lg border border-gray-200 mt-6">
+            <div className="rounded-lg shadow-md mt-6">
               {targetedSales?.data?.length > 0 ? (
-                <div className="overflow-x-auto rounded-t-lg">
-                  <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                    <thead className="ltr:text-left rtl:text-right bg-[#fff9ee]">
-                      <tr className="divide-x divide-gray-300  font-semibold text-center ">
+                <div className="overflow-x-auto rounded-lg">
+                  <table className="min-w-full etext-sm">
+                    <thead>
+                      <tr className="  font-semibold text-center ">
                         <td className="whitespace-nowrap p-4 ">SL No</td>
-                        <td className="whitespace-nowrap p-4 ">Sale Target</td>
-                        <td className="whitespace-nowrap p-4 ">
-                          Sale Target Amount
-                        </td>
                         <td className="whitespace-nowrap p-4 ">
                           Sale Target Start Date
                         </td>
                         <td className="whitespace-nowrap p-4 ">
                           Sale Target End Date
                         </td>
+                        <td className="whitespace-nowrap p-4 ">Sale Target</td>
+                        <td className="whitespace-nowrap p-4 ">
+                          Sale Target Amount
+                        </td>
+
                         <td className="whitespace-nowrap p-4 ">
                           {" "}
                           Sale Target Filup
@@ -128,63 +140,69 @@ const SaleTarget = () => {
                       </tr>
                     </thead>
 
-                    <tbody className="divide-y divide-gray-200 text-center">
-                      {targetedSales?.data?.map(
-                        (saleTarget, i) => (
-                          <tr
-                            key={saleTarget?._id}
-                            className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                              }`}
-                          >
-                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                              {serialNumber + i + 1}
-                            </td>
-                            <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
-                              {saleTarget?.sale_target}
-                            </td>
-                            <td className="whitespace-nowrap py-1.5 font-medium text-purple">
-                              {saleTarget?.sale_target_amount}
-                            </td>
-                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                              {DateTimeFormat(
-                                saleTarget?.sale_target_start_date
-                              )}
-                            </td>
-                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                              {DateTimeFormat(saleTarget?.sale_target_end_date)}
-                            </td>
-                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                              {saleTarget?.sale_target_filup === saleTarget?.sale_target ? <span className="text-green-600">{saleTarget?.sale_target_filup}</span> : <span className="text-red-600">{saleTarget?.sale_target_filup}</span>}
-                            </td>
-                            <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
-                              <button
-                                className="ml-[8px]"
-                                onClick={() =>
-                                  handleShowDocumentModal(saleTarget?._id)
-                                }
-                              >
-                                <CiMenuKebab
-                                  size={30}
-                                  className="cursor-pointer text-gray-500 hover:text-gray-300 font-bold"
-                                />
-                              </button>
-                              {supplierDocumentModal == saleTarget?._id && (
-                                <div className=" bg-bgray-200 shadow-xl w-[150px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
+                    <tbody>
+                      {targetedSales?.data?.map((saleTarget, i) => (
+                        <tr
+                          key={saleTarget?._id}
+                          className={`text-center ${
+                            i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                          } hover:bg-blue-100`}
+                        >
+                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                            {serialNumber + i + 1}
+                          </td>
+                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                            {DateTimeFormat(saleTarget?.sale_target_start_date)}
+                          </td>
+                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                            {DateTimeFormat(saleTarget?.sale_target_end_date)}
+                          </td>
+                          <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                            {saleTarget?.sale_target}
+                          </td>
+                          <td className="whitespace-nowrap py-1.5 font-medium text-purple">
+                            {saleTarget?.sale_target_amount}
+                          </td>
 
-                                  <Link
-                                    to={`/sale-target-view/${saleTarget?._id}`}
-                                  >
-                                    {" "}
-                                    <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium">
-                                      <FaEye size={16} /> View
-                                    </button>
-                                  </Link>
-                                </div>
-                              )}
-                            </td>
-                          </tr>
-                        )
-                      )}
+                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                            {saleTarget?.sale_target_filup ===
+                            saleTarget?.sale_target ? (
+                              <span className="text-green-600">
+                                {saleTarget?.sale_target_filup}
+                              </span>
+                            ) : (
+                              <span className="text-red-600">
+                                {saleTarget?.sale_target_filup}
+                              </span>
+                            )}
+                          </td>
+                          <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
+                            <button
+                              className="ml-[8px]"
+                              onClick={() =>
+                                handleShowDocumentModal(saleTarget?._id)
+                              }
+                            >
+                              <CiMenuKebab
+                                size={30}
+                                className="cursor-pointer text-primaryVariant-300 hover:text-primaryVariant-700 font-bold"
+                              />
+                            </button>
+                            {supplierDocumentModal == saleTarget?._id && (
+                              <div className=" bg-success-50  shadow-xl w-[150px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
+                                <Link
+                                  to={`/sale-target-view/${saleTarget?._id}`}
+                                >
+                                  {" "}
+                                  <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium">
+                                    <FaEye size={16} /> View
+                                  </button>
+                                </Link>
+                              </div>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>

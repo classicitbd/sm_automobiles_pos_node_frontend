@@ -65,7 +65,7 @@ const BankOutPage = () => {
 
 
   return (
-    <div className="bg-white rounded-lg py-6 px-4 shadow">
+    <div className="rounded-lg py-6 px-4">
 
       <BankOut bankOutData={bankOutData}
         setPage={setPage}

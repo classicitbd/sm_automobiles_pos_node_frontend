@@ -8,6 +8,7 @@ import { FiEdit } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import OrderUpDateModal from "./OrderUpDateModal";
 import ChallanPDF from "@/pages/AllPdfPrintPage/ChallanPDF";
+import InVoicePdf from "@/pages/AllPdfPrintPage/InVoicePdf";
 
 const OrderTable = ({
   setPage,
@@ -136,6 +137,33 @@ const OrderTable = ({
   const handleChallanPrint = (order) => {
     setChallanOpenData(order);
     setChallanOpen(true);
+    // Reload the page after printing
+    setTimeout(() => {
+      const printContent = document.getElementById("invoicePrintArea");
+      const originalBody = document.body.innerHTML;
+
+      document.body.innerHTML = printContent.innerHTML;
+
+      window.print();
+
+      // Restore the original content after printing
+      document.body.innerHTML = originalBody;
+
+      // Reload the page after printing
+      setTimeout(() => {
+        location.reload();
+      }, 10);
+    }, 100);
+  };
+
+  //InVoice Pdf Open
+  const [inVoiceOpen, setInVoiceOpen] = useState(false);
+  const [inVoiceData, setInVoiceData] = useState({});
+
+  // handle challan print
+  const handleInvoicePrint = (order) => {
+    setInVoiceData(order);
+    setInVoiceOpen(true);
     // Reload the page after printing
     setTimeout(() => {
       const printContent = document.getElementById("invoicePrintArea");
@@ -321,14 +349,21 @@ const OrderTable = ({
                                       <FaEye size={16} /> View
                                     </button>
                                   </Link>
-
                                   <button
+                                    className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
+                                    onClick={() => handleInvoicePrint(order)}
+                                  >
+                                    <FaPrint size={18} />
+                                    Invoice
+                                  </button>
+
+                                  {/* <button
                                     className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
                                     onClick={() => handleOrderUpdate(order)}
                                   >
                                     <FiEdit size={18} />
                                     Edit
-                                  </button>
+                                  </button> */}
                                   <button
                                     className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
                                     onClick={() => handleChallanPrint(order)}
@@ -353,6 +388,8 @@ const OrderTable = ({
 
           {/* Challan */}
           {challanOpen && <ChallanPDF challanOpenData={challanOpenData} />}
+          {/* In-Voice */}
+          {inVoiceOpen && <InVoicePdf inVoiceData={inVoiceData} />}
 
           {totalData > 10 && (
             <Pagination

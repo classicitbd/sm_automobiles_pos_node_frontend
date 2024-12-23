@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Pagination from "../common/pagination/Pagination";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
-import { Button } from "../ui/button";
+
 import { FaEye } from "react-icons/fa";
 import ExpenseDocumentModalShow from "./ExpenseDocumentModalShow";
 
@@ -100,21 +100,21 @@ const ExpensesTable = ({
                         </td>
                         <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                           {expense?.expense_voucher ? (
-                            <Button
+                            <button
                               className="text-primary-600 hover:underline"
                               onClick={() => {
                                 setDocumentModalOpen(true);
                                 setDocumentModalData(expense);
                               }}
                             >
-                              <FaEye className="text-white" size={25} />
-                            </Button>
+                              <FaEye className="text-gray-900 hover:text-gray-500" size={22} />
+                            </button>
                           ) : (
                             "--"
                           )}
                         </td>
 
-                        <td className="whitespace-nowrap py-1.5 font-medium text-red-600">
+                        <td className="whitespace-nowrap py-2.5 font-medium text-red-600">
                           {expense?.expense_amount || (
                             <span className="text-green-600">N/A</span>
                           )}
