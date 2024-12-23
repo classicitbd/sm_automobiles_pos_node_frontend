@@ -96,8 +96,6 @@ const SaleTargetTable = ({
                       <td className="whitespace-nowrap p-4 ">
                         Get Amount(51-100)%
                       </td>
-                      <td className="whitespace-nowrap p-4 ">Create By</td>
-                      <td className="whitespace-nowrap p-4 ">Updated By</td>
                       <td className="whitespace-nowrap p-4 ">Action</td>
                     </tr>
                   </thead>
@@ -182,18 +180,6 @@ const SaleTargetTable = ({
                         <td className="whitespace-nowrap py-1.5 font-medium">
                           {sale_target?.second_half_amount_per_unit} <small>(per {settingData?.unit_name})</small>
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {sale_target?.sale_target_publisher_id?.user_name}
-                        </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {sale_target?.sale_target_updated_by?.user_name
-                            ? sale_target?.sale_target_updated_by?.user_name
-                            : "--"}
-                        </td>
-                        {/* <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
-                         
-
-                        </td> */}
 
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                           <button
