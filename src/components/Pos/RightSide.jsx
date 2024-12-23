@@ -155,7 +155,6 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
           autoClose: 1000,
         });
       }
-      console.log(addProducts)
       const sendData = {
         order_publisher_id: user?._id,
         order_status: "management",

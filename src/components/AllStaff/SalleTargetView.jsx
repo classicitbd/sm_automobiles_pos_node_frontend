@@ -143,12 +143,21 @@ const SalleTargetView = () => {
                       <td className="whitespace-nowrap p-4 ">SL No</td>
                       <td className="whitespace-nowrap p-4 ">Start Date</td>
                       <td className="whitespace-nowrap p-4 ">End Date</td>
-                      <td className="whitespace-nowrap p-4 ">Status</td>
-                      <td className="whitespace-nowrap p-4 ">Sale Target</td>
                       <td className="whitespace-nowrap p-4 ">
-                        Sale Target Fill Up
+                        Brand Sale Target
                       </td>
-                      <td className="whitespace-nowrap p-4">Get Amount</td>
+                      <td className="whitespace-nowrap p-4 ">Fill Up</td>
+                      <td className="whitespace-nowrap p-4 ">
+                        Others Sale Target
+                      </td>
+                      <td className="whitespace-nowrap p-4 ">Fill Up</td>
+                      <td className="whitespace-nowrap p-4 ">
+                        Get Amount(1-50)%
+                      </td>
+                      <td className="whitespace-nowrap p-4 ">
+                        Get Amount(51-100)%
+                      </td>
+                      <td className="whitespace-nowrap p-4 ">Status</td>
                     </tr>
                   </thead>
 
@@ -169,41 +178,36 @@ const SalleTargetView = () => {
                         <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                           {sale_target?.sale_target_end_date}
                         </td>
-                        <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
-                          {sale_target?.sale_target_success == true ? (
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                          {sale_target?.brand_sale_target}{" "}
+                          {settingData?.unit_name}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                          {sale_target?.brand_sale_target_fillup}{" "}
+                          {settingData?.unit_name}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                          {sale_target?.sale_target} {settingData?.unit_name}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                          {sale_target?.sale_target_fillup}{" "}
+                          {settingData?.unit_name}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                          {sale_target?.first_half_amount_per_unit}{" "}
+                          <small>(per {settingData?.unit_name})</small>
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                          {sale_target?.second_half_amount_per_unit}{" "}
+                          <small>(per {settingData?.unit_name})</small>
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {sale_target?.brand_sale_target_success == true &&
+                          sale_target?.sale_target_success == true ? (
                             <span className="text-green-600">Success</span>
                           ) : (
                             <span className="text-blue-600">Pending</span>
                           )}
-                        </td>
-                        <td className="whitespace-nowrap py-2.5 font-medium text-yellow-400">
-                          {sale_target?.sale_target ? (
-                            <>
-                              {sale_target?.sale_target}{" "}
-                              {settingData?.unit_name}
-                            </>
-                          ) : (
-                            "--"
-                          )}
-                        </td>
-                        <td className="whitespace-nowrap py-2.5 font-medium ">
-                          {sale_target?.sale_target_filup >=
-                          sale_target?.sale_target ? (
-                            <span className="text-green-600">
-                              {" "}
-                              {sale_target?.sale_target_filup}{" "}
-                              {settingData?.unit_name}
-                            </span>
-                          ) : (
-                            <span className="text-red-600">
-                              {" "}
-                              {sale_target?.sale_target_filup}{" "}
-                              {settingData?.unit_name}
-                            </span>
-                          )}
-                        </td>
-                        <td className="whitespace-nowrap py-2.5 font-medium text-green-600">
-                          {sale_target?.sale_target_amount}
                         </td>
                       </tr>
                     ))}

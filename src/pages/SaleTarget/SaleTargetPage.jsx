@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { AuthContext } from "@/context/AuthProvider";
 import { SettingContext } from "@/context/SettingProvider";
 import useDebounced from "@/hooks/useDebounced";
+import useGetBrand from "@/hooks/useGetBrand";
 import UseGetUser from "@/hooks/UseGetUser";
 import MiniSpinner from "@/shared/MiniSpinner/MiniSpinner";
 import { BASE_URL } from "@/utils/baseURL";
@@ -68,9 +69,8 @@ const SaleTargetPage = () => {
   //get user data
   const { data: userTypes, isLoading: userLoading } = UseGetUser();
 
-  if (settingLoading || userLoading) {
-    return <MiniSpinner />;
-  }
+  //get brand data
+  const { data: brandTypes, isLoading: brandLoading } = useGetBrand();
 
   return (
     <div className="py-6 px-4">
@@ -108,6 +108,9 @@ const SaleTargetPage = () => {
         isLoading={isLoading}
         settingData={settingData}
         userTypes={userTypes}
+        userLoading={userLoading}
+        settingLoading={settingLoading}
+        brandLoading={brandLoading}
       />
       {/*Sale Target Create  modal */}
       {saleTargetCreateModal && (
@@ -117,6 +120,7 @@ const SaleTargetPage = () => {
           user={user}
           settingData={settingData}
           userTypes={userTypes}
+          brandTypes={brandTypes}
         />
       )}
     </div>

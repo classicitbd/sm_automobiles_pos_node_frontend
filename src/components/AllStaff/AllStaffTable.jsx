@@ -67,6 +67,9 @@ const AllStaffTable = ({
                 <thead>
                   <tr className="font-semibold text-center ">
                     <th className="whitespace-nowrap px-4 py-2.5 ">
+                      Joining Date
+                    </th>
+                    <th className="whitespace-nowrap px-4 py-2.5 ">
                       Staff Name
                     </th>
                     <th className="whitespace-nowrap px-4 py-2.5 ">
@@ -101,6 +104,9 @@ const AllStaffTable = ({
                         i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
                       } hover:bg-blue-100`}
                     >
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                        {user?.joining_date}
+                      </td>
                       <td className="whitespace-nowrap px-4 py-2 font-semibold">
                         {user?.user_name}
                       </td>

@@ -153,11 +153,6 @@ const StaffPerfomance = () => {
                         <tr className="font-semibold text-center">
                           <td className="whitespace-nowrap p-4 ">SL No</td>
                           <td className="whitespace-nowrap p-4 ">Invoice Id</td>
-                          <td className="whitespace-nowrap p-4 ">Total Oil</td>
-                          <td className="whitespace-nowrap p-4 ">
-                            Order Status
-                          </td>
-
                           <td className="whitespace-nowrap p-4 ">
                             Total Amount
                           </td>
@@ -165,42 +160,37 @@ const StaffPerfomance = () => {
                             Received Amount
                           </td>
                           <td className="whitespace-nowrap p-4 ">Due Amount</td>
+                          <td className="whitespace-nowrap p-4 ">
+                            Order Status
+                          </td>
+                          <td className="whitespace-nowrap p-4 ">Total</td>
                         </tr>
                       </thead>
 
-                      <tbody>
+                      <tbody className="divide-y divide-gray-200 text-center">
                         {orderData?.data?.map((order, i) => (
                           <tr
                             key={order?._id}
-                            className={`text-center ${
-                              i % 2 === 0
-                                ? "bg-secondary-50"
-                                : "bg-secondary-100"
-                            } hover:bg-blue-100`}
+                            className={`divide-x divide-gray-200 ${
+                              i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                            }`}
                           >
-                            <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
+                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                               {i + 1}
                             </td>
-                            <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
-                              <Link to="">
-                                {" "}
-                                <span className="text-blue-600 underline">
-                                  {" "}
-                                  {order?.order_id}
-                                </span>{" "}
-                              </Link>
+                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                              {order?.order_id}
                             </td>
-                            <td className="whitespace-nowrap py-2.5 font-medium text-green-700">
-                              {order?.total_messurement_count ? (
-                                <>
-                                  {order?.total_messurement_count}{" "}
-                                  {settingData?.unit_name}
-                                </>
-                              ) : (
-                                "--"
-                              )}
+                            <td className="whitespace-nowrap py-1.5 font-medium text-green-700">
+                              {order?.grand_total_amount}
                             </td>
-                            <td className="whitespace-nowrap py-2.5 font-medium text-gray-600 uppercase">
+                            <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                              {order?.received_amount}
+                            </td>
+                            <td className="whitespace-nowrap py-1.5 font-medium text-red-600">
+                              {order?.due_amount}
+                            </td>
+                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-600 uppercase">
                               {order?.order_status == "management" ? (
                                 <span className="text-red-600">
                                   {" "}
@@ -213,15 +203,9 @@ const StaffPerfomance = () => {
                                 </span>
                               )}
                             </td>
-
-                            <td className="whitespace-nowrap py-2.5 font-medium text-green-700">
-                              {order?.grand_total_amount}
-                            </td>
-                            <td className="whitespace-nowrap py-2.5 font-medium text-green-600">
-                              {order?.received_amount}
-                            </td>
-                            <td className="whitespace-nowrap py-2.5 font-medium text-red-600">
-                              {order?.due_amount}
+                            <td className="whitespace-nowrap py-1.5 font-medium text-green-700">
+                              {order?.total_measurement_count}{" "}
+                              {settingData?.unit_name}
                             </td>
                           </tr>
                         ))}
@@ -249,21 +233,28 @@ const StaffPerfomance = () => {
                   </p>
                 </div>
                 {saleTargetData?.data?.length > 0 ? (
-                  <div className="overflow-x-auto rounded-lg shadow-md">
-                    <table className="min-w-full text-sm">
+                  <div className="overflow-x-auto rounded-lg">
+                    <table className="min-w-full  text-sm">
                       <thead>
                         <tr className="font-semibold text-center">
                           <td className="whitespace-nowrap p-4 ">SL No</td>
                           <td className="whitespace-nowrap p-4 ">Start Date</td>
                           <td className="whitespace-nowrap p-4 ">End Date</td>
+                          <td className="whitespace-nowrap p-4 ">
+                            Brand Sale Target
+                          </td>
+                          <td className="whitespace-nowrap p-4 ">Fill Up</td>
+                          <td className="whitespace-nowrap p-4 ">
+                            Others Sale Target
+                          </td>
+                          <td className="whitespace-nowrap p-4 ">Fill Up</td>
+                          <td className="whitespace-nowrap p-4 ">
+                            Get Amount(1-50)%
+                          </td>
+                          <td className="whitespace-nowrap p-4 ">
+                            Get Amount(51-100)%
+                          </td>
                           <td className="whitespace-nowrap p-4 ">Status</td>
-                          <td className="whitespace-nowrap p-4 ">
-                            Sale Target
-                          </td>
-                          <td className="whitespace-nowrap p-4 ">
-                            Sale Target Fill Up
-                          </td>
-                          <td className="whitespace-nowrap p-4">Get Amount</td>
                         </tr>
                       </thead>
 
@@ -286,41 +277,37 @@ const StaffPerfomance = () => {
                             <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                               {sale_target?.sale_target_end_date}
                             </td>
-                            <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
-                              {sale_target?.sale_target_success == true ? (
+                            <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                              {sale_target?.brand_sale_target}{" "}
+                              {settingData?.unit_name}
+                            </td>
+                            <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                              {sale_target?.brand_sale_target_fillup}{" "}
+                              {settingData?.unit_name}
+                            </td>
+                            <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                              {sale_target?.sale_target}{" "}
+                              {settingData?.unit_name}
+                            </td>
+                            <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                              {sale_target?.sale_target_fillup}{" "}
+                              {settingData?.unit_name}
+                            </td>
+                            <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                              {sale_target?.first_half_amount_per_unit}{" "}
+                              <small>(per {settingData?.unit_name})</small>
+                            </td>
+                            <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                              {sale_target?.second_half_amount_per_unit}{" "}
+                              <small>(per {settingData?.unit_name})</small>
+                            </td>
+                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                              {sale_target?.brand_sale_target_success == true &&
+                              sale_target?.sale_target_success == true ? (
                                 <span className="text-green-600">Success</span>
                               ) : (
                                 <span className="text-blue-600">Pending</span>
                               )}
-                            </td>
-                            <td className="whitespace-nowrap py-2.5 font-medium text-yellow-400">
-                              {sale_target?.sale_target ? (
-                                <>
-                                  {sale_target?.sale_target}{" "}
-                                  {settingData?.unit_name}
-                                </>
-                              ) : (
-                                "--"
-                              )}
-                            </td>
-                            <td className="whitespace-nowrap py-2.5 font-medium ">
-                              {sale_target?.sale_target_filup >=
-                              sale_target?.sale_target ? (
-                                <span className="text-green-600">
-                                  {" "}
-                                  {sale_target?.sale_target_filup}{" "}
-                                  {settingData?.unit_name}
-                                </span>
-                              ) : (
-                                <span className="text-red-600">
-                                  {" "}
-                                  {sale_target?.sale_target_filup}{" "}
-                                  {settingData?.unit_name}
-                                </span>
-                              )}
-                            </td>
-                            <td className="whitespace-nowrap py-2.5 font-medium text-green-600">
-                              {sale_target?.sale_target_amount}
                             </td>
                           </tr>
                         ))}

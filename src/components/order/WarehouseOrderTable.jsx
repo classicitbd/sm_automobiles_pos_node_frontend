@@ -83,6 +83,7 @@ const WarehouseOrderTable = ({
             product_id: item?.product_id?._id,
             product_quantity: item?.product_quantity,
             total_measurement: item?.total_measurement,
+            brand_id: item?.product_id?.brand_id?._id,
           })),
         };
         try {

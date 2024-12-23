@@ -29,8 +29,8 @@ const UpdateCashModal = ({
         previous_balance: cashUpdateModalValue?.cash_balance,
       };
 
-      if (sendData?.cash_balance == sendData?.previous_balance) {
-        toast.error("Please update the cash balance", {
+      if (sendData?.cash_balance <= sendData?.previous_balance) {
+        toast.error("Cash Balance should be greater than previous balance", {
           autoClose: 1000,
         });
         return;
