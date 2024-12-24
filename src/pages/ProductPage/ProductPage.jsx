@@ -1,3 +1,4 @@
+import { LoaderOverlay } from "@/components/common/loader/LoderOverley";
 import ProductTable from "@/components/Products/ProductTable";
 import { Button } from "@/components/ui/button";
 import { AuthContext } from "@/context/AuthProvider";
@@ -13,7 +14,7 @@ const ProductPage = () => {
   const [limit, setLimit] = useState(10);
   const [searchValue, setSearchValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const { user } = useContext(AuthContext);
+  const { user, loading: userLoading } = useContext(AuthContext);
 
   const searchText = useDebounced({ searchQuery: searchValue, delay: 500 });
   useEffect(() => {
@@ -60,41 +61,48 @@ const ProductPage = () => {
       }
     },
   });
-
+  if (userLoading) return <LoaderOverlay />;
   return (
-    <div className="rounded py-6 px-4">
-      <div className="flex justify-between items-center mt-6">
-        <div>
-          <h1 className="text-xl sm:text-2xl ">All Product List </h1>
+    <>
+      {user?.user_role_id?.product_dashboard_show == true && (
+        <div className="rounded py-6 px-4">
+          <div className="flex justify-between items-center mt-6">
+            <div>
+              <h1 className="text-xl sm:text-2xl ">All Product List </h1>
+            </div>
+
+            {user?.user_role_id?.product_post == true && (
+              <div>
+                <Link to="/add-product">
+                  <Button>Add Product</Button>
+                </Link>
+              </div>
+            )}
+          </div>
+          <div className="mt-8 flex justify-end">
+            <input
+              type="text"
+              defaultValue={searchTerm}
+              onChange={(e) => handleSearchValue(e.target.value)}
+              placeholder="Search Supplier..."
+              className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+            />
+          </div>
+          {/* show Product Table List Component*/}
+          <ProductTable
+            products={products}
+            setPage={setPage}
+            setLimit={setLimit}
+            page={page}
+            limit={limit}
+            totalData={products?.totalData}
+            refetch={refetch}
+            user={user}
+            isLoading={isLoading}
+          />
         </div>
-        <div>
-          <Link to="/add-product">
-            <Button>Add Product</Button>
-          </Link>
-        </div>
-      </div>
-      <div className="mt-8 flex justify-end">
-        <input
-          type="text"
-          defaultValue={searchTerm}
-          onChange={(e) => handleSearchValue(e.target.value)}
-          placeholder="Search Supplier..."
-          className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-        />
-      </div>
-      {/* show Product Table List Component*/}
-      <ProductTable
-        products={products}
-        setPage={setPage}
-        setLimit={setLimit}
-        page={page}
-        limit={limit}
-        totalData={products?.totalData}
-        refetch={refetch}
-        user={user}
-        isLoading={isLoading}
-      />
-    </div>
+      )}
+    </>
   );
 };
 

@@ -349,13 +349,16 @@ const OrderTable = ({
                                       <FaEye size={16} /> View
                                     </button>
                                   </Link>
-                                  <button
-                                    className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
-                                    onClick={() => handleInvoicePrint(order)}
-                                  >
-                                    <FaPrint size={18} />
-                                    Invoice
-                                  </button>
+                                  {user?.user_role_id?.order_invoice_print ==
+                                    true && (
+                                    <button
+                                      className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
+                                      onClick={() => handleInvoicePrint(order)}
+                                    >
+                                      <FaPrint size={18} />
+                                      Invoice
+                                    </button>
+                                  )}
 
                                   {/* <button
                                     className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
@@ -364,13 +367,16 @@ const OrderTable = ({
                                     <FiEdit size={18} />
                                     Edit
                                   </button> */}
-                                  <button
-                                    className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
-                                    onClick={() => handleChallanPrint(order)}
-                                  >
-                                    <FaPrint size={18} />
-                                    Challan
-                                  </button>
+                                  {user?.user_role_id?.order_challan_print ==
+                                    true && (
+                                    <button
+                                      className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
+                                      onClick={() => handleChallanPrint(order)}
+                                    >
+                                      <FaPrint size={18} />
+                                      Challan
+                                    </button>
+                                  )}
                                 </div>
                               )}
                             </div>

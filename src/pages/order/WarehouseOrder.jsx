@@ -1,4 +1,5 @@
 
+import { LoaderOverlay } from "@/components/common/loader/LoderOverley";
 import WarehouseOrderTable from "@/components/order/WarehouseOrderTable";
 import { AuthContext } from "@/context/AuthProvider";
 import useDebounced from "@/hooks/useDebounced";
@@ -11,8 +12,7 @@ const WarehouseOrder = () => {
     const [limit, setLimit] = useState(10);
     const [searchValue, setSearchValue] = useState("");
     const [searchTerm, setSearchTerm] = useState("");
-    const { user } = useContext(AuthContext);
-
+   const { user, loading: userLoading } = useContext(AuthContext);
     const searchText = useDebounced({ searchQuery: searchValue, delay: 500 });
     useEffect(() => {
         setSearchTerm(searchText);
@@ -58,7 +58,7 @@ const WarehouseOrder = () => {
             }
         },
     });
-
+ if (userLoading) return <LoaderOverlay />;
     return (
         <div className="rounded py-6 px-4 ">
             <div className="flex justify-between mt-6">

@@ -312,13 +312,15 @@ const AccountOrderTable = ({
                                                             )}
                                                         </div>
                                                     </div> */}
-                          <button
-                            type="button"
-                            className="w-full px-3 py-2 hover:bg-primary hover:text-white flex justify-center items-center gap-2 font-medium btn bg-sky-400 text-white rounded-md"
-                            onClick={() => handleSendWarehouse(order)}
-                          >
-                            Send Warehouse
-                          </button>
+                          {user?.user_role_id?.order_patch == true && (
+                            <button
+                              type="button"
+                              className="w-full px-3 py-2 hover:bg-primary hover:text-white flex justify-center items-center gap-2 font-medium btn bg-sky-400 text-white rounded-md"
+                              onClick={() => handleSendWarehouse(order)}
+                            >
+                              Send Warehouse
+                            </button>
+                          )}
                         </td>
                       </tr>
                     ))}
