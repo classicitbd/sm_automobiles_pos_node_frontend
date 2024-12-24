@@ -40,12 +40,12 @@ const SalleTargetView = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/sale_target/${user_id}?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=sale_target_show`,
+      `/api/v1/sale_target/${user_id}?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/sale_target/${user_id}?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=sale_target_show`,
+          `${BASE_URL}/sale_target/${user_id}?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
           {
             credentials: "include",
           }

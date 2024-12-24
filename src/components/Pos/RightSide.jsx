@@ -194,7 +194,7 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
           sendData.check_withdraw_date = data?.check_withdraw_date;
         }
       }
-      const response = await fetch(`${BASE_URL}/order?role_type=order_create`, {
+      const response = await fetch(`${BASE_URL}/order`, {
         method: "POST",
         credentials: "include",
         headers: {

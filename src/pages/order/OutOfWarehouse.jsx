@@ -32,12 +32,12 @@ const OutOfWarehouse = () => {
         refetch,
     } = useQuery({
         queryKey: [
-            `/api/v1/order/out_of_warehouse_order?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=out_of_warehouse_order_show`,
+            `/api/v1/order/out_of_warehouse_order?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
         ],
         queryFn: async () => {
             try {
                 const res = await fetch(
-                    `${BASE_URL}/order/out_of_warehouse_order?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=out_of_warehouse_order_show`,
+                    `${BASE_URL}/order/out_of_warehouse_order?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
                     {
                         credentials: "include",
                     }

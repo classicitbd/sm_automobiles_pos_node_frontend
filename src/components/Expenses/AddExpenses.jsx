@@ -55,7 +55,7 @@ const AddExpenses = ({ setExpenceCreateModal, refetch, user }) => {
 
         formData.append("expense_publisher_id", user?._id);
         const response = await fetch(
-          `${BASE_URL}/expense/?role_type=expense_create`,
+          `${BASE_URL}/expense`,
           {
             method: "POST",
             credentials: "include",
@@ -89,7 +89,7 @@ const AddExpenses = ({ setExpenceCreateModal, refetch, user }) => {
         };
 
         const response = await fetch(
-          `${BASE_URL}/expense?role_type=expense_create`,
+          `${BASE_URL}/expense`,
           {
             method: "POST",
             credentials: "include",

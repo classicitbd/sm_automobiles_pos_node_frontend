@@ -34,12 +34,12 @@ const ExpensePage = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/expense?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=expense_show`,
+      `/api/v1/expense?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/expense?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=expense_show`,
+          `${BASE_URL}/expense?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
           {
             credentials: "include",
           }

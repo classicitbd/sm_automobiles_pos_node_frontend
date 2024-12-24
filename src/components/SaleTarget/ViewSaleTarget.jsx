@@ -15,12 +15,12 @@ const ViewSaleTarget = ({
   //Fetch saleTargetDetails Data
   const { data: saleTargetDetails = [] } = useQuery({
     queryKey: [
-      `/api/v1/sale_target/a_sale_target_details/${id}?role_type=a_sale_target_details_show`,
+      `/api/v1/sale_target/a_sale_target_details/${id}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/sale_target/a_sale_target_details/${id}?role_type=a_sale_target_details_show`,
+          `${BASE_URL}/sale_target/a_sale_target_details/${id}`,
           {
             credentials: "include",
           }

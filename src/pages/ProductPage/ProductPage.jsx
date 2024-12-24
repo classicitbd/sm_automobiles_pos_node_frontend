@@ -34,12 +34,12 @@ const ProductPage = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/product/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=product_show`,
+      `/api/v1/product/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/product/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=product_show`,
+          `${BASE_URL}/product/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
           {
             credentials: "include",
           }

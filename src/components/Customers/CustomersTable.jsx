@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { FaEye, FaPlus } from "react-icons/fa";
 import { CiMenuKebab } from "react-icons/ci";
 import AddCustomers from "./AddCustomers";
-import AddPayment from "./AddPayment";
+// import AddPayment from "./AddPayment";
 
 const CustomersTable = ({
   setPage,
@@ -25,7 +25,7 @@ const CustomersTable = ({
   const [customerUpdateModal, setCustomerUpdateModal] = useState(false);
 
   const [customerUpdateData, setCustomerUpdateData] = useState({});
-  const [customerAddPaymentModal, setCustomerAddPaymentModal] = useState(false);
+  // const [customerAddPaymentModal, setCustomerAddPaymentModal] = useState(false);
 
   const [supplierDocumentModal, setSupplierDocumentModal] = useState(null);
 
@@ -160,13 +160,13 @@ const CustomersTable = ({
                                 <FiEdit size={18} />
                                 Edit
                               </button>
-                              <button
+                              {/* <button
                                 className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
                                 onClick={() => setCustomerAddPaymentModal(true)}
                               >
                                 <FaPlus size={14} />
                                 Add Customer Payment
-                              </button>
+                              </button> */}
                               <Link to={`/customer-viewOrder/${customer?._id}`}>
                                 {" "}
                                 <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium">
@@ -212,11 +212,11 @@ const CustomersTable = ({
             />
           )}
           {/* Show customer Update Modal */}
-          {customerAddPaymentModal && (
+          {/* {customerAddPaymentModal && (
             <AddPayment
               setCustomerAddPaymentModal={setCustomerAddPaymentModal}
             />
-          )}
+          )} */}
         </div>
       )}
     </>

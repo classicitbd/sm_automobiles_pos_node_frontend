@@ -4,10 +4,10 @@ import { BASE_URL } from "../utils/baseURL";
 
 const useGetRole = () => {
   return useQuery({
-    queryKey: [`/api/v1/role?role_type=staff_permission_show`],
+    queryKey: [`/api/v1/role`],
     queryFn: async () => {
       const res = await fetch(
-        `${BASE_URL}/role?role_type=staff_permission_show`,
+        `${BASE_URL}/role`,
         {
           headers: {
             credentials: "include",

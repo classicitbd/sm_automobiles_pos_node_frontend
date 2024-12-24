@@ -46,7 +46,7 @@ const UpDateStaffRole = ({ setUpdateModal, updateModalValue, refetch }) => {
 
     try {
       const response = await fetch(
-        `${BASE_URL}/role?role_type=staff_permission_update`,
+        `${BASE_URL}/role`,
         {
           method: 'PATCH',
           headers: {

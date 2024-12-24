@@ -27,7 +27,7 @@ const AddCashBalance = ({ setCashCreateModal, cashRefetch, user }) => {
         cash_balance: data?.cash_balance,
       };
 
-      const response = await fetch(`${BASE_URL}/cash?role_type=cash_update`, {
+      const response = await fetch(`${BASE_URL}/cash`, {
         method: "PATCH",
         credentials: "include",
         headers: {

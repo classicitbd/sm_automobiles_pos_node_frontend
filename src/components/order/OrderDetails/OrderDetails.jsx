@@ -1,5 +1,4 @@
-
-import {Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./OrderDetails.css";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "@/utils/baseURL";
@@ -15,13 +14,13 @@ import useDebounced from "@/hooks/useDebounced";
 const OrderDetails = () => {
   const { _id } = useParams();
   const [activeNavButton, setActiveNavButton] = useState("order");
-   const [serialNumber, setSerialNumber] = useState();
-    const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(10);
-    const [searchValue, setSearchValue] = useState("");
-    const [searchTerm, setSearchTerm] = useState("");
-    const { user } = useContext(AuthContext);
-    const { settingData } = useContext(SettingContext);
+  const [serialNumber, setSerialNumber] = useState();
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [searchValue, setSearchValue] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const { user } = useContext(AuthContext);
+  const { settingData } = useContext(SettingContext);
 
   const handleNavButtonClick = (buttonName) => {
     setActiveNavButton(buttonName);
@@ -37,11 +36,11 @@ const OrderDetails = () => {
 
   //Fetch OrderDetails Data
   const { data: orderDetail = {}, isLoading } = useQuery({
-    queryKey: [`/api/v1/order/${_id}?role_type=order_details_show`],
+    queryKey: [`/api/v1/order/${_id}`],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/order/${_id}?role_type=order_details_show`,
+          `${BASE_URL}/order/${_id}`,
           {
             credentials: "include",
           }
@@ -82,23 +81,17 @@ const OrderDetails = () => {
     setSearchTerm(searchText);
   }, [searchText]);
 
-  const check_publisher_id = user?.check_publisher_id
-    ? user?.check_publisher_id
-    : user?._id;
-
   //Fetch Customer Data
   const {
     data: allEmployelist = [],
-    isLoading:allPaymetViewLoading,
+    isLoading: allPaymetViewLoading,
     // refetch,
   } = useQuery({
-    queryKey: [
-      `/api/v1/check/find_user_publish_check?check_publisher_id=${check_publisher_id}&page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
-    ],
+    queryKey: [`/api/v1/check/find_a_order_all_check?order_id=${_id}`],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/check/find_user_publish_check?check_publisher_id=${check_publisher_id}&page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
+          `${BASE_URL}/check/find_a_order_all_check?order_id=${_id}`,
           {
             credentials: "include",
           }
@@ -124,8 +117,6 @@ const OrderDetails = () => {
   if (isLoading) {
     return <TableLoadingSkeleton />;
   }
-
-  console.log(orderDetail);
 
   return (
     <div className="">
@@ -176,15 +167,13 @@ const OrderDetails = () => {
                     </span>
                   </p>
                   <p className="sm:text-[20px] text-bgray-700">
+                    Address : {orderDetail?.customer_id?.customer_address}
+                  </p>
+                  <p className="sm:text-[20px] text-bgray-700">
                     Order Date :{" "}
                     <span className="sm:text-[20px]">
                       {DateTimeFormat(orderDetail?.createdAt)}
                     </span>
-                  </p>
-                </div>
-                <div className="font-bold text-bgray-700">
-                  <p className="sm:text-[20px] text-bgray-700">
-                    Address : {orderDetail?.customer_id?.customer_address}
                   </p>
                   <p className="sm:text-[20px] text-bgray-700">
                     Order No :{" "}
@@ -194,9 +183,45 @@ const OrderDetails = () => {
                     </span>
                   </p>
                   <p className="sm:text-[20px] text-bgray-700">
+                    Order Status : {orderDetail?.order_status}
+                  </p>
+                </div>
+                <div className="font-bold text-bgray-700">
+                  <p className="sm:text-[20px] text-bgray-700">
+                    Measurement :{" "}
+                    <span className="sm:text-[20px] text-blue-700">
+                      {orderDetail?.total_measurement_count}{" "}
+                      {settingData?.unit_name}
+                    </span>
+                  </p>
+                  <p className="sm:text-[20px] text-bgray-700">
+                    Sub Total :{" "}
+                    <span className="sm:text-[20px] text-blue-700">
+                      {orderDetail?.sub_total_amount}
+                    </span>
+                  </p>
+                  <p className="sm:text-[20px] text-bgray-700">
+                    Discount :{" "}
+                    <span className="sm:text-[20px] text-red-700">
+                      {orderDetail?.discount_percent_amount} %
+                    </span>
+                  </p>
+                  <p className="sm:text-[20px] text-bgray-700">
                     Grand Total :{" "}
                     <span className="sm:text-[20px] text-green-600">
                       {orderDetail?.grand_total_amount}
+                    </span>
+                  </p>
+                  <p className="sm:text-[20px] text-bgray-700">
+                    Received Amount :{" "}
+                    <span className="sm:text-[20px] text-green-600">
+                      {orderDetail?.received_amount}
+                    </span>
+                  </p>
+                  <p className="sm:text-[20px] text-bgray-700">
+                    Due Amount :{" "}
+                    <span className="sm:text-[20px] text-red-600">
+                      {orderDetail?.due_amount}
                     </span>
                   </p>
                 </div>
@@ -215,9 +240,9 @@ const OrderDetails = () => {
                         <td className="whitespace-nowrap p-4 ">SL No</td>
 
                         <td className="whitespace-nowrap p-4 ">Product Name</td>
+                        <td className="whitespace-nowrap p-4 ">Product ID</td>
                         <td className="whitespace-nowrap p-4 ">Unit Price</td>
                         <td className="whitespace-nowrap p-4 ">Quantity</td>
-
                         <td className="whitespace-nowrap p-4 ">Sub Total</td>
                         <td className="whitespace-nowrap p-4 ">Discount(%)</td>
                         <td className="whitespace-nowrap p-4 ">Total Amount</td>
@@ -239,6 +264,9 @@ const OrderDetails = () => {
                           <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                             {product?.product_id?.product_name}
                           </td>
+                          <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
+                            {product?.product_id?.product_id}
+                          </td>
                           <td className="whitespace-nowrap py-2.5 font-medium text-blue-600">
                             {product?.product_price}
                           </td>
@@ -247,10 +275,7 @@ const OrderDetails = () => {
                               <>
                                 {" "}
                                 {product?.product_quantity}{" "}
-                                {
-                                  product?.product_id?.product_unit_id
-                                    ?.product_unit_name
-                                }
+                                {product?.product_unit_name}
                               </>
                             ) : (
                               "--"
@@ -310,19 +335,10 @@ const OrderDetails = () => {
                                   SL No
                                 </td>
                                 <td className="whitespace-nowrap p-4 ">
-                                  Invice No
-                                </td>
-                                <td className="whitespace-nowrap p-4 ">
-                                  Customer Name
-                                </td>
-                                <td className="whitespace-nowrap p-4 ">
-                                  Customer Phone
+                                  Payment Method
                                 </td>
                                 <td className="whitespace-nowrap p-4 ">
                                   Bank Name
-                                </td>
-                                <td className="whitespace-nowrap p-4 ">
-                                  Payment Method
                                 </td>
                                 <td className="whitespace-nowrap p-4 ">
                                   Check No
@@ -332,13 +348,6 @@ const OrderDetails = () => {
                                 </td>
                                 <td className="whitespace-nowrap p-4 ">
                                   Status
-                                </td>
-                                <td className="whitespace-nowrap p-4 ">
-                                  Total Messurement
-                                </td>
-
-                                <td className="whitespace-nowrap p-4 ">
-                                  Total Amount
                                 </td>
                                 <td className="whitespace-nowrap p-4 ">
                                   Pay Amount
@@ -359,26 +368,7 @@ const OrderDetails = () => {
                                   <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                                     {serialNumber + i + 1}
                                   </td>
-                                  <td className="whitespace-nowrap py-3 font-medium text-gray-700">
-                                    <Link>
-                                      <span className="text-blue-600 underline">
-                                        {" "}
-                                        {employe?.invoice_number}
-                                      </span>
-                                    </Link>
-                                  </td>
-                                  <td className="whitespace-nowrap py-3 font-medium text-gray-700">
-                                    {employe?.customer_id?.customer_name}
-                                  </td>
-                                  <td className="whitespace-nowrap py-3 font-medium text-gray-700">
-                                    {employe?.customer_phone}
-                                  </td>
-                                  <td className="whitespace-nowrap py-3 font-medium text-blue-600">
-                                    {employe?.bank_id?.bank_name
-                                      ? employe?.bank_id?.bank_name
-                                      : "--"}
-                                  </td>
-                                  <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                                  <td className="whitespace-nowrap py-3 font-medium text-gray-700 capitalize">
                                     {employe?.payment_method === "cash" ? (
                                       <span className="text-secondary-default">
                                         {employe?.payment_method}
@@ -390,11 +380,14 @@ const OrderDetails = () => {
                                     )}
                                   </td>
                                   <td className="whitespace-nowrap py-3 font-medium text-gray-700">
-                                    {employe?.check_number
-                                      ? employe?.check_number
+                                    {employe?.bank_id?.bank_name
+                                      ? employe?.bank_id?.bank_name
                                       : "--"}
                                   </td>
                                   <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                                    {employe?.check_number || "--"}
+                                  </td>
+                                  <td className="whitespace-nowrap py-3 font-medium text-blue-600">
                                     {employe?.check_withdraw_date
                                       ? employe?.check_withdraw_date
                                       : "--"}
@@ -410,41 +403,8 @@ const OrderDetails = () => {
                                       </span>
                                     )}
                                   </td>
-                                  <td className="whitespace-nowrap py-3 font-medium text-green-600">
-                                    {employe?.order_id
-                                      ?.total_messurement_count ? (
-                                      <>
-                                        {" "}
-                                        {
-                                          employe?.order_id
-                                            ?.total_messurement_count
-                                        }{" "}
-                                        {settingData?.unit_name}
-                                      </>
-                                    ) : (
-                                      "--"
-                                    )}
-                                  </td>
-
-                                  <td className="whitespace-nowrap py-3 font-medium text-green-600">
-                                    {employe?.order_id?.grand_total_amount}
-                                  </td>
-                                  <td className="whitespace-nowrap py-3 font-medium text-gray-700">
-                                    {employe?.pay_amount ===
-                                    employe?.order_id?.grand_total_amount ? (
-                                      <span className="text-green-600">
-                                        {employe?.pay_amount}
-                                      </span>
-                                    ) : employe?.pay_amount >
-                                      employe?.order_id?.grand_total_amount ? (
-                                      <span className="text-blue-600">
-                                        {employe?.pay_amount}
-                                      </span>
-                                    ) : (
-                                      <span className="text-yellow-600">
-                                        {employe?.pay_amount}
-                                      </span>
-                                    )}
+                                  <td className="whitespace-nowrap py-3 font-medium text-blue-700">
+                                    {employe?.pay_amount}
                                   </td>
                                 </tr>
                               ))}

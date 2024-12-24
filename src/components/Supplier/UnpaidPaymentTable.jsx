@@ -51,7 +51,7 @@ const UnpaidPaymentTable = ({
         try {
           const response = await fetch(
             `
-            ${BASE_URL}/supplier_payment?role_type=supplier_payment_update`,
+            ${BASE_URL}/supplier_payment`,
             {
               method: "PATCH",
               headers: {

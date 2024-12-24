@@ -40,7 +40,7 @@ const UpdateProductUnit = ({
       };
 
       const response = await fetch(
-        `${BASE_URL}/product_unit?role_type=product_unit_update`,
+        `${BASE_URL}/product_unit`,
         {
           method: "PATCH",
           credentials: "include",

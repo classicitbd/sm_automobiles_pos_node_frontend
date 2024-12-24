@@ -54,7 +54,7 @@ const CustomerPaymentTable = ({
         try {
           const response = await fetch(
             `
-            ${BASE_URL}/check?role_type=check_update`,
+            ${BASE_URL}/check`,
             {
               method: "PATCH",
               headers: {

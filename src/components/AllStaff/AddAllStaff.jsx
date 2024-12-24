@@ -58,7 +58,7 @@ const AddAllStaff = ({
     };
 
     try {
-      const response = await fetch(`${BASE_URL}/user?role_type=staff_create`, {
+      const response = await fetch(`${BASE_URL}/user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

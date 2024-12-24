@@ -29,11 +29,11 @@ const StaffPerfomance = () => {
 
   //Fetch SaleTarget Data
   const { data: saleTargetData = [], isLoading } = useQuery({
-    queryKey: [`/api/v1/sale_target/${user_id}?role_type=sale_target_show`],
+    queryKey: [`/api/v1/sale_target/${user_id}`],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/sale_target/${user_id}?role_type=sale_target_show`,
+          `${BASE_URL}/sale_target/${user_id}`,
           {
             credentials: "include",
           }

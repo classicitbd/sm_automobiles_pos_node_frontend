@@ -30,7 +30,7 @@ const AddBankInfo = ({ setBankAccountCreateModal, refetch, user }) => {
         bank_balance: data?.bank_balance,
       };
 
-      const response = await fetch(`${BASE_URL}/bank?role_type=bank_create`, {
+      const response = await fetch(`${BASE_URL}/bank`, {
         method: "POST",
         credentials: "include",
         headers: {

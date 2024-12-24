@@ -62,7 +62,7 @@ const UpdateSaleTarget = ({
       };
 
       const response = await fetch(
-        `${BASE_URL}/sale_target?role_type=sale_target_update`,
+        `${BASE_URL}/sale_target`,
         {
           method: "PATCH",
           credentials: "include",

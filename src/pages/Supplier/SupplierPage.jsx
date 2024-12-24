@@ -36,12 +36,12 @@ const SupplierPage = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/supplier/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=supplier_show`,
+      `/api/v1/supplier/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/supplier/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=supplier_show`,
+          `${BASE_URL}/supplier/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
           {
             credentials: "include",
           }

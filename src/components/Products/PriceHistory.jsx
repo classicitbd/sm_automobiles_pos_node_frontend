@@ -24,12 +24,12 @@ const PriceHistory = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/product_price_update_history?product_id=${product_id}&page=${page}&limit=${limit}&role_type=product_price_update_history_show`,
+      `/api/v1/product_price_update_history?product_id=${product_id}&page=${page}&limit=${limit}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/product_price_update_history?product_id=${product_id}&page=${page}&limit=${limit}&role_type=product_price_update_history_show`,
+          `${BASE_URL}/product_price_update_history?product_id=${product_id}&page=${page}&limit=${limit}`,
           {
             credentials: "include",
           }

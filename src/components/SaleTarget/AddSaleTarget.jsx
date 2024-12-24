@@ -54,7 +54,7 @@ const AddSaleTarget = ({
       };
 
       const response = await fetch(
-        `${BASE_URL}/sale_target?role_type=sale_target_create`,
+        `${BASE_URL}/sale_target`,
         {
           method: "POST",
           credentials: "include",

@@ -56,7 +56,7 @@ const StockManageForm = () => {
         payment_status: "unpaid",
       };
       const response = await fetch(
-        `${BASE_URL}/stock_manage?role_type=stock_manage_create`,
+        `${BASE_URL}/stock_manage`,
         {
           method: "POST",
           credentials: "include",

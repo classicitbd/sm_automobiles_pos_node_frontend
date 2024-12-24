@@ -32,12 +32,12 @@ const IncomePage = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/income?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=income_show`,
+      `/api/v1/income?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/income?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=income_show`,
+          `${BASE_URL}/income?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
           {
             credentials: "include",
           }

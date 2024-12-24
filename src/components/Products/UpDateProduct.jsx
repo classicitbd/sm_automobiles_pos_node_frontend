@@ -88,7 +88,7 @@ const UpDateProduct = () => {
     formData.append("product_publisher_id", user?._id);
     formData.append("category_id", category_id);
     const response = await fetch(
-      `${BASE_URL}/product/?role_type=product_create`,
+      `${BASE_URL}/product`,
       {
         method: "POST",
         credentials: "include",

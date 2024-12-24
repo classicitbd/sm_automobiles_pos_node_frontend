@@ -34,12 +34,12 @@ const BankOutPage = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/bank_out?bank_id=${id}&page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=bank_out_show`,
+      `/api/v1/bank_out?bank_id=${id}&page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/bank_out?bank_id=${id}&page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=bank_out_show`,
+          `${BASE_URL}/bank_out?bank_id=${id}&page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
           {
             credentials: 'include',
           }

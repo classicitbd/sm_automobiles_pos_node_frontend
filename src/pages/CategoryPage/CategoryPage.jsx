@@ -34,12 +34,12 @@ function CategoryPage() {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/category?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
+      `/api/v1/category?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/category?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=category_show`,
+          `${BASE_URL}/category?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
           {
             credentials: 'include',
           }
