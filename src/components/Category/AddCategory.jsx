@@ -30,7 +30,7 @@ const AddCategory = ({ setCategoryCreateModal, refetch, user }) => {
       };
 
       const response = await fetch(
-        `${BASE_URL}/category?role_type=category_create`,
+        `${BASE_URL}/category`,
         {
           method: "POST",
           credentials: "include",

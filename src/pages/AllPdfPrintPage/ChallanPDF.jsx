@@ -73,7 +73,7 @@ const ChallanPDF = ({ challanOpenData }) => {
             </p>
             <p>
               Served By :{" "}
-              <span style={{ fontWeight: "normal" }}>Input Field </span>
+              <span style={{ fontWeight: "normal" }}></span>
             </p>
             <p>
               Billing Date :{" "}

@@ -24,7 +24,7 @@ const AddBrand = ({ setBrandCreateModal, refetch, user }) => {
         brand_name: data?.brand_name,
       };
 
-      const response = await fetch(`${BASE_URL}/brand?role_type=brand_create`, {
+      const response = await fetch(`${BASE_URL}/brand`, {
         method: "POST",
         credentials: "include",
         headers: {

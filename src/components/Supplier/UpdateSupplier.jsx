@@ -33,7 +33,7 @@ const UpdateSupplier = ({
       };
 
       const response = await fetch(
-        `${BASE_URL}/supplier?role_type=supplier_update`,
+        `${BASE_URL}/supplier`,
         {
           method: "PATCH",
           credentials: "include",

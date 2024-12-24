@@ -59,7 +59,7 @@ const SiteSetting = () => {
     };
     try {
       const response = await fetch(
-        `${BASE_URL}/site_setting?role_type=site_setting_update`,
+        `${BASE_URL}/site_setting`,
         {
           method: "PATCH",
           headers: {

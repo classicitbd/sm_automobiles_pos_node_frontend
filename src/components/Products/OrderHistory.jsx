@@ -24,12 +24,12 @@ const OrderHistory = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/order/product_order/${product_id}?page=${page}&limit=${limit}&role_type=product/_show`,
+      `/api/v1/order/product_order/${product_id}?page=${page}&limit=${limit}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/order/product_order/${product_id}?page=${page}&limit=${limit}&role_type=product_order_show`,
+          `${BASE_URL}/order/product_order/${product_id}?page=${page}&limit=${limit}`,
           {
             credentials: "include",
           }

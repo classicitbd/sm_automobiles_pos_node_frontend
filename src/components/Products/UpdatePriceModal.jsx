@@ -35,7 +35,7 @@ const UpdatePriceModal = ({
                 price_update: true
             };
             const response = await fetch(
-                `${BASE_URL}/product?role_type=product_update`,
+                `${BASE_URL}/product`,
                 {
                     method: "PATCH",
                     credentials: "include",

@@ -81,12 +81,12 @@ const PosMainComponent = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/product?page=${page}&limit=${limit}&product_barcode=${product_barcode}&searchTerm=${searchTerm}&category_id=${category_id}&brand_id=${brand_id}&role_type=product_show`,
+      `/api/v1/product?page=${page}&limit=${limit}&product_barcode=${product_barcode}&searchTerm=${searchTerm}&category_id=${category_id}&brand_id=${brand_id}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/product?page=${page}&limit=${limit}&product_barcode=${product_barcode}&searchTerm=${searchTerm}&category_id=${category_id}&brand_id=${brand_id}&role_type=product_show`,
+          `${BASE_URL}/product?page=${page}&limit=${limit}&product_barcode=${product_barcode}&searchTerm=${searchTerm}&category_id=${category_id}&brand_id=${brand_id}`,
           {
             credentials: "include",
           }

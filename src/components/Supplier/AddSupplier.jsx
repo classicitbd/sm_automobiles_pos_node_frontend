@@ -27,7 +27,7 @@ const AddSupplier = ({ setOpenAddModal, refetch, user }) => {
       };
 
       const response = await fetch(
-        `${BASE_URL}/supplier?role_type=supplier_create`,
+        `${BASE_URL}/supplier`,
         {
           method: "POST",
           credentials: "include",

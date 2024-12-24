@@ -37,12 +37,12 @@ const ProductUnitPage = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/product_unit/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=product_unit_show`,
+      `/api/v1/product_unit/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/product_unit/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=product_unit_show`,
+          `${BASE_URL}/product_unit/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
           {
             credentials: "include",
           }

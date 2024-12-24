@@ -82,7 +82,7 @@ const OrderTable = ({
   //       })),
   //     };
 
-  //     const response = await fetch(`${BASE_URL}/order?role_type=order_update`, {
+  //     const response = await fetch(`${BASE_URL}/order`, {
   //       method: "PATCH",
   //       credentials: "include",
   //       headers: {
@@ -251,7 +251,7 @@ const OrderTable = ({
                             : "--"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          <Link to="">
+                          <Link to={`/order-details/${order?._id}`}>
                             <span className="text-blue-600 underline ">
                               {order?.order_id}
                             </span>

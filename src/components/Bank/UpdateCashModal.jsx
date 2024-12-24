@@ -36,7 +36,7 @@ const UpdateCashModal = ({
         return;
       }
 
-      const response = await fetch(`${BASE_URL}/cash?role_type=cash_update`, {
+      const response = await fetch(`${BASE_URL}/cash`, {
         method: "PATCH",
         credentials: "include",
         headers: {

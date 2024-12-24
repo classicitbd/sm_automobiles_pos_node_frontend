@@ -34,12 +34,12 @@ const SypllierPaymentList = () => {
   //Fetch Bank Data
   const { data: supplierPayments = [], isLoading } = useQuery({
     queryKey: [
-      `/api/v1/supplier_payment?supplier_id=${supplier_id}&page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=supplier_payment_history_show`,
+      `/api/v1/supplier_payment?supplier_id=${supplier_id}&page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/supplier_payment?supplier_id=${supplier_id}&page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=supplier_payment_history_show`,
+          `${BASE_URL}/supplier_payment?supplier_id=${supplier_id}&page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
           {
             credentials: "include",
           }

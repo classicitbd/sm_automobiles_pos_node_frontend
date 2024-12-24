@@ -22,12 +22,12 @@ const StockPurchase = () => {
     // refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/stock_manage/supplier_stock/${supplier_id}?page=${page}&limit=${limit}&role_type=supplier_payment_history_show`,
+      `/api/v1/stock_manage/supplier_stock/${supplier_id}?page=${page}&limit=${limit}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/stock_manage/supplier_stock/${supplier_id}?page=${page}&limit=${limit}&role_type=supplier_payment_history_show`,
+          `${BASE_URL}/stock_manage/supplier_stock/${supplier_id}?page=${page}&limit=${limit}`,
           {
             credentials: "include",
           }

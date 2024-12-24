@@ -175,7 +175,7 @@ const RightSide = ({ user, addProducts, setAddProducts }) => {
       if (!payment_bank_tranx_id) {
         delete sendData?.payment_transaction_id;
       }
-      const response = await fetch(`${BASE_URL}/order?role_type=order_create`, {
+      const response = await fetch(`${BASE_URL}/order`, {
         method: "POST",
         credentials: "include",
         headers: {

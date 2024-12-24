@@ -52,23 +52,20 @@ const CreateAPaymentModal = ({
         supplier_payment_title: data?.supplier_payment_title,
         supplier_payment_date: data?.supplier_payment_date,
         supplier_payment_amount: data?.supplier_payment_amount,
-        invoice_id: invoice_id
+        invoice_id: invoice_id,
       };
       if (supplier_payment_method == "check") {
         (sendData.payment_bank_id = payment_bank_id),
           (sendData.reference_id = data?.reference_id);
       }
-      const response = await fetch(
-        `${BASE_URL}/supplier_payment?role_type=supplier_payment_create`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(sendData),
-        }
-      );
+      const response = await fetch(`${BASE_URL}/supplier_payment`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(sendData),
+      });
       const result = await response.json();
       if (result?.statusCode === 200 && result?.success === true) {
         toast.success(

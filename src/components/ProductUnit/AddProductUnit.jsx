@@ -32,7 +32,7 @@ const AddProductUnit = ({
       };
 
       const response = await fetch(
-        `${BASE_URL}/product_unit?role_type=product_unit_create`,
+        `${BASE_URL}/product_unit`,
         {
           method: "POST",
           credentials: "include",

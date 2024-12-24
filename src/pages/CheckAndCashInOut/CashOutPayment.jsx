@@ -31,12 +31,12 @@ const CashOutPayment = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/supplier_payment/check_or_cash_out_payment?supplier_payment_method=cash&page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_out_payment_show`,
+      `/api/v1/supplier_payment/check_or_cash_out_payment?supplier_payment_method=cash&page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/supplier_payment/check_or_cash_out_payment?supplier_payment_method=cash&page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_out_payment_show`,
+          `${BASE_URL}/supplier_payment/check_or_cash_out_payment?supplier_payment_method=cash&page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
           {
             credentials: "include",
           }

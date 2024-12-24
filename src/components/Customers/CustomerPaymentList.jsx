@@ -39,12 +39,12 @@ const CustomerPaymentList = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/check?customer_id=${customer_id}&page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_history_show`,
+      `/api/v1/check?customer_id=${customer_id}&page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/check?customer_id=${customer_id}&page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_history_show`,
+          `${BASE_URL}/check?customer_id=${customer_id}&page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
           {
             credentials: "include",
           }

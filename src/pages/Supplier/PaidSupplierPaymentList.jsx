@@ -32,12 +32,12 @@ const PaidSupplierPaymentList = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/supplier_payment/paid_payment_list?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=paid_supplier_payment_show`,
+      `/api/v1/supplier_payment/paid_payment_list?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/supplier_payment/paid_payment_list?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=paid_supplier_payment_show`,
+          `${BASE_URL}/supplier_payment/paid_payment_list?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
           {
             credentials: 'include',
           }

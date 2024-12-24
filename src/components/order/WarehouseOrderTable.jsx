@@ -89,7 +89,7 @@ const WarehouseOrderTable = ({
         try {
           const response = await fetch(
             `
-                  ${BASE_URL}/order?role_type=order_status_update`,
+                  ${BASE_URL}/order`,
             {
               method: "PATCH",
               headers: {

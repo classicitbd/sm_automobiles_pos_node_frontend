@@ -32,12 +32,12 @@ const TodayCustomerPayment = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/check/today_dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_show`,
+      `/api/v1/check/today_dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/check/today_dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}&role_type=check_show`,
+          `${BASE_URL}/check/today_dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
           {
             credentials: 'include',
           }

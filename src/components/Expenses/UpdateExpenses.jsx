@@ -98,7 +98,7 @@ const UpdateExpenses = ({
           getExpenseModalData?.expense_voucher_key
         );
         const response = await fetch(
-          `${BASE_URL}/expense/?role_type=expense_update`,
+          `${BASE_URL}/expense`,
           {
             method: "PATCH",
             credentials: "include",
@@ -143,7 +143,7 @@ const UpdateExpenses = ({
           sendData.expense_voucher = getExpenseModalData?.expense_voucher;
         }
         const response = await fetch(
-          `${BASE_URL}/expense?role_type=expense_update`,
+          `${BASE_URL}/expense`,
           {
             method: "PATCH",
             credentials: "include",

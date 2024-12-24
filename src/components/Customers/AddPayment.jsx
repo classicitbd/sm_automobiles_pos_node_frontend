@@ -87,7 +87,7 @@ const AddPayment = ({ setCustomerAddPaymentModal }) => {
           (sendData.check_number = data?.check_number),
           (sendData.check_withdraw_date = data?.check_withdraw_date);
       }
-      const response = await fetch(`${BASE_URL}/check?role_type=check_create`, {
+      const response = await fetch(`${BASE_URL}/check`, {
         method: "POST",
         credentials: "include",
         headers: {

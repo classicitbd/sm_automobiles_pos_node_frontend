@@ -41,7 +41,7 @@ const AddCustomer = ({ setCustomerAddModal, user, refetch }) => {
       };
 
       const response = await fetch(
-        `${BASE_URL}/customer?role_type=customer_create`,
+        `${BASE_URL}/customer`,
         {
           method: "POST",
           credentials: "include",

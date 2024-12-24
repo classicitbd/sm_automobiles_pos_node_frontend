@@ -20,12 +20,12 @@ const BankBalanceUpdateHistory = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/bank_balance_update_history?bank_id=${bank_id}&page=${page}&limit=${limit}&role_type=bank_balance_update_history_show`,
+      `/api/v1/bank_balance_update_history?bank_id=${bank_id}&page=${page}&limit=${limit}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/bank_balance_update_history?bank_id=${bank_id}&page=${page}&limit=${limit}&role_type=bank_balance_update_history_show`,
+          `${BASE_URL}/bank_balance_update_history?bank_id=${bank_id}&page=${page}&limit=${limit}`,
           {
             credentials: "include",
           }

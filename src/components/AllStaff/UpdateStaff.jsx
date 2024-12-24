@@ -47,7 +47,7 @@ const UpdateStaff = ({
     }
 
     try {
-      const response = await fetch(`${BASE_URL}/user?role_type=staff_update`, {
+      const response = await fetch(`${BASE_URL}/user`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

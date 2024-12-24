@@ -32,12 +32,12 @@ const PurchaseListPage = () => {
       refetch,
     } = useQuery({
       queryKey: [
-        `/api/v1/stock_manage/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
+        `/api/v1/supplier_payment/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
       ],
       queryFn: async () => {
         try {
           const res = await fetch(
-            `${BASE_URL}/stock_manage/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
+            `${BASE_URL}/supplier_payment/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
             {
               credentials: "include",
             }

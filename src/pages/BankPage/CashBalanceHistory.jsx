@@ -17,12 +17,12 @@ const CashBalanceHistory = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/cash_balance_update_history?page=${page}&limit=${limit}&role_type=cash_balance_history_show`,
+      `/api/v1/cash_balance_update_history?page=${page}&limit=${limit}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/cash_balance_update_history?page=${page}&limit=${limit}&role_type=cash_balance_history_show`,
+          `${BASE_URL}/cash_balance_update_history?page=${page}&limit=${limit}`,
           {
             credentials: "include",
           }
