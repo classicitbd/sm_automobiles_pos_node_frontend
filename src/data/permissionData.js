@@ -4,197 +4,117 @@ const permissionsData = [
     Type: ["dashboard_show"],
   },
   {
-    Name: "Pos",
-    Type: ["pos_page_show"],
-  },
-  {
-    Name: "Employe",
-    Type: ["employe_payment_list_show", "customer_payment_create"],
-  },
-  {
-    Name: "Incomes",
-    Type: ["income_show", "income_get"],
-  },
-
-  {
-    Name: "All Order",
-    Type: ["all_order_page_show", "all_order_page_get"],
-  },
-  {
-    Name: "Out of Warehouse Order",
-    Type: [
-      "out_of_warehouse_order_list_show",
-
-      "out_of_warehouse_order_list_get",
-    ],
-  },
-  {
-    Name: "Profit",
-    Type: ["profit_list_show", "profit_list_get"],
-  },
-
-  {
-    Name: "Check In",
-    Type: ["check_in_list_show", "check_in_list_get"],
-  },
-  {
-    Name: "Check Out",
-    Type: ["check_out_list_show", "check_out_list_get"],
-  },
-  {
-    Name: "Cash In",
-    Type: ["cash_in_list_show", "cash_in_list_get"],
-  },
-  {
-    Name: "Cash Out",
-    Type: ["cash_out_list_show", "cash_out_list_get"],
-  },
-  {
-    Name: "Paid Payment List",
-    Type: ["paid_payment_list_show", "paid_payment_list_get"],
-  },
-  {
-    Name: "Account Receive",
-    Type: ["account_receive_list_show", "account_receive_list_get"],
-  },
-
-  {
-    Name: "Account Payable",
-    Type: ["account_payable_list_show", "account_payable_list_get"],
-  },
-  {
-    Name: "All Paid Payment List",
-    Type: ["all_paid_payment_list_show", "all_paid_payment_list_get"],
-  },
-
-  {
-    Name: "Expense",
-    Type: ["expense_show", "expense_create", "expense_get"],
-  },
-  {
-    Name: "Management Order List",
-    Type: [
-      "management_order_list_show",
-      "management_order_list_update",
-      "management_order_list_get",
-    ],
-  },
-  {
-    Name: "Management Account Order List",
-    Type: [
-      "management_account_order_list_show",
-      "management_account_order_list_update",
-      "management_account_order_list_get",
-    ],
-  },
-  {
-    Name: "Warehouse Order",
-    Type: [
-      "warehouse_order_list_show",
-      "warehouse_order_list_update",
-      "warehouse_order_list_get",
-    ],
-  },
-
-  {
-    Name: "Payment List",
-    Type: ["payment_list_show", "payment_list_get", "payment_list_update"],
-  },
-
-  {
-    Name: "Due Payment List",
-    Type: [
-      "due_payment_list_show",
-      "due_payment_list_get",
-      "due_payment_list_update",
-    ],
-  },
-  {
-    Name: "Today Payment List",
-    Type: [
-      "today_payment_list_show",
-      "today_payment_list_get",
-      "today_payment_list_update",
-    ],
-  },
-
-  {
-    Name: "Unpaid Payment List",
-    Type: [
-      "unpaid_payment_list_show",
-      "unpaid_payment_list_get",
-      "unpaid_payment_list_update",
-    ],
-  },
-  {
     Name: "Category",
-    Type: [
-      "category_show",
-      "category_create",
-      "category_update",
-      "category_get",
-    ],
+    Type: ["category_post", "category_patch"],
   },
   {
     Name: "Brand",
-    Type: ["brand_show", "brand_create", "brand_update", "brand_get"],
+    Type: ["brand_post", "brand_patch"],
   },
   {
-    Name: "Units",
-    Type: ["unit_show", "unit_create", "unit_update", "unit_get"],
+    Name: "Unit",
+    Type: ["unit_dashboard_show", "unit_post", "unit_patch"],
   },
   {
-    Name: "Staff",
-    Type: ["staff_show", "staff_create", "staff_update", "staff_get"],
+    Name: "Site Setting",
+    Type: ["site_setting_patch"],
   },
   {
-    Name: "Sales Target",
+    Name: "User Permission",
+    Type: ["user_post", "user_patch", "user_dashboard_show"],
+  },
+  {
+    Name: "Role Permission",
+    Type: ["role_post", "role_patch"],
+  },
+  {
+    Name: "Sale Target",
+    Type: ["sale_target_post", "sale_target_patch"],
+  },
+  {
+    Name: "Supplier",
+    Type: ["supplier_dashboard_show", "supplier_post", "supplier_patch"],
+  },
+  {
+    Name: "Supplier Payment Permission",
     Type: [
-      "sale_target_show",
-      "sale_target_create",
-      "sale_target_update",
-      "sale_target_get",
+      "supplier_payment_dashboard_show",
+      "supplier_payment_post",
+      "supplier_payment_patch",
+      "supplier_paid_payment_show",
+      "supplier_unpaid_payment_show",
     ],
   },
   {
-    Name: "Bank Account",
+    Name: "Supplier Cheak and Cash Permission",
+    Type: ["supplier_check_or_cash_out_payment_show"],
+  },
+  {
+    Name: "Cash Update Permission",
+    Type: ["cash_patch"],
+  },
+  {
+    Name: "Bank",
+    Type: ["bank_dashboard_show", "bank_post", "bank_patch"],
+  },
+  {
+    Name: "Customer",
     Type: [
-      "bank_account_show",
-      "bank_account_create",
-      "bank_account_update",
-      "bank_account_get",
+      "customer_dashboard_show",
+      "customer_post",
+      "customer_patch",
+      "customer_ar_show",
     ],
   },
   {
-    Name: "Customers",
+    Name: "Check",
     Type: [
-      "customer_show",
-      "customer_create",
-      "customer_update",
-      "customer_get",
+      "check_dashboard_show",
+      "check_today_dashboard_show",
+      "check_due_dashboard_show",
+      "check_or_cash_in_payment_show",
     ],
   },
-
-  {
-    Name: "Supplier List",
-    Type: [
-      "supplier_list_show",
-      "supplier_list_create",
-      "supplier_list_update",
-      "supplier_list_get",
-      "supplier_add_payment",
-    ],
-  },
-
   {
     Name: "Product",
+    Type: ["product_dashboard_show", "product_post", "product_patch"],
+  },
+  {
+    Name: "Stock",
+    Type: ["stock_post", "stock_ap_show"],
+  },
+  {
+    Name: "Expense",
+    Type: ["expense_show", "expense_post"],
+  },
+  {
+    Name: "Income",
+    Type: ["income_show"],
+  },
+  {
+    Name: "Order",
+    Type: ["order_dashboard_show", "order_post", "order_patch"],
+  },
+  {
+    Name: "Profit",
+    Type: ["profit_show"],
+  },
+  {
+    Name: "Management Order",
     Type: [
-      "product_show",
-      "product_create",
-      "product_update",
-      "product_purchage_create",
-      "product_get",
+      "management_order_show",
+      "account_order_show",
+      "warehouse_order_show",
+      "out_of_warehouse_order_show",
     ],
+  },
+  {
+    Name: "Ledger",
+    Type: ["ledger_show"],
+  },
+  {
+    Name: "Invoice",
+    Type: ["order_invoice_print", "order_challan_print"],
   },
 ];
 

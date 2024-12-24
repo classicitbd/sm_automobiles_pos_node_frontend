@@ -1,7 +1,7 @@
 import { DateTimeFormat } from "@/utils/dateTimeFormet";
 import { toWords } from "number-to-words";
 
-const CustomerPaymentVoucher = ({ voucherData }) => {
+const PaidPaymentVoucher = ({ voucherData }) => {
   console.log(voucherData);
 
   const today = new Date();
@@ -23,7 +23,6 @@ const CustomerPaymentVoucher = ({ voucherData }) => {
       : "";
     return fractionalWords ? `${words} and ${fractionalWords}` : words;
   };
-
   return (
     <div className="max-w-7xl mx-auto">
       <section
@@ -86,7 +85,7 @@ const CustomerPaymentVoucher = ({ voucherData }) => {
             >
               Party Name :{" "}
               <span style={{ marginLeft: "20px", fontSize: "18px" }}>
-                {voucherData?.customer_id?.customer_name}
+                {/* {voucherData?.customer_id?.customer_name} */}
               </span>
             </p>
             <p
@@ -96,7 +95,7 @@ const CustomerPaymentVoucher = ({ voucherData }) => {
             >
               Address :{" "}
               <span style={{ marginLeft: "49px", fontSize: "18px" }}>
-                {voucherData?.customer_id?.customer_address}
+                {/* {voucherData?.customer_id?.customer_address} */}
               </span>
             </p>
             <p
@@ -106,7 +105,7 @@ const CustomerPaymentVoucher = ({ voucherData }) => {
             >
               Billing Date :{" "}
               <span style={{ marginLeft: "20px", fontSize: "18px" }}>
-                {formattedDate}
+                {/* {formattedDate} */}
               </span>
             </p>
           </div>
@@ -175,7 +174,7 @@ const CustomerPaymentVoucher = ({ voucherData }) => {
                     padding: "6px",
                   }}
                 >
-                  {DateTimeFormat(voucherData?.createdAt)}
+                  {/* {DateTimeFormat(voucherData?.createdAt)} */}
                 </td>
                 <td
                   style={{
@@ -191,7 +190,7 @@ const CustomerPaymentVoucher = ({ voucherData }) => {
                     fontSize: "20px",
                   }}
                 >
-                  {voucherData?.pay_amount}
+                  {/* {voucherData?.pay_amount} */}
                 </td>
               </tr>
             ))}
@@ -208,7 +207,7 @@ const CustomerPaymentVoucher = ({ voucherData }) => {
                 }}
                 colSpan={3}
               >
-                In Word : {formatAmountToWords(voucherData?.pay_amount)} Only
+                {/* In Word : {formatAmountToWords(voucherData?.pay_amount)} Only */}
               </td>
             </tr>
           </tbody>
@@ -224,7 +223,7 @@ const CustomerPaymentVoucher = ({ voucherData }) => {
           <div>
             <p style={{ fontSize: "18px", textAlign: "center" }}>
               {" "}
-              {voucherData?.customer_id?.customer_name}
+              {/* {voucherData?.customer_id?.customer_name} */}
             </p>
             <div
               style={{
@@ -262,4 +261,4 @@ const CustomerPaymentVoucher = ({ voucherData }) => {
   );
 };
 
-export default CustomerPaymentVoucher;
+export default PaidPaymentVoucher;

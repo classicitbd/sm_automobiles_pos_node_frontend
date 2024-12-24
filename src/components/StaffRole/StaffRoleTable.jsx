@@ -1,4 +1,3 @@
-
 import { FiEdit } from "react-icons/fi";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../utils/baseURL";
@@ -12,8 +11,8 @@ const StaffRoleTable = () => {
   const [updateModalValue, setUpdateModalValue] = useState(false);
   //   console.log(roleData);
   const updateStaffModal = (item) => {
-    setUpdateModal(true);
     setUpdateModalValue(item);
+    setUpdateModal(true);
   };
   const {
     data: roleData,
@@ -22,17 +21,16 @@ const StaffRoleTable = () => {
   } = useQuery({
     queryKey: [`/api/v1/role`],
     queryFn: async () => {
-      const res = await fetch(
-        `${BASE_URL}/role`,
-        {
-          credentials: "include",
-        }
-      );
+      const res = await fetch(`${BASE_URL}/role`, {
+        credentials: "include",
+      });
 
       const data = await res.json();
       return data?.data;
     },
   });
+
+  console.log(roleData);
 
   if (isLoading) {
     return <LoaderOverlay />;

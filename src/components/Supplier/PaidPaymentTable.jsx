@@ -4,6 +4,8 @@ import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import { FaEye } from "react-icons/fa";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import { Link } from "react-router-dom";
+import { LuPrinter } from "react-icons/lu";
+import PaidPaymentVoucher from "./PaidPaymentVoucher";
 
 const PaidPaymentTable = ({
   setPage,
@@ -21,6 +23,34 @@ const PaidPaymentTable = ({
     const newSerialNumber = (page - 1) * limit;
     setSerialNumber(newSerialNumber);
   }, [page, limit]);
+
+  // Payment Voucher Print Function
+  const [voucherOpen, setVoucherOpen] = useState(false);
+  const [voucherData, setVoucherData] = useState({});
+
+  //    function of Pdf
+  const handlePrint = (paymentInfo) => {
+    setVoucherOpen(true);
+    setVoucherData(paymentInfo);
+
+    // Reload the page after printing
+    setTimeout(() => {
+      const printContent = document.getElementById("invoicePrintArea");
+      const originalBody = document.body.innerHTML;
+
+      document.body.innerHTML = printContent.innerHTML;
+
+      window.print();
+
+      // Restore the original content after printing
+      document.body.innerHTML = originalBody;
+
+      // Reload the page after printing
+      setTimeout(() => {
+        location.reload();
+      }, 10);
+    }, 10);
+  };
 
   return (
     <>
@@ -121,11 +151,12 @@ const PaidPaymentTable = ({
                           {paymentInfo?.supplier_payment_amount}
                         </td>
                         <td className="whitespace-nowrap py-2.5 px-2 text-gray-700 flex items-center">
-                          <button className="ml-3">
-                            <FaEye
-                              className="cursor-pointer text-gray-900 hover:text-gray-500"
-                              size={25}
-                            />
+                          <button
+                            className="border px-8 py-2 bg-success-300 text-white font-bold hover:bg-violet-600 transition-all duration-200 flex items-center gap-3 rounded"
+                            onClick={() => handlePrint(paymentInfo)}
+                          >
+                            <LuPrinter size={20} />
+                            Print
                           </button>
                         </td>
                       </tr>
@@ -146,6 +177,7 @@ const PaidPaymentTable = ({
           />
         </div>
       )}
+      {voucherOpen && <PaidPaymentVoucher voucherData={voucherData} />}
     </>
   );
 };
