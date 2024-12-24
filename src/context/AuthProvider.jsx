@@ -44,6 +44,8 @@ const AuthProvider = ({ children }) => {
     fetchUserData();
   }, []);
 
+  console.log(user)
+
   const info = {
     user,
     loading,

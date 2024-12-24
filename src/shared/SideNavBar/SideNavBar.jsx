@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { logo } from "../../utils/imageImport";
 import { Link, useLocation } from "react-router-dom";
 import { GiPayMoney, GiReceiveMoney, GiTargetShot } from "react-icons/gi";
@@ -25,8 +25,12 @@ import {
 } from "react-icons/fa";
 import { MdAccountBalanceWallet, MdSettingsSuggest } from "react-icons/md";
 import { RiFolderReceivedFill } from "react-icons/ri";
+import { AuthContext } from "@/context/AuthProvider";
+import { LoaderOverlay } from "@/components/common/loader/LoderOverley";
 
 const SideNavBar = () => {
+  const { user, loading } = useContext(AuthContext);
+
   const { pathname } = useLocation();
   const [activeDropdown, setActiveDropdown] = useState(null); // Centralized state to track open dropdown
   const [activeChildDropdown, setActiveChildDropdown] = useState(null); // Centralized state to track open dropdown
@@ -75,6 +79,10 @@ const SideNavBar = () => {
       ? "bg-primaryVariant-600 text-white font-semibold border-primaryVariant-100 "
       : "";
 
+  if (loading) {
+    return <LoaderOverlay />;
+  }
+
   return (
     <div className="flex flex-col min-h-screen bg-primaryVariant-800">
       <div className="flex-grow">
@@ -112,12 +120,14 @@ const SideNavBar = () => {
               label="Brand"
               isActive={isActive("/brand")}
             />
-            <ChildMenuItem
-              to="/units"
-              icon={TbCategoryPlus}
-              label="Units"
-              isActive={isActive("/units")}
-            />
+            {user?.user_role_id?.unit_dashboard_show == true && (
+              <ChildMenuItem
+                to="/units"
+                icon={TbCategoryPlus}
+                label="Units"
+                isActive={isActive("/units")}
+              />
+            )}
           </DropdownMenu>
 
           <MenuItem

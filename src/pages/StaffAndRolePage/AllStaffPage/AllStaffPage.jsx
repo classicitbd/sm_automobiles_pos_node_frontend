@@ -29,9 +29,7 @@ const AllStaffPage = () => {
       const res = await fetch(
         `${BASE_URL}/user/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
         {
-          headers: {
-            credentials: "include",
-          },
+          credentials: "include",
         }
       );
       const data = await res.json();
