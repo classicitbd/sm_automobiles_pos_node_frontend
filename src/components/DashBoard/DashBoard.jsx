@@ -1,6 +1,5 @@
-
-import { BsBagPlusFill } from "react-icons/bs"
-import { FaUserCheck } from "react-icons/fa"
+import { BsBagPlusFill } from "react-icons/bs";
+import { FaUserCheck } from "react-icons/fa";
 import BarChart from "./BarChart";
 import LineChart from "./LineChart";
 import PieChart from "./PieChart";
@@ -10,15 +9,7 @@ import RecentInVoice from "./RecentInVoice";
 import RecentSales from "./RecentSales";
 import AllProfit from "./AllProfit";
 
-
-
 const DashBoard = () => {
-
-
-
-
-
-
   return (
     <div className="mb-10">
       {/*First Cart Section Start */}
@@ -32,14 +23,13 @@ const DashBoard = () => {
               <BsBagPlusFill size={30} className="text-red-400" />
             </div>
             <div className="ml-10">
-              <p className="text-success-300 font-semibold text-2xl space-x-1">$123863</p>
+              <p className="text-success-300 font-semibold text-2xl space-x-1">
+                $123863
+              </p>
               <p className="text-bgray-400 text-xl mt-1.5">Total Sale Amount</p>
             </div>
           </div>
         ))}
-
-
-
       </section>
       {/*First Cart Section End */}
 
@@ -47,14 +37,15 @@ const DashBoard = () => {
       <section className="grid sm:grid-cols-4 gap-8 mt-10">
         {Array.from({ length: 4 }, (_, index) => (
           <div
-            className={`flex items-center justify-between p-6 rounded-sm shadow-sm ${index === 0
-              ? 'bg-error-100'
-              : index === 1
-                ? 'bg-purple'
+            className={`flex items-center justify-between p-6 rounded-sm shadow-sm ${
+              index === 0
+                ? "bg-error-100"
+                : index === 1
+                ? "bg-purple"
                 : index === 2
-                  ? 'bg-success-300'
-                  : 'bg-bamber-100'
-              }`}
+                ? "bg-success-300"
+                : "bg-bamber-100"
+            }`}
             key={index}
           >
             <div>
@@ -66,9 +57,6 @@ const DashBoard = () => {
             </div>
           </div>
         ))}
-
-
-
       </section>
       {/*Second Cart Section End */}
       {/* First  Chart Section Start */}
@@ -90,9 +78,6 @@ const DashBoard = () => {
             <MultipleBars />
           </div>
         </div>
-
-
-
       </section>
       {/* First  Chart Section End */}
 
@@ -105,7 +90,6 @@ const DashBoard = () => {
           <div className="bg-white shadow-md p-5">
             <RecentInVoice />
           </div>
-
         </div>
         <div className="mt-8 bg-white shadow-md p-5">
           <RecentSales />
@@ -117,9 +101,8 @@ const DashBoard = () => {
       </section>
 
       {/* Table End  */}
-
     </div>
-  )
-}
+  );
+};
 
-export default DashBoard
+export default DashBoard;
