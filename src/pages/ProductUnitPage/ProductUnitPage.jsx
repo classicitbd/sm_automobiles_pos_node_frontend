@@ -1,3 +1,4 @@
+import { LoaderOverlay } from "@/components/common/loader/LoderOverley";
 import AddProductUnit from "@/components/ProductUnit/AddProductUnit";
 import ProductUnitTable from "@/components/ProductUnit/ProductUnitTable";
 import { Button } from "@/components/ui/button";
@@ -15,8 +16,8 @@ const ProductUnitPage = () => {
   const [limit, setLimit] = useState(10);
   const [searchValue, setSearchValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const { user } = useContext(AuthContext);
-  const{settingData, loading: settingLoading} = useContext(SettingContext)
+  const { user, loading: userLoading } = useContext(AuthContext);
+  const { settingData, loading: settingLoading } = useContext(SettingContext);
 
   const searchText = useDebounced({ searchQuery: searchValue, delay: 500 });
   useEffect(() => {
@@ -64,56 +65,65 @@ const ProductUnitPage = () => {
     },
   });
 
-  if(settingLoading){
-    return <MiniSpinner/>
+  if (settingLoading || userLoading) {
+    return <LoaderOverlay />;
   }
 
   return (
-    <div className="py-6 px-4">
-      <div className="flex justify-between mt-6">
-        <div>
-          <h1 className="text-2xl">Product Unit</h1>
-        </div>
+    <>
+      {user?.user_role_id?.unit_dashboard_show == true && (
+        <div className="py-6 px-4">
+          <div className="flex justify-between mt-6">
+            <div>
+              <h1 className="text-2xl">Product Unit</h1>
+            </div>
 
-        <div>
-          <Button type="button" onClick={() => setProductUnitCreateModal(true)}>
-            Create Product Unit
-          </Button>
+            {user?.user_role_id?.unit_post == true && (
+              <div>
+                <Button
+                  type="button"
+                  onClick={() => setProductUnitCreateModal(true)}
+                >
+                  Create Product Unit
+                </Button>
+              </div>
+            )}
+          </div>
+          {/* search Product Unit... */}
+          <div className="mt-3">
+            <input
+              type="text"
+              defaultValue={searchTerm}
+              onChange={(e) => handleSearchValue(e.target.value)}
+              placeholder="Search Unit..."
+              className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+            />
+          </div>
+          {/*Product Unit Data Show and update and delete operation file */}
+          <ProductUnitTable
+            product_unitNames={product_unitNames}
+            setPage={setPage}
+            setLimit={setLimit}
+            page={page}
+            limit={limit}
+            totalData={product_unitNames?.totalData}
+            refetch={refetch}
+            user={user}
+            isLoading={isLoading}
+            settingData={settingData}
+          />
+          {/*Product Unit Create  modal */}
+          {productUnitCreateModal && (
+            <AddProductUnit
+              setProductUnitCreateModal={setProductUnitCreateModal}
+              refetch={refetch}
+              user={user}
+              settingData={settingData}
+            />
+          )}
         </div>
-      </div>
-      {/* search Product Unit... */}
-      <div className="mt-3">
-        <input
-          type="text"
-          defaultValue={searchTerm}
-          onChange={(e) => handleSearchValue(e.target.value)}
-          placeholder="Search Unit..."
-          className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-        />
-      </div>
-      {/*Product Unit Data Show and update and delete operation file */}
-      <ProductUnitTable
-        product_unitNames={product_unitNames}
-        setPage={setPage}
-        setLimit={setLimit}
-        page={page}
-        limit={limit}
-        totalData={product_unitNames?.totalData}
-        refetch={refetch}
-        user={user}
-        isLoading={isLoading}
-        settingData={settingData}
-      />
-      {/*Product Unit Create  modal */}
-      {productUnitCreateModal && (
-        <AddProductUnit
-          setProductUnitCreateModal={setProductUnitCreateModal}
-          refetch={refetch}
-          user={user}
-          settingData={settingData}
-        />
       )}
-    </div>
+    </>
   );
 };
 
