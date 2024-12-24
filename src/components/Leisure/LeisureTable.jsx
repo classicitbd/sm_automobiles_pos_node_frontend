@@ -67,18 +67,40 @@ const LeisureTable = ({
                           {" "}
                           {ledger?.ledger_title}
                         </td>
-                        <td className="whitespace-nowrap py-3 font-medium text-gray-700">
-                          {ledger?.ledger_category}
+                        <td className="whitespace-nowrap py-3  ">
+                          {ledger?.ledger_category == "Revenue" ? (
+                            <span className="text-green-600 font-medium">
+                              {" "}
+                              {ledger?.ledger_category}
+                            </span>
+                          ) : (
+                            <span className="text-red-600 font-medium">
+                              {" "}
+                              {ledger?.ledger_category}
+                            </span>
+                          )}
                         </td>
 
                         <td className="whitespace-nowrap py-3 font-medium text-red-600">
-                          {ledger?.ledger_debit}
+                          {ledger?.ledger_debit ? (
+                            <> {ledger?.ledger_debit}</>
+                          ) : (
+                            "--"
+                          )}
                         </td>
                         <td className="whitespace-nowrap py-3 font-medium text-green-600">
-                          {ledger?.ledger_credit}
+                          {ledger?.ledger_credit ? (
+                            <> {ledger?.ledger_credit}</>
+                          ) : (
+                            "--"
+                          )}
                         </td>
                         <td className="whitespace-nowrap py-3 font-medium text-blue-600">
-                          {ledger?.ledger_balance}
+                          {ledger?.ledger_balance ? (
+                            <> {ledger?.ledger_balance}</>
+                          ) : (
+                            "--"
+                          )}
                         </td>
                       </tr>
                     ))}

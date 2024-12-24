@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import { BASE_URL } from "@/utils/baseURL";
 import Swal from "sweetalert2-optimized";
 import { Link } from "react-router-dom";
+import { LuPrinter } from "react-icons/lu";
+import CustomerPaymentVoucher from "./CustomerPaymentVoucher";
 
 const CustomerPaymentTable = ({
   setPage,
@@ -23,6 +25,34 @@ const CustomerPaymentTable = ({
     const newSerialNumber = (page - 1) * limit;
     setSerialNumber(newSerialNumber);
   }, [page, limit]);
+
+  // Payment Voucher Print Function
+  const [voucherOpen, setVoucherOpen] = useState(false);
+  const [voucherData, setVoucherData] = useState({});
+
+  //    function of Pdf
+  const handlePrint = (check) => {
+    setVoucherOpen(true);
+    setVoucherData(check);
+
+    // Reload the page after printing
+    setTimeout(() => {
+      const printContent = document.getElementById("invoicePrintArea");
+      const originalBody = document.body.innerHTML;
+
+      document.body.innerHTML = printContent.innerHTML;
+
+      window.print();
+
+      // Restore the original content after printing
+      document.body.innerHTML = originalBody;
+
+      // Reload the page after printing
+      setTimeout(() => {
+        location.reload();
+      }, 10);
+    }, 10);
+  };
 
   // Today Payment Status
   // Today Payment Status
@@ -87,7 +117,6 @@ const CustomerPaymentTable = ({
       }
     });
   };
-  console.log(checks);
 
   return (
     <>
@@ -214,7 +243,7 @@ const CustomerPaymentTable = ({
                         </td>
 
                         <td className="whitespace-nowrap py-3 px-1  text-gray-700 flex items-center">
-                          {check?.check_status == "pending" && (
+                          {check?.check_status == "pending" ? (
                             <select
                               onChange={(e) =>
                                 handleOrderStatus(e.target.value, check)
@@ -228,6 +257,17 @@ const CustomerPaymentTable = ({
                               <option value="approved">Approved</option>
                               <option value="rejected">Rejected</option>
                             </select>
+                          ) : (
+                            <>
+                              {" "}
+                              <button
+                                className="border px-8 py-2 bg-success-300 text-white font-bold hover:bg-violet-600 transition-all duration-200 flex items-center gap-3 rounded"
+                                onClick={() => handlePrint(check)}
+                              >
+                                <LuPrinter size={20} />
+                                Print
+                              </button>
+                            </>
                           )}
                         </td>
                       </tr>
@@ -248,6 +288,7 @@ const CustomerPaymentTable = ({
           />
         </div>
       )}
+      {voucherOpen && <CustomerPaymentVoucher voucherData={voucherData} />}
     </>
   );
 };

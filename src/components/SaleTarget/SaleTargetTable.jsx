@@ -114,7 +114,7 @@ const SaleTargetTable = ({
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {sale_target?.user_id?.user_name}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 ">
+                        <td className="whitespace-nowrap py-1.5 font-medium">
                           {sale_target?.user_id?.user_phone}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
@@ -134,9 +134,16 @@ const SaleTargetTable = ({
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {sale_target?.brand_id?.brand_name}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {sale_target?.brand_sale_target}{" "}
-                          {settingData?.unit_name}
+                        <td className="whitespace-nowrap py-1.5 font-medium text-blue-600">
+                          {sale_target?.brand_sale_target ? (
+                            <>
+                              {" "}
+                              {sale_target?.brand_sale_target}{" "}
+                              {settingData?.unit_name}
+                            </>
+                          ) : (
+                            "--"
+                          )}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                           {sale_target?.brand_sale_target_fillup >=
@@ -154,8 +161,16 @@ const SaleTargetTable = ({
                             </span>
                           )}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {sale_target?.sale_target} {settingData?.unit_name}
+                        <td className="whitespace-nowrap py-1.5 font-medium text-purple">
+                          {sale_target?.sale_target ? (
+                            <>
+                              {" "}
+                              {sale_target?.sale_target}{" "}
+                              {settingData?.unit_name}
+                            </>
+                          ) : (
+                            "--"
+                          )}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                           {sale_target?.sale_target_fillup >=
@@ -174,11 +189,27 @@ const SaleTargetTable = ({
                           )}
                         </td>
 
-                        <td className="whitespace-nowrap py-1.5 font-medium">
-                          {sale_target?.first_half_amount_per_unit} <small>(per {settingData?.unit_name})</small>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-primary">
+                          {sale_target?.first_half_amount_per_unit ? (
+                            <>
+                              {" "}
+                              {sale_target?.first_half_amount_per_unit}{" "}
+                              <small>(per {settingData?.unit_name})</small>
+                            </>
+                          ) : (
+                            "--"
+                          )}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium">
-                          {sale_target?.second_half_amount_per_unit} <small>(per {settingData?.unit_name})</small>
+                        <td className="whitespace-nowrap py-1.5 font-medium  text-primary">
+                          {sale_target?.second_half_amount_per_unit ? (
+                            <>
+                              {" "}
+                              {sale_target?.second_half_amount_per_unit}{" "}
+                              <small>(per {settingData?.unit_name})</small>
+                            </>
+                          ) : (
+                            "--"
+                          )}
                         </td>
 
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
