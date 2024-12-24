@@ -76,15 +76,17 @@ const BrandTable = ({
                             : "--"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
-                          <button
-                            className="ml-3"
-                            onClick={() => handleBrandUpdateModal(brand)}
-                          >
-                            <FiEdit
-                              size={25}
-                              className="cursor-pointer text-gray-500 hover:text-gray-300"
-                            />
-                          </button>
+                          {user?.user_role_id?.brand_patch == true && (
+                            <button
+                              className="ml-3"
+                              onClick={() => handleBrandUpdateModal(brand)}
+                            >
+                              <FiEdit
+                                size={25}
+                                className="cursor-pointer text-gray-500 hover:text-gray-300"
+                              />
+                            </button>
+                          )}
                         </td>
                       </tr>
                     ))}

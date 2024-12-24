@@ -1,3 +1,4 @@
+import { LoaderOverlay } from "@/components/common/loader/LoderOverley";
 import LeisureTable from "@/components/Leisure/LeisureTable";
 import { AuthContext } from "@/context/AuthProvider";
 import useDebounced from "@/hooks/useDebounced";
@@ -10,7 +11,7 @@ const LeisurePage = () => {
   const [limit, setLimit] = useState(10);
   const [searchValue, setSearchValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const { user } = useContext(AuthContext);
+  const { user, loading: userLoading } = useContext(AuthContext);
 
   const searchText = useDebounced({ searchQuery: searchValue, delay: 500 });
   useEffect(() => {
@@ -57,39 +58,42 @@ const LeisurePage = () => {
       }
     },
   });
- 
+  if (userLoading) return <LoaderOverlay />;
   return (
-    <div className="py-6 px-4 ">
-      <div className="flex justify-between ">
-        <div>
-          <h1 className="sm:text-2xl text-xl">All Ledger List</h1>
-        </div>
-        <div className="flex justify-end mt-3">
-          <input
-            type="text"
-            defaultValue={searchTerm}
-            onChange={(e) => handleSearchValue(e.target.value)}
-            placeholder="Search Ledger..."
-            className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+    <>
+      {user?.user_role_id?.ledger_show == true && (
+        <div className="py-6 px-4 ">
+          <div className="flex justify-between ">
+            <div>
+              <h1 className="sm:text-2xl text-xl">All Ledger List</h1>
+            </div>
+            <div className="flex justify-end mt-3">
+              <input
+                type="text"
+                defaultValue={searchTerm}
+                onChange={(e) => handleSearchValue(e.target.value)}
+                placeholder="Search Ledger..."
+                className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+              />
+            </div>
+          </div>
+
+          {/* show Order Table List Component*/}
+          <LeisureTable
+            ledgers={ledgers}
+            setPage={setPage}
+            setLimit={setLimit}
+            page={page}
+            limit={limit}
+            totalData={ledgers?.totalData}
+            refetch={refetch}
+            user={user}
+            isLoading={isLoading}
           />
         </div>
-      </div>
-
-      {/* show Order Table List Component*/}
-      <LeisureTable
-        ledgers={ledgers}
-        setPage={setPage}
-        setLimit={setLimit}
-        page={page}
-        limit={limit}
-        totalData={ledgers?.totalData}
-        refetch={refetch}
-        user={user}
-        isLoading={isLoading}
-      />
-    </div>
+      )}
+    </>
   );
 };
 
 export default LeisurePage;
-

@@ -1,4 +1,5 @@
 import CheckInPaymentTable from "@/components/CheckAndCashInOut/CheckInPaymentTable";
+import { LoaderOverlay } from "@/components/common/loader/LoderOverley";
 import { AuthContext } from "@/context/AuthProvider";
 import useDebounced from "@/hooks/useDebounced";
 import { BASE_URL } from "@/utils/baseURL";
@@ -10,7 +11,7 @@ const CheckInPayment = () => {
   const [limit, setLimit] = useState(10);
   const [searchValue, setSearchValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const { user } = useContext(AuthContext);
+  const { user, loading: userLoading } = useContext(AuthContext);
 
   const searchText = useDebounced({ searchQuery: searchValue, delay: 500 });
   useEffect(() => {
@@ -57,11 +58,14 @@ const CheckInPayment = () => {
       }
     },
   });
-
+if (userLoading) return <LoaderOverlay />;
   return (
-    <div className="py-6 px-4">
-        {/* customer payment list */}
-          <div >
+    <>
+      {" "}
+      {user?.user_role_id?.check_or_cash_in_payment_show == true && (
+        <div className="py-6 px-4">
+          {/* customer payment list */}
+          <div>
             <div>
               <h1 className="text-2xl">All Customer Check In Payment</h1>
             </div>
@@ -88,7 +92,9 @@ const CheckInPayment = () => {
             user={user}
             isLoading={isLoading}
           />
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 

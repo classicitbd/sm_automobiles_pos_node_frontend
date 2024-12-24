@@ -1,3 +1,4 @@
+import { LoaderOverlay } from "@/components/common/loader/LoderOverley";
 import OrderTable from "@/components/order/OrderTable";
 import { AuthContext } from "@/context/AuthProvider";
 import useDebounced from "@/hooks/useDebounced";
@@ -10,7 +11,7 @@ const OrderPage = () => {
   const [limit, setLimit] = useState(10);
   const [searchValue, setSearchValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const { user } = useContext(AuthContext);
+  const { user, loading: userLoading } = useContext(AuthContext);
 
   const searchText = useDebounced({ searchQuery: searchValue, delay: 500 });
   useEffect(() => {
@@ -57,37 +58,41 @@ const OrderPage = () => {
       }
     },
   });
-
-    return (
+if (userLoading) return <LoaderOverlay />;
+  return (
+    <>
+      {user?.user_role_id?.order_dashboard_show == true && (
         <div className="rounded py-6 px-4 ">
-      <div className="flex justify-between mt-6">
-        <div className="text-xl sm:text-2xl">
-          <h1 className="text-2xl">All Order List </h1>
+          <div className="flex justify-between mt-6">
+            <div className="text-xl sm:text-2xl">
+              <h1 className="text-2xl">All Order List </h1>
+            </div>
+          </div>
+          <div className="mt-3 flex justify-end">
+            <input
+              type="text"
+              defaultValue={searchTerm}
+              onChange={(e) => handleSearchValue(e.target.value)}
+              placeholder="Search Order..."
+              className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+            />
+          </div>
+          {/* show Order Table List Component*/}
+          <OrderTable
+            orders={orders}
+            setPage={setPage}
+            setLimit={setLimit}
+            page={page}
+            limit={limit}
+            totalData={orders?.totalData}
+            refetch={refetch}
+            user={user}
+            isLoading={isLoading}
+          />
         </div>
-      </div>
-      <div className="mt-3 flex justify-end">
-        <input
-          type="text"
-          defaultValue={searchTerm}
-          onChange={(e) => handleSearchValue(e.target.value)}
-          placeholder="Search Order..."
-          className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-        />
-      </div>
-      {/* show Order Table List Component*/}
-      <OrderTable
-        orders={orders}
-        setPage={setPage}
-        setLimit={setLimit}
-        page={page}
-        limit={limit}
-        totalData={orders?.totalData}
-        refetch={refetch}
-        user={user}
-        isLoading={isLoading}
-      />
-    </div>
-    );
+      )}
+    </>
+  );
 };
 
 export default OrderPage;

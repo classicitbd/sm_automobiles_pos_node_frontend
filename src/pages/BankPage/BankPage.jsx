@@ -21,7 +21,7 @@ const BankPage = () => {
   const [limit, setLimit] = useState(10);
   const [searchValue, setSearchValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const { user } = useContext(AuthContext);
+  const { user, loading: userLoading } = useContext(AuthContext);
 
   const [cashCreateModal, setCashCreateModal] = useState(false);
   const [cashUpdateModal, setCashUpdateModal] = useState(false);
@@ -94,184 +94,195 @@ const BankPage = () => {
     refetch: cashRefetch,
   } = useGetCashDetails();
 
-  if (cashLoading) return <LoaderOverlay />;
+  if (cashLoading || userLoading) return <LoaderOverlay />;
 
   return (
-    <div className="py-6 px-4">
-      <div className="flex justify-between mt-6">
-        <div>
-          <h1 className="text-2xl">Bank Account</h1>
-        </div>
+    <>
+      {" "}
+      {user?.user_role_id?.bank_dashboard_show == true && (
+        <div className="py-6 px-4">
+          {/* cash in hand and out hand */}
+          <div className="mt-10">
+            <div>
+              <h1 className="text-2xl text-center mb-2">Cash Account Table</h1>
+              {!cashTypes?.data ? (
+                <div className="flex items-center justify-center">
+                  <Button
+                    type="button"
+                    onClick={() => setCashCreateModal(true)}
+                    className="mt-3"
+                  >
+                    Create Cash Balance
+                  </Button>
+                </div>
+              ) : (
+                <div className="overflow-x-auto rounded-lg shadow-md">
+                  <table className="min-w-full text-sm">
+                    <thead>
+                      <tr className=" font-semibold text-center ">
+                        <td className="whitespace-nowrap p-4 ">SL No</td>
+                        <td className="whitespace-nowrap p-4 ">Cash Balance</td>
+                        <td className="whitespace-nowrap p-4 ">Created By</td>
+                        <td className="whitespace-nowrap p-4 ">Updated By</td>
+                        <td className="whitespace-nowrap p-4 ">Action</td>
+                      </tr>
+                    </thead>
 
-        <div>
-          <Button type="button" onClick={() => setBankAccountCreateModal(true)}>
-            Create Bank Account
-          </Button>
-        </div>
-      </div>
-
-      {/* cash in hand and out hand */}
-      <div className="mt-10">
-        <div>
-          <h1 className="text-2xl text-center mb-2">Cash Account Table</h1>
-          {!cashTypes?.data ? (
-            <div className="flex items-center justify-center">
-              <Button
-                type="button"
-                onClick={() => setCashCreateModal(true)}
-                className="mt-3"
-              >
-                Create Cash Balance
-              </Button>
-            </div>
-          ) : (
-            <div className="overflow-x-auto rounded-lg shadow-md">
-              <table className="min-w-full text-sm">
-                <thead>
-                  <tr className=" font-semibold text-center ">
-                    <td className="whitespace-nowrap p-4 ">SL No</td>
-                    <td className="whitespace-nowrap p-4 ">Cash Balance</td>
-                    <td className="whitespace-nowrap p-4 ">Created By</td>
-                    <td className="whitespace-nowrap p-4 ">Updated By</td>
-                    <td className="whitespace-nowrap p-4 ">Action</td>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr
-                    className="text-center 
+                    <tbody>
+                      <tr
+                        className="text-center 
                      bg-secondary-100
                    hover:bg-blue-100"
-                  >
-                    <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                      {1}
-                    </td>
-                    <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                      {cashTypes?.data?.cash_balance > 0 ? (
-                        <span className="text-green-500">
-                          {cashTypes?.data?.cash_balance}
-                        </span>
-                      ) : (
-                        <span className="text-red-500">
-                          {cashTypes?.data?.cash_balance}
-                        </span>
-                      )}
-                    </td>
-                    <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                      {cashTypes?.data?.cash_publisher_id?.user_name}
-                    </td>
-                    <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                      {cashTypes?.data?.cash_updated_by?.user_name
-                        ? cashTypes?.data?.cash_updated_by?.user_name
-                        : "--"}
-                    </td>
-                    <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
-                      <button
-                        className="ml-[8px]"
-                        onClick={() => setCashDropdownModal(!cashDropdownModal)}
                       >
-                        <CiMenuKebab
-                          size={30}
-                          className="cursor-pointer text-primaryVariant-300 hover:text-primaryVariant-700 font-bold"
-                        />
-                      </button>
-                      {cashDropdownModal && (
-                        <div className=" bg-success-50 shadow-xl w-[150px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {1}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {cashTypes?.data?.cash_balance > 0 ? (
+                            <span className="text-green-500">
+                              {cashTypes?.data?.cash_balance}
+                            </span>
+                          ) : (
+                            <span className="text-red-500">
+                              {cashTypes?.data?.cash_balance}
+                            </span>
+                          )}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {cashTypes?.data?.cash_publisher_id?.user_name}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {cashTypes?.data?.cash_updated_by?.user_name
+                            ? cashTypes?.data?.cash_updated_by?.user_name
+                            : "--"}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                           <button
-                            className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
-                            onClick={() => {
-                              setCashUpdateModalValue(cashTypes?.data);
-                              setCashUpdateModal(true);
-                            }}
+                            className="ml-[8px]"
+                            onClick={() =>
+                              setCashDropdownModal(!cashDropdownModal)
+                            }
                           >
-                            <FiEdit size={18} />
-                            Edit
+                            <CiMenuKebab
+                              size={30}
+                              className="cursor-pointer text-primaryVariant-300 hover:text-primaryVariant-700 font-bold"
+                            />
                           </button>
-                          <Link to={`/cash-balance-history`}>
-                            {" "}
-                            <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium ">
-                              <CiBank size={18} />
-                              Update History
-                            </button>
-                          </Link>
-                          <Link to={`/cash-in`}>
-                            {" "}
-                            <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium ">
-                              <CiBank size={18} />
-                              View Cash in
-                            </button>
-                          </Link>
-                          <Link to={`/cash-out`}>
-                            {" "}
-                            <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium ">
-                              <AiTwotoneBank size={18} /> View Cash Out
-                            </button>
-                          </Link>
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                          {cashDropdownModal && (
+                            <div className=" bg-success-50 shadow-xl w-[150px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
+                              <button
+                                className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
+                                onClick={() => {
+                                  setCashUpdateModalValue(cashTypes?.data);
+                                  setCashUpdateModal(true);
+                                }}
+                              >
+                                <FiEdit size={18} />
+                                Edit
+                              </button>
+                              <Link to={`/cash-balance-history`}>
+                                {" "}
+                                <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium ">
+                                  <CiBank size={18} />
+                                  Update History
+                                </button>
+                              </Link>
+                              <Link to={`/cash-in`}>
+                                {" "}
+                                <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium ">
+                                  <CiBank size={18} />
+                                  View Cash in
+                                </button>
+                              </Link>
+                              <Link to={`/cash-out`}>
+                                {" "}
+                                <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium ">
+                                  <AiTwotoneBank size={18} /> View Cash Out
+                                </button>
+                              </Link>
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
+          </div>
+
+          <hr className="my-12" />
+
+          {/* search Bank Account... */}
+          <div className="flex justify-between mt-6">
+            <div>
+              <h1 className="text-2xl">Bank Account</h1>
+            </div>
+
+            <div>
+              {user?.user_role_id?.bank_post == true && (
+                <Button
+                  type="button"
+                  onClick={() => setBankAccountCreateModal(true)}
+                >
+                  Create Bank Account
+                </Button>
+              )}
+            </div>
+          </div>
+          <div className="mt-3">
+            <input
+              type="text"
+              defaultValue={searchTerm}
+              onChange={(e) => handleSearchValue(e.target.value)}
+              placeholder="Search Category..."
+              className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+            />
+          </div>
+          {/* Bank Account Data Show and update and delete operation file */}
+
+          <BankInfoTable
+            banks={banks}
+            setPage={setPage}
+            setLimit={setLimit}
+            page={page}
+            limit={limit}
+            totalData={banks?.totalData}
+            refetch={refetch}
+            user={user}
+            isLoading={isLoading}
+          />
+
+          {/*Bank Account Create  modal */}
+          {bankAccountCreateModal && (
+            <AddBankInfo
+              setBankAccountCreateModal={setBankAccountCreateModal}
+              refetch={refetch}
+              user={user}
+            />
+          )}
+
+          {/* create cash balance modal */}
+          {cashCreateModal && (
+            <AddCashBalance
+              setCashCreateModal={setCashCreateModal}
+              cashRefetch={cashRefetch}
+              user={user}
+            />
+          )}
+
+          {/* cash update modal */}
+          {cashUpdateModal && (
+            <UpdateCashModal
+              setCashUpdateModal={setCashUpdateModal}
+              cashUpdateModalValue={cashUpdateModalValue}
+              refetch={cashRefetch}
+              user={user}
+            />
           )}
         </div>
-      </div>
-
-      <hr className="my-12" />
-
-      {/* search Bank Account... */}
-      <div className="mt-3 flex justify-end">
-        <input
-          type="text"
-          defaultValue={searchTerm}
-          onChange={(e) => handleSearchValue(e.target.value)}
-          placeholder="Search Category..."
-          className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-        />
-      </div>
-      {/* Bank Account Data Show and update and delete operation file */}
-
-      <BankInfoTable
-        banks={banks}
-        setPage={setPage}
-        setLimit={setLimit}
-        page={page}
-        limit={limit}
-        totalData={banks?.totalData}
-        refetch={refetch}
-        user={user}
-        isLoading={isLoading}
-      />
-
-      {/*Bank Account Create  modal */}
-      {bankAccountCreateModal && (
-        <AddBankInfo
-          setBankAccountCreateModal={setBankAccountCreateModal}
-          refetch={refetch}
-          user={user}
-        />
       )}
-
-      {/* create cash balance modal */}
-      {cashCreateModal && (
-        <AddCashBalance
-          setCashCreateModal={setCashCreateModal}
-          cashRefetch={cashRefetch}
-          user={user}
-        />
-      )}
-
-      {/* cash update modal */}
-      {cashUpdateModal && (
-        <UpdateCashModal
-          setCashUpdateModal={setCashUpdateModal}
-          cashUpdateModalValue={cashUpdateModalValue}
-          refetch={cashRefetch}
-          user={user}
-        />
-      )}
-    </div>
+    </>
   );
 };
 
