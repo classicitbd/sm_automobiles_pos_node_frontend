@@ -63,6 +63,24 @@ const SaleTargetTable = ({
     const newSerialNumber = (page - 1) * limit;
     setSerialNumber(newSerialNumber);
   }, [page, limit]);
+
+  // calculate commission amount
+  const calculateCommissionAmount = (data) => {
+    // Calculate the total target
+    const totalTarget = data?.brand_sale_target + data?.sale_target;
+
+    // Calculate the 50% split
+    const firstHalf = totalTarget / 2;
+    const secondHalf = totalTarget - firstHalf;
+
+    // Calculate the commission
+    const commision_amount =
+      firstHalf * data?.first_half_amount_per_unit +
+      secondHalf * data?.second_half_amount_per_unit;
+
+    return commision_amount;
+  };
+
   return (
     <>
       {isLoading === true ||
@@ -90,12 +108,10 @@ const SaleTargetTable = ({
                       <td className="whitespace-nowrap p-4 ">Fill Up</td>
                       <td className="whitespace-nowrap p-4 ">Others Target</td>
                       <td className="whitespace-nowrap p-4 ">Others Fill Up</td>
-                      <td className="whitespace-nowrap p-4 ">
-                        Get Amount(1-50)%
-                      </td>
-                      <td className="whitespace-nowrap p-4 ">
-                        Get Amount(51-100)%
-                      </td>
+                      <td className="whitespace-nowrap p-4 ">(1-50)%</td>
+                      <td className="whitespace-nowrap p-4 ">(51-100)%</td>
+                      <td className="whitespace-nowrap p-4 ">Total Get</td>
+                      <td className="whitespace-nowrap p-4 ">Status</td>
                       <td className="whitespace-nowrap p-4 ">Action</td>
                     </tr>
                   </thead>
@@ -147,7 +163,7 @@ const SaleTargetTable = ({
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                           {sale_target?.brand_sale_target_fillup >=
-                          sale_target?.brand_sale_target ? (
+                          sale_target?.brand_sale_target * 0.8 ? (
                             <span className="text-green-600">
                               {" "}
                               {sale_target?.brand_sale_target_fillup}{" "}
@@ -174,7 +190,7 @@ const SaleTargetTable = ({
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                           {sale_target?.sale_target_fillup >=
-                          sale_target?.sale_target ? (
+                          sale_target?.sale_target * 0.8 ? (
                             <span className="text-green-600">
                               {" "}
                               {sale_target?.sale_target_fillup}{" "}
@@ -209,6 +225,17 @@ const SaleTargetTable = ({
                             </>
                           ) : (
                             "--"
+                          )}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium  text-primary">
+                          {calculateCommissionAmount(sale_target) || "--"}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium  text-primary">
+                          {sale_target?.brand_sale_target_success &&
+                          sale_target?.sale_target_success ? (
+                            <span className="text-green-600">Success</span>
+                          ) : (
+                            <span className="text-red-600">Pending</span>
                           )}
                         </td>
 
