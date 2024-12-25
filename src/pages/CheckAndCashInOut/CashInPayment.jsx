@@ -1,5 +1,5 @@
-
 import CashInPaymentTable from "@/components/CheckAndCashInOut/CashInPaymentTable";
+import { LoaderOverlay } from "@/components/common/loader/LoderOverley";
 import { AuthContext } from "@/context/AuthProvider";
 import useDebounced from "@/hooks/useDebounced";
 import { BASE_URL } from "@/utils/baseURL";
@@ -11,8 +11,7 @@ const CashInPayment = () => {
   const [limit, setLimit] = useState(10);
   const [searchValue, setSearchValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const { user } = useContext(AuthContext);
-
+  const { user, loading: userLoading } = useContext(AuthContext);
   const searchText = useDebounced({ searchQuery: searchValue, delay: 500 });
   useEffect(() => {
     setSearchTerm(searchText);
@@ -58,38 +57,42 @@ const CashInPayment = () => {
       }
     },
   });
-
+  if (userLoading) return <LoaderOverlay />;
   return (
-    <div className=" py-6 px-4 ">
-      {/* customer payment list */}
-      <div className=" mt-6">
-        <div>
-          <h1 className="text-2xl">All Customer Cash In Payment</h1>
+    <>
+      {user?.user_role_id?.check_or_cash_in_payment_show == true && (
+        <div className=" py-6 px-4 ">
+          {/* customer payment list */}
+          <div className=" mt-6">
+            <div>
+              <h1 className="text-2xl">All Customer Cash In Payment</h1>
+            </div>
+          </div>
+          {/* search CashInPaymentData... */}
+          <div className="mt-3 flex justify-end">
+            <input
+              type="text"
+              defaultValue={searchTerm}
+              onChange={(e) => handleSearchValue(e.target.value)}
+              placeholder="Search income..."
+              className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+            />
+          </div>
+          {/*Cash in Data Show and update and delete operation file */}
+          <CashInPaymentTable
+            CashInPaymentData={CashInPaymentData}
+            setPage={setPage}
+            setLimit={setLimit}
+            page={page}
+            limit={limit}
+            totalData={CashInPaymentData?.totalData}
+            refetch={refetch}
+            user={user}
+            isLoading={isLoading}
+          />
         </div>
-      </div>
-      {/* search CashInPaymentData... */}
-      <div className="mt-3 flex justify-end">
-        <input
-          type="text"
-          defaultValue={searchTerm}
-          onChange={(e) => handleSearchValue(e.target.value)}
-          placeholder="Search income..."
-          className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-        />
-      </div>
-      {/*Cash in Data Show and update and delete operation file */}
-      <CashInPaymentTable
-        CashInPaymentData={CashInPaymentData}
-        setPage={setPage}
-        setLimit={setLimit}
-        page={page}
-        limit={limit}
-        totalData={CashInPaymentData?.totalData}
-        refetch={refetch}
-        user={user}
-        isLoading={isLoading}
-      />
-    </div>
+      )}
+    </>
   );
 };
 

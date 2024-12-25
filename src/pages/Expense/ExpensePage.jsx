@@ -1,3 +1,4 @@
+import { LoaderOverlay } from "@/components/common/loader/LoderOverley";
 import AddExpenses from "@/components/Expenses/AddExpenses";
 import ExpensesTable from "@/components/Expenses/ExpensesTable";
 import { Button } from "@/components/ui/button";
@@ -8,12 +9,12 @@ import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
 
 const ExpensePage = () => {
-  const [expenceCreateModal, setExpenceCreateModal] = useState(false)
+  const [expenceCreateModal, setExpenceCreateModal] = useState(false);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [searchValue, setSearchValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const { user } = useContext(AuthContext);
+  const { user, loading: userLoading } = useContext(AuthContext);
 
   const searchText = useDebounced({ searchQuery: searchValue, delay: 500 });
   useEffect(() => {
@@ -60,53 +61,61 @@ const ExpensePage = () => {
       }
     },
   });
-
+  if (userLoading) return <LoaderOverlay />;
   return (
-    <div className="rounded py-6 px-4">
-      <div className='flex justify-between mt-6'>
-              <div>
-                <h1 className='text-2xl'>Expense</h1>
-              </div>
-      
-              <div>
-                <Button type='button' onClick={() => setExpenceCreateModal(true)}>
+    <>
+      {user?.user_role_id?.expense_show == true && (
+        <div className="rounded py-6 px-4">
+          <div className="flex justify-between mt-6">
+            <div>
+              <h1 className="text-2xl">Expense</h1>
+            </div>
+
+            <div>
+              {user?.user_role_id?.expense_post == true && (
+                <Button
+                  type="button"
+                  onClick={() => setExpenceCreateModal(true)}
+                >
                   Create Expense
                 </Button>
-              </div>
+              )}
             </div>
-      {/* search Expenses... */}
-      <div className="mt-3 flex justify-start">
-        <input
-          type="text"
-          defaultValue={searchTerm}
-          onChange={(e) => handleSearchValue(e.target.value)}
-          placeholder="Search Customers..."
-          className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-        />
-      </div>
-      {/*Expenses Data Show and update and delete operation file */}
-      <ExpensesTable
-        expenses={expenses}
-        setPage={setPage}
-        setLimit={setLimit}
-        page={page}
-        limit={limit}
-        totalData={expenses?.totalData}
-        refetch={refetch}
-        user={user}
-        isLoading={isLoading}
-      />
+          </div>
+          {/* search Expenses... */}
+          <div className="mt-3 flex justify-start">
+            <input
+              type="text"
+              defaultValue={searchTerm}
+              onChange={(e) => handleSearchValue(e.target.value)}
+              placeholder="Search Customers..."
+              className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+            />
+          </div>
+          {/*Expenses Data Show and update and delete operation file */}
+          <ExpensesTable
+            expenses={expenses}
+            setPage={setPage}
+            setLimit={setLimit}
+            page={page}
+            limit={limit}
+            totalData={expenses?.totalData}
+            refetch={refetch}
+            user={user}
+            isLoading={isLoading}
+          />
 
-      {/*Bank Account Create  modal */}
-      {expenceCreateModal && (
-        <AddExpenses
-          setExpenceCreateModal={setExpenceCreateModal}
-          refetch={refetch}
-          user={user}
-        />
+          {/*Bank Account Create  modal */}
+          {expenceCreateModal && (
+            <AddExpenses
+              setExpenceCreateModal={setExpenceCreateModal}
+              refetch={refetch}
+              user={user}
+            />
+          )}
+        </div>
       )}
-
-    </div>
+    </>
   );
 };
 

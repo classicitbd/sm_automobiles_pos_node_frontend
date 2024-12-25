@@ -314,15 +314,17 @@ const WarehouseOrderTable = ({
                                                             )}
                                                         </div>
                                                     </div> */}
-                          <button
-                            type="button"
-                            className="w-full px-3 py-2 hover:bg-primary  hover:text-white flex justify-center items-center gap-2 font-medium btn text-white bg-sky-400 rounded-md"
-                            onClick={() =>
-                              handleOutToWarehouse(order?._id, order)
-                            }
-                          >
-                            Out to Warehouse
-                          </button>
+                          {user?.user_role_id?.order_patch == true && (
+                            <button
+                              type="button"
+                              className="w-full px-3 py-2 hover:bg-primary  hover:text-white flex justify-center items-center gap-2 font-medium btn text-white bg-sky-400 rounded-md"
+                              onClick={() =>
+                                handleOutToWarehouse(order?._id, order)
+                              }
+                            >
+                              Out to Warehouse
+                            </button>
+                          )}
                         </td>
                       </tr>
                     ))}

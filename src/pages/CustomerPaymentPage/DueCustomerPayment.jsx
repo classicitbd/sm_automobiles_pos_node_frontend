@@ -1,3 +1,4 @@
+import { LoaderOverlay } from "@/components/common/loader/LoderOverley";
 import DueCustomerPaymentTable from "@/components/CustomersPayment/DueCustomerPaymentTable";
 import { AuthContext } from "@/context/AuthProvider";
 import useDebounced from "@/hooks/useDebounced";
@@ -10,7 +11,7 @@ const DueCustomerPayment = () => {
   const [limit, setLimit] = useState(10);
   const [searchValue, setSearchValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const { user } = useContext(AuthContext);
+  const { user, loading: userLoading } = useContext(AuthContext);
 
   const searchText = useDebounced({ searchQuery: searchValue, delay: 500 });
   useEffect(() => {
@@ -57,38 +58,42 @@ const DueCustomerPayment = () => {
       }
     },
   });
-
+  if (userLoading) return <LoaderOverlay />;
   return (
-    <div className="py-6 ">
-      <div className="">
-        <div>
-          <h1 className="sm:text-2xl text-xl">Due Payment</h1>
-        </div>
-      </div>
-      {/* search checks... */}
-      <div className="mt-3 flex justify-end">
-        <input
-          type="text"
-          defaultValue={searchTerm}
-          onChange={(e) => handleSearchValue(e.target.value)}
-          placeholder="Search checks..."
-          className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-        />
-      </div>
+    <>
+      {user?.user_role_id?.check_due_dashboard_show == true && (
+        <div className="py-6 ">
+          <div className="">
+            <div>
+              <h1 className="sm:text-2xl text-xl">Due Payment</h1>
+            </div>
+          </div>
+          {/* search checks... */}
+          <div className="mt-3 flex justify-end">
+            <input
+              type="text"
+              defaultValue={searchTerm}
+              onChange={(e) => handleSearchValue(e.target.value)}
+              placeholder="Search checks..."
+              className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+            />
+          </div>
 
-      {/*checks Payment Table */}
-      <DueCustomerPaymentTable
-        checks={checks}
-        setPage={setPage}
-        setLimit={setLimit}
-        page={page}
-        limit={limit}
-        totalData={checks?.totalData}
-        refetch={refetch}
-        user={user}
-        isLoading={isLoading}
-      />
-    </div>
+          {/*checks Payment Table */}
+          <DueCustomerPaymentTable
+            checks={checks}
+            setPage={setPage}
+            setLimit={setLimit}
+            page={page}
+            limit={limit}
+            totalData={checks?.totalData}
+            refetch={refetch}
+            user={user}
+            isLoading={isLoading}
+          />
+        </div>
+      )}
+    </>
   );
 };
 
