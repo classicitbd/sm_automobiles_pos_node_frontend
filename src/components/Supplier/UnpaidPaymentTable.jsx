@@ -206,12 +206,17 @@ const UnpaidPaymentTable = ({
                           {paymentInfo?.invoice_id?.due_amount}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 ">
-                          <button
-                            className="bg-success-400 text-white px-[14px] py-[4px] rounded-[8px]"
-                            onClick={() => handlePaymentPaidStatus(paymentInfo)}
-                          >
-                            <span>Paid</span>
-                          </button>
+                          {user?.user_role_id?.supplier_payment_patch ==
+                            true && (
+                            <button
+                              className="bg-success-400 text-white px-[14px] py-[4px] rounded-[8px]"
+                              onClick={() =>
+                                handlePaymentPaidStatus(paymentInfo)
+                              }
+                            >
+                              <span>Paid</span>
+                            </button>
+                          )}
                         </td>
 
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700 flex items-center">

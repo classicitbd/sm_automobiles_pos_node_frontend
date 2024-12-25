@@ -115,7 +115,7 @@ const ViewSaleTarget = ({
                       <td className="whitespace-nowrap p-4 ">
                         Received Amount
                       </td>
-                      <td className="whitespace-nowrap p-4 text-red-600">
+                      <td className="whitespace-nowrap p-4 ">
                         Due Amount
                       </td>
                       <td className="whitespace-nowrap p-4 ">

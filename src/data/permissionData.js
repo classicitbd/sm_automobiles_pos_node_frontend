@@ -6,7 +6,6 @@ const permissionsData = [
   {
     Name: "Category Create and Update Permissino",
     Type: ["category_post", "category_patch"],
-    name: ["Category Create", "Category Update"],
   },
   {
     Name: "Brand",

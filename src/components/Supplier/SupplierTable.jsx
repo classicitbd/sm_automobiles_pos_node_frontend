@@ -76,7 +76,7 @@ const SupplierTable = ({
 
           <div className="mt-5 overflow-x-auto rounded-lg shadow-md">
             <table className="min-w-full text-sm">
-              <thead >
+              <thead>
                 <tr className="font-semibold text-center ">
                   <th className="whitespace-nowrap px-4 py-4 ">SL</th>
                   <th className="whitespace-nowrap px-4 py-4 ">
@@ -131,22 +131,30 @@ const SupplierTable = ({
                       </button>
                       {supplierDocumentModal == supplier?._id && (
                         <div className="  bg-success-50 shadow-xl w-[200px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
-                          <button
-                            className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
-                            onClick={() => handleSupplierUpdateModal(supplier)}
-                          >
-                            <FiEdit size={18} />
-                            Edit
-                          </button>
-                          <button
-                            className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
-                            onClick={() =>
-                              handleSupplierPaymentUpdateModal(supplier)
-                            }
-                          >
-                            <MdOutlinePayment size={18} />
-                            Payment
-                          </button>
+                          {user?.user_role_id?.supplier_patch == true && (
+                            <button
+                              className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
+                              onClick={() =>
+                                handleSupplierUpdateModal(supplier)
+                              }
+                            >
+                              <FiEdit size={18} />
+                              Edit
+                            </button>
+                          )}
+                          {user?.user_role_id?.supplier_payment_post ==
+                            true && (
+                            <button
+                              className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
+                              onClick={() =>
+                                handleSupplierPaymentUpdateModal(supplier)
+                              }
+                            >
+                              <MdOutlinePayment size={18} />
+                              Payment
+                            </button>
+                          )}
+
                           <Link to={`/supplier-paymentlist/${supplier?._id}`}>
                             {" "}
                             <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium">

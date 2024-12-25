@@ -3,7 +3,7 @@ import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import { BASE_URL } from "@/utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { LoaderOverlay } from "../common/loader/LoderOverley";
 import useGetSelfOrder from "@/hooks/useGetAllSelfOrder";
 import useGetAUserDetails from "@/hooks/useGetAUserDetails";
@@ -32,12 +32,9 @@ const StaffPerfomance = () => {
     queryKey: [`/api/v1/sale_target/${user_id}`],
     queryFn: async () => {
       try {
-        const res = await fetch(
-          `${BASE_URL}/sale_target/${user_id}`,
-          {
-            credentials: "include",
-          }
-        );
+        const res = await fetch(`${BASE_URL}/sale_target/${user_id}`, {
+          credentials: "include",
+        });
 
         if (!res.ok) {
           const errorData = await res.text();
@@ -204,8 +201,15 @@ const StaffPerfomance = () => {
                               )}
                             </td>
                             <td className="whitespace-nowrap py-1.5 font-medium text-green-700">
-                              {order?.total_measurement_count}{" "}
-                              {settingData?.unit_name}
+                              {order?.total_measurement_count ? (
+                                <>
+                                  {" "}
+                                  {order?.total_measurement_count}{" "}
+                                  {settingData?.unit_name}
+                                </>
+                              ) : (
+                                "--"
+                              )}
                             </td>
                           </tr>
                         ))}
@@ -233,7 +237,7 @@ const StaffPerfomance = () => {
                   </p>
                 </div>
                 {saleTargetData?.data?.length > 0 ? (
-                  <div className="overflow-x-auto rounded-lg">
+                  <div className="overflow-x-auto shadow-md rounded-lg">
                     <table className="min-w-full  text-sm">
                       <thead>
                         <tr className="font-semibold text-center">
@@ -294,12 +298,28 @@ const StaffPerfomance = () => {
                               {settingData?.unit_name}
                             </td>
                             <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
-                              {sale_target?.first_half_amount_per_unit}{" "}
-                              <small>(per {settingData?.unit_name})</small>
+                              {sale_target?.first_half_amount_per_unit ? (
+                                <>
+                                  {" "}
+                                  {sale_target?.first_half_amount_per_unit}{" "}
+                                  <small>(per {settingData?.unit_name})</small>
+                                </>
+                              ) : (
+                                "--"
+                              )}
                             </td>
                             <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
-                              {sale_target?.second_half_amount_per_unit}{" "}
-                              <small>(per {settingData?.unit_name})</small>
+                              {sale_target?.second_half_amount_per_unit ? (
+                                <>
+                                  {" "}
+                                  {
+                                    sale_target?.second_half_amount_per_unit
+                                  }{" "}
+                                  <small>(per {settingData?.unit_name})</small>
+                                </>
+                              ) : (
+                                "--"
+                              )}
                             </td>
                             <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                               {sale_target?.brand_sale_target_success == true &&

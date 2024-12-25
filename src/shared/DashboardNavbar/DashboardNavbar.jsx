@@ -66,9 +66,14 @@ const DashBoardNavbar = ({
           </div>
 
           <div className="-mr-2 flex justify-between">
-            <Link className="" to='/pos'>
-              <button className="mr-3 border-2 border-primaryVariant-500 px-8 py-2 hover:bg-primary font-bold text-primary hover:text-white text-lg rounded shadow-xl transition-all duration-300">POS</button>
-            </Link>
+            {user?.user_role_id?.order_post === true && (
+              <Link className="" to="/pos">
+                <button className="mr-3 border-2 border-primaryVariant-500 px-8 py-2 hover:bg-primary font-bold text-primary hover:text-white text-lg rounded shadow-xl transition-all duration-300">
+                  POS
+                </button>
+              </Link>
+            )}
+
             <div className="shrink-0">
               <div className="flex items-center gap-3">
                 <div className="group hidden lg:block">
@@ -120,8 +125,9 @@ const DashBoardNavbar = ({
                   </div>
 
                   <div
-                    className={`absolute  ${isDropdownOpen ? "right-0" : "hidden"
-                      } z-10 mt-4 w-52 origin-top-right rounded bg-white shadow-2xl focus:outline-none`}
+                    className={`absolute  ${
+                      isDropdownOpen ? "right-0" : "hidden"
+                    } z-10 mt-4 w-52 origin-top-right rounded bg-white shadow-2xl focus:outline-none`}
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"

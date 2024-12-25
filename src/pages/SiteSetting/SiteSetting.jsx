@@ -10,7 +10,7 @@ import { AuthContext } from "@/context/AuthProvider";
 import { BASE_URL } from "@/utils/baseURL";
 
 const SiteSetting = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading: userLoading } = useContext(AuthContext);
   const { register, reset, handleSubmit } = useForm(); //get data in form
   const {
     data: settings = [],
@@ -25,7 +25,7 @@ const SiteSetting = () => {
     },
   }); // get Site Settings
 
-  if (isLoading) {
+  if (isLoading || userLoading) {
     return <LoaderOverlay />;
   }
 
@@ -58,17 +58,14 @@ const SiteSetting = () => {
       setting_updated_by: user?._id,
     };
     try {
-      const response = await fetch(
-        `${BASE_URL}/site_setting`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(sendData),
-        }
-      );
+      const response = await fetch(`${BASE_URL}/site_setting`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(sendData),
+      });
       const result = await response.json();
       if (result?.statusCode == 200 && result?.success == true) {
         toast.success(
@@ -95,7 +92,6 @@ const SiteSetting = () => {
     <>
       {/* Site setting navbar */}
 
-
       <div className="bg-white shadow-lg rounded-xl p-6 max-w-7xl mx-auto sm:mt-6">
         {/* Header Section */}
         <div className="flex items-center justify-between border-b pb-4 mb-6">
@@ -116,7 +112,10 @@ const SiteSetting = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Logo */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="logo">
+              <label
+                className="block text-sm font-medium text-gray-700 mb-1"
+                htmlFor="logo"
+              >
                 Logo <span className="text-red-500">(if needed)</span>
               </label>
               <input
@@ -133,13 +132,16 @@ const SiteSetting = () => {
                 id="logo"
                 type="file"
                 accept="image/*"
-                className="block w-full px-4 py-2 text-green-700 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 file:bg-green-600 file:text-white file:border-none file:rounded file:cursor-pointer " 
+                className="block w-full px-4 py-2 text-green-700 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 file:bg-green-600 file:text-white file:border-none file:rounded file:cursor-pointer "
               />
             </div>
 
             {/* Title */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="title">
+              <label
+                className="block text-sm font-medium text-gray-700 mb-1"
+                htmlFor="title"
+              >
                 Title <span className="text-red-500">(if needed)</span>
               </label>
               <input
@@ -154,7 +156,10 @@ const SiteSetting = () => {
 
             {/* Contact Number */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="emergency_contact">
+              <label
+                className="block text-sm font-medium text-gray-700 mb-1"
+                htmlFor="emergency_contact"
+              >
                 Contact No <span className="text-red-500">(if needed)</span>
               </label>
               <input
@@ -169,7 +174,10 @@ const SiteSetting = () => {
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="email">
+              <label
+                className="block text-sm font-medium text-gray-700 mb-1"
+                htmlFor="email"
+              >
                 E-Mail <span className="text-red-500">(if needed)</span>
               </label>
               <input
@@ -184,7 +192,10 @@ const SiteSetting = () => {
 
             {/* Address */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="address">
+              <label
+                className="block text-sm font-medium text-gray-700 mb-1"
+                htmlFor="address"
+              >
                 Address <span className="text-red-500">(if needed)</span>
               </label>
               <input
@@ -199,8 +210,12 @@ const SiteSetting = () => {
 
             {/* Global Unit Name */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="unit_name">
-                Global Unit Name <span className="text-red-500">(if needed)</span>
+              <label
+                className="block text-sm font-medium text-gray-700 mb-1"
+                htmlFor="unit_name"
+              >
+                Global Unit Name{" "}
+                <span className="text-red-500">(if needed)</span>
               </label>
               <input
                 defaultValue={initialData?.unit_name}
@@ -214,17 +229,18 @@ const SiteSetting = () => {
           </div>
 
           {/* Submit Button */}
-          <div className="mt-6 flex justify-end">
-            <button
-              type="submit"
-              className="px-6 py-2 bg-blue-500 text-white font-medium rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            >
-              Submit
-            </button>
-          </div>
+          {user?.user_role_id?.site_setting_patch == true && (
+            <div className="mt-6 flex justify-end">
+              <button
+                type="submit"
+                className="px-6 py-2 bg-blue-500 text-white font-medium rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              >
+                Submit
+              </button>
+            </div>
+          )}
         </form>
       </div>
-
     </>
   );
 };
