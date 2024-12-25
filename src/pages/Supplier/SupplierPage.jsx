@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "@/utils/baseURL";
 import useDebounced from "@/hooks/useDebounced";
 import { AuthContext } from "@/context/AuthProvider";
+import { LoaderOverlay } from "@/components/common/loader/LoderOverley";
 
 const SupplierPage = () => {
   //Add Supplier modal open state
@@ -15,7 +16,7 @@ const SupplierPage = () => {
   const [limit, setLimit] = useState(10);
   const [searchValue, setSearchValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const { user } = useContext(AuthContext);
+  const { user, loading: userLoading } = useContext(AuthContext);
 
   const searchText = useDebounced({ searchQuery: searchValue, delay: 500 });
   useEffect(() => {
@@ -63,49 +64,59 @@ const SupplierPage = () => {
     },
   });
 
-
+  if (userLoading) {
+    return <LoaderOverlay />;
+  }
   return (
-    <div className="rounded py-6 px-4">
-      <div className="flex justify-between mt-6">
-        <div>
-          <h1 className="text-2xl">All Supplier List </h1>
-        </div>
-        <div>
-          <div>
-            <Button onClick={() => setOpenAddModal(true)}>Add Supplier</Button>
+    <>
+      {user?.user_role_id?.supplier_dashboard_show == true && (
+        <div className="rounded py-6 px-4">
+          <div className="flex justify-between mt-6">
+            <div>
+              <h1 className="text-2xl">All Supplier List </h1>
+            </div>
+            <div>
+              {user?.user_role_id?.supplier_post == true && (
+                <div>
+                  <Button onClick={() => setOpenAddModal(true)}>
+                    Add Supplier
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      </div>
-      <div className="mt-3">
-        <input
-          type="text"
-          defaultValue={searchTerm}
-          onChange={(e) => handleSearchValue(e.target.value)}
-          placeholder="Search Supplier..."
-          className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-        />
-      </div>
-      {/* show All Supplier Table List Component*/}
-      <SupplierTable
-        allSupplier={allSupplier}
-        refetch={refetch}
-        isLoading={isLoading}
-        user={user}
-        setPage={setPage}
-        setLimit={setLimit}
-        page={page}
-        limit={limit}
-      />
+          <div className="mt-3">
+            <input
+              type="text"
+              defaultValue={searchTerm}
+              onChange={(e) => handleSearchValue(e.target.value)}
+              placeholder="Search Supplier..."
+              className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+            />
+          </div>
+          {/* show All Supplier Table List Component*/}
+          <SupplierTable
+            allSupplier={allSupplier}
+            refetch={refetch}
+            isLoading={isLoading}
+            user={user}
+            setPage={setPage}
+            setLimit={setLimit}
+            page={page}
+            limit={limit}
+          />
 
-      {/* add all ReSeller modal component */}
-      {openAddModal && (
-        <AddSupplier
-          setOpenAddModal={setOpenAddModal}
-          refetch={refetch}
-          user={user}
-        />
+          {/* add all ReSeller modal component */}
+          {openAddModal && (
+            <AddSupplier
+              setOpenAddModal={setOpenAddModal}
+              refetch={refetch}
+              user={user}
+            />
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

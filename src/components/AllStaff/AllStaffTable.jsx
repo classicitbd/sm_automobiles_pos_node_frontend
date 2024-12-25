@@ -148,13 +148,16 @@ const AllStaffTable = ({
                         </button>
                         {bankDocumentModal == user?._id && (
                           <div className="  bg-success-50 shadow-xl w-[200px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
-                            <button
-                              className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
-                              onClick={() => updateStaffModal(user)}
-                            >
-                              <FiEdit size={18} />
-                              Edit
-                            </button>
+                            {user?.user_role_id?.user_patch == true && (
+                              <button
+                                className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
+                                onClick={() => updateStaffModal(user)}
+                              >
+                                <FiEdit size={18} />
+                                Edit
+                              </button>
+                             )} 
+
                             <Link to={`/staff-Perfomance/${user?._id}`}>
                               {" "}
                               <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium ">

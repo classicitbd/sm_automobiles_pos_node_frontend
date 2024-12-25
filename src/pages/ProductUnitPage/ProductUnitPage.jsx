@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { AuthContext } from "@/context/AuthProvider";
 import { SettingContext } from "@/context/SettingProvider";
 import useDebounced from "@/hooks/useDebounced";
-import MiniSpinner from "@/shared/MiniSpinner/MiniSpinner";
+
 import { BASE_URL } from "@/utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
@@ -78,7 +78,7 @@ const ProductUnitPage = () => {
               <h1 className="text-2xl">Product Unit</h1>
             </div>
 
-            {user?.user_role_id?.unit_post == true && (
+            {user?.user_role_id?.unit_post ==true && (
               <div>
                 <Button
                   type="button"

@@ -253,14 +253,16 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
               <label className="block  font-medium text-gray-700 mb-1 ">
                 Customer Name <span className="text-red-500">*</span>
               </label>
-              <button
-                onClick={() => setCustomerAddModal(true)}
-                type="button"
-                className="btn bg-primary rounded px-2.5 py-0.5 text-white flex items-center mb-1 gap-x-1"
-              >
-                <IoMdAddCircleOutline size={18} />
-                ADD
-              </button>
+              {user?.user_role_id?.customer_post == true && (
+                <button
+                  onClick={() => setCustomerAddModal(true)}
+                  type="button"
+                  className="btn bg-primary rounded px-2.5 py-0.5 text-white flex items-center mb-1 gap-x-1"
+                >
+                  <IoMdAddCircleOutline size={18} />
+                  ADD
+                </button>
+              )}
             </div>
             <Select
               id="customer_id"
@@ -878,13 +880,17 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
             className="border rounded-md p-2"
             onChange={(e) => setOrderNote(e.target.value)}
           ></textarea>
-
-          {loading == true ? (
-            <div className="px-10 py-2 flex items-center justify-center  bg-primary text-white rounded">
-              <MiniSpinner />
-            </div>
-          ) : (
-            <Button type="submit">Create</Button>
+          {user?.user_role_id?.order_post == true && (
+            <>
+              {" "}
+              {loading == true ? (
+                <div className="px-10 py-2 flex items-center justify-center  bg-primary text-white rounded">
+                  <MiniSpinner />
+                </div>
+              ) : (
+                <Button type="submit">Create</Button>
+              )}
+            </>
           )}
         </div>
       </form>

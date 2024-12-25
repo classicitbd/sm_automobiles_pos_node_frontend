@@ -137,7 +137,7 @@ const CreateStaffRole = () => {
                             {...register(permission)}
                             className="mr-2 outline-primaryVariant-600"
                           />
-                          {/* <span
+                          <span
                             className={`text-sm ${
                               isChecked ? "text-white" : "text-gray-700"
                             }`}
@@ -145,7 +145,7 @@ const CreateStaffRole = () => {
                             {permission
                               .replace(/_/g, " ")
                               .replace(/\b\w/g, (char) => char.toUpperCase())}
-                          </span> */}
+                          </span>
                         </label>
                       );
                     })}

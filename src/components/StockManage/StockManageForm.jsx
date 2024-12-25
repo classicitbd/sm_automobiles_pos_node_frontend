@@ -15,7 +15,8 @@ const StockManageForm = () => {
   const [buyingPrice, setBuyingPrice] = useState(0);
   const [productQuantity, setProductQuantity] = useState(0);
 
-  const { user } = useContext(AuthContext);
+  const { user, loading: userLoading } = useContext(AuthContext);
+
   const { settingData, loading: settingLoading } = useContext(SettingContext);
 
   const [loading, setLoading] = useState(false);
@@ -55,17 +56,14 @@ const StockManageForm = () => {
         paid_amount: 0,
         payment_status: "unpaid",
       };
-      const response = await fetch(
-        `${BASE_URL}/stock_manage`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(sendData),
-        }
-      );
+      const response = await fetch(`${BASE_URL}/stock_manage`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(sendData),
+      });
       const result = await response.json();
       if (result?.statusCode === 200 && result?.success === true) {
         toast.success(
@@ -97,11 +95,9 @@ const StockManageForm = () => {
   //Total Price...
   const totalPrice = productQuantity * buyingPrice || 0;
 
-  if (productLoading || supplierLoading || settingLoading) {
+  if (productLoading || supplierLoading || settingLoading || userLoading) {
     return <LoaderOverlay />;
   }
-
-  console.log(product_id);
 
   return (
     <div>
@@ -249,16 +245,17 @@ const StockManageForm = () => {
               }}
             />
           </div>
-
-          <div className="flex justify-end mt-5">
-            {loading == true ? (
-              <div className="px-10 py-2 flex items-center justify-center  bg-primary text-white rounded">
-                <MiniSpinner />
-              </div>
-            ) : (
-              <Button type="submit">Create</Button>
-            )}
-          </div>
+          {user?.user_role_id?.stock_post == true && (
+            <div className="flex justify-end mt-5">
+              {loading == true ? (
+                <div className="px-10 py-2 flex items-center justify-center  bg-primary text-white rounded">
+                  <MiniSpinner />
+                </div>
+              ) : (
+                <Button type="submit">Create</Button>
+              )}
+            </div>
+          )}
         </form>
       </div>
 
