@@ -21,19 +21,41 @@ const DashBoard = () => {
         <div className="mb-10">
           {/*First Cart Section Start */}
           <section className="grid sm:grid-cols-4 gap-8">
-            {Array.from({ length: 4 }, (_, index) => (
+            {Array.from({ length: 8 }, (_, index) => (
               <div
-                className="border flex items-center p-5 bg-white rounded-sm shadow-md"
                 key={index}
+                className={`flex items-center p-6 rounded-sm shadow-md ${
+                  index === 0 || index === 1 || index === 2 || index === 3
+                    ? "border bg-white"
+                    : index === 4
+                    ? "bg-error-100 justify-between"
+                    : index === 5
+                    ? "bg-purple justify-between"
+                    : index === 6
+                    ? "bg-success-300 justify-between"
+                    : "bg-bamber-100 justify-between"
+                }`}
               >
                 <div className="bg-success-100 w-[70px] h-[70px] flex items-center justify-center rounded-full">
                   <BsBagPlusFill size={30} className="text-red-400" />
                 </div>
                 <div className="ml-10">
-                  <p className="text-success-300 font-semibold text-2xl space-x-1">
+                  <p
+                    className={`font-semibold text-2xl space-x-1 ${
+                      index === 4 || index === 5 || index === 6 || index === 7
+                        ? "text-white"
+                        : "text-success-300"
+                    }`}
+                  >
                     $123863
                   </p>
-                  <p className="text-bgray-400 text-xl mt-1.5">
+                  <p
+                    className={`text-xl mt-1.5 ${
+                      index === 4 || index === 5 || index === 6 || index === 7
+                        ? "text-white"
+                        : "text-bgray-400"
+                    }`}
+                  >
                     Total Sale Amount
                   </p>
                 </div>
@@ -42,32 +64,6 @@ const DashBoard = () => {
           </section>
           {/*First Cart Section End */}
 
-          {/*Second Cart Section Start */}
-          <section className="grid sm:grid-cols-4 gap-8 mt-10">
-            {Array.from({ length: 4 }, (_, index) => (
-              <div
-                className={`flex items-center justify-between p-6 rounded-sm shadow-sm ${
-                  index === 0
-                    ? "bg-error-100"
-                    : index === 1
-                    ? "bg-purple"
-                    : index === 2
-                    ? "bg-success-300"
-                    : "bg-bamber-100"
-                }`}
-                key={index}
-              >
-                <div>
-                  <p className="text-white text-2xl font-semibold">1005</p>
-                  <p className="text-white text-xl mt-1.5">Customers</p>
-                </div>
-                <div>
-                  <FaUserCheck size={50} className="text-white" />
-                </div>
-              </div>
-            ))}
-          </section>
-          {/*Second Cart Section End */}
           {/* First  Chart Section Start */}
           <section className="mt-10">
             <div className="grid grid-cols-1 sm:grid-cols-5 gap-6">

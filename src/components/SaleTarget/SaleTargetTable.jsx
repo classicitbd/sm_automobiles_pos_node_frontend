@@ -253,15 +253,19 @@ const SaleTargetTable = ({
                           </button>
                           {bankDocumentModal == sale_target?._id && (
                             <div className="  bg-success-50 shadow-xl w-[200px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
-                              <button
-                                className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
-                                onClick={() =>
-                                  handleSaleTargetUpdateModal(sale_target)
-                                }
-                              >
-                                <FiEdit size={18} />
-                                Edit
-                              </button>
+                              {user?.user_role_id?.sale_target_patch ==
+                                true && (
+                                <button
+                                  className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
+                                  onClick={() =>
+                                    handleSaleTargetUpdateModal(sale_target)
+                                  }
+                                >
+                                  <FiEdit size={18} />
+                                  Edit
+                                </button>
+                              )}
+
                               <Link
                                 to={`/sale-target-view/${sale_target?._id}`}
                               >

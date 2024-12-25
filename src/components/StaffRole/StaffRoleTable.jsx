@@ -6,7 +6,7 @@ import { useState } from "react";
 import NoDataFound from "../../shared/NoDataFound/NoDataFound";
 import UpDateStaffRole from "./UpDateStaffRole";
 
-const StaffRoleTable = () => {
+const StaffRoleTable = ({ user }) => {
   const [updateModal, setUpdateModal] = useState(false);
   const [updateModalValue, setUpdateModalValue] = useState(false);
   //   console.log(roleData);
@@ -76,13 +76,15 @@ const StaffRoleTable = () => {
                   </td>
 
                   <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
-                    <>
-                      <FiEdit
-                        onClick={() => updateStaffModal(role)}
-                        className="cursor-pointer text-gray-500 hover:text-gray-300"
-                        size={25}
-                      />
-                    </>
+                    {user?.user_role_id?.role_patch == true && (
+                      <>
+                        <FiEdit
+                          onClick={() => updateStaffModal(role)}
+                          className="cursor-pointer text-gray-500 hover:text-gray-300"
+                          size={25}
+                        />
+                      </>
+                    )}
                   </td>
                   {/* <td className="whitespace-nowrap px-4 py-2 space-x-1 flex items-center justify-center gap-4">
                     {user?.user_role_id?.staff_permission_delete ||

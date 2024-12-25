@@ -42,7 +42,7 @@ const ProductUnitTable = ({
             {product_unitNames?.data?.length > 0 ? (
               <div className="overflow-x-auto rounded-lg">
                 <table className="min-w-full  text-sm">
-                  <thead >
+                  <thead>
                     <tr className="font-semibold text-center">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
                       <td className="whitespace-nowrap p-4 ">
@@ -87,17 +87,19 @@ const ProductUnitTable = ({
                             : "--"}
                         </td>
                         <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
-                          <button
-                            className="ml-3"
-                            onClick={() =>
-                              handleproduct_unitUpdateModal(product_unit)
-                            }
-                          >
-                            <FiEdit
-                              size={25}
-                              className="cursor-pointer text-gray-500 hover:text-gray-300"
-                            />
-                          </button>
+                          {user?.user_role_id?.unit_patch == true && (
+                            <button
+                              className="ml-3"
+                              onClick={() =>
+                                handleproduct_unitUpdateModal(product_unit)
+                              }
+                            >
+                              <FiEdit
+                                size={25}
+                                className="cursor-pointer text-gray-500 hover:text-gray-300"
+                              />
+                            </button>
+                          )}
                         </td>
                       </tr>
                     ))}

@@ -1,3 +1,4 @@
+import { LoaderOverlay } from "@/components/common/loader/LoderOverley";
 import AddSaleTarget from "@/components/SaleTarget/AddSaleTarget";
 import SaleTargetTable from "@/components/SaleTarget/SaleTargetTable";
 import { Button } from "@/components/ui/button";
@@ -6,7 +7,7 @@ import { SettingContext } from "@/context/SettingProvider";
 import useDebounced from "@/hooks/useDebounced";
 import useGetBrand from "@/hooks/useGetBrand";
 import UseGetUser from "@/hooks/UseGetUser";
-import MiniSpinner from "@/shared/MiniSpinner/MiniSpinner";
+
 import { BASE_URL } from "@/utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
@@ -17,7 +18,7 @@ const SaleTargetPage = () => {
   const [limit, setLimit] = useState(10);
   const [searchValue, setSearchValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const { user } = useContext(AuthContext);
+  const { user, loading: usersLoading } = useContext(AuthContext);
   const { settingData, loading: settingLoading } = useContext(SettingContext);
 
   const searchText = useDebounced({ searchQuery: searchValue, delay: 500 });
@@ -72,18 +73,23 @@ const SaleTargetPage = () => {
   //get brand data
   const { data: brandTypes, isLoading: brandLoading } = useGetBrand();
 
+  if (usersLoading) return <LoaderOverlay />;
   return (
     <div className="py-6 px-4">
       <div className="flex justify-between mt-6">
         <div>
           <h1 className="text-2xl">Sale Target</h1>
         </div>
-
-        <div>
-          <Button type="button" onClick={() => setSaleTargetCreateModal(true)}>
-            Create Sale Target
-          </Button>
-        </div>
+        {user?.user_role_id?.sale_target_post == true && (
+          <div>
+            <Button
+              type="button"
+              onClick={() => setSaleTargetCreateModal(true)}
+            >
+              Create Sale Target
+            </Button>
+          </div>
+        )}
       </div>
       {/* search Sale Target... */}
       <div className="mt-3">
