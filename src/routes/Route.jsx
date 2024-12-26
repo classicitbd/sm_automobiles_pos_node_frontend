@@ -67,6 +67,10 @@ import APListPage from "@/pages/AP/APListPage";
 import AccountOrder from "@/pages/order/AccountOrder";
 import CashBalanceHistory from "@/pages/BankPage/CashBalanceHistory";
 import BankBalanceUpdateHistory from "@/pages/BankPage/BankBalanceUpdateHistory";
+import SaleryPage from "@/pages/SalaryModulePage/SaleryPage";
+import GeneRateSalarySheet from "@/components/Salary/GeneRateSalarySheet";
+import PaymentHistoryPage from "@/pages/SalaryModulePage/PaymentHistoryPage";
+import MyPayrollPage from "@/pages/SalaryModulePage/MyPayrollPage";
 
 const route = createBrowserRouter([
   {
@@ -347,6 +351,23 @@ const route = createBrowserRouter([
       {
         path: "/ap-list",
         element: <APListPage />,
+      },
+      //Salery routes..........
+      {
+        path: "/salary-sheet",
+        element: <SaleryPage />,
+      },
+      {
+        path: "/generate-salary-sheet/:id",
+        element: <GeneRateSalarySheet />,
+      },
+      {
+        path: "/payment-history",
+        element: <PaymentHistoryPage />,
+      },
+      {
+        path: "/my-payroll",
+        element: <MyPayrollPage />,
       },
     ],
   },
