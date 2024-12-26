@@ -19,12 +19,17 @@ import {
 import { FiUsers } from "react-icons/fi";
 import {
   FaCcAmazonPay,
+  FaMoneyBillAlt,
   FaProductHunt,
   FaShoppingCart,
   FaUsers,
 } from "react-icons/fa";
-import { MdAccountBalanceWallet, MdSettingsSuggest } from "react-icons/md";
-import { RiFolderReceivedFill } from "react-icons/ri";
+import {
+  MdAccountBalanceWallet,
+  MdOutlinePayments,
+  MdSettingsSuggest,
+} from "react-icons/md";
+import { RiFolderReceivedFill, RiMoneyDollarBoxFill } from "react-icons/ri";
 import { AuthContext } from "@/context/AuthProvider";
 import { LoaderOverlay } from "@/components/common/loader/LoderOverley";
 
@@ -94,9 +99,7 @@ const SideNavBar = () => {
         </div>
         {/* Menu */}
         <ul className="flex flex-col pb-4 space-y-[2px]">
-
           {/* ....Dashvoard .....*/}
-
           {user?.user_role_id?.dashboard_show == true && (
             <MenuItem
               to="/"
@@ -106,9 +109,7 @@ const SideNavBar = () => {
               onClick={closeAllDropdowns} // Close all dropdowns when clicked
             />
           )}
-
           {/* ....Task Bar....... */}
-
           {(user?.user_role_id?.category_post === true ||
             user?.user_role_id?.category_patch === true ||
             user?.user_role_id?.brand_post === true ||
@@ -151,10 +152,8 @@ const SideNavBar = () => {
                 />
               )}
             </DropdownMenu>
-            )}
-          
+          )}
           {/* ....Site Setting..... */}
-
           {user?.user_role_id?.site_setting_patch === true && (
             <MenuItem
               to="/site_setting"
@@ -164,9 +163,7 @@ const SideNavBar = () => {
               onClick={closeAllDropdowns} // Close all dropdowns when clicked
             />
           )}
-
           {/* .....Staff.....  */}
-
           {(user?.user_role_id?.user_post === true ||
             user?.user_role_id?.user_patch === true ||
             user?.user_role_id?.user_dashboard_show === true ||
@@ -207,9 +204,7 @@ const SideNavBar = () => {
               )}
             </DropdownMenu>
           )}
-
           {/* .....Sale Target..... */}
-
           {(user?.user_role_id?.sale_target_post === true ||
             user?.user_role_id?.sale_target_patch === true) && (
             <MenuItem
@@ -220,9 +215,7 @@ const SideNavBar = () => {
               onClick={closeAllDropdowns} // Close all dropdowns when clicked
             />
           )}
-
           {/* ....Supplier List.... */}
-
           {user?.user_role_id?.supplier_dashboard_show === true && (
             <MenuItem
               to="/supplier"
@@ -233,7 +226,6 @@ const SideNavBar = () => {
             />
           )}
           {/* ....Bank Account.... */}
-
           {user?.user_role_id?.bank_dashboard_show === true && (
             <MenuItem
               to="/bank-account"
@@ -243,9 +235,7 @@ const SideNavBar = () => {
               onClick={closeAllDropdowns} // Close all dropdowns when clicked
             />
           )}
-
           {/* ....Customers.... */}
-
           {user?.user_role_id?.customer_dashboard_show === true && (
             <MenuItem
               to="/customers"
@@ -255,9 +245,7 @@ const SideNavBar = () => {
               onClick={closeAllDropdowns} // Close all dropdowns when clicked
             />
           )}
-
           {/* .......Employe...... */}
-
           <DropdownMenu
             label="Employe"
             icon={BiTask}
@@ -308,9 +296,7 @@ const SideNavBar = () => {
               isActive={isActive("/add-payment")}
             />
           </DropdownMenu>
-
           {/* .......Product  ...... */}
-
           {(user?.user_role_id?.product_post === true ||
             user?.user_role_id?.product_patch === true ||
             user?.user_role_id?.product_dashboard_show === true ||
@@ -347,7 +333,6 @@ const SideNavBar = () => {
               )}
             </DropdownMenu>
           )}
-
           {/* ...Expense.... */}
           {user?.user_role_id?.expense_show === true && (
             <MenuItem
@@ -359,7 +344,6 @@ const SideNavBar = () => {
             />
           )}
           {/* ...Income.... */}
-
           {user?.user_role_id?.income_show === true && (
             <MenuItem
               to="/income"
@@ -370,7 +354,6 @@ const SideNavBar = () => {
             />
           )}
           {/* ...Income.... */}
-
           {user?.user_role_id?.order_post === true && (
             <MenuItem
               to="/pos"
@@ -380,9 +363,7 @@ const SideNavBar = () => {
               onClick={closeAllDropdowns} // Close all dropdowns when clicked
             />
           )}
-
           {/*....... Order....... */}
-
           {(user?.user_role_id?.order_patch === true ||
             user?.user_role_id?.order_dashboard_show === true ||
             user?.user_role_id?.management_order_show === true ||
@@ -437,9 +418,7 @@ const SideNavBar = () => {
               )}
             </DropdownMenu>
           )}
-
           {/* .....Pdf File...... */}
-
           {/* <DropdownMenu
             label="PDF FILE"
             icon={BiTask}
@@ -465,9 +444,7 @@ const SideNavBar = () => {
               isActive={isActive("/voucher-pdf")}
             />
           </DropdownMenu> */}
-
           {/* .....Account Manegement..... */}
-
           {(user?.user_role_id?.supplier_payment_patch === true ||
             user?.user_role_id?.supplier_paid_payment_show === true ||
             user?.user_role_id?.supplier_unpaid_payment_show === true ||
@@ -596,7 +573,7 @@ const SideNavBar = () => {
               )}
 
               {/* ....Ledger...... */}
-              
+
               {user?.user_role_id?.ledger_show === true && (
                 <ChildMenuItem
                   to="/leisure"
@@ -657,6 +634,33 @@ const SideNavBar = () => {
               )}
             </DropdownMenu>
           )}
+          {/* .....Payroll Manegement..... */}
+
+          <DropdownMenu
+            label="Payroll"
+            icon={RiMoneyDollarBoxFill}
+            isOpen={activeDropdown === "payroll"}
+            onClick={() => toggleDropdown("payroll")}
+          >
+            <ChildMenuItem
+              to="/salary-sheet"
+              icon={FaMoneyBillAlt}
+              label="Generate Salary Sheet"
+              isActive={isActive("/salary-sheet")}
+            />
+            <ChildMenuItem
+              to="/payment-history"
+              icon={MdOutlinePayments}
+              label="Payment History"
+              isActive={isActive("/payment-history")}
+            />
+            <ChildMenuItem
+              to="/my-payroll"
+              icon={MdOutlinePayments}
+              label="My Payroll"
+              isActive={isActive("/my-payroll")}
+            />
+          </DropdownMenu>
         </ul>
       </div>
     </div>
