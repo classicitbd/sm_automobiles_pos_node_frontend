@@ -636,7 +636,7 @@ const SideNavBar = () => {
           )}
           {/* .....Payroll Manegement..... */}
 
-          <DropdownMenu
+          {/* <DropdownMenu
             label="Payroll"
             icon={RiMoneyDollarBoxFill}
             isOpen={activeDropdown === "payroll"}
@@ -660,7 +660,7 @@ const SideNavBar = () => {
               label="My Payroll"
               isActive={isActive("/my-payroll")}
             />
-          </DropdownMenu>
+          </DropdownMenu> */}
         </ul>
       </div>
     </div>

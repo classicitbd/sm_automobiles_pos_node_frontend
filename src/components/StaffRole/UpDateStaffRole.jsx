@@ -49,8 +49,8 @@ const UpDateStaffRole = ({ setUpdateModal, updateModalValue, refetch }) => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          credentials: "include",
         },
+        credentials: "include",
         body: JSON.stringify(sendData),
       });
       const result = await response.json();

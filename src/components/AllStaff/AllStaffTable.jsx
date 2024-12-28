@@ -14,7 +14,7 @@ const AllStaffTable = ({
   staffData,
   roleData,
   isLoading,
-  user,
+  user: user_login,
   isLoadingStaff,
   limit,
   page,
@@ -148,7 +148,7 @@ const AllStaffTable = ({
                         </button>
                         {bankDocumentModal == user?._id && (
                           <div className="  bg-success-50 shadow-xl w-[200px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
-                            {user?.user_role_id?.user_patch == true && (
+                            {user_login?.user_role_id?.user_patch == true && (
                               <button
                                 className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
                                 onClick={() => updateStaffModal(user)}
@@ -224,7 +224,7 @@ const AllStaffTable = ({
               refetch={refetch}
               roleData={roleData}
               isLoading={isLoading}
-              user={user}
+              user={user_login}
             />
           )}
         </div>

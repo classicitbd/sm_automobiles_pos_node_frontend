@@ -62,8 +62,8 @@ const AddAllStaff = ({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          credentials: "include",
         },
+        credentials: "include",
         body: JSON.stringify(sendData),
       });
       const result = await response.json();
