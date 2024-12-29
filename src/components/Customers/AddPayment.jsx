@@ -379,9 +379,9 @@ const AddPayment = ({ setCustomerAddPaymentModal }) => {
                             <td className="whitespace-nowrap p-4 ">
                               Customer Address
                             </td>
-                            <td className="whitespace-nowrap p-4 ">
+                            {/* <td className="whitespace-nowrap p-4 ">
                               Customer Wallet
-                            </td>
+                            </td> */}
                             <td className="whitespace-nowrap p-4 ">
                               Customer Status
                             </td>
@@ -402,7 +402,7 @@ const AddPayment = ({ setCustomerAddPaymentModal }) => {
                             <td className="whitespace-nowrap py-1.5 ">
                               {order_Info?.customer_id?.customer_address}
                             </td>
-                            <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                            {/* <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                               {order_Info?.customer_id?.customer_wallet ? (
                                 <>
                                   {" "}
@@ -420,7 +420,7 @@ const AddPayment = ({ setCustomerAddPaymentModal }) => {
                               ) : (
                                 "--"
                               )}
-                            </td>
+                            </td> */}
                             <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                               {order_Info?.customer_id?.customer_status ===
                               "active" ? (

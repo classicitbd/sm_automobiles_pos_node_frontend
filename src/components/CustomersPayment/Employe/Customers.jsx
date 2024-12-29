@@ -121,9 +121,9 @@ const Customers = () => {
                         <td className="whitespace-nowrap p-4 ">
                           Customer Status
                         </td>
-                        <td className="whitespace-nowrap p-4 ">
+                        {/* <td className="whitespace-nowrap p-4 ">
                           Customer Wallet
-                        </td>
+                        </td> */}
                         <td className="whitespace-nowrap p-4 ">Action</td>
                       </tr>
                     </thead>
@@ -160,7 +160,7 @@ const Customers = () => {
                               </span>
                             )}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {/* <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                             {customer?.customer_wallet > 0 ? (
                               <span className="text-green-600">
                                 {customer?.customer_wallet}
@@ -170,7 +170,7 @@ const Customers = () => {
                                 {customer?.customer_wallet}
                               </span>
                             )}
-                          </td>
+                          </td> */}
                           <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                             <button
                               className="ml-[8px]"

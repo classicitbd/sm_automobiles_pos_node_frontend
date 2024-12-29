@@ -64,7 +64,7 @@ const AccountOrderTable = ({
   const handleSendWarehouse = async (order) => {
     Swal.fire({
       title: "Are you sure?",
-      text: `You send this order to warehouse! `,
+      text: `You send this order to management! `,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -79,7 +79,7 @@ const AccountOrderTable = ({
           income_order_id: order?._id,
           income_invoice_number: order?.order_id,
           _id: order?._id,
-          order_status: "warehouse",
+          order_status: "management",
           order_updated_by: user?._id,
           account_user_id: user?._id,
         };
@@ -318,7 +318,7 @@ const AccountOrderTable = ({
                               className="w-full px-3 py-2 hover:bg-primary hover:text-white flex justify-center items-center gap-2 font-medium btn bg-sky-400 text-white rounded-md"
                               onClick={() => handleSendWarehouse(order)}
                             >
-                              Send Warehouse
+                              Send Management
                             </button>
                           )}
                         </td>

@@ -128,22 +128,21 @@ const ViewSaleTarget = ({
                     {saleTargetData?.data?.map((sale_target, i) => (
                       <tr
                         key={sale_target?._id}
-                        className={`divide-x divide-gray-200 ${
-                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                        }`}
+                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                          }`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {i + 1}
                         </td>
-                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {sale_target?.order_id}
+                        <td className="whitespace-nowrap py-1.5 font-medium text-blue-700 underline cursor-pointer">
+                          <Link to={`/order-details/${sale_target?._id}`}>{sale_target?.order_id}</Link>
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                           {sale_target?.grand_total_amount}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                           {sale_target?.received_amount ===
-                          sale_target?.grand_total_amount ? (
+                            sale_target?.grand_total_amount ? (
                             <span className="text-green-600">
                               {sale_target?.received_amount}
                             </span>

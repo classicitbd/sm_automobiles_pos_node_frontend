@@ -69,6 +69,8 @@ const permissionsData = [
   {
     Name: "Check",
     Type: [
+      "check_post",
+      "check_patch",
       "check_dashboard_show",
       "check_today_dashboard_show",
       "check_due_dashboard_show",

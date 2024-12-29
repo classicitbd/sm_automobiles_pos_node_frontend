@@ -384,20 +384,20 @@ const SideNavBar = () => {
                   isActive={isActive("/order")}
                 />
               )}
+                {user?.user_role_id?.account_order_show === true && (
+                  <ChildMenuItem
+                    to="/account-order"
+                    icon={FaShoppingCart}
+                    label="Account Order"
+                    isActive={isActive("/account-order")}
+                  />
+                )}
               {user?.user_role_id?.management_order_show === true && (
                 <ChildMenuItem
                   to="/management-order"
                   icon={FaShoppingCart}
                   label="Management Order"
                   isActive={isActive("/management-order")}
-                />
-              )}
-              {user?.user_role_id?.account_order_show === true && (
-                <ChildMenuItem
-                  to="/account-order"
-                  icon={FaShoppingCart}
-                  label="Account Order"
-                  isActive={isActive("/account-order")}
                 />
               )}
               {user?.user_role_id?.warehouse_order_show === true && (
@@ -499,7 +499,7 @@ const SideNavBar = () => {
                     <SubChildMenuItem
                       to="/payment"
                       icon={GiReceiveMoney}
-                      label="Payment List"
+                      label="Collection List"
                       isActive={isActive("/payment")}
                     />
                   )}
@@ -508,7 +508,7 @@ const SideNavBar = () => {
                     <SubChildMenuItem
                       to="/today-payment"
                       icon={GiReceiveMoney}
-                      label="Today Payment List"
+                      label="Today Collection List"
                       isActive={isActive("/today-payment")}
                     />
                   )}
@@ -516,7 +516,7 @@ const SideNavBar = () => {
                     <SubChildMenuItem
                       to="/due-payment"
                       icon={GiReceiveMoney}
-                      label="Due Payment List"
+                      label="Due Collection List"
                       isActive={isActive("/due-payment")}
                     />
                   )}
