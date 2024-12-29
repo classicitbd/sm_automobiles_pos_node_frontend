@@ -157,7 +157,7 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
       }
       const sendData = {
         order_publisher_id: user?._id,
-        order_status: "management",
+        order_status: "account",
         customer_id: customer_id,
         customer_phone: customerInfo?.customer_phone,
         order_products: addProducts?.map((item) => ({
