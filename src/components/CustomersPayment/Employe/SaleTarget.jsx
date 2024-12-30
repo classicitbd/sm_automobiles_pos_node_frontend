@@ -1,6 +1,7 @@
 import TableLoadingSkeleton from "@/components/common/loadingSkeleton/TableLoadingSkeleton";
 import Pagination from "@/components/common/pagination/Pagination";
 import { AuthContext } from "@/context/AuthProvider";
+import { SettingContext } from "@/context/SettingProvider";
 import useDebounced from "@/hooks/useDebounced";
 import useGetAUserDetails from "@/hooks/useGetAUserDetails";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
@@ -18,6 +19,7 @@ const SaleTarget = () => {
   const [limit, setLimit] = useState(10);
 
   const { user } = useContext(AuthContext);
+  const {settingData} = useContext(SettingContext);
 
   useEffect(() => {
     const newSerialNumber = (page - 1) * limit;
@@ -57,14 +59,32 @@ const SaleTarget = () => {
   });
 
   //get user data
-  const { data: userData = {}, isLoading: userLoading } =
-    useGetAUserDetails(user?._id);
+  const { data: userData = {}, isLoading: userLoading } = useGetAUserDetails(
+    user?._id
+  );
 
   const [supplierDocumentModal, setSupplierDocumentModal] = useState(null);
 
   const handleShowDocumentModal = (id) => {
     setSupplierDocumentModal((prevId) => (prevId === id ? null : id));
   };
+
+    // calculate commission amount
+    const calculateCommissionAmount = (data) => {
+      // Calculate the total target
+      const totalTarget = data?.brand_sale_target + data?.sale_target;
+  
+      // Calculate the 50% split
+      const firstHalf = totalTarget / 2;
+      const secondHalf = totalTarget - firstHalf;
+  
+      // Calculate the commission
+      const commision_amount =
+        firstHalf * data?.first_half_amount_per_unit +
+        secondHalf * data?.second_half_amount_per_unit;
+  
+      return commision_amount;
+    };
 
   return (
     <>
@@ -127,23 +147,27 @@ const SaleTarget = () => {
                         <td className="whitespace-nowrap p-4 ">
                           Sale Target End Date
                         </td>
-                        <td className="whitespace-nowrap p-4 ">Sale Target</td>
+                        <td className="whitespace-nowrap p-4 ">Brand Name</td>
+                        <td className="whitespace-nowrap p-4 ">Brand Target</td>
+                        <td className="whitespace-nowrap p-4 ">Fill Up</td>
                         <td className="whitespace-nowrap p-4 ">
-                          Sale Target Amount
+                          Others Target
                         </td>
-
                         <td className="whitespace-nowrap p-4 ">
-                          {" "}
-                          Sale Target Filup
+                          Others Fill Up
                         </td>
+                        <td className="whitespace-nowrap p-4 ">(1-50)%</td>
+                        <td className="whitespace-nowrap p-4 ">(51-100)%</td>
+                        <td className="whitespace-nowrap p-4 ">Total Get</td>
+                        <td className="whitespace-nowrap p-4 ">Status</td>
                         <td className="whitespace-nowrap p-4 "> Action</td>
                       </tr>
                     </thead>
 
                     <tbody>
-                      {targetedSales?.data?.map((saleTarget, i) => (
+                      {targetedSales?.data?.map((sale_target, i) => (
                         <tr
-                          key={saleTarget?._id}
+                          key={sale_target?._id}
                           className={`text-center ${
                             i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
                           } hover:bg-blue-100`}
@@ -152,35 +176,107 @@ const SaleTarget = () => {
                             {serialNumber + i + 1}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {DateTimeFormat(saleTarget?.sale_target_start_date)}
+                            {DateTimeFormat(sale_target?.sale_target_start_date)}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {DateTimeFormat(saleTarget?.sale_target_end_date)}
+                            {DateTimeFormat(sale_target?.sale_target_end_date)}
                           </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
-                            {saleTarget?.sale_target}
-                          </td>
-                          <td className="whitespace-nowrap py-1.5 font-medium text-purple">
-                            {saleTarget?.sale_target_amount}
-                          </td>
+                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {sale_target?.brand_id?.brand_name}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-blue-600">
+                          {sale_target?.brand_sale_target ? (
+                            <>
+                              {" "}
+                              {sale_target?.brand_sale_target}{" "}
+                              {settingData?.unit_name}
+                            </>
+                          ) : (
+                            "--"
+                          )}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                          {sale_target?.brand_sale_target_fillup >=
+                          sale_target?.brand_sale_target * 0.8 ? (
+                            <span className="text-green-600">
+                              {" "}
+                              {sale_target?.brand_sale_target_fillup}{" "}
+                              {settingData?.unit_name}
+                            </span>
+                          ) : (
+                            <span className="text-red-600">
+                              {" "}
+                              {sale_target?.brand_sale_target_fillup}{" "}
+                              {settingData?.unit_name}
+                            </span>
+                          )}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-purple">
+                          {sale_target?.sale_target ? (
+                            <>
+                              {" "}
+                              {sale_target?.sale_target}{" "}
+                              {settingData?.unit_name}
+                            </>
+                          ) : (
+                            "--"
+                          )}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
+                          {sale_target?.sale_target_fillup >=
+                          sale_target?.sale_target * 0.8 ? (
+                            <span className="text-green-600">
+                              {" "}
+                              {sale_target?.sale_target_fillup}{" "}
+                              {settingData?.unit_name}
+                            </span>
+                          ) : (
+                            <span className="text-red-600">
+                              {" "}
+                              {sale_target?.sale_target_fillup}{" "}
+                              {settingData?.unit_name}
+                            </span>
+                          )}
+                        </td>
 
-                          <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                            {saleTarget?.sale_target_filup ===
-                            saleTarget?.sale_target ? (
-                              <span className="text-green-600">
-                                {saleTarget?.sale_target_filup}
-                              </span>
-                            ) : (
-                              <span className="text-red-600">
-                                {saleTarget?.sale_target_filup}
-                              </span>
-                            )}
-                          </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-primary">
+                          {sale_target?.first_half_amount_per_unit ? (
+                            <>
+                              {" "}
+                              {sale_target?.first_half_amount_per_unit}{" "}
+                              <small>(per {settingData?.unit_name})</small>
+                            </>
+                          ) : (
+                            "--"
+                          )}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium  text-primary">
+                          {sale_target?.second_half_amount_per_unit ? (
+                            <>
+                              {" "}
+                              {sale_target?.second_half_amount_per_unit}{" "}
+                              <small>(per {settingData?.unit_name})</small>
+                            </>
+                          ) : (
+                            "--"
+                          )}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium  text-primary">
+                          {calculateCommissionAmount(sale_target) || "--"}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium  text-primary">
+                          {sale_target?.brand_sale_target_success &&
+                          sale_target?.sale_target_success ? (
+                            <span className="text-green-600">Success</span>
+                          ) : (
+                            <span className="text-red-600">Pending</span>
+                          )}
+                        </td>
                           <td className="whitespace-nowrap py-1.5 px-2 text-gray-700">
                             <button
                               className="ml-[8px]"
                               onClick={() =>
-                                handleShowDocumentModal(saleTarget?._id)
+                                handleShowDocumentModal(sale_target?._id)
                               }
                             >
                               <CiMenuKebab
@@ -188,10 +284,10 @@ const SaleTarget = () => {
                                 className="cursor-pointer text-primaryVariant-300 hover:text-primaryVariant-700 font-bold"
                               />
                             </button>
-                            {supplierDocumentModal == saleTarget?._id && (
+                            {supplierDocumentModal == sale_target?._id && (
                               <div className=" bg-success-50  shadow-xl w-[150px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
                                 <Link
-                                  to={`/sale-target-view/${saleTarget?._id}`}
+                                  to={`/sale-target-view/${sale_target?._id}`}
                                 >
                                   {" "}
                                   <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium">

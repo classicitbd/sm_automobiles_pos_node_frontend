@@ -100,15 +100,67 @@ const SideNavBar = () => {
         {/* Menu */}
         <ul className="flex flex-col pb-4 space-y-[2px]">
           {/* ....Dashvoard .....*/}
-          {user?.user_role_id?.dashboard_show == true && (
-            <MenuItem
-              to="/"
-              icon={GoHome}
-              label="Dashboard"
-              isActive={isActive("/")}
-              onClick={closeAllDropdowns} // Close all dropdowns when clicked
-            />
-          )}
+          {/* {user?.user_role_id?.dashboard_show == true && ( */}
+          <MenuItem
+            to="/"
+            icon={GoHome}
+            label="Dashboard"
+            isActive={isActive("/")}
+            onClick={closeAllDropdowns}
+          />
+          {/* // )} */}
+          {/* .......Employe...... */}
+          <MenuItem
+            to="/empolye-customers"
+            icon={TbCategoryPlus}
+            label="Customers"
+            isActive={isActive("/empolye-customers")}
+            onClick={closeAllDropdowns}
+          />
+          <MenuItem
+            to="/empolye-orders"
+            icon={TbCategoryPlus}
+            label="Orders"
+            isActive={isActive("/empolye-orders")}
+            onClick={closeAllDropdowns}
+          />
+          {/* <MenuItem
+            to="/empolye-profile"
+            icon={TbCategoryPlus}
+            label="Profile"
+            isActive={isActive("/empolye-profile")}
+            onClick={closeAllDropdowns}
+          /> */}
+          {/* <MenuItem
+            to="/empolye-salery"
+            icon={TbCategoryPlus}
+            label="Salery"
+            isActive={isActive("/empolye-salery")}
+            onClick={closeAllDropdowns}
+          /> */}
+          <MenuItem
+            to="/empolye-sale-Target"
+            icon={TbCategoryPlus}
+            label="Sale Target"
+            isActive={isActive("/empolye-sale-Target")}
+            onClick={closeAllDropdowns}
+          />
+          <MenuItem
+            to="/employe-payment"
+            icon={TbCategoryPlus}
+            label="Employ Payment List"
+            isActive={isActive("/employe-payment")}
+            onClick={closeAllDropdowns}
+          />
+
+          <MenuItem
+            to="/add-payment"
+            icon={TbCategoryPlus}
+            label="Add Payment"
+            isActive={isActive("/add-payment")}
+            onClick={closeAllDropdowns}
+          />
+
           {/* ....Task Bar....... */}
           {(user?.user_role_id?.category_post === true ||
             user?.user_role_id?.category_patch === true ||
@@ -245,57 +297,6 @@ const SideNavBar = () => {
               onClick={closeAllDropdowns} // Close all dropdowns when clicked
             />
           )}
-          {/* .......Employe...... */}
-          <DropdownMenu
-            label="Employe"
-            icon={BiTask}
-            isOpen={activeDropdown === "payment"}
-            onClick={() => toggleDropdown("payment")}
-          >
-            <ChildMenuItem
-              to="/empolye-customers"
-              icon={TbCategoryPlus}
-              label="Customers"
-              isActive={isActive("/empolye-customers")}
-            />
-            <ChildMenuItem
-              to="/empolye-orders"
-              icon={TbCategoryPlus}
-              label="Orders"
-              isActive={isActive("/empolye-orders")}
-            />
-            <ChildMenuItem
-              to="/empolye-profile"
-              icon={TbCategoryPlus}
-              label="Profile"
-              isActive={isActive("/empolye-profile")}
-            />
-            <ChildMenuItem
-              to="/empolye-salery"
-              icon={TbCategoryPlus}
-              label="Salery"
-              isActive={isActive("/empolye-salery")}
-            />
-            <ChildMenuItem
-              to="/empolye-sale-Target"
-              icon={TbCategoryPlus}
-              label="Sale Target"
-              isActive={isActive("/empolye-sale-Target")}
-            />
-            <ChildMenuItem
-              to="/employe-payment"
-              icon={TbCategoryPlus}
-              label="Employ Payment List"
-              isActive={isActive("/employe-payment")}
-            />
-
-            <ChildMenuItem
-              to="/add-payment"
-              icon={TbCategoryPlus}
-              label="Add Payment"
-              isActive={isActive("/add-payment")}
-            />
-          </DropdownMenu>
           {/* .......Product  ...... */}
           {(user?.user_role_id?.product_post === true ||
             user?.user_role_id?.product_patch === true ||
@@ -384,14 +385,14 @@ const SideNavBar = () => {
                   isActive={isActive("/order")}
                 />
               )}
-                {user?.user_role_id?.account_order_show === true && (
-                  <ChildMenuItem
-                    to="/account-order"
-                    icon={FaShoppingCart}
-                    label="Account Order"
-                    isActive={isActive("/account-order")}
-                  />
-                )}
+              {user?.user_role_id?.account_order_show === true && (
+                <ChildMenuItem
+                  to="/account-order"
+                  icon={FaShoppingCart}
+                  label="Account Order"
+                  isActive={isActive("/account-order")}
+                />
+              )}
               {user?.user_role_id?.management_order_show === true && (
                 <ChildMenuItem
                   to="/management-order"

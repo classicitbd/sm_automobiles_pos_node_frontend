@@ -118,9 +118,6 @@ const EmployePaymentList = () => {
                           Withdraw Date
                         </td>
                         <td className="whitespace-nowrap p-4 ">Status</td>
-                        <td className="whitespace-nowrap p-4 ">
-                          Total Messurement
-                        </td>
 
                         <td className="whitespace-nowrap p-4 ">Total Amount</td>
                         <td className="whitespace-nowrap p-4 ">Pay Amount</td>
@@ -139,7 +136,7 @@ const EmployePaymentList = () => {
                             {serialNumber + i + 1}
                           </td>
                           <td className="whitespace-nowrap py-3 font-medium text-gray-700">
-                            <Link>
+                            <Link to={`/order-details/${employe?._id}`}>
                               <span className="text-blue-600 underline">
                                 {" "}
                                 {employe?.invoice_number}
@@ -187,19 +184,6 @@ const EmployePaymentList = () => {
                               <span className="text-red-600">
                                 {employe?.check_status}
                               </span>
-                            )}
-                          </td>
-                          <td className="whitespace-nowrap py-3 font-medium text-green-600">
-                            {employe?.order_id?.total_messurement_count ? (
-                              <>
-                                {" "}
-                                {
-                                  employe?.order_id?.total_messurement_count
-                                }{" "}
-                                {settingData?.unit_name}
-                              </>
-                            ) : (
-                              "--"
                             )}
                           </td>
 

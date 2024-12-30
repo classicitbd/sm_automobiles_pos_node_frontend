@@ -32,12 +32,12 @@ const AccountOrder = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/order/account_order?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
+      `/api/v1/order/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/order/account_order?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
+          `${BASE_URL}/order/dashboard?page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
           {
             credentials: "include",
           }

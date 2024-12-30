@@ -52,7 +52,7 @@ const InVoicePdf = ({ inVoiceData }) => {
                 fontWeight: "bold",
               }}
             >
-              CHALLAN
+              Invoice
             </span>
           </div>
           <div>
@@ -72,7 +72,7 @@ const InVoicePdf = ({ inVoiceData }) => {
               </p>
               <p>
                 Served By :{" "}
-                <span style={{ fontWeight: "normal" }}>Input Field </span>
+                <span style={{ fontWeight: "normal" }}> </span>
               </p>
               <p>
                 Billing Date :{" "}
@@ -259,45 +259,11 @@ const InVoicePdf = ({ inVoiceData }) => {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "1fr 1fr 1fr 1fr",
-              gap: "20px",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "80px",
               marginTop: "80px",
             }}
           >
-            <div>
-              <p style={{ fontWeight: "bold", textAlign: "center" }}>
-                {inVoiceData?.customer_id?.customer_name}
-              </p>
-              <div
-                style={{
-                  width: "100%",
-                  border: "1px solid",
-                  marginTop: "4px",
-                  marginBottom: "4px",
-                }}
-              ></div>
-              <p style={{ fontWeight: "bold", textAlign: "center" }}>
-                {" "}
-                Customer <br /> Signature
-              </p>
-            </div>
-            <div>
-              <p style={{ fontWeight: "bold", textAlign: "center" }}>
-                {inVoiceData?.warehouse_user_id?.user_name}
-              </p>
-              <div
-                style={{
-                  width: "100%",
-                  border: "1px solid",
-                  marginTop: "4px",
-                  marginBottom: "4px",
-                }}
-              ></div>
-              <p style={{ fontWeight: "bold", textAlign: "center" }}>
-                {" "}
-                Warehouse Incharge <br /> Signature
-              </p>
-            </div>
             <div>
               <p style={{ fontWeight: "bold", textAlign: "center" }}>
                 {inVoiceData?.account_user_id?.user_name}
