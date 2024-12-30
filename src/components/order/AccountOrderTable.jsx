@@ -5,13 +5,15 @@ import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton
 import { CiMenuKebab } from "react-icons/ci";
 import { BASE_URL } from "@/utils/baseURL";
 import { toast } from "react-toastify";
-import { FaEye, FaFileDownload } from "react-icons/fa";
+import { FaEye, FaFileDownload, FaPrint } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import OrderUpDateModal from "./OrderUpDateModal";
 import { CSVLink } from "react-csv";
 import { DateTimeFormat } from "@/utils/dateTimeFormet";
 import Swal from "sweetalert2-optimized";
+import ChallanPDF from "@/pages/AllPdfPrintPage/ChallanPDF";
+import InVoicePdf from "@/pages/AllPdfPrintPage/InVoicePdf";
 
 const AccountOrderTable = ({
   setPage,
@@ -133,6 +135,59 @@ const AccountOrderTable = ({
       Grand_Total: order?.grand_total_amount,
       Order_Note: order?.order_note,
     })) || [];
+
+  const [challanOpen, setChallanOpen] = useState(false);
+  const [challanOpenData, setChallanOpenData] = useState(false);
+
+  // handle challan print
+  const handleChallanPrint = (order) => {
+    setChallanOpenData(order);
+    setChallanOpen(true);
+    // Reload the page after printing
+    setTimeout(() => {
+      const printContent = document.getElementById("invoicePrintArea");
+      const originalBody = document.body.innerHTML;
+
+      document.body.innerHTML = printContent.innerHTML;
+
+      window.print();
+
+      // Restore the original content after printing
+      document.body.innerHTML = originalBody;
+
+      // Reload the page after printing
+      setTimeout(() => {
+        location.reload();
+      }, 10);
+    }, 100);
+  };
+
+  //InVoice Pdf Open
+  const [inVoiceOpen, setInVoiceOpen] = useState(false);
+  const [inVoiceData, setInVoiceData] = useState({});
+
+  // handle challan print
+  const handleInvoicePrint = (order) => {
+    setInVoiceData(order);
+    setInVoiceOpen(true);
+    // Reload the page after printing
+    setTimeout(() => {
+      const printContent = document.getElementById("invoicePrintArea");
+      const originalBody = document.body.innerHTML;
+
+      document.body.innerHTML = printContent.innerHTML;
+
+      window.print();
+
+      // Restore the original content after printing
+      document.body.innerHTML = originalBody;
+
+      // Reload the page after printing
+      setTimeout(() => {
+        location.reload();
+      }, 10);
+    }, 100);
+  };
 
   return (
     <>
@@ -313,13 +368,74 @@ const AccountOrderTable = ({
                                                         </div>
                                                     </div> */}
                           {user?.user_role_id?.order_patch == true && (
-                            <button
-                              type="button"
-                              className="w-full px-3 py-2 hover:bg-primary hover:text-white flex justify-center items-center gap-2 font-medium btn bg-sky-400 text-white rounded-md"
-                              onClick={() => handleSendWarehouse(order)}
-                            >
-                              Send Management
-                            </button>
+                            <>
+                              <div>
+                                <div>
+                                  <button
+                                    className="ml-[8px]"
+                                    onClick={() =>
+                                      handleShowDocumentModal(order?._id)
+                                    }
+                                  >
+                                    <CiMenuKebab
+                                      size={30}
+                                      className="cursor-pointer text-primaryVariant-300 hover:text-primaryVariant-700 font-bold"
+                                    />
+                                  </button>
+                                  {orderDocumentModal == order?._id && (
+                                    <div className="  bg-success-50 shadow-xl w-[200px] flex flex-col gap-2 py-2 modal-container absolute right-14 z-30">
+                                      <Link to={`/order-details/${order?._id}`}>
+                                        {" "}
+                                        <button className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium">
+                                          <FaEye size={16} /> View
+                                        </button>
+                                      </Link>
+                                      {user?.user_role_id
+                                        ?.order_invoice_print == true && (
+                                        <button
+                                          className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
+                                          onClick={() =>
+                                            handleInvoicePrint(order)
+                                          }
+                                        >
+                                          <FaPrint size={18} />
+                                          Invoice
+                                        </button>
+                                      )}
+
+                                      {/* <button
+                                                                                            className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
+                                                                                            onClick={() => handleOrderUpdate(order)}
+                                                                                          >
+                                                                                            <FiEdit size={18} />
+                                                                                            Edit
+                                                                                          </button> */}
+                                      {user?.user_role_id
+                                        ?.order_challan_print == true && (
+                                        <button
+                                          className="w-full px-3 py-2 hover:bg-sky-400 hover:text-white flex justify-center items-center gap-2 font-medium "
+                                          onClick={() =>
+                                            handleChallanPrint(order)
+                                          }
+                                        >
+                                          <FaPrint size={18} />
+                                          Challan
+                                        </button>
+                                      )}
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              {order?.order_status == "account" && (
+                                <button
+                                  type="button"
+                                  className="w-full px-3 py-2 hover:bg-primary hover:text-white flex justify-center items-center gap-2 font-medium btn bg-sky-400 text-white rounded-md"
+                                  onClick={() => handleSendWarehouse(order)}
+                                >
+                                  Send Management
+                                </button>
+                              )}
+                            </>
                           )}
                         </td>
                       </tr>
@@ -331,6 +447,11 @@ const AccountOrderTable = ({
               <NoDataFound />
             )}
           </div>
+
+          {/* Challan */}
+          {challanOpen && <ChallanPDF challanOpenData={challanOpenData} />}
+          {/* In-Voice */}
+          {inVoiceOpen && <InVoicePdf inVoiceData={inVoiceData} />}
 
           {totalData > 10 && (
             <Pagination

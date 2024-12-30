@@ -157,7 +157,7 @@ const CustomerPaymentList = () => {
                             {serialNumber + i + 1}
                           </td>
                           <td className="whitespace-nowrap py-3 font-medium text-gray-700">
-                            <Link to="">
+                            <Link to={`/order-details/${payment?.order_id?._id}`}>
                               <span className="text-blue-600 underline">
                                 {" "}
                                 {payment?.invoice_number}
