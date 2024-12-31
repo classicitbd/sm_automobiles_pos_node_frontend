@@ -20,6 +20,10 @@ const permissionsData = [
     Type: ["site_setting_patch"],
   },
   {
+    Name: "Employee Routes",
+    Type: ["employee_route_show"],
+  },
+  {
     Name: "User Permission",
     Type: ["user_post", "user_patch", "user_dashboard_show"],
   },

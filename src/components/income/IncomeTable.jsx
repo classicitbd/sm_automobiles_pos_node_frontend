@@ -93,15 +93,13 @@ const IncomeTable = ({
                           )}
                         </td>
                         <td className="whitespace-nowrap py-3 font-medium text-gray-700">
-                          <Link to="">
                             {income?.income_invoice_number ? (
-                              <span className="text-blue-600 underline">
+                              <span>
                                 {income?.income_invoice_number}
                               </span>
                             ) : (
                               <span className="text-red-600">N/A</span>
                             )}
-                          </Link>
                         </td>
                         <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                           {DateTimeFormat(income?.createdAt)}

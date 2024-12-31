@@ -7,6 +7,7 @@ import Swal from "sweetalert2-optimized";
 import { BASE_URL } from "@/utils/baseURL";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { DateTimeFormat } from "@/utils/dateTimeFormet";
 
 const DueCustomerPaymentTable = ({
   setPage,
@@ -100,6 +101,7 @@ const DueCustomerPaymentTable = ({
                   <thead>
                     <tr className="font-semibold text-center">
                       <td className="whitespace-nowrap py-4 px-2 ">SL No</td>
+                      <td className="whitespace-nowrap p-4 ">Date</td>
                       <td className="whitespace-nowrap py-4 px-2 ">
                         Invoice No
                       </td>
@@ -151,6 +153,9 @@ const DueCustomerPaymentTable = ({
                       >
                         <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700">
                           {serialNumber + i + 1}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {DateTimeFormat(check?.createdAt)}
                         </td>
                         <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700">
                           <Link to={`/order-details/${check?.order_id?._id}`}>

@@ -212,6 +212,7 @@ const ManagementOrderTable = ({
                   <thead>
                     <tr className="font-semibold text-center ">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
+                      <td className="whitespace-nowrap p-4 ">Date</td>
                       <td className="whitespace-nowrap p-4 ">Customer Name</td>
                       <td className="whitespace-nowrap p-4 ">Phone</td>
                       <td className="whitespace-nowrap p-4 ">Created By</td>
@@ -241,6 +242,9 @@ const ManagementOrderTable = ({
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {DateTimeFormat(order?.createdAt)}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {order?.customer_id?.customer_name}
