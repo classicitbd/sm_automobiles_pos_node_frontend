@@ -72,9 +72,8 @@ const PurchaseListTable = ({
                   {purchaseLists?.data?.map((purchaseList, i) => (
                     <tr
                       key={purchaseList?._id}
-                      className={`text-center ${
-                        i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
-                      } hover:bg-blue-100`}
+                      className={`text-center ${i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                        } hover:bg-blue-100`}
                     >
                       <td className="whitespace-nowrap py-3 px-1.5 font-medium text-gray-700">
                         {serialNumber + i + 1}

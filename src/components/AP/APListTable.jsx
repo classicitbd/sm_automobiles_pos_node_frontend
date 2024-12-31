@@ -97,11 +97,7 @@ const APListTable = ({
                       </td>
 
                       <td className="whitespace-nowrap py-3 px-1.5 font-medium text-gray-700">
-                        <Link to="">
-                          <span className="text-blue-600 underline ">
                             {purchaselist?.invoice_id}
-                          </span>
-                        </Link>
                       </td>
                       <td className="whitespace-nowrap py-3 px-1.5 font-medium text-purple">
                         {purchaselist?.product_quantity}

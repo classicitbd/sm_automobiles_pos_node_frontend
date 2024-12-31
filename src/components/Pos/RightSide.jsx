@@ -61,13 +61,13 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
       prev.map((item) =>
         item?._id === product_discount_idInfo?._id
           ? {
-              ...item,
-              discount_percent: product_discount,
-              grand_total:
-                product_discount_idInfo?.total_amount -
-                (product_discount_idInfo?.total_amount * product_discount) /
-                  100,
-            }
+            ...item,
+            discount_percent: product_discount,
+            grand_total:
+              product_discount_idInfo?.total_amount -
+              (product_discount_idInfo?.total_amount * product_discount) /
+              100,
+          }
           : item
       )
     );
@@ -169,7 +169,8 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
           discount_percent: item?.discount_percent || 0,
           grand_total: parseFloat(item?.grand_total.toFixed(2)),
           total_measurement: parseInt(item?.total_measurement),
-          product_unit_name: item?.product_unit_id?.product_unit_name,
+          // product_unit_name: item?.product_unit_id?.product_unit_name,
+          product_unit_name: settingData?.unit_name,
         })),
         sub_total_amount: parseFloat(sub_total.toFixed(2)),
         discount_percent_amount: parseFloat(discount_amount).toFixed(2) || 0,
@@ -347,12 +348,12 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                       <th className="  font-semibold text-center  py-2 px-3">
                         Quantity
                       </th>
-                      <th className="  font-semibold text-center  py-2 px-3">
+                      {/* <th className="  font-semibold text-center  py-2 px-3">
                         Unit
-                      </th>
-                      <th className="  font-semibold text-center  py-2 px-3">
+                      </th> */}
+                      {/* <th className="  font-semibold text-center  py-2 px-3">
                         Measurement
-                      </th>
+                      </th> */}
                       <th className="  font-semibold text-center  py-2 px-3">
                         Total
                       </th>
@@ -372,11 +373,10 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                       addProducts?.map((product, index) => (
                         <tr
                           key={index}
-                          className={`text-center ${
-                            index % 2 === 0
-                              ? "bg-secondary-50"
-                              : "bg-secondary-100"
-                          } hover:bg-blue-100`}
+                          className={`text-center ${index % 2 === 0
+                            ? "bg-secondary-50"
+                            : "bg-secondary-100"
+                            } hover:bg-blue-100`}
                         >
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700 text-center  px-3">
                             {product?.product_id}
@@ -395,33 +395,33 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                                     prev.map((item) =>
                                       item._id === product._id
                                         ? {
-                                            ...item,
-                                            purchase_quantity:
-                                              item?.purchase_quantity > 1
-                                                ? item?.purchase_quantity - 1
-                                                : item?.purchase_quantity,
-                                            total_amount:
-                                              item?.purchase_quantity > 1
-                                                ? item?.total_amount -
-                                                  product?.product_price
-                                                : item?.total_amount,
-                                            grand_total:
-                                              item?.purchase_quantity > 1
-                                                ? item?.total_amount -
-                                                  product?.product_price -
-                                                  ((item?.total_amount -
-                                                    product?.product_price) *
-                                                    item?.discount_percent) /
-                                                    100
-                                                : item?.grand_total,
-                                            total_measurement:
-                                              item?.purchase_quantity > 1
-                                                ? (product?.purchase_quantity -
-                                                    1) *
-                                                  product?.product_unit_id
-                                                    ?.product_unit_value
-                                                : item?.total_measurement,
-                                          }
+                                          ...item,
+                                          purchase_quantity:
+                                            item?.purchase_quantity > 1
+                                              ? item?.purchase_quantity - 1
+                                              : item?.purchase_quantity,
+                                          total_amount:
+                                            item?.purchase_quantity > 1
+                                              ? item?.total_amount -
+                                              product?.product_price
+                                              : item?.total_amount,
+                                          grand_total:
+                                            item?.purchase_quantity > 1
+                                              ? item?.total_amount -
+                                              product?.product_price -
+                                              ((item?.total_amount -
+                                                product?.product_price) *
+                                                item?.discount_percent) /
+                                              100
+                                              : item?.grand_total,
+                                          total_measurement:
+                                            item?.purchase_quantity > 1
+                                              ? (product?.purchase_quantity -
+                                                1) *
+                                              product?.product_unit_id
+                                                ?.product_unit_value
+                                              : item?.total_measurement,
+                                        }
                                         : item
                                     )
                                   );
@@ -440,50 +440,51 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                                       prev.map((item) =>
                                         item._id === product._id
                                           ? {
-                                              ...item,
-                                              purchase_quantity:
-                                                newQuantity <
+                                            ...item,
+                                            purchase_quantity:
+                                              newQuantity <
                                                 product?.product_quantity
-                                                  ? newQuantity
-                                                  : product?.product_quantity,
-                                              total_amount:
-                                                newQuantity <
+                                                ? newQuantity
+                                                : product?.product_quantity,
+                                            total_amount:
+                                              newQuantity <
                                                 product?.product_quantity
-                                                  ? newQuantity *
-                                                    product?.product_price
-                                                  : product?.product_quantity *
-                                                    product?.product_price,
-                                              grand_total:
-                                                newQuantity <
+                                                ? newQuantity *
+                                                product?.product_price
+                                                : product?.product_quantity *
+                                                product?.product_price,
+                                            grand_total:
+                                              newQuantity <
                                                 product?.product_quantity
-                                                  ? newQuantity *
-                                                      product?.product_price -
-                                                    (newQuantity *
-                                                      product?.product_price *
-                                                      item?.discount_percent) /
-                                                      100
-                                                  : product?.product_quantity *
-                                                      product?.product_price -
-                                                    (product?.product_quantity *
-                                                      product?.product_price *
-                                                      item?.discount_percent) /
-                                                      100,
-                                              total_measurement:
-                                                newQuantity <
+                                                ? newQuantity *
+                                                product?.product_price -
+                                                (newQuantity *
+                                                  product?.product_price *
+                                                  item?.discount_percent) /
+                                                100
+                                                : product?.product_quantity *
+                                                product?.product_price -
+                                                (product?.product_quantity *
+                                                  product?.product_price *
+                                                  item?.discount_percent) /
+                                                100,
+                                            total_measurement:
+                                              newQuantity <
                                                 product?.product_quantity
-                                                  ? newQuantity *
-                                                    product?.product_unit_id
-                                                      ?.product_unit_value
-                                                  : item?.total_measurement,
-                                            }
+                                                ? newQuantity *
+                                                product?.product_unit_id
+                                                  ?.product_unit_value
+                                                : item?.total_measurement,
+                                          }
                                           : item
                                       )
                                     );
                                   }
                                 }}
-                                value={product?.purchase_quantity}
+                                value={product?.purchase_quantity + " " + settingData?.unit_name}
                                 className="rounded-md  shadow-sm sm:text-sm p-1 w-16 text-center"
                               />
+
                               <button
                                 type="button"
                                 onClick={() => {
@@ -491,37 +492,37 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                                     prev.map((item) =>
                                       item._id === product._id
                                         ? {
-                                            ...item,
-                                            purchase_quantity:
-                                              item?.purchase_quantity <
+                                          ...item,
+                                          purchase_quantity:
+                                            item?.purchase_quantity <
                                               product?.product_quantity
-                                                ? item?.purchase_quantity + 1
-                                                : item?.purchase_quantity,
-                                            total_amount:
-                                              item?.purchase_quantity <
+                                              ? item?.purchase_quantity + 1
+                                              : item?.purchase_quantity,
+                                          total_amount:
+                                            item?.purchase_quantity <
                                               product?.product_quantity
-                                                ? item?.total_amount +
-                                                  product?.product_price
-                                                : item?.total_amount,
-                                            grand_total:
-                                              item?.purchase_quantity <
+                                              ? item?.total_amount +
+                                              product?.product_price
+                                              : item?.total_amount,
+                                          grand_total:
+                                            item?.purchase_quantity <
                                               product?.product_quantity
-                                                ? item?.total_amount +
-                                                  product?.product_price -
-                                                  ((item?.total_amount +
-                                                    product?.product_price) *
-                                                    item?.discount_percent) /
-                                                    100
-                                                : item?.grand_total,
-                                            total_measurement:
-                                              item?.purchase_quantity <
+                                              ? item?.total_amount +
+                                              product?.product_price -
+                                              ((item?.total_amount +
+                                                product?.product_price) *
+                                                item?.discount_percent) /
+                                              100
+                                              : item?.grand_total,
+                                          total_measurement:
+                                            item?.purchase_quantity <
                                               product?.product_quantity
-                                                ? (product?.purchase_quantity +
-                                                    1) *
-                                                  product?.product_unit_id
-                                                    ?.product_unit_value
-                                                : item?.total_measurement,
-                                          }
+                                              ? (product?.purchase_quantity +
+                                                1) *
+                                              product?.product_unit_id
+                                                ?.product_unit_value
+                                              : item?.total_measurement,
+                                        }
                                         : item
                                     )
                                   );
@@ -532,7 +533,7 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                               </button>
                             </div>
                           </td>
-                          <td className="whitespace-nowrap font-medium text-gray-700 text-center ">
+                          {/* <td className="whitespace-nowrap font-medium text-gray-700 text-center ">
                             <Select
                               id="product_unit_name"
                               name="product_unit_name"
@@ -543,8 +544,6 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                               getOptionLabel={(x) => x?.product_unit_name}
                               getOptionValue={(x) => x?._id}
                               onChange={(selectedOption) => {
-                                console.log(selectedOption);
-                                console.log(product);
                                 setAddProducts((prev) =>
                                   prev.map((item) =>
                                     item?._id === product?._id
@@ -561,15 +560,14 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                               }}
                               className="text-sm"
                             />
-                            {/* measurement */}
-                          </td>
-                          <td className="whitespace-nowrap font-medium text-gray-700 text-center  px-3">
+                          </td> */}
+                          {/* <td className="whitespace-nowrap font-medium text-gray-700 text-center  px-3">
                             {product?.purchase_quantity}{" "}
                             {product?.product_unit_id?.product_unit_name}
                             {"="}
                             {product?.total_measurement}{" "}
                             {settingData?.unit_name}
-                          </td>
+                          </td> */}
                           <td className="whitespace-nowrap font-medium text-green-600 text-center  px-3">
                             {product?.total_amount}
                           </td>
@@ -720,27 +718,27 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                 </div>
                 {(payment_type == "full-payment" ||
                   payment_type == "partial-payment") && (
-                  <h5 className="">Payment Method</h5>
-                )}
+                    <h5 className="">Payment Method</h5>
+                  )}
                 {/* {payment_type !== "due-payment" select paymrnt method */}
                 {(payment_type == "full-payment" ||
                   payment_type == "partial-payment") && (
-                  <div className="">
-                    <Select
-                      id="payment_method"
-                      name="payment_method"
-                      aria-label="Payment By"
-                      required
-                      isClearable
-                      options={partialPaymentOption}
-                      getOptionLabel={(x) => x?.label}
-                      getOptionValue={(x) => x?.value}
-                      onChange={(selectedOption) => {
-                        setPaymentBy(selectedOption?.value);
-                      }}
-                    />
-                  </div>
-                )}
+                    <div className="">
+                      <Select
+                        id="payment_method"
+                        name="payment_method"
+                        aria-label="Payment By"
+                        required
+                        isClearable
+                        options={partialPaymentOption}
+                        getOptionLabel={(x) => x?.label}
+                        getOptionValue={(x) => x?.value}
+                        onChange={(selectedOption) => {
+                          setPaymentBy(selectedOption?.value);
+                        }}
+                      />
+                    </div>
+                  )}
                 {payment_type == "partial-payment" && (
                   <h5 className="">Pay Amount</h5>
                 )}
