@@ -1,5 +1,7 @@
 import TableLoadingSkeleton from "@/components/common/loadingSkeleton/TableLoadingSkeleton";
 import Pagination from "@/components/common/pagination/Pagination";
+import AddCustomers from "@/components/Customers/AddCustomers";
+import { Button } from "@/components/ui/button";
 import { AuthContext } from "@/context/AuthProvider";
 import useDebounced from "@/hooks/useDebounced";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
@@ -17,6 +19,7 @@ const Customers = () => {
   const [searchValue, setSearchValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const { user } = useContext(AuthContext);
+  const [customersCreateModal, setCustomersCreateModal] = useState(false);
 
   // handle item search function....
   const handleSearchValue = (value) => {
@@ -43,7 +46,7 @@ const Customers = () => {
   const {
     data: allCustomers = [],
     isLoading,
-    // refetch,
+    refetch,
   } = useQuery({
     queryKey: [
       `/api/v1/customer/self_customer?customer_publisher_id=${customer_publisher_id}&page=${page}&limit=${limit}&searchTerm=${searchTerm}`,
@@ -81,11 +84,18 @@ const Customers = () => {
 
   return (
     <>
-      <div className="flex justify-between mt-6">
+      <h1 className="text-2xl">Customers</h1>
+      <div className="flex justify-between items-center mt-6">
         <div>
-          <h1 className="text-2xl">Customers</h1>
-        </div>
-
+            {user?.user_role_id?.customer_post == true && (
+              <Button
+                type="button"
+                onClick={() => setCustomersCreateModal(true)}
+              >
+                Create Customers
+              </Button>
+            )}
+          </div>
         <div className="mt-3">
           <input
             type="text"
@@ -96,6 +106,7 @@ const Customers = () => {
           />
         </div>
       </div>
+
       <>
         {isLoading === true ? (
           <TableLoadingSkeleton />
@@ -132,9 +143,8 @@ const Customers = () => {
                       {allCustomers?.data?.map((customer, i) => (
                         <tr
                           key={customer?._id}
-                          className={`text-center ${
-                            i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
-                          } hover:bg-blue-100`}
+                          className={`text-center ${i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                            } hover:bg-blue-100`}
                         >
                           <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                             {serialNumber + i + 1}
@@ -224,6 +234,15 @@ const Customers = () => {
           page={page}
           limit={limit}
         />
+        {/*Customers Create  modal */}
+
+        {customersCreateModal && (
+          <AddCustomers
+            setCustomersCreateModal={setCustomersCreateModal}
+            refetch={refetch}
+            user={user}
+          />
+        )}
       </>
     </>
   );

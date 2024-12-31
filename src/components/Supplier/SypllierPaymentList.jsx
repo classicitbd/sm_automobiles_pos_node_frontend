@@ -150,19 +150,14 @@ const SypllierPaymentList = () => {
                       (payment, i) => (
                         <tr
                           key={payment?._id}
-                          className={`text-center ${
-                            i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
-                          } hover:bg-blue-100`}
+                          className={`text-center ${i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                            } hover:bg-blue-100`}
                         >
                           <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                             {serialNumber + i + 1}
                           </td>
                           <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
-                            <Link>
-                              <span className="underline text-blue-600">
-                                {payment?.reference_id}
-                              </span>
-                            </Link>
+                            {payment?.reference_id}
                           </td>
                           <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                             {payment?.supplier_payment_title}

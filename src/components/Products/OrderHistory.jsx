@@ -2,7 +2,7 @@ import { AuthContext } from "@/context/AuthProvider";
 import { BASE_URL } from "@/utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import { DateTimeFormat } from "@/utils/dateTimeFormet";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
@@ -132,15 +132,16 @@ const OrderHistory = () => {
                       (payment, i) => (
                         <tr
                           key={payment?._id}
-                          className={`text-center ${
-                            i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
-                          } hover:bg-blue-100`}
+                          className={`text-center ${i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                            } hover:bg-blue-100`}
                         >
                           <td className="whitespace-nowrap py-2 font-medium text-gray-700">
                             {serialNumber + i + 1}
                           </td>
-                          <td className="whitespace-nowrap py-2 font-medium text-blue-500 underline cursor-pointer">
-                            {payment?.order_id}
+                          <td className="whitespace-nowrap py-2 font-medium text-blue-700 underline cursor-pointer">
+                            <Link to={`/order-details/${payment?._id}`}>
+                              {payment?.order_id}
+                            </Link>
                           </td>
                           <td className="whitespace-nowrap py-2 font-medium text-gray-700">
                             {DateTimeFormat(payment?.createdAt)}

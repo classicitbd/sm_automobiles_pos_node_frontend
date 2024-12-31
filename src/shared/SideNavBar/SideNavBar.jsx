@@ -148,7 +148,7 @@ const SideNavBar = () => {
           <MenuItem
             to="/employe-payment"
             icon={TbCategoryPlus}
-            label="Employ Payment List"
+            label="Payment List"
             isActive={isActive("/employe-payment")}
             onClick={closeAllDropdowns}
           />
@@ -165,46 +165,49 @@ const SideNavBar = () => {
           {(user?.user_role_id?.category_post === true ||
             user?.user_role_id?.category_patch === true ||
             user?.user_role_id?.brand_post === true ||
-            user?.user_role_id?.brand_patch === true ||
-            user?.user_role_id?.unit_dashboard_show === true ||
-            user?.user_role_id?.unit_post === true ||
-            user?.user_role_id?.unit_patch === true) && (
-            <DropdownMenu
-              label="Task"
-              icon={BiTask}
-              isOpen={activeDropdown === "task"}
-              onClick={() => toggleDropdown("task")}
-            >
-              {(user?.user_role_id?.category_post === true ||
-                user?.user_role_id?.category_patch === true) && (
-                <ChildMenuItem
-                  to="/category"
-                  icon={TbCategoryPlus}
-                  label="Category"
-                  isActive={isActive("/category")}
-                />
-              )}
+            user?.user_role_id?.brand_patch === true
+            // ||
+            // user?.user_role_id?.unit_dashboard_show === true
+            // ||
+            // user?.user_role_id?.unit_post === true ||
+            // user?.user_role_id?.unit_patch === true
+          ) && (
+              <DropdownMenu
+                label="Task"
+                icon={BiTask}
+                isOpen={activeDropdown === "task"}
+                onClick={() => toggleDropdown("task")}
+              >
+                {(user?.user_role_id?.category_post === true ||
+                  user?.user_role_id?.category_patch === true) && (
+                    <ChildMenuItem
+                      to="/category"
+                      icon={TbCategoryPlus}
+                      label="Category"
+                      isActive={isActive("/category")}
+                    />
+                  )}
 
-              {(user?.user_role_id?.brand_post === true ||
-                user?.user_role_id?.brand_patch === true) && (
-                <ChildMenuItem
-                  to="/brand"
-                  icon={TbCategoryPlus}
-                  label="Brand"
-                  isActive={isActive("/brand")}
-                />
-              )}
+                {(user?.user_role_id?.brand_post === true ||
+                  user?.user_role_id?.brand_patch === true) && (
+                    <ChildMenuItem
+                      to="/brand"
+                      icon={TbCategoryPlus}
+                      label="Brand"
+                      isActive={isActive("/brand")}
+                    />
+                  )}
 
-              {user?.user_role_id?.unit_dashboard_show === true && (
+                {/* {user?.user_role_id?.unit_dashboard_show === true && (
                 <ChildMenuItem
                   to="/units"
                   icon={TbCategoryPlus}
                   label="Units"
                   isActive={isActive("/units")}
                 />
-              )}
-            </DropdownMenu>
-          )}
+              )} */}
+              </DropdownMenu>
+            )}
           {/* ....Site Setting..... */}
           {user?.user_role_id?.site_setting_patch === true && (
             <MenuItem
@@ -221,52 +224,52 @@ const SideNavBar = () => {
             user?.user_role_id?.user_dashboard_show === true ||
             user?.user_role_id?.role_post === true ||
             user?.user_role_id?.role_patch === true) && (
-            <DropdownMenu
-              label="Staff"
-              icon={FiUsers}
-              isOpen={activeDropdown === "staff"}
-              onClick={() => toggleDropdown("staff")}
-            >
-              {user?.user_role_id?.user_dashboard_show === true && (
-                <ChildMenuItem
-                  to="/all-staff"
-                  icon={PiUsersThree}
-                  label="All Staff"
-                  isActive={isActive("/all-staff")}
-                />
-              )}
-              {(user?.user_role_id?.role_post === true ||
-                user?.user_role_id?.role_patch === true) && (
-                <ChildMenuItem
-                  to="/create-staff-role"
-                  icon={BsShieldPlus}
-                  label="Add Staff Role"
-                  isActive={isActive("/create-staff-role")}
-                />
-              )}
+              <DropdownMenu
+                label="Staff"
+                icon={FiUsers}
+                isOpen={activeDropdown === "staff"}
+                onClick={() => toggleDropdown("staff")}
+              >
+                {user?.user_role_id?.user_dashboard_show === true && (
+                  <ChildMenuItem
+                    to="/all-staff"
+                    icon={PiUsersThree}
+                    label="All Staff"
+                    isActive={isActive("/all-staff")}
+                  />
+                )}
+                {(user?.user_role_id?.role_post === true ||
+                  user?.user_role_id?.role_patch === true) && (
+                    <ChildMenuItem
+                      to="/create-staff-role"
+                      icon={BsShieldPlus}
+                      label="Add Staff Role"
+                      isActive={isActive("/create-staff-role")}
+                    />
+                  )}
 
-              {(user?.user_role_id?.role_post === true ||
-                user?.user_role_id?.role_patch === true) && (
-                <ChildMenuItem
-                  to="/staff-role"
-                  icon={BsShieldPlus}
-                  label="Staff Role"
-                  isActive={isActive("/staff-role")}
-                />
-              )}
-            </DropdownMenu>
-          )}
+                {(user?.user_role_id?.role_post === true ||
+                  user?.user_role_id?.role_patch === true) && (
+                    <ChildMenuItem
+                      to="/staff-role"
+                      icon={BsShieldPlus}
+                      label="Staff Role"
+                      isActive={isActive("/staff-role")}
+                    />
+                  )}
+              </DropdownMenu>
+            )}
           {/* .....Sale Target..... */}
           {(user?.user_role_id?.sale_target_post === true ||
             user?.user_role_id?.sale_target_patch === true) && (
-            <MenuItem
-              to="/sale-target"
-              icon={GiTargetShot}
-              label="Sales Target"
-              isActive={isActive("/sale-target")}
-              onClick={closeAllDropdowns} // Close all dropdowns when clicked
-            />
-          )}
+              <MenuItem
+                to="/sale-target"
+                icon={GiTargetShot}
+                label="Sales Target"
+                isActive={isActive("/sale-target")}
+                onClick={closeAllDropdowns} // Close all dropdowns when clicked
+              />
+            )}
           {/* ....Supplier List.... */}
           {user?.user_role_id?.supplier_dashboard_show === true && (
             <MenuItem
@@ -302,38 +305,38 @@ const SideNavBar = () => {
             user?.user_role_id?.product_patch === true ||
             user?.user_role_id?.product_dashboard_show === true ||
             user?.user_role_id?.stock_post === true) && (
-            <DropdownMenu
-              label="Product"
-              icon={BiTask}
-              isOpen={activeDropdown === "product"}
-              onClick={() => toggleDropdown("product")}
-            >
-              {user?.user_role_id?.product_dashboard_show === true && (
-                <ChildMenuItem
-                  to="/product"
-                  icon={TbCategoryPlus}
-                  label="Stock List"
-                  isActive={isActive("/product")}
-                />
-              )}
-              {user?.user_role_id?.product_post === true && (
-                <ChildMenuItem
-                  to="/add-product"
-                  icon={TbCategoryPlus}
-                  label="Add Product"
-                  isActive={isActive("/add-product")}
-                />
-              )}
-              {user?.user_role_id?.stock_post === true && (
-                <ChildMenuItem
-                  to="/stock_manage"
-                  icon={TbCategoryPlus}
-                  label="Product Purchase"
-                  isActive={isActive("/stock_manage")}
-                />
-              )}
-            </DropdownMenu>
-          )}
+              <DropdownMenu
+                label="Product"
+                icon={BiTask}
+                isOpen={activeDropdown === "product"}
+                onClick={() => toggleDropdown("product")}
+              >
+                {user?.user_role_id?.product_dashboard_show === true && (
+                  <ChildMenuItem
+                    to="/product"
+                    icon={TbCategoryPlus}
+                    label="Stock List"
+                    isActive={isActive("/product")}
+                  />
+                )}
+                {user?.user_role_id?.product_post === true && (
+                  <ChildMenuItem
+                    to="/add-product"
+                    icon={TbCategoryPlus}
+                    label="Add Product"
+                    isActive={isActive("/add-product")}
+                  />
+                )}
+                {user?.user_role_id?.stock_post === true && (
+                  <ChildMenuItem
+                    to="/stock_manage"
+                    icon={TbCategoryPlus}
+                    label="Product Purchase"
+                    isActive={isActive("/stock_manage")}
+                  />
+                )}
+              </DropdownMenu>
+            )}
           {/* ...Expense.... */}
           {user?.user_role_id?.expense_show === true && (
             <MenuItem
@@ -371,54 +374,54 @@ const SideNavBar = () => {
             user?.user_role_id?.account_order_show === true ||
             user?.user_role_id?.warehouse_order_show === true ||
             user?.user_role_id?.out_of_warehouse_order_show === true) && (
-            <DropdownMenu
-              label="Order"
-              icon={BiTask}
-              isOpen={activeDropdown === "order"}
-              onClick={() => toggleDropdown("order")}
-            >
-              {user?.user_role_id?.order_dashboard_show === true && (
-                <ChildMenuItem
-                  to="/order"
-                  icon={FaShoppingCart}
-                  label="All Order"
-                  isActive={isActive("/order")}
-                />
-              )}
-              {user?.user_role_id?.account_order_show === true && (
-                <ChildMenuItem
-                  to="/account-order"
-                  icon={FaShoppingCart}
-                  label="Account Order"
-                  isActive={isActive("/account-order")}
-                />
-              )}
-              {user?.user_role_id?.management_order_show === true && (
-                <ChildMenuItem
-                  to="/management-order"
-                  icon={FaShoppingCart}
-                  label="Management Order"
-                  isActive={isActive("/management-order")}
-                />
-              )}
-              {user?.user_role_id?.warehouse_order_show === true && (
-                <ChildMenuItem
-                  to="/warehouse-order"
-                  icon={FaShoppingCart}
-                  label="Warehouse Order"
-                  isActive={isActive("/warehouse-order")}
-                />
-              )}
-              {user?.user_role_id?.out_of_warehouse_order_show === true && (
-                <ChildMenuItem
-                  to="/out-of-warehouse"
-                  icon={FaShoppingCart}
-                  label="Out Of Warehouse"
-                  isActive={isActive("/out-of-warehouse")}
-                />
-              )}
-            </DropdownMenu>
-          )}
+              <DropdownMenu
+                label="Order"
+                icon={BiTask}
+                isOpen={activeDropdown === "order"}
+                onClick={() => toggleDropdown("order")}
+              >
+                {user?.user_role_id?.order_dashboard_show === true && (
+                  <ChildMenuItem
+                    to="/order"
+                    icon={FaShoppingCart}
+                    label="All Order"
+                    isActive={isActive("/order")}
+                  />
+                )}
+                {user?.user_role_id?.account_order_show === true && (
+                  <ChildMenuItem
+                    to="/account-order"
+                    icon={FaShoppingCart}
+                    label="Account Order"
+                    isActive={isActive("/account-order")}
+                  />
+                )}
+                {user?.user_role_id?.management_order_show === true && (
+                  <ChildMenuItem
+                    to="/management-order"
+                    icon={FaShoppingCart}
+                    label="Management Order"
+                    isActive={isActive("/management-order")}
+                  />
+                )}
+                {user?.user_role_id?.warehouse_order_show === true && (
+                  <ChildMenuItem
+                    to="/warehouse-order"
+                    icon={FaShoppingCart}
+                    label="Warehouse Order"
+                    isActive={isActive("/warehouse-order")}
+                  />
+                )}
+                {user?.user_role_id?.out_of_warehouse_order_show === true && (
+                  <ChildMenuItem
+                    to="/out-of-warehouse"
+                    icon={FaShoppingCart}
+                    label="Out Of Warehouse"
+                    isActive={isActive("/out-of-warehouse")}
+                  />
+                )}
+              </DropdownMenu>
+            )}
           {/* .....Pdf File...... */}
           {/* <DropdownMenu
             label="PDF FILE"
@@ -450,7 +453,7 @@ const SideNavBar = () => {
             user?.user_role_id?.supplier_paid_payment_show === true ||
             user?.user_role_id?.supplier_unpaid_payment_show === true ||
             user?.user_role_id?.supplier_check_or_cash_out_payment_show ===
-              true ||
+            true ||
             user?.user_role_id?.supplier_payment_dashboard_show === true ||
             user?.user_role_id?.check_dashboard_show === true ||
             user?.user_role_id?.customer_ar_show === true ||
@@ -460,181 +463,181 @@ const SideNavBar = () => {
             user?.user_role_id?.profit_show === true ||
             user?.user_role_id?.ledger_show === true ||
             user?.user_role_id?.stock_ap_show === true) && (
-            <DropdownMenu
-              label="Accounts"
-              icon={MdAccountBalanceWallet}
-              isOpen={activeDropdown === "accounts"}
-              onClick={() => toggleDropdown("accounts")}
-            >
-              {user?.user_role_id?.profit_show === true && (
-                <ChildMenuItem
-                  to="/profit"
-                  icon={FaProductHunt}
-                  label="Profit"
-                  isActive={isActive("/profit")}
-                  onClick={closeAllChildDropdowns}
-                />
-              )}
+              <DropdownMenu
+                label="Accounts"
+                icon={MdAccountBalanceWallet}
+                isOpen={activeDropdown === "accounts"}
+                onClick={() => toggleDropdown("accounts")}
+              >
+                {user?.user_role_id?.profit_show === true && (
+                  <ChildMenuItem
+                    to="/profit"
+                    icon={FaProductHunt}
+                    label="Profit"
+                    isActive={isActive("/profit")}
+                    onClick={closeAllChildDropdowns}
+                  />
+                )}
 
-              {/* Account Receiveable */}
+                {/* Account Receiveable */}
 
-              {(user?.user_role_id?.customer_ar_show === true ||
-                user?.user_role_id?.check_dashboard_show === true ||
-                user?.user_role_id?.check_today_dashboard_show === true ||
-                user?.user_role_id?.check_due_dashboard_show === true) && (
-                <ChildDropdownMenu
-                  label="Account Receivable"
-                  icon={RiFolderReceivedFill}
-                  isOpen={activeChildDropdown === "ar"}
-                  onClick={() => toggleChildDropdown("ar")}
-                >
-                  {user?.user_role_id?.customer_ar_show === true && (
-                    <SubChildMenuItem
-                      to="/ar-list"
-                      icon={GiReceiveMoney}
-                      label="A/R List"
-                      isActive={isActive("/ar-list")}
-                    />
-                  )}
-                  {user?.user_role_id?.check_dashboard_show === true && (
-                    <SubChildMenuItem
-                      to="/payment"
-                      icon={GiReceiveMoney}
-                      label="Collection List"
-                      isActive={isActive("/payment")}
-                    />
+                {(user?.user_role_id?.customer_ar_show === true ||
+                  user?.user_role_id?.check_dashboard_show === true ||
+                  user?.user_role_id?.check_today_dashboard_show === true ||
+                  user?.user_role_id?.check_due_dashboard_show === true) && (
+                    <ChildDropdownMenu
+                      label="Account Receivable"
+                      icon={RiFolderReceivedFill}
+                      isOpen={activeChildDropdown === "ar"}
+                      onClick={() => toggleChildDropdown("ar")}
+                    >
+                      {user?.user_role_id?.customer_ar_show === true && (
+                        <SubChildMenuItem
+                          to="/ar-list"
+                          icon={GiReceiveMoney}
+                          label="A/R List"
+                          isActive={isActive("/ar-list")}
+                        />
+                      )}
+                      {user?.user_role_id?.check_dashboard_show === true && (
+                        <SubChildMenuItem
+                          to="/payment"
+                          icon={GiReceiveMoney}
+                          label="Collection List"
+                          isActive={isActive("/payment")}
+                        />
+                      )}
+
+                      {user?.user_role_id?.check_today_dashboard_show === true && (
+                        <SubChildMenuItem
+                          to="/today-payment"
+                          icon={GiReceiveMoney}
+                          label="Today Collection List"
+                          isActive={isActive("/today-payment")}
+                        />
+                      )}
+                      {user?.user_role_id?.check_today_dashboard_show === true && (
+                        <SubChildMenuItem
+                          to="/due-payment"
+                          icon={GiReceiveMoney}
+                          label="Due Collection List"
+                          isActive={isActive("/due-payment")}
+                        />
+                      )}
+                    </ChildDropdownMenu>
                   )}
 
-                  {user?.user_role_id?.check_today_dashboard_show === true && (
-                    <SubChildMenuItem
-                      to="/today-payment"
-                      icon={GiReceiveMoney}
-                      label="Today Collection List"
-                      isActive={isActive("/today-payment")}
-                    />
-                  )}
-                  {user?.user_role_id?.check_today_dashboard_show === true && (
-                    <SubChildMenuItem
-                      to="/due-payment"
-                      icon={GiReceiveMoney}
-                      label="Due Collection List"
-                      isActive={isActive("/due-payment")}
-                    />
-                  )}
-                </ChildDropdownMenu>
-              )}
+                {/* Account Payable */}
 
-              {/* Account Payable */}
+                {(user?.user_role_id?.supplier_payment_dashboard_show === true ||
+                  user?.user_role_id?.stock_ap_show === true ||
+                  user?.user_role_id?.supplier_paid_payment_show === true ||
+                  user?.user_role_id?.supplier_unpaid_payment_show === true) && (
+                    <ChildDropdownMenu
+                      label="Account Payable"
+                      icon={FaCcAmazonPay}
+                      isOpen={activeChildDropdown === "ap"}
+                      onClick={() => toggleChildDropdown("ap")}
+                    >
+                      {user?.user_role_id?.stock_ap_show === true && (
+                        <SubChildMenuItem
+                          to="/ap-list"
+                          icon={GiPayMoney}
+                          label="A/P List"
+                          isActive={isActive("/ap-list")}
+                        />
+                      )}
+                      {user?.user_role_id?.supplier_payment_dashboard_show ===
+                        true && (
+                          <SubChildMenuItem
+                            to="/purchase-list"
+                            icon={GiPayMoney}
+                            label="All Payment List"
+                            isActive={isActive("/purchase-list")}
+                          />
+                        )}
+                      {user?.user_role_id?.supplier_paid_payment_show === true && (
+                        <SubChildMenuItem
+                          to="/paid-payment"
+                          icon={GiPayMoney}
+                          label="Paid Payment List"
+                          isActive={isActive("/paid-payment")}
+                        />
+                      )}
+                      {user?.user_role_id?.supplier_unpaid_payment_show ===
+                        true && (
+                          <SubChildMenuItem
+                            to="/unpaid-payment"
+                            icon={GiPayMoney}
+                            label="Un-Paid Payment List"
+                            isActive={isActive("/unpaid-payment")}
+                          />
+                        )}
+                    </ChildDropdownMenu>
+                  )}
 
-              {(user?.user_role_id?.supplier_payment_dashboard_show === true ||
-                user?.user_role_id?.stock_ap_show === true ||
-                user?.user_role_id?.supplier_paid_payment_show === true ||
-                user?.user_role_id?.supplier_unpaid_payment_show === true) && (
-                <ChildDropdownMenu
-                  label="Account Payable"
-                  icon={FaCcAmazonPay}
-                  isOpen={activeChildDropdown === "ap"}
-                  onClick={() => toggleChildDropdown("ap")}
-                >
-                  {user?.user_role_id?.stock_ap_show === true && (
-                    <SubChildMenuItem
-                      to="/ap-list"
-                      icon={GiPayMoney}
-                      label="A/P List"
-                      isActive={isActive("/ap-list")}
-                    />
-                  )}
-                  {user?.user_role_id?.supplier_payment_dashboard_show ===
-                    true && (
-                    <SubChildMenuItem
-                      to="/purchase-list"
-                      icon={GiPayMoney}
-                      label="All Payment List"
-                      isActive={isActive("/purchase-list")}
-                    />
-                  )}
-                  {user?.user_role_id?.supplier_paid_payment_show === true && (
-                    <SubChildMenuItem
-                      to="/paid-payment"
-                      icon={GiPayMoney}
-                      label="Paid Payment List"
-                      isActive={isActive("/paid-payment")}
-                    />
-                  )}
-                  {user?.user_role_id?.supplier_unpaid_payment_show ===
-                    true && (
-                    <SubChildMenuItem
-                      to="/unpaid-payment"
-                      icon={GiPayMoney}
-                      label="Un-Paid Payment List"
-                      isActive={isActive("/unpaid-payment")}
-                    />
-                  )}
-                </ChildDropdownMenu>
-              )}
+                {/* ....Ledger...... */}
 
-              {/* ....Ledger...... */}
-
-              {user?.user_role_id?.ledger_show === true && (
-                <ChildMenuItem
-                  to="/leisure"
-                  icon={SiVirustotal}
-                  label="Ledger"
-                  isActive={isActive("/leisure")}
-                  onClick={closeAllChildDropdowns}
-                />
-              )}
-              {/* Transaction History */}
-              {(user?.user_role_id?.check_or_cash_in_payment_show === true ||
-                user?.user_role_id?.supplier_check_or_cash_out_payment_show ===
+                {user?.user_role_id?.ledger_show === true && (
+                  <ChildMenuItem
+                    to="/leisure"
+                    icon={SiVirustotal}
+                    label="Ledger"
+                    isActive={isActive("/leisure")}
+                    onClick={closeAllChildDropdowns}
+                  />
+                )}
+                {/* Transaction History */}
+                {(user?.user_role_id?.check_or_cash_in_payment_show === true ||
+                  user?.user_role_id?.supplier_check_or_cash_out_payment_show ===
                   true) && (
-                <ChildDropdownMenu
-                  label="Transaction History"
-                  icon={BiTask}
-                  isOpen={activeChildDropdown === "transaction-history"}
-                  onClick={() => toggleChildDropdown("transaction-history")}
-                >
-                  {user?.user_role_id?.check_or_cash_in_payment_show ===
-                    true && (
-                    <SubChildMenuItem
-                      to="/check-in"
-                      icon={TbCategoryPlus}
-                      label="Check In"
-                      isActive={isActive("/check-in")}
-                    />
-                  )}
-                  {user?.user_role_id
-                    ?.supplier_check_or_cash_out_payment_show === true && (
-                    <SubChildMenuItem
-                      to="/check-out"
-                      icon={TbCategoryPlus}
-                      label="Check Out"
-                      isActive={isActive("/check-out")}
-                    />
-                  )}
-                  {user?.user_role_id?.check_or_cash_in_payment_show ===
-                    true && (
-                    <SubChildMenuItem
-                      to="/cash-in"
-                      icon={TbCategoryPlus}
-                      label="Cash In"
-                      isActive={isActive("/cash-in")}
-                    />
-                  )}
+                    <ChildDropdownMenu
+                      label="Transaction History"
+                      icon={BiTask}
+                      isOpen={activeChildDropdown === "transaction-history"}
+                      onClick={() => toggleChildDropdown("transaction-history")}
+                    >
+                      {user?.user_role_id?.check_or_cash_in_payment_show ===
+                        true && (
+                          <SubChildMenuItem
+                            to="/check-in"
+                            icon={TbCategoryPlus}
+                            label="Check In"
+                            isActive={isActive("/check-in")}
+                          />
+                        )}
+                      {user?.user_role_id
+                        ?.supplier_check_or_cash_out_payment_show === true && (
+                          <SubChildMenuItem
+                            to="/check-out"
+                            icon={TbCategoryPlus}
+                            label="Check Out"
+                            isActive={isActive("/check-out")}
+                          />
+                        )}
+                      {user?.user_role_id?.check_or_cash_in_payment_show ===
+                        true && (
+                          <SubChildMenuItem
+                            to="/cash-in"
+                            icon={TbCategoryPlus}
+                            label="Cash In"
+                            isActive={isActive("/cash-in")}
+                          />
+                        )}
 
-                  {user?.user_role_id
-                    ?.supplier_check_or_cash_out_payment_show === true && (
-                    <SubChildMenuItem
-                      to="/cash-out"
-                      icon={TbCategoryPlus}
-                      label="Cash Out"
-                      isActive={isActive("/cash-out")}
-                    />
+                      {user?.user_role_id
+                        ?.supplier_check_or_cash_out_payment_show === true && (
+                          <SubChildMenuItem
+                            to="/cash-out"
+                            icon={TbCategoryPlus}
+                            label="Cash Out"
+                            isActive={isActive("/cash-out")}
+                          />
+                        )}
+                    </ChildDropdownMenu>
                   )}
-                </ChildDropdownMenu>
-              )}
-            </DropdownMenu>
-          )}
+              </DropdownMenu>
+            )}
           {/* .....Payroll Manegement..... */}
 
           {/* <DropdownMenu

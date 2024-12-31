@@ -443,7 +443,7 @@ const AddCustomersPayment = () => {
                                hover:bg-blue-100"
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          <Link>
+                          <Link to={`/order-details/${order_Info?._id}`}>
                             <span className="text-blue-500 underline">
                               {" "}
                               {order_Info?.order_id}
@@ -521,9 +521,7 @@ const AddCustomersPayment = () => {
                             {product?.product_quantity}
                           </td>
                           <td className="whitespace-nowrap py-1.5 font-medium text-blue-600">
-                            {product?.product_total_price
-                              ? product?.product_total_price
-                              : "--"}
+                            {product?.grand_total}
                           </td>
                         </tr>
                       ))}

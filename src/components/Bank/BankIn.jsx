@@ -107,17 +107,14 @@ const BankIn = ({
                   {bankInData?.data?.map((payment, i) => (
                     <tr
                       key={payment?._id}
-                      className={`text-center ${
-                        i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
-                      } hover:bg-blue-100`}
+                      className={`text-center ${i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                        } hover:bg-blue-100`}
                     >
                       <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                         {serialNumber + i + 1}
                       </td>
                       <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
-                        <Link>
-                          <span className="text-blue-600 underline"> {payment?.bank_in_ref_no}</span>
-                        </Link>
+                        {payment?.bank_in_ref_no}
                       </td>
                       <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                         {payment?.bank_in_title}

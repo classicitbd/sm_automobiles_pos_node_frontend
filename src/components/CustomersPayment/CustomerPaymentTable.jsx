@@ -184,7 +184,7 @@ const CustomerPaymentTable = ({
                           {serialNumber + i + 1}
                         </td>
                         <td className="whitespace-nowrap py-3 px-1 font-medium text-gray-700">
-                          <Link to={`/order-details/${check?._id}`}>
+                          <Link to={`/order-details/${check?.order_id?._id}`}>
                             <span className="text-blue-600 underline ">
                               {check?.invoice_number}
                             </span>
