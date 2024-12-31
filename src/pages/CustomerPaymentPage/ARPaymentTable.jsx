@@ -6,6 +6,7 @@ import Swal from "sweetalert2-optimized";
 import Pagination from "@/components/common/pagination/Pagination";
 import TableLoadingSkeleton from "@/components/common/loadingSkeleton/TableLoadingSkeleton";
 import { Link } from "react-router-dom";
+import { DateTimeFormat } from "@/utils/dateTimeFormet";
 
 const ARPaymentTable = ({
   setPage,
@@ -101,7 +102,7 @@ const ARPaymentTable = ({
                   <thead>
                     <tr className=" font-semibold text-center ">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
-
+                      <td className="whitespace-nowrap p-4 ">Date</td>
                       <td className="whitespace-nowrap p-4 ">Customer Name</td>
                       <td className="whitespace-nowrap p-4 ">Customer Phone</td>
                       <td className="whitespace-nowrap p-4 ">Invoice No</td>
@@ -126,7 +127,9 @@ const ARPaymentTable = ({
                         <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                           {serialNumber + i + 1}
                         </td>
-
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {DateTimeFormat(check?.createdAt)}
+                        </td>
                         <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                           {check?.customer_id?.customer_name}
                         </td>

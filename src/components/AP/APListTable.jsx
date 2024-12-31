@@ -4,6 +4,7 @@ import Pagination from "../common/pagination/Pagination";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import { Link } from "react-router-dom";
+import { DateTimeFormat } from "@/utils/dateTimeFormet";
 
 const APListTable = ({
   purchaseLists,
@@ -33,6 +34,7 @@ const APListTable = ({
                 <thead>
                   <tr className="font-semibold text-center">
                     <th className="whitespace-nowrap px-4 py-2.5    ">SL</th>
+                    <td className="whitespace-nowrap p-4 ">Date</td>
                     <th className="whitespace-nowrap px-4 py-2.5    ">
                       Supplier Name
                     </th>
@@ -80,6 +82,9 @@ const APListTable = ({
                       <td className="whitespace-nowrap py-3 px-1.5 font-medium text-gray-700">
                         {serialNumber + i + 1}
                       </td>
+                      <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {DateTimeFormat(purchaselist?.createdAt)}
+                        </td>
                       <td className="whitespace-nowrap py-3 px-1.5 font-medium text-gray-700">
                         {purchaselist?.supplier_id?.supplier_name}
                       </td>

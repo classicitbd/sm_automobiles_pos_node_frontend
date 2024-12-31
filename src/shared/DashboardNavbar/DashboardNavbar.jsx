@@ -125,16 +125,15 @@ const DashBoardNavbar = ({
                   </div>
 
                   <div
-                    className={`absolute  ${
-                      isDropdownOpen ? "right-0" : "hidden"
-                    } z-10 mt-4 w-52 origin-top-right rounded bg-white shadow-2xl focus:outline-none`}
+                    className={`absolute  ${isDropdownOpen ? "right-0" : "hidden"
+                      } z-10 mt-4 w-52 origin-top-right rounded bg-white shadow-2xl focus:outline-none`}
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
                     tabIndex="-1"
                   >
                     <Link
-                      to="/admin/my-profile"
+                      to="/my-profile"
                       className="block py-4 px-4  text-sm  w-full rounded hover:bg-gray-100"
                       role="menuitem"
                       tabIndex="-1"
@@ -142,19 +141,20 @@ const DashBoardNavbar = ({
                     >
                       Your Profile
                     </Link>
-                    <Link
-                      to="/admin/setting"
+                    {/* <Link
+                      to="/site_setting"
                       className="block py-4 px-4  text-sm  w-full rounded hover:bg-gray-100"
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-0"
                     >
                       Settings
-                    </Link>
+                    </Link> */}
                     <p
                       onClick={() => {
-                        // logout();
+                        document.cookie = "sm_auto_mobile_token=; Max-Age=0; path=/;";
                         toggleDropdown;
+                        window.location.reload();
                       }}
                       className="block py-3 px-4 cursor-pointer text-sm w-full rounded hover:bg-gray-100"
                       role="menuitem"

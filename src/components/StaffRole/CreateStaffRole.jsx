@@ -47,8 +47,8 @@ const CreateStaffRole = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          credentials: "include",
         },
+        credentials: "include",
         body: JSON.stringify(sendData),
       });
       const result = await response.json();
@@ -125,11 +125,10 @@ const CreateStaffRole = () => {
                         <label
                           key={permission}
                           htmlFor={permission}
-                          className={`flex items-center max-w-lg border shadow cursor-pointer w-full p-2 rounded ${
-                            isChecked
+                          className={`flex items-center max-w-lg border shadow cursor-pointer w-full p-2 rounded ${isChecked
                               ? "bg-green-500 text-white"
                               : "bg-gray-100"
-                          }`}
+                            }`}
                         >
                           <input
                             type="checkbox"
@@ -138,9 +137,8 @@ const CreateStaffRole = () => {
                             className="mr-2 outline-primaryVariant-600"
                           />
                           <span
-                            className={`text-sm ${
-                              isChecked ? "text-white" : "text-gray-700"
-                            }`}
+                            className={`text-sm ${isChecked ? "text-white" : "text-gray-700"
+                              }`}
                           >
                             {permission
                               .replace(/_/g, " ")

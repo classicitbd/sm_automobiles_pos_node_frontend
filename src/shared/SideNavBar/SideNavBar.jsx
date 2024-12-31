@@ -110,56 +110,62 @@ const SideNavBar = () => {
           />
           {/* // )} */}
           {/* .......Employe...... */}
-          <MenuItem
-            to="/empolye-customers"
-            icon={TbCategoryPlus}
-            label="Customers"
-            isActive={isActive("/empolye-customers")}
-            onClick={closeAllDropdowns}
-          />
-          <MenuItem
-            to="/empolye-orders"
-            icon={TbCategoryPlus}
-            label="Orders"
-            isActive={isActive("/empolye-orders")}
-            onClick={closeAllDropdowns}
-          />
-          {/* <MenuItem
+          {
+            user?.user_role_id?.employee_route_show == true && (
+              <>
+                <MenuItem
+                  to="/empolye-customers"
+                  icon={TbCategoryPlus}
+                  label="Customers"
+                  isActive={isActive("/empolye-customers")}
+                  onClick={closeAllDropdowns}
+                />
+                <MenuItem
+                  to="/empolye-orders"
+                  icon={TbCategoryPlus}
+                  label="Orders"
+                  isActive={isActive("/empolye-orders")}
+                  onClick={closeAllDropdowns}
+                />
+                {/* <MenuItem
             to="/empolye-profile"
             icon={TbCategoryPlus}
             label="Profile"
             isActive={isActive("/empolye-profile")}
             onClick={closeAllDropdowns}
           /> */}
-          {/* <MenuItem
+                {/* <MenuItem
             to="/empolye-salery"
             icon={TbCategoryPlus}
             label="Salery"
             isActive={isActive("/empolye-salery")}
             onClick={closeAllDropdowns}
           /> */}
-          <MenuItem
-            to="/empolye-sale-Target"
-            icon={TbCategoryPlus}
-            label="Sale Target"
-            isActive={isActive("/empolye-sale-Target")}
-            onClick={closeAllDropdowns}
-          />
-          <MenuItem
-            to="/employe-payment"
-            icon={TbCategoryPlus}
-            label="Payment List"
-            isActive={isActive("/employe-payment")}
-            onClick={closeAllDropdowns}
-          />
+                <MenuItem
+                  to="/empolye-sale-Target"
+                  icon={TbCategoryPlus}
+                  label="Sale Target"
+                  isActive={isActive("/empolye-sale-Target")}
+                  onClick={closeAllDropdowns}
+                />
+                <MenuItem
+                  to="/employe-payment"
+                  icon={TbCategoryPlus}
+                  label="Payment List"
+                  isActive={isActive("/employe-payment")}
+                  onClick={closeAllDropdowns}
+                />
 
-          <MenuItem
-            to="/add-payment"
-            icon={TbCategoryPlus}
-            label="Add Payment"
-            isActive={isActive("/add-payment")}
-            onClick={closeAllDropdowns}
-          />
+                <MenuItem
+                  to="/add-payment"
+                  icon={TbCategoryPlus}
+                  label="Check Collection"
+                  isActive={isActive("/add-payment")}
+                  onClick={closeAllDropdowns}
+                />
+              </>
+            )
+          }
 
           {/* ....Task Bar....... */}
           {(user?.user_role_id?.category_post === true ||
@@ -503,7 +509,7 @@ const SideNavBar = () => {
                         <SubChildMenuItem
                           to="/payment"
                           icon={GiReceiveMoney}
-                          label="Collection List"
+                          label="Check Callection List"
                           isActive={isActive("/payment")}
                         />
                       )}
@@ -512,7 +518,7 @@ const SideNavBar = () => {
                         <SubChildMenuItem
                           to="/today-payment"
                           icon={GiReceiveMoney}
-                          label="Today Collection List"
+                          label="Today Callection List"
                           isActive={isActive("/today-payment")}
                         />
                       )}
@@ -520,7 +526,7 @@ const SideNavBar = () => {
                         <SubChildMenuItem
                           to="/due-payment"
                           icon={GiReceiveMoney}
-                          label="Due Collection List"
+                          label="Due Callection List"
                           isActive={isActive("/due-payment")}
                         />
                       )}
