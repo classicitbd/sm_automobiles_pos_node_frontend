@@ -331,9 +331,9 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
               <p className="font-semibold  text-gray-700  mt-2 text-xl">
                 Product Information :
               </p>
-              <div className="overflow-x-auto rounded shadow-md">
+              <div className="rounded shadow-md overflow-x-auto sm:overflow-visible ">
                 <table className="min-w-full rounded">
-                  <thead className="">
+                  <thead className=" bg-gray-100 z-10">
                     <tr className=" font-semibold text-center ">
                       <th className=" font-semibold text-center  py-2 px-3">
                         ID
@@ -532,7 +532,7 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                               </button>
                             </div>
                           </td>
-                          <td className="whitespace-nowrap font-medium text-gray-700 text-center px-3">
+                          <td className="whitespace-nowrap font-medium text-gray-700 text-center ">
                             <Select
                               id="product_unit_name"
                               name="product_unit_name"
@@ -559,6 +559,7 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                                   )
                                 );
                               }}
+                              className="text-sm"
                             />
                             {/* measurement */}
                           </td>
