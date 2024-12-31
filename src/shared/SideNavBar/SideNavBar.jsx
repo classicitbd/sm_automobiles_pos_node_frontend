@@ -148,7 +148,7 @@ const SideNavBar = () => {
           <MenuItem
             to="/employe-payment"
             icon={TbCategoryPlus}
-            label="Employ Payment List"
+            label="Payment List"
             isActive={isActive("/employe-payment")}
             onClick={closeAllDropdowns}
           />

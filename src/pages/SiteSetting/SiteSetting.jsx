@@ -101,7 +101,7 @@ const SiteSetting = () => {
               <PiHouseBold size={25} color="#3EA2FA" />
             </Link>
             <span className="font-semibold text-xl">/</span>
-            <Link to="/seeting" className="text-blue-500 hover:underline">
+            <Link to="/site_setting" className="text-blue-500 hover:underline">
               Site Setting
             </Link>
           </div>
