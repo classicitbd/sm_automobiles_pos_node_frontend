@@ -331,7 +331,10 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
               <p className="font-semibold  text-gray-700  mt-2 text-xl">
                 Product Information :
               </p>
-              <div className="rounded shadow-md overflow-x-auto sm:overflow-visible ">
+              <div
+                className="rounded shadow-md overflow-x-auto 
+              "
+              >
                 <table className="min-w-full rounded">
                   <thead className=" bg-gray-100 z-10">
                     <tr className=" font-semibold text-center ">
@@ -559,8 +562,16 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                                   )
                                 );
                               }}
-                              className="text-sm"
+                              className="text-sm w-40"
+                              menuPortalTarget={document.body} // Render dropdown outside the container
+                              styles={{
+                                menuPortal: (base) => ({
+                                  ...base,
+                                  zIndex: 9999,
+                                }), // Ensure it appears above other elements
+                              }}
                             />
+
                             {/* measurement */}
                           </td>
                           <td className="whitespace-nowrap font-medium text-gray-700 text-center  px-3">
@@ -649,33 +660,34 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
                   Discount percent{" "}
                   <small className="text-purple">(max 99)</small>
                 </h5>
-                <p className="">
-                  <input
-                    value={discount_amount} // Bind input to state
-                    onChange={(e) => {
-                      const value = parseFloat(e.target.value); // Use parseFloat for decimal values
 
-                      if (!isNaN(value) && value >= 0 && value <= 99.99) {
-                        setDiscountInputAmount(value); // Update state only for valid input
-                      } else if (value > 99.99) {
-                        setDiscountInputAmount(99.99); // Reset to max allowed value
-                      }
-                    }}
-                    onBlur={(e) => {
-                      const value = parseFloat(e.target.value); // Use parseFloat for decimal values
+                <input
+                  value={discount_amount}
+                 
+                  onChange={(e) => {
+                    const value = parseFloat(e.target.value); // Use parseFloat for decimal values
 
-                      // Reset the value if it exceeds the limit
-                      if (isNaN(value) || value > 99.99) {
-                        setDiscountInputAmount(99.99); // Reset to max allowed value
-                      }
-                    }}
-                    min={0} // Allow decimal values with minimum 0.01
-                    step="0.01" // Ensure step supports decimal precision
-                    type="number"
-                    placeholder="Discount On SubTotal"
-                    className=" rounded-md p-1 text-purple"
-                  />
-                </p>
+                    if (!isNaN(value) && value >= 0 && value <= 99.99) {
+                      setDiscountInputAmount(value); // Update state only for valid input
+                    } else if (value > 99.99) {
+                      setDiscountInputAmount(99.99); // Reset to max allowed value
+                    }
+                  }}
+                  onBlur={(e) => {
+                    const value = parseFloat(e.target.value); // Use parseFloat for decimal values
+
+                    // Reset the value if it exceeds the limit
+                    if (isNaN(value) || value > 99.99) {
+                      setDiscountInputAmount(99.99); // Reset to max allowed value
+                    }
+                  }}
+                  min={0} // Allow decimal values with minimum 0.01
+                  step="0.01" // Ensure step supports decimal precision
+                  type="number"
+                  placeholder="Discount On SubTotal"
+                  className=" rounded-md p-2 text-purple"
+                />
+
                 <h5 className="">Grand Total</h5>
                 <p className=" font-bold">
                   <span>
