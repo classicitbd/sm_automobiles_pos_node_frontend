@@ -4,6 +4,7 @@ import { AuthContext } from "@/context/AuthProvider";
 import useDebounced from "@/hooks/useDebounced";
 import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import { BASE_URL } from "@/utils/baseURL";
+import { DateTimeFormat } from "@/utils/dateTimeFormet";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -99,6 +100,7 @@ const Orders = () => {
                     <thead>
                       <tr className=" font-semibold text-center ">
                         <td className="whitespace-nowrap p-4 ">SL No</td>
+                        <td className="whitespace-nowrap p-4 ">Date</td>
                         <td className="whitespace-nowrap p-4 ">
                           Customer Name
                         </td>
@@ -127,6 +129,9 @@ const Orders = () => {
                         >
                           <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                             {serialNumber + i + 1}
+                          </td>
+                          <td className="whitespace-nowrap py-3 font-medium text-gray-700">
+                            {DateTimeFormat(order?.createdAt)}
                           </td>
                           <td className="whitespace-nowrap py-3 font-medium text-gray-700">
                             {order?.customer_id?.customer_name}

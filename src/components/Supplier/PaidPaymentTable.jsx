@@ -6,6 +6,7 @@ import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton
 import { Link } from "react-router-dom";
 import { LuPrinter } from "react-icons/lu";
 import PaidPaymentVoucher from "./PaidPaymentVoucher";
+import { DateTimeFormat } from "@/utils/dateTimeFormet";
 
 const PaidPaymentTable = ({
   setPage,
@@ -65,6 +66,7 @@ const PaidPaymentTable = ({
                   <thead>
                     <tr className=" font-semibold text-center ">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
+                      <td className="whitespace-nowrap p-4 ">Date</td>
                       <td className="whitespace-nowrap p-4 ">Supplier name</td>
                       <td className="whitespace-nowrap p-4 ">Supplier Phone</td>
                       <td className="whitespace-nowrap p-4 ">Created By</td>
@@ -94,6 +96,9 @@ const PaidPaymentTable = ({
                       >
                         <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {DateTimeFormat(paymentInfo?.createdAt)}
                         </td>
                         <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                           {paymentInfo?.supplier_id?.supplier_name}

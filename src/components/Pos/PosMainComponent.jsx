@@ -119,7 +119,7 @@ const PosMainComponent = () => {
         <div className="w-full md:w-1/2">
           <div className="flex flex-col gap-4 mb-6">
             {/* Filters */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1 sm:mt-2">
                   Category Name
@@ -157,25 +157,25 @@ const PosMainComponent = () => {
                   }}
                 />
               </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            </div> */}
+            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> */}
               <input
                 type="text"
                 placeholder="Search Here"
-                className="border rounded-md p-2 w-full"
+                className="border rounded-md p-2 w-full mt-8"
                 defaultValue={searchTerm}
                 onChange={(e) => handleSearchValue(e.target.value)}
               />
               {/* Scan Barcode Input Field */}
-              <input
+              {/* <input
                 type="text"
                 placeholder="Scan Barcode here"
                 className="border rounded-md p-2 w-full"
                 ref={barcodeInputRef} // Attach the ref here
                 defaultValue={barcodeValue}
                 onChange={(e) => handleBarCodeSearchValue(e.target.value)}
-              />
-            </div>
+              /> */}
+            {/* </div> */}
           </div>
 
           {/* Product Cards */}
@@ -207,6 +207,7 @@ const PosMainComponent = () => {
                                 total_amount: product?.product_price,
                                 discount_percent: 0,
                                 grand_total: product?.product_price,
+                                total_measurement: 1
                               },
                             ]);
                           }}

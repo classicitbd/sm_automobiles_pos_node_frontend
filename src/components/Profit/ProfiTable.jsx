@@ -59,7 +59,7 @@ const ProfitTable = ({
                           {serialNumber + i + 1}
                         </td>
                         <td className="whitespace-nowrap py-3 font-medium text-gray-700">
-                          <Link to="">
+                          <Link to={`/order-details/${profit?._id}`}>
                             <span className="text-blue-600 underline ">
                               {profit?.order_id}
                             </span>

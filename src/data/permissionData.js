@@ -11,13 +11,17 @@ const permissionsData = [
     Name: "Brand",
     Type: ["brand_post", "brand_patch"],
   },
-  {
-    Name: "Unit",
-    Type: ["unit_dashboard_show", "unit_post", "unit_patch"],
-  },
+  // {
+  //   Name: "Unit",
+  //   Type: ["unit_dashboard_show", "unit_post", "unit_patch"],
+  // },
   {
     Name: "Site Setting",
     Type: ["site_setting_patch"],
+  },
+  {
+    Name: "Employee Routes",
+    Type: ["employee_route_show"],
   },
   {
     Name: "User Permission",

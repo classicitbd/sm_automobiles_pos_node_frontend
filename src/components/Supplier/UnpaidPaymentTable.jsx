@@ -7,6 +7,7 @@ import Swal from "sweetalert2-optimized";
 import { BASE_URL } from "@/utils/baseURL";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { DateTimeFormat } from "@/utils/dateTimeFormet";
 
 const UnpaidPaymentTable = ({
   setPage,
@@ -98,6 +99,7 @@ const UnpaidPaymentTable = ({
                   <thead>
                     <tr className="font-semibold text-center ">
                       <td className="whitespace-nowrap p-4 ">SL No</td>
+                      <td className="whitespace-nowrap p-4 ">Date</td>
                       <td className="whitespace-nowrap p-4 ">Supplier name</td>
                       <td className="whitespace-nowrap p-4 ">Supplier Phone</td>
                       <td className="whitespace-nowrap p-4 ">Created By</td>
@@ -130,6 +132,9 @@ const UnpaidPaymentTable = ({
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {serialNumber + i + 1}
+                        </td>
+                        <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
+                          {DateTimeFormat(paymentInfo?.createdAt)}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                           {paymentInfo?.supplier_id?.supplier_name}

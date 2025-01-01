@@ -142,10 +142,10 @@ const SaleTarget = () => {
                       <tr className="  font-semibold text-center ">
                         <td className="whitespace-nowrap p-4 ">SL No</td>
                         <td className="whitespace-nowrap p-4 ">
-                          Sale Target Start Date
+                          Start Date
                         </td>
                         <td className="whitespace-nowrap p-4 ">
-                          Sale Target End Date
+                          End Date
                         </td>
                         <td className="whitespace-nowrap p-4 ">Brand Name</td>
                         <td className="whitespace-nowrap p-4 ">Brand Target</td>
