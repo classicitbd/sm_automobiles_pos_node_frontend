@@ -663,7 +663,6 @@ const RightSide = ({ user, addProducts, setAddProducts, settingData }) => {
 
                 <input
                   value={discount_amount}
-                 
                   onChange={(e) => {
                     const value = parseFloat(e.target.value); // Use parseFloat for decimal values
 
