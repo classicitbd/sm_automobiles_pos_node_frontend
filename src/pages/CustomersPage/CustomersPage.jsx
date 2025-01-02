@@ -70,7 +70,7 @@ const CustomersPage = () => {
         <div className=" py-6 px-4">
           <div className="flex justify-between mt-6">
             <div>
-              <h1 className="text-2xl">Customers Information</h1>
+              <h1 className="sm:text-2xl text-xl">Customers Information</h1>
             </div>
 
             <div>

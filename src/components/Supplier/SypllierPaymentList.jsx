@@ -107,11 +107,11 @@ const SypllierPaymentList = () => {
         </div>
       </div>
 
-      <div className="bg-gray-50  p-5 shadow-md mt-8">
+      {/* <div className="bg-gray-50  p-5 shadow-md mt-8">
         <SupplierPaymentListChart />
-      </div>
+      </div> */}
 
-      <div className="bg-white rounded py-6 px-4 shadow mt-8">
+      <div className="  py-6 px-4  mt-8">
         <div className="mt-3 flex justify-end">
           <input
             type="text"

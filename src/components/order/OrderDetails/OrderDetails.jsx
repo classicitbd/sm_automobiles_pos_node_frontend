@@ -121,9 +121,9 @@ const OrderDetails = () => {
   return (
     <div className="">
       <section className=" py-4">
-        <div className="mt-6">
+        <div className="mt-6 flex">
           <button
-            className={`mr-3 border-2 border-green-600 px-8 py-2 hover:bg-success-400 font-bold  hover:text-white text-lg rounded shadow-xl transition-all duration-300  ${
+            className={`mr-3 border-2 border-green-600 px-4 sm:px-8 py-2 hover:bg-success-400 font-bold  hover:text-white sm:text-lg rounded shadow-xl transition-all duration-300  ${
               activeNavButton == "order"
                 ? "bg-success-400 text-white"
                 : "text-success-400"
@@ -134,7 +134,7 @@ const OrderDetails = () => {
           </button>
 
           <button
-            className={`mr-3 border-2 border-purple px-8 py-2 hover:bg-purple font-bold  hover:text-white text-lg rounded shadow-xl transition-all duration-300 ${
+            className={`mr-3 border-2 border-purple  px-4 sm:px-8 py-2 hover:bg-purple font-bold  hover:text-white sm:text-lg rounded shadow-xl transition-all duration-300 ${
               activeNavButton == "payment"
                 ? "bg-purple text-white"
                 : "text-purple"

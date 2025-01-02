@@ -7,13 +7,35 @@ import { Link, useParams } from "react-router-dom";
 import { LoaderOverlay } from "../common/loader/LoderOverley";
 import useGetSelfOrder from "@/hooks/useGetAllSelfOrder";
 import useGetAUserDetails from "@/hooks/useGetAUserDetails";
-import OrderChart from "./OrderChart";
-import SaleChart from "./SaleChart";
+import Pagination from "../common/pagination/Pagination";
+//import OrderChart from "./OrderChart";
+//import SaleChart from "./SaleChart";
 
 const StaffPerfomance = () => {
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
+  const [orderLimit, setOrderLimit] = useState(10);
+  const [ordePage, setOrdePage] = useState(1);
   const { user_id } = useParams();
   const { settingData } = useContext(SettingContext);
   const [activeNavButton, setActiveNavButton] = useState("order");
+
+  //-----------//
+
+  const [serialNumber, setSerialNumber] = useState();
+  useEffect(() => {
+    const newSerialNumber = (page - 1) * limit;
+    setSerialNumber(newSerialNumber);
+  }, [page, limit]);
+
+  //------Order Seril-----//
+
+  const [orderSerialNumber, setOrderSerialNumber] = useState();
+
+  useEffect(() => {
+    const newOrderSerialNumber = (ordePage - 1) * orderLimit;
+    setOrderSerialNumber(newOrderSerialNumber);
+  }, [ordePage, orderLimit]);
 
   const handleNavButtonClick = (buttonName) => {
     setActiveNavButton(buttonName);
@@ -29,12 +51,15 @@ const StaffPerfomance = () => {
 
   //Fetch SaleTarget Data
   const { data: saleTargetData = [], isLoading } = useQuery({
-    queryKey: [`/api/v1/sale_target/${user_id}`],
+    queryKey: [`/api/v1/sale_target/${user_id}?page=${page}&limit=${limit}`],
     queryFn: async () => {
       try {
-        const res = await fetch(`${BASE_URL}/sale_target/${user_id}`, {
-          credentials: "include",
-        });
+        const res = await fetch(
+          `${BASE_URL}/sale_target/${user_id}?page=${page}&limit=${limit}`,
+          {
+            credentials: "include",
+          }
+        );
 
         if (!res.ok) {
           const errorData = await res.text();
@@ -53,8 +78,11 @@ const StaffPerfomance = () => {
   });
 
   //get order data
-  const { data: orderData = [], isLoading: orderLoading } =
-    useGetSelfOrder(user_id);
+  const { data: orderData = [], isLoading: orderLoading } = useGetSelfOrder(
+    user_id,
+    orderLimit,
+    ordePage
+  );
 
   //get user data
   const { data: userData = {}, isLoading: userLoading } =
@@ -104,20 +132,22 @@ const StaffPerfomance = () => {
 
           <div className="mt-6">
             <button
-              className={`mr-3 border-2 border-green-600 px-8 py-2 hover:bg-success-400 font-bold  hover:text-white text-lg rounded shadow-xl transition-all duration-300  ${activeNavButton == "order"
-                ? "bg-success-400 text-white"
-                : "text-success-400"
-                }`}
+              className={`mr-3 border-2 border-green-600 px-8 py-2 hover:bg-success-400 font-bold  hover:text-white text-lg rounded shadow-xl transition-all duration-300  ${
+                activeNavButton == "order"
+                  ? "bg-success-400 text-white"
+                  : "text-success-400"
+              }`}
               onClick={() => handleNavButtonClick("order")}
             >
               Order List
             </button>
 
             <button
-              className={`mr-3 border-2 border-purple px-8 py-2 hover:bg-purple font-bold  hover:text-white text-lg rounded shadow-xl transition-all duration-300 ${activeNavButton == "sale"
-                ? "bg-purple text-white"
-                : "text-purple"
-                }`}
+              className={`mr-3 border-2 border-purple px-8 py-2 hover:bg-purple font-bold  hover:text-white text-lg rounded shadow-xl transition-all duration-300 ${
+                activeNavButton == "sale"
+                  ? "bg-purple text-white"
+                  : "text-purple"
+              }`}
               onClick={() => handleNavButtonClick("sale")}
             >
               Sale Target
@@ -130,12 +160,12 @@ const StaffPerfomance = () => {
 
             {activeNavButton == "order" && (
               <div className="">
-                <p className="text-[20px] font-bold uppercase my-2">
+                {/* <p className="text-[20px] font-bold uppercase my-2">
                   Order List Chart
                 </p>
                 <div className="bg-gray-50  p-5 shadow-md ">
                   <OrderChart />
-                </div>
+                </div> */}
                 <div className="mt-6">
                   <p className="text-[20px] font-bold uppercase my-2">
                     Order List Table
@@ -166,11 +196,12 @@ const StaffPerfomance = () => {
                         {orderData?.data?.map((order, i) => (
                           <tr
                             key={order?._id}
-                            className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                              }`}
+                            className={`divide-x divide-gray-200 ${
+                              i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                            }`}
                           >
                             <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                              {i + 1}
+                              {orderSerialNumber + i + 1}
                             </td>
                             <td className="whitespace-nowrap py-1.5 font-medium text-blue-700 underline">
                               <Link to={`/order-details/${order?._id}`}>
@@ -218,18 +249,25 @@ const StaffPerfomance = () => {
                 ) : (
                   <NoDataFound />
                 )}
+                <Pagination
+                  setPage={setOrdePage}
+                  setLimit={setOrderLimit}
+                  totalData={orderData?.totalData}
+                  page={ordePage}
+                  limit={orderLimit}
+                />
               </div>
             )}
 
             {/* Sale Target */}
             {activeNavButton == "sale" && (
               <div className="">
-                <p className="text-[20px] font-bold uppercase my-2">
+                {/* <p className="text-[20px] font-bold uppercase my-2">
                   Sale Target Chart
                 </p>
                 <div className="bg-gray-50  p-5 shadow-md mt-6">
                   <SaleChart />
-                </div>
+                </div> */}
                 <div className="mt-6">
                   <p className="text-[20px] font-bold uppercase my-2">
                     Sale Target Table
@@ -265,13 +303,14 @@ const StaffPerfomance = () => {
                         {saleTargetData?.data?.map((sale_target, i) => (
                           <tr
                             key={sale_target?._id}
-                            className={`text-center ${i % 2 === 0
-                              ? "bg-secondary-50"
-                              : "bg-secondary-100"
-                              } hover:bg-blue-100`}
+                            className={`text-center ${
+                              i % 2 === 0
+                                ? "bg-secondary-50"
+                                : "bg-secondary-100"
+                            } hover:bg-blue-100`}
                           >
                             <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
-                              {i + 1}
+                              {serialNumber + i + 1}
                             </td>
                             <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                               {sale_target?.sale_target_start_date}
@@ -321,7 +360,7 @@ const StaffPerfomance = () => {
                             </td>
                             <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
                               {sale_target?.brand_sale_target_success == true &&
-                                sale_target?.sale_target_success == true ? (
+                              sale_target?.sale_target_success == true ? (
                                 <span className="text-green-600">Success</span>
                               ) : (
                                 <span className="text-blue-600">Pending</span>
@@ -335,6 +374,13 @@ const StaffPerfomance = () => {
                 ) : (
                   <NoDataFound />
                 )}
+                <Pagination
+                  setPage={setPage}
+                  setLimit={setLimit}
+                  totalData={saleTargetData?.totalData}
+                  page={page}
+                  limit={limit}
+                />
               </div>
             )}
           </div>

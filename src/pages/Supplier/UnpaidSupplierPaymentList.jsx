@@ -68,7 +68,7 @@ const UnpaidSupplierPaymentList = () => {
         <div className=" py-6 px-4 ">
           <div className=" mt-6">
             <div>
-              <h1 className="text-2xl">Un Paid Payment Information</h1>
+              <h1 className="sm:text-2xl text-xl">Un Paid Payment Information</h1>
             </div>
           </div>
           {/* search Un Paid Payment... */}

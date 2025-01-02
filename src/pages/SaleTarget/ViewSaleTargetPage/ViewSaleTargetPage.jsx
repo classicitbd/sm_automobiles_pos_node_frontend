@@ -1,13 +1,15 @@
 import ViewSaleTarget from "@/components/SaleTarget/ViewSaleTarget";
-import { AuthContext } from "@/context/AuthProvider";
+//import { AuthContext } from "@/context/AuthProvider";
 import { SettingContext } from "@/context/SettingProvider";
 import { BASE_URL } from "@/utils/baseURL";
 import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 const ViewSaleTargetPage = () => {
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
   const { id } = useParams();
-  const { user } = useContext(AuthContext);
+  //const { user } = useContext(AuthContext);
   const { settingData } = useContext(SettingContext);
 
   //Fetch sale target report Data
@@ -17,12 +19,12 @@ const ViewSaleTargetPage = () => {
     refetch,
   } = useQuery({
     queryKey: [
-      `/api/v1/sale_target/a_sale_target_report/${id}`,
+      `/api/v1/sale_target/a_sale_target_report/${id}?page=${page}&limit=${limit}`,
     ],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/sale_target/a_sale_target_report/${id}`,
+          `${BASE_URL}/sale_target/a_sale_target_report/${id}?page=${page}&limit=${limit}`,
           {
             credentials: "include",
           }
@@ -43,6 +45,7 @@ const ViewSaleTargetPage = () => {
       }
     },
   });
+ 
 
   return (
     <div>
@@ -53,6 +56,11 @@ const ViewSaleTargetPage = () => {
           refetch={refetch}
           settingData={settingData}
           id={id}
+          limit={limit}
+          setLimit={setLimit}
+          setPage={setPage}
+          page={page}
+          totalData={saleTargetData?.data?.length}
         />
       </div>
     </div>

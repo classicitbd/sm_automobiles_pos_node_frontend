@@ -248,7 +248,7 @@ const PosMainComponent = () => {
                       ) : (
                         <div
                           key={index}
-                          className="relative rounded-lg shadow-lg p-4 bg-white hover:shadow-xl transition duration-300 ease-in-out cursor-pointer"
+                          className="relative rounded-lg shadow-lg p-4 bg-white hover:shadow-xl transition duration-300 ease-in-out cursor-not-allowed"
                         >
                           <div className="absolute top-0 h-full w-full bg-black/70 rounded-lg shadow-lg right-[0.5px] flex items-center justify-center">
                             <p className="uppercase text-xl text-center font-bold text-white z-10">

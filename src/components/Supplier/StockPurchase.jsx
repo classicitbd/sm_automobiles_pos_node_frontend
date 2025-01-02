@@ -12,7 +12,7 @@ import StockPurchaseChart from "./StockPurchaseChart";
 const StockPurchase = () => {
   const { supplier_id } = useParams();
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(30);
+  const [limit, setLimit] = useState(10);
   // const { user } = useContext(AuthContext);
 
   //Fetch Bank Data
@@ -102,9 +102,9 @@ const StockPurchase = () => {
             </div>
           </div>
 
-          <div className="bg-gray-50  p-5 shadow-md mt-8">
+          {/* <div className="bg-gray-50  p-5 shadow-md mt-8">
             <StockPurchaseChart />
-          </div>
+          </div> */}
 
           <div className="">
             <div className="rounded-lg">

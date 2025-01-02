@@ -111,9 +111,9 @@ const AddProducts = () => {
 
   return (
     <div>
-      <div className="pl-6 max-h-[100vh]  mt-3">
+      <div className="max-h-[100vh]  mt-3">
         <form onSubmit={handleSubmit(handleDataPost)} className="">
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div className="mt-2">
               <label
                 htmlFor=""
@@ -222,7 +222,7 @@ const AddProducts = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div className="mt-6">
               <label
                 htmlFor=""
@@ -241,7 +241,7 @@ const AddProducts = () => {
             </div>
             {/* ------Image Of Product------- */}
 
-            <div className="mt-6">
+            <div className="mt-3">
               <label
                 htmlFor=""
                 className="block text-xs font-medium text-gray-700"
@@ -262,14 +262,14 @@ const AddProducts = () => {
                     <img
                       src={imagePreview}
                       alt="Preview"
-                      className="w-full h-64 object-cover my-2 rounded"
+                      className="w-full h-40 object-cover my-2 rounded"
                     />
                   </div>
                 </>
               ) : (
                 <>
                   <label
-                    className="mt-4 w-full h-[160px] bg-gray-100 border-dashed border flex justify-center items-center rounded cursor-pointer"
+                    className="mt-4 w-full h-40 bg-gray-100 border-dashed border flex justify-center items-center rounded cursor-pointer"
                     htmlFor="product_image"
                   >
                     <div className="flex flex-col items-center justify-center">
