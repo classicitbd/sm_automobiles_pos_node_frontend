@@ -71,6 +71,7 @@ import SaleryPage from "@/pages/SalaryModulePage/SaleryPage";
 import GeneRateSalarySheet from "@/components/Salary/GeneRateSalarySheet";
 import PaymentHistoryPage from "@/pages/SalaryModulePage/PaymentHistoryPage";
 import MyPayrollPage from "@/pages/SalaryModulePage/MyPayrollPage";
+import MyProfile from "@/components/Profile/MyProfile";
 
 const route = createBrowserRouter([
   {
@@ -368,6 +369,10 @@ const route = createBrowserRouter([
       {
         path: "/my-payroll",
         element: <MyPayrollPage />,
+      },
+      {
+        path: "/my-profile",
+        element: <MyProfile />,
       },
     ],
   },
