@@ -60,6 +60,12 @@ const ExpensesTable = ({
                         Supplier Phone
                       </th>
                       <th className="whitespace-nowrap p-4 font-medium ">
+                        Employee Name
+                      </th>
+                      <th className="whitespace-nowrap p-4 font-medium ">
+                        Employee Phone
+                      </th>
+                      <th className="whitespace-nowrap p-4 font-medium ">
                         Document
                       </th>
 
@@ -99,6 +105,12 @@ const ExpensesTable = ({
                           {expense?.expense_supplier_id?.supplier_phone || "--"}
                         </td>
                         <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
+                          {expense?.salary_user_id?.user_name || "--"}
+                        </td>
+                        <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
+                          {expense?.salary_user_id?.user_phone || "--"}
+                        </td>
+                        <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                           {expense?.expense_voucher ? (
                             <button
                               className="text-primary-600 hover:underline"
@@ -107,7 +119,10 @@ const ExpensesTable = ({
                                 setDocumentModalData(expense);
                               }}
                             >
-                              <FaEye className="text-gray-900 hover:text-gray-500" size={22} />
+                              <FaEye
+                                className="text-gray-900 hover:text-gray-500"
+                                size={22}
+                              />
                             </button>
                           ) : (
                             "--"
