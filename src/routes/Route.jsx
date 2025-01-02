@@ -359,7 +359,7 @@ const route = createBrowserRouter([
         element: <SaleryPage />,
       },
       {
-        path: "/generate-salary-sheet/:id",
+        path: "/generate-salary-sheet",
         element: <GeneRateSalarySheet />,
       },
       {
