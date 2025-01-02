@@ -159,15 +159,15 @@ const PosMainComponent = () => {
               </div>
             </div> */}
             {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> */}
-              <input
-                type="text"
-                placeholder="Search Here"
-                className="border rounded-md p-2 w-full mt-8"
-                defaultValue={searchTerm}
-                onChange={(e) => handleSearchValue(e.target.value)}
-              />
-              {/* Scan Barcode Input Field */}
-              {/* <input
+            <input
+              type="text"
+              placeholder="Search Here"
+              className="border rounded-md p-2 w-full mt-8"
+              defaultValue={searchTerm}
+              onChange={(e) => handleSearchValue(e.target.value)}
+            />
+            {/* Scan Barcode Input Field */}
+            {/* <input
                 type="text"
                 placeholder="Scan Barcode here"
                 className="border rounded-md p-2 w-full"
@@ -207,81 +207,84 @@ const PosMainComponent = () => {
                                 total_amount: product?.product_price,
                                 discount_percent: 0,
                                 grand_total: product?.product_price,
-                                total_measurement: 1
+                                total_measurement: 1,
                               },
                             ]);
                           }}
                           key={index}
-                          className="border rounded-md overflow-hidden shadow-md flex flex-col justify-between cursor-pointer hover:shadow-lg transition duration-300 ease-in-out bg-white"
+                          className="border rounded-lg shadow-lg p-4 bg-white hover:shadow-xl transition duration-300 ease-in-out cursor-pointer "
                         >
-                          <img
-                            src={product?.product_image}
-                            alt={`Product ${index + 1}`}
-                            className="w-full h-40 object-cover p-3"
-                          />
-                          <div className="px-1.5 sm:px-2 ">
-                            <p className="font-bold">{product?.product_name}</p>
-                            <p className="text-sm sm:mt-1">
-                              Quantity:{" "}
-                              <span className="font-bold text-blue-600">
-                                {product?.product_quantity}{" "}
-                                {settingData?.unit_name}
-                              </span>
-                            </p>
-                            <p className="text-sm sm:mt-1">
-                              Category : {product?.category_id?.category_name}
-                            </p>
-                            {product?.brand_id?.brand_name ? (
-                              <p className="text-sm sm:mt-1">
-                                Brand : {product?.brand_id?.brand_name}
+                          <div className="flex items-center gap-4">
+                            <div className="flex-grow">
+                              <p className="text-lg font-bold text-gray-800">
+                                {product?.product_name}
                               </p>
-                            ) : (
-                              <p className="text-sm mt-1 opacity-0">
-                                Brand : Placeholder
+                              <p className="text-sm text-gray-600 mt-1">
+                                Quantity :{" "}
+                                <span className="font-medium text-blue-600">
+                                  {product?.product_quantity}{" "}
+                                  {settingData?.unit_name}
+                                </span>
                               </p>
-                            )}
-                            <p className="text-sm mt-1 font-semibold">
-                              ID : {product?.product_id}
-                            </p>
+                              <p className="text-sm text-gray-600 mt-1">
+                                Category : {product?.category_id?.category_name}
+                              </p>
+                              {product?.brand_id?.brand_name && (
+                                <p className="text-sm text-gray-600 mt-1">
+                                  Brand : {product?.brand_id?.brand_name}
+                                </p>
+                              )}
+                              <p className="text-sm text-gray-500 mt-1">
+                                ID : {product?.product_id}
+                              </p>
+                            </div>
                           </div>
-                          <div className="bg-blue-500 text-white text-center text-xs py-1.5">
-                            {product?.product_price}
+                          <div className="mt-4">
+                            <p className="text-center bg-blue-600 text-white text-sm py-2 rounded-md">
+                              $ {product?.product_price}
+                            </p>
                           </div>
                         </div>
                       ) : (
                         <div
-                          disabled
                           key={index}
-                          className="border rounded-md overflow-hidden shadow-md flex flex-col justify-between hover:shadow-lg transition duration-300 ease-in-out"
+                          className="relative rounded-lg shadow-lg p-4 bg-white hover:shadow-xl transition duration-300 ease-in-out cursor-pointer"
                         >
-                          <img
-                            src={product?.product_image}
-                            alt={`Product ${index + 1}`}
-                            className="w-full h-40 object-cover p-3"
-                          />
-                          <div className="px-1.5 sm:px-2">
-                            <p className="font-bold">{product?.product_name}</p>
-                            <p className="text-sm sm:mt-1">
-                              Category: {product?.category_id?.category_name}
-                            </p>
-                            {product?.brand_id?.brand_name ? (
-                              <p className="text-sm sm:mt-1">
-                                Brand : {product?.brand_id?.brand_name}
-                              </p>
-                            ) : (
-                              <p className="text-sm sm:mt-1 opacity-0">
-                                Brand : Placeholder
-                              </p>
-                            )}
-                            <p className="text-sm my-1 font-semibold">
-                              ID : {product?.product_id}
+                          <div className="absolute top-0 h-full w-full bg-black/70 rounded-lg shadow-lg right-[0.5px] flex items-center justify-center">
+                            <p className="uppercase text-xl text-center font-bold text-white z-10">
+                              Out Of Store
                             </p>
                           </div>
-                          {product?.product_price && (
-                            <div className="bg-blue-500 text-white text-center text-xs py-1.5">
-                              {product?.product_price}
+                          <div className="flex items-center gap-4">
+                            <div className="flex-grow">
+                              <p className="text-lg font-bold text-gray-800">
+                                {product?.product_name}
+                              </p>
+                              <p className="text-sm text-gray-600 mt-1">
+                                Quantity :{" "}
+                                <span className="font-medium text-blue-600">
+                                  {product?.product_quantity}{" "}
+                                  {settingData?.unit_name}
+                                </span>
+                              </p>
+                              <p className="text-sm text-gray-600 mt-1">
+                                Category : {product?.category_id?.category_name}
+                              </p>
+                              {product?.brand_id?.brand_name && (
+                                <p className="text-sm text-gray-600 mt-1">
+                                  Brand : {product?.brand_id?.brand_name}
+                                </p>
+                              )}
+                              <p className="text-sm text-gray-500 mt-1">
+                                ID : {product?.product_id}
+                              </p>
                             </div>
-                          )}
+                          </div>
+                          <div className="mt-4">
+                            <p className="text-center bg-blue-600 text-white text-sm py-2 rounded-md">
+                              $ {product?.product_price}
+                            </p>
+                          </div>
                         </div>
                       )}
                     </>
