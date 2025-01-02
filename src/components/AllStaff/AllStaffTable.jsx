@@ -24,6 +24,14 @@ const AllStaffTable = ({
 }) => {
   const [updateModal, setUpdateModal] = useState(false);
   const [updateModalValue, setUpdateModalValue] = useState(false);
+
+  //-----------//
+
+  const [serialNumber, setSerialNumber] = useState();
+  useEffect(() => {
+    const newSerialNumber = (page - 1) * limit;
+    setSerialNumber(newSerialNumber);
+  }, [page, limit]);
   //   console.log(staffData);
   const updateStaffModal = (item) => {
     setUpdateModal(true);
@@ -66,6 +74,7 @@ const AllStaffTable = ({
                 {" "}
                 <thead>
                   <tr className="font-semibold text-center ">
+                    <th className="whitespace-nowrap px-4 py-2.5 ">SL</th>
                     <th className="whitespace-nowrap px-4 py-2.5 ">
                       Joining Date
                     </th>
@@ -104,6 +113,9 @@ const AllStaffTable = ({
                         i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
                       } hover:bg-blue-100`}
                     >
+                      <td className="whitespace-nowrap px-4 py-2 font-semibold">
+                        {serialNumber + i + 1}
+                      </td>
                       <td className="whitespace-nowrap px-4 py-2 font-semibold">
                         {user?.joining_date}
                       </td>
@@ -156,7 +168,7 @@ const AllStaffTable = ({
                                 <FiEdit size={18} />
                                 Edit
                               </button>
-                             )} 
+                            )}
 
                             <Link to={`/staff-Perfomance/${user?._id}`}>
                               {" "}
@@ -206,15 +218,6 @@ const AllStaffTable = ({
           ) : (
             <NoDataFound />
           )}
-          {totalData > 10 && (
-            <Pagination
-              limit={limit}
-              page={page}
-              setPage={setPage}
-              setLimit={setLimit}
-              totalData={totalData}
-            />
-          )}
 
           {/* Update Sub Category */}
           {updateModal && (
@@ -228,6 +231,15 @@ const AllStaffTable = ({
             />
           )}
         </div>
+      )}
+      {totalData > 2 && (
+        <Pagination
+          limit={limit}
+          page={page}
+          setPage={setPage}
+          setLimit={setLimit}
+          totalData={totalData}
+        />
       )}
     </>
   );

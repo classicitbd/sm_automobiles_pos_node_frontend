@@ -63,9 +63,9 @@ const BankOut = ({
         </div>
       </div>
 
-      <div className="bg-gray-50  p-5 shadow-md mt-8">
+      {/* <div className="bg-gray-50  p-5 shadow-md mt-8">
         <BankOutChart />
-      </div>
+      </div> */}
 
       {/* search Bank Account... */}
       <div className="mt-8 flex justify-end">

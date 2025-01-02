@@ -63,7 +63,7 @@ const ProfitPage = () => {
     <>
       {user?.user_role_id?.profit_show == true && (
         <div className="py-6 px-4 ">
-          <div className="flex justify-between ">
+          <div className="flex sm:justify-between flex-col">
             <div>
               <h1 className="sm:text-2xl text-xl">All Profit List</h1>
             </div>

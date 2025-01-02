@@ -2,21 +2,34 @@ import NoDataFound from "@/shared/NoDataFound/NoDataFound";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "@/utils/baseURL";
-import ViewSaleTargetChart from "./ViewSaleTargetChart";
+//import ViewSaleTargetChart from "./ViewSaleTargetChart";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Pagination from "../common/pagination/Pagination";
 
 const ViewSaleTarget = ({
   saleTargetData,
   isLoading,
-  refetch,
+  // refetch,
   settingData,
   id,
+  limit,
+  setLimit,
+  page,
+  totalData,
+  setPage,
 }) => {
+  //-----------//
+
+  const [serialNumber, setSerialNumber] = useState();
+  useEffect(() => {
+    const newSerialNumber = (page - 1) * limit;
+    setSerialNumber(newSerialNumber);
+  }, [page, limit]);
+
   //Fetch saleTargetDetails Data
   const { data: saleTargetDetails = [] } = useQuery({
-    queryKey: [
-      `/api/v1/sale_target/a_sale_target_details/${id}`,
-    ],
+    queryKey: [`/api/v1/sale_target/a_sale_target_details/${id}`],
     queryFn: async () => {
       try {
         const res = await fetch(
@@ -100,9 +113,9 @@ const ViewSaleTarget = ({
             </div>
           </div>
 
-          <div className="bg-gray-50  p-5 shadow-md mt-8">
+          {/* <div className="bg-gray-50  p-5 shadow-md mt-8">
             <ViewSaleTargetChart />
-          </div>
+          </div> */}
           <div className="rounded-lg shadow-md mt-6">
             {saleTargetData?.data?.length > 0 ? (
               <div className="overflow-x-auto rounded-lg">
@@ -115,9 +128,7 @@ const ViewSaleTarget = ({
                       <td className="whitespace-nowrap p-4 ">
                         Received Amount
                       </td>
-                      <td className="whitespace-nowrap p-4 ">
-                        Due Amount
-                      </td>
+                      <td className="whitespace-nowrap p-4 ">Due Amount</td>
                       <td className="whitespace-nowrap p-4 ">
                         Total Messurement
                       </td>
@@ -128,21 +139,24 @@ const ViewSaleTarget = ({
                     {saleTargetData?.data?.map((sale_target, i) => (
                       <tr
                         key={sale_target?._id}
-                        className={`divide-x divide-gray-200 ${i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
-                          }`}
+                        className={`divide-x divide-gray-200 ${
+                          i % 2 === 0 ? "bg-white" : "bg-tableRowBGColor"
+                        }`}
                       >
                         <td className="whitespace-nowrap py-1.5 font-medium text-gray-700">
-                          {i + 1}
+                          {serialNumber + i + 1}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-blue-700 underline cursor-pointer">
-                          <Link to={`/order-details/${sale_target?._id}`}>{sale_target?.order_id}</Link>
+                          <Link to={`/order-details/${sale_target?._id}`}>
+                            {sale_target?.order_id}
+                          </Link>
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                           {sale_target?.grand_total_amount}
                         </td>
                         <td className="whitespace-nowrap py-1.5 font-medium text-green-600">
                           {sale_target?.received_amount ===
-                            sale_target?.grand_total_amount ? (
+                          sale_target?.grand_total_amount ? (
                             <span className="text-green-600">
                               {sale_target?.received_amount}
                             </span>
@@ -173,6 +187,13 @@ const ViewSaleTarget = ({
               <NoDataFound />
             )}
           </div>
+          <Pagination
+            setPage={setPage}
+            setLimit={setLimit}
+            totalData={totalData}
+            page={page}
+            limit={limit}
+          />
         </>
       )}
     </>

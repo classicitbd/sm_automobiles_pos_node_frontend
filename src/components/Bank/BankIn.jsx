@@ -4,7 +4,7 @@ import { DateTimeFormat } from "@/utils/dateTimeFormet";
 import TableLoadingSkeleton from "../common/loadingSkeleton/TableLoadingSkeleton";
 import { useEffect, useState } from "react";
 import BankInChart from "./BankInChart";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 
 const BankIn = ({
   setPage,
@@ -19,7 +19,7 @@ const BankIn = ({
   bankLoading,
   bankData,
   handleSearchValue,
-  searchTerm
+  searchTerm,
 }) => {
   const [serialNumber, setSerialNumber] = useState();
   useEffect(() => {
@@ -64,9 +64,9 @@ const BankIn = ({
         </div>
       </div>
 
-      <div className="bg-gray-50  p-5 shadow-md mt-8">
+      {/* <div className="bg-gray-50  p-5 shadow-md mt-8">
         <BankInChart />
-      </div>
+      </div> */}
 
       {/* search Bank Account... */}
       <div className="mt-8 flex justify-end">
@@ -107,8 +107,9 @@ const BankIn = ({
                   {bankInData?.data?.map((payment, i) => (
                     <tr
                       key={payment?._id}
-                      className={`text-center ${i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
-                        } hover:bg-blue-100`}
+                      className={`text-center ${
+                        i % 2 === 0 ? "bg-secondary-50" : "bg-secondary-100"
+                      } hover:bg-blue-100`}
                     >
                       <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                         {serialNumber + i + 1}
