@@ -42,6 +42,12 @@ const CheckOutPaymentTable = ({
                         Supplier Phone
                       </th>
                       <th className="whitespace-nowrap p-4 font-medium">
+                        Employee Name
+                      </th>
+                      <th className="whitespace-nowrap p-4 font-medium">
+                        Employee Phone
+                      </th>
+                      <th className="whitespace-nowrap p-4 font-medium">
                         Created By
                       </th>
                       <th className="whitespace-nowrap p-4 font-medium">
@@ -76,6 +82,12 @@ const CheckOutPaymentTable = ({
                         </td>
                         <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                           {income?.supplier_id?.supplier_phone || "N/A"}
+                        </td>
+                        <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
+                          {income?.salary_user_id?.user_name || "N/A"}
+                        </td>
+                        <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
+                          {income?.salary_user_id?.user_phone || "N/A"}
                         </td>
                         <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                           {income?.supplier_payment_publisher_id?.user_name}

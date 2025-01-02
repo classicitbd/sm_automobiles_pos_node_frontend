@@ -66,6 +66,8 @@ const PurchaseListTable = ({
                     <td className="whitespace-nowrap p-4 ">Date</td>
                     <td className="whitespace-nowrap p-4 ">Supplier name</td>
                     <td className="whitespace-nowrap p-4 ">Supplier Phone</td>
+                    <td className="whitespace-nowrap p-4 ">Employee name</td>
+                    <td className="whitespace-nowrap p-4 ">Employee Phone</td>
                     <td className="whitespace-nowrap p-4 ">Created By</td>
                     <td className="whitespace-nowrap p-4 ">Updated By</td>
                     <td className="whitespace-nowrap p-4 ">Payment Date</td>
@@ -97,10 +99,16 @@ const PurchaseListTable = ({
                         {DateTimeFormat(paymentInfo?.createdAt)}
                       </td>
                       <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
-                        {paymentInfo?.supplier_id?.supplier_name}
+                        {paymentInfo?.supplier_id?.supplier_name || "-"}
                       </td>
                       <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
-                        {paymentInfo?.supplier_id?.supplier_phone}
+                        {paymentInfo?.supplier_id?.supplier_phone || "-"}
+                      </td>
+                      <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
+                        {paymentInfo?.salary_user_id?.user_name || "-"}
+                      </td>
+                      <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
+                        {paymentInfo?.salary_user_id?.user_phone || "-"}
                       </td>
                       <td className="whitespace-nowrap py-2.5 font-medium text-gray-700">
                         {

@@ -3,19 +3,105 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { RxCross1 } from "react-icons/rx";
 import { Button } from "../ui/button";
+import { BASE_URL } from "@/utils/baseURL";
+import { toast } from "react-toastify";
 
 const SalaryUpdateModal = ({
   salaryUpdateModaldata,
   setSalaryUpdateModalOpen,
+  user,
+  refetch
 }) => {
   const [loading, setLoading] = useState(false);
-  const { register, handleSubmit } = useForm();
-
-  console.log(salaryUpdateModaldata);
+  const [addOrDeductType, setAddOrDeductType] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   //Payment Data Post
-  const handleDataPost = (data) => {
-    console.log(data);
+  const handleDataPost = async (data) => {
+    setLoading(true);
+    if (!addOrDeductType) {
+      toast.error("Please select add or deduct type", {
+        autoClose: 1000,
+      });
+      setLoading(false);
+      return;
+    }
+    try {
+      const sendData = {
+        _id: salaryUpdateModaldata?._id,
+        salary_note: data?.salary_note,
+        salary_updated_by: user?._id,
+      };
+      if (addOrDeductType === "toAdd") {
+        sendData.add_or_deduct_amount =
+          parseFloat(salaryUpdateModaldata?.add_or_deduct_amount) +
+          parseFloat(data?.add_or_deduct_amount);
+        sendData.grand_total_amount = parseFloat(
+          parseFloat(salaryUpdateModaldata?.grand_total_amount) +
+            parseFloat(data?.add_or_deduct_amount)
+        );
+        sendData.due_amount = parseFloat(
+          parseFloat(salaryUpdateModaldata?.due_amount) +
+            parseFloat(data?.add_or_deduct_amount)
+        );
+        sendData.salary_status = "unpaid";
+      } else {
+        sendData.add_or_deduct_amount =
+          parseFloat(salaryUpdateModaldata?.add_or_deduct_amount) +
+          parseFloat(-data?.add_or_deduct_amount);
+        sendData.grand_total_amount = parseFloat(
+          parseFloat(salaryUpdateModaldata?.grand_total_amount) -
+            parseFloat(data?.add_or_deduct_amount)
+        );
+        sendData.due_amount = parseFloat(
+          parseFloat(salaryUpdateModaldata?.due_amount) -
+            parseFloat(data?.add_or_deduct_amount)
+        );
+        sendData.salary_status =
+          parseFloat(salaryUpdateModaldata?.due_amount) -
+            parseFloat(data?.add_or_deduct_amount) ==
+          0
+            ? "paid"
+            : "unpaid";
+      }
+
+      const response = await fetch(`${BASE_URL}/salary`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(sendData),
+      });
+      const result = await response.json();
+      if (result?.statusCode === 200 && result?.success === true) {
+        toast.success(
+          result?.message ? result?.message : "Salary updated successfully",
+          {
+            autoClose: 1000,
+          }
+        );
+        refetch();
+        setLoading(false);
+        setSalaryUpdateModalOpen(false);
+      } else {
+        toast.error(result?.message || "Something went wrong", {
+          autoClose: 1000,
+        });
+        setLoading(false);
+      }
+    } catch (error) {
+      toast.error(error?.message, {
+        autoClose: 1000,
+      });
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div>
@@ -46,11 +132,38 @@ const SalaryUpdateModal = ({
                 <label className="block  font-medium text-gray-700">
                   Employe Name
                 </label>
-
                 <input
-                  {...register("employe_name")}
                   type="text"
+                  disabled
+                  readOnly
+                  value={salaryUpdateModaldata?.user_id?.user_name}
                   placeholder="Employe Name"
+                  className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                />
+              </div>
+              <div>
+                <label className="block  font-medium text-gray-700">
+                  Employe Phone
+                </label>
+                <input
+                  type="text"
+                  disabled
+                  readOnly
+                  value={salaryUpdateModaldata?.user_id?.user_phone}
+                  placeholder="Employe Phone"
+                  className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                />
+              </div>
+              <div>
+                <label className="block  font-medium text-gray-700">
+                  Salary Month
+                </label>
+                <input
+                  type="month"
+                  disabled
+                  readOnly
+                  value={salaryUpdateModaldata?.salary_month}
+                  placeholder="Salary Month"
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
               </div>
@@ -60,74 +173,182 @@ const SalaryUpdateModal = ({
                 </label>
 
                 <input
-                  {...register("basic_salary")}
-                  type="text"
+                  disabled
+                  readOnly
+                  value={salaryUpdateModaldata?.basic_salary}
+                  type="number"
                   placeholder="Basic Salary"
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
               </div>
               <div>
                 <label className="block  font-medium text-gray-700">
-                  Total Allowance
+                  Commision
                 </label>
-
                 <input
-                  {...register("total_allowance")}
-                  type="text"
-                  placeholder="Total Allowance"
+                  type="number"
+                  disabled
+                  readOnly
+                  value={salaryUpdateModaldata?.commision_amount}
+                  placeholder="Commision"
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
               </div>
               <div>
                 <label className="block  font-medium text-gray-700">
-                  Total Deduction
+                  Total Salary
                 </label>
-
                 <input
-                  {...register("total_deduction")}
                   type="text"
-                  placeholder="Total Deduction"
+                  disabled
+                  readOnly
+                  value={salaryUpdateModaldata?.grand_total_amount}
+                  placeholder="Total Salary"
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
               </div>
               <div>
                 <label className="block  font-medium text-gray-700">
-                  Gross Salary
+                  Received Salary
                 </label>
 
                 <input
-                  {...register("gross_salary")}
-                  type="text"
-                  placeholder="Gross Salary"
+                  disabled
+                  readOnly
+                  value={salaryUpdateModaldata?.received_amount}
+                  type="number"
+                  placeholder="Received Salary"
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
                 />
               </div>
               <div>
                 <label className="block  font-medium text-gray-700">
-                  Payment Method
+                  Due Salary
                 </label>
-                <select
-                  {...register("payment_method")}
-                  //value={}
-                  //onChange={(e) => setCouponType(e.target.value)}
+
+                <input
+                  disabled
+                  readOnly
+                  value={salaryUpdateModaldata?.due_amount}
+                  type="number"
+                  placeholder="Due Salary"
                   className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
-                >
-                  <option value="cash">Cash</option>
-                  <option value="cheque">Cheque</option>
-                </select>
+                />
               </div>
             </div>
+
+            <div className="mt-4">
+              <label className="block  font-medium text-gray-700">
+                Previous Add Or Deduct
+              </label>
+              <input
+                type="text"
+                disabled
+                readOnly
+                value={salaryUpdateModaldata?.add_or_deduct_amount}
+                placeholder="Previous Add Or Deduct"
+                className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+              />
+            </div>
+
+            <p className="mt-4">Add Or Deduct :</p>
+            <div className="flex items-center gap-1 mt-2">
+              <div
+                onClick={() => setAddOrDeductType("toAdd")}
+                className="relative"
+              >
+                <input
+                  className="absolute top-[11px] left-5 peer"
+                  id="toAdd"
+                  type="radio"
+                  tabIndex="-1"
+                  name="payment"
+                />
+                <label
+                  htmlFor="toAdd"
+                  className="w-full rounded-lg border border-gray-200 p-2 text-gray-600 hover:border-black peer-checked:border-yellowColor peer-checked:bg-logoColor flex justify-between items-center"
+                  tabIndex="0"
+                >
+                  <span className="lg:text-sm text-[10px] pl-10">
+                    Add Salary{" "}
+                  </span>
+                </label>
+              </div>
+
+              <div
+                onClick={() => setAddOrDeductType("toDeduct")}
+                className="relative"
+              >
+                <input
+                  className="absolute top-[11px] left-5 peer"
+                  id="toDeduct"
+                  type="radio"
+                  tabIndex="-1"
+                  name="payment"
+                />
+                <label
+                  htmlFor="toDeduct"
+                  className="w-full rounded-lg border border-gray-200 p-2 text-gray-600 hover:border-black peer-checked:border-yellowColor peer-checked:bg-logoColor flex justify-between items-center"
+                  tabIndex="0"
+                >
+                  <span className="lg:text-sm text-[10px] pl-10">
+                    Deduct Salary
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <label
+              htmlFor="add_or_deduct_amount"
+              className="block text-xs font-medium text-gray-700 mt-4"
+            >
+              {addOrDeductType
+                ? addOrDeductType == "toAdd"
+                  ? "Add Amount"
+                  : "Deduct Amount"
+                : "Please Choose Add Or Deduct Type"}
+            </label>
+
+            <input
+              {...register("add_or_deduct_amount", {
+                required: "Add Or Deduct Amount is required",
+              })}
+              type="number"
+              min={1}
+              id="add_or_deduct_amount"
+              defaultValue={0}
+              max={
+                addOrDeductType === "toDeduct"
+                  ? salaryUpdateModaldata?.due_amount
+                  : undefined
+              }
+              placeholder="Enter Add Or Deduct Amount"
+              className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+            />
+            {errors.add_or_deduct_amount && (
+              <p className="text-red-600 text-sm">
+                {errors.add_or_deduct_amount?.message}
+              </p>
+            )}
+
             <div className="mt-2 sm:mt-4">
               <label className="block  font-medium text-gray-700">
                 Comments
               </label>
 
               <textarea
-                {...register("comments")}
+                {...register("salary_note", {
+                  required: "Comments is required",
+                })}
                 type="text"
                 placeholder="Add Yours Comments"
                 className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
               />
+              {errors.salary_note && (
+                <p className="text-red-600 text-sm">
+                  {errors.salary_note?.message}
+                </p>
+              )}
             </div>
 
             <div className="flex justify-end mt-3">
@@ -137,7 +358,7 @@ const SalaryUpdateModal = ({
                 </div>
               ) : (
                 <Button type="submit" className="px-10 text-lg">
-                  Pay
+                  Update
                 </Button>
               )}
             </div>

@@ -36,16 +36,6 @@ const SaleryPage = () => {
           </Link>
         </div>
       </div>
-      {/* search salery Payment... */}
-      <div className="mt-8">
-        <input
-          type="text"
-          // defaultValue={searchTerm}
-          // onChange={(e) => handleSearchValue(e.target.value)}
-          placeholder="Search Salary..."
-          className="w-full sm:w-[350px] px-4 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-        />
-      </div>
 
       {/*Salery Payment table Show */}
       <SalerySheetTable />
