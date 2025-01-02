@@ -1,6 +1,7 @@
 import MiniSpinner from "@/shared/MiniSpinner/MiniSpinner";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { RiImageAddFill } from "react-icons/ri";
 import { RxCross1 } from "react-icons/rx";
 
@@ -13,6 +14,12 @@ const ProfileSetting = ({ setUserupdateModalOpen }) => {
     setValue,
     formState: { errors },
   } = useForm();
+
+  const [changePassword, setChangePassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   //Image preview....
   const [imagePreview, setImagePreview] = useState(null);
@@ -81,23 +88,72 @@ const ProfileSetting = ({ setUserupdateModalOpen }) => {
               )}
             </div>
 
-            <div className="mt-2">
-              <label
-                htmlFor=""
-                className="block text-xs font-medium text-gray-700"
-              >
-                Password
-              </label>
+            <div className="mt-5">
+              <div className="flex justify-between   bg-gray-100 p-2 rounded-lg shadow border ">
+                <p className="text-gray-700 font-semibold text-sm">
+                  Do you want to change your password
+                </p>
+                <label
+                  htmlFor="changePassword"
+                  className="inline-flex items-center space-x-4 cursor-pointer dark:text-gray-800"
+                >
+                  <span className="relative">
+                    <input
+                      id="changePassword"
+                      type="checkbox"
+                      className="hidden peer"
+                      checked={changePassword} // Control the toggle state
+                      onChange={() => setChangePassword(!changePassword)}
+                    />
+                    <div className="w-12 h-4 rounded-full shadow bg-slate-300  peer-checked:bg-bgBtnActive"></div>
+                    <div className="absolute left-0 w-6 h-6 rounded-full -inset-y-1 peer-checked:right-0 peer-checked:left-auto peer-checked:bg-primary bg-white ring-[1px] shadow-lg  ring-gray-300  "></div>
+                  </span>
+                </label>
+              </div>
+              {changePassword && (
+                <div className="relative">
+                  <label
+                    htmlFor="user_password"
+                    className="block text-sm font-medium text-gray-700 mt-2"
+                  >
+                    Password
+                  </label>
 
-              <input
-                {...register("password")}
-                type="password"
-                placeholder="Your Password"
-                readOnly
-                className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
-              />
+                  <input
+                    {...register("user_password", {
+                      validate: {
+                        isPassword: (value) =>
+                          value.length >= 4 ||
+                          " Password must be at least 4 characters",
+                      },
+                      required: "User Password is required",
+                    })}
+                    type={showPassword ? "text" : "password"} // Dynamic type based on state
+                    id="user_password"
+                    placeholder="Enter your new password"
+                    className="mt-2 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-2 border-2"
+                  />
+                  {errors.user_password && (
+                    <p className="text-red-600 text-sm">
+                      {errors.user_password?.message}
+                    </p>
+                  )}
+
+                  {/* Eye icon for toggling password visibility */}
+                  <div
+                    className="absolute top-9 right-3 cursor-pointer"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? (
+                      <FaRegEye size={20} />
+                    ) : (
+                      <FaRegEyeSlash size={20} />
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="mt-2">
+            <div className="mt-4">
               <label
                 htmlFor=""
                 className="block text-xs font-medium text-gray-700"

@@ -121,9 +121,9 @@ const SalleTargetView = () => {
             </div>
           </div>
 
-          <div className="bg-gray-50  p-5 shadow-md mt-8">
+          {/* <div className="bg-gray-50  p-5 shadow-md mt-8">
             <SaleTargetChart />
-          </div>
+          </div> */}
 
           <div className="flex justify-end mt-10">
             <input

@@ -63,7 +63,7 @@ const LeisurePage = () => {
     <>
       {user?.user_role_id?.ledger_show == true && (
         <div className="py-6 px-4 ">
-          <div className="flex justify-between ">
+          <div className="flex justify-between flex-col">
             <div>
               <h1 className="sm:text-2xl text-xl">All Ledger List</h1>
             </div>

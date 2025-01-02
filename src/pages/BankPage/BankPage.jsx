@@ -219,7 +219,7 @@ const BankPage = () => {
           {/* search Bank Account... */}
           <div className="flex justify-between mt-6">
             <div>
-              <h1 className="text-2xl">Bank Account</h1>
+              <h1 className="sm:text-2xl text-xl">Bank Account</h1>
             </div>
 
             <div>

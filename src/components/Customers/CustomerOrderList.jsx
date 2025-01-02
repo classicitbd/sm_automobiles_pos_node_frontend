@@ -103,9 +103,9 @@ const CustomerOrderList = () => {
         </div>
       </div>
 
-      <div className="bg-gray-50  p-5 shadow-md mt-8">
+      {/* <div className="bg-gray-50  p-5 shadow-md mt-8">
         <CustomerOrderChart />
-      </div>
+      </div> */}
 
       <div className=" py-3 px-4 mt-8">
         <div className="mt-8 flex justify-end">
