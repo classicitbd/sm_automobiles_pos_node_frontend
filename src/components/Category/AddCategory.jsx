@@ -13,8 +13,8 @@ const AddCategory = ({ setCategoryCreateModal, refetch, user }) => {
 
   const {
     register,
-    handleSubmit,
-    formState: { errors },
+    handleSubmit,formState: { errors },
+    
   } = useForm();
 
   // get token
